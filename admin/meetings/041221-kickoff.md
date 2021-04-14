@@ -1,8 +1,8 @@
 # Meeting Minutes
-Team: Group 2
-Type: Kickoff Meeting
-Date: 04/12/2021
-Time: 12:00 - 1:00pm
+Team: Group 2\
+Type: Kickoff Meeting\
+Date: 04/12/2021\
+Time: 12:00 - 1:00pm\
 Location: Zoom
 
 ## Agenda
