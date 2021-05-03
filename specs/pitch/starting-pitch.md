@@ -1,3 +1,4 @@
+# Group 2 Starting Pitch
 ## Problem
 - No specific tools in the market for students (all other options are generic with way too many auxiliary features that can overwhelm first time journallers)
 
@@ -54,7 +55,9 @@ Our product will be capable of rapid logging, organizing thoughts and ideas, and
 - One such example of this could be our idea of implementing a block style text editor that automatically categorizes blocks of text as notes, events or tasks based on the initial character typed, and being able to add tags to specific blocks
 - One way to mitigate this is if we realise throughout the sprint that a certain feature was starting to get backlogged, even with more engineers added on to help solve the issue, we must take a step back to simplify the feature and implement a more basic version of the feature (if it is core) or may even decide as a team if it’s best to remove it from the final product altogether. 
 
-Implementing features that could potentially distract from the core functionality of the bullet journal. We would avoid this by always keeping our main plan in sight and in mind, making sure that every step we take leads us towards our shared vision of the user’s wants and needs. We also want our bullet journal to be as easy to use as possible, so anything that is not essential or addresses one of persona’s concerns would be implemented afterwards.
+#### Implementing features that could potentially distract from the core functionality of the bullet journal
+- We would avoid this by always keeping our main plan in sight and in mind, making sure that every step we take leads us towards our shared vision of the user’s wants and needs. 
+- We also want our bullet journal to be as easy to use as possible, so anything that is not essential or addresses one of persona’s concerns would be implemented afterwards.
 
 ---
 ## Wireframes
@@ -65,24 +68,24 @@ Implementing features that could potentially distract from the core functionalit
 
 ![image](https://user-images.githubusercontent.com/56616510/116929664-9c34e380-ac13-11eb-901b-c967f94ad135.png)
 ### Name: Mark Liang
-Mark is a 3rd year biology major, who works two jobs. He has never used a bullet journal before. He is from UCSD, within Revelle College and needs 2 more years to graduate. He has an overall GPA of 2.8. He likes to attend social events, and surf. He wishes to someday attend Med School and pursue a higher education in biology. 
+Mark is a 3rd year biology major, who works two jobs. He has never used a bullet journal before. He is from UCSD, within Revelle College and needs 2 more years to graduate. He has an overall GPA of 2.8. He likes to attend social events, and surf. He wishes to someday attend medical school and pursue a higher education in biology. 
 
-As a person, he’s a forgetful procrastinator that is very flexible and adaptable depending on the situation. He is very sociable and motivated when he wants to be.He doesn’t have too much experience with technology, except for using zoom and watching Netflix. His understanding of technical skills is sustainable and adequate. 
+As a person, he’s a forgetful procrastinator that is very flexible and adaptable depending on the situation. He is very sociable and motivated when he wants to be. He doesn’t have too much experience with technology, except for using Zoom and watching Netflix. His understanding of technical skills is sustainable and adequate. 
 
-Currently, he wants to be able to organize and manage his daily tasks. Additionally, he has trouble keeping priority of his tasks. Although he wants to maintain his work flow, he doesn’t want to waste too much time journaling. He doesn’t want to use any methods that are too complicated and time consuming. 
+Currently, he wants to be able to organize and manage his daily tasks. Additionally, he has trouble keeping priority of his tasks. Although he wants to maintain his work flow, he doesn’t want to waste too much time journaling. He doesn’t want to use any methods that are too complicated or time consuming. 
 
 By using our product, Mark would be able to easily create and link tasks for any classes that he’s taking. Our design would be user friendly and straight to the point, so that he doesn’t feel overwhelmed by journaling. In order to accommodate for Mark’s forgetfulness, our app will contain dates and reminders that will notify users of upcoming tasks. Our app will contain daily, weekly, and quarterly logs in order to help Mark keep track of his priorities.  
 
 
 ![image](https://user-images.githubusercontent.com/56616510/116929534-6bed4500-ac13-11eb-9d06-f2207b84091d.png)
 ### Name: Trai Suraj
-Traj is a first year lit major who is not the most familiar with technology. He likes having everything on paper rather than digitally and enjoys reading books over electronic media. His minimal dependence on technology even transfers over to his non-academic life, as he prefers to ride a bike rather than using other means of transportation.
+Traj is a first year literature major who is not the most familiar with technology. He likes having everything on paper rather than digitally and enjoys reading books over electronic media. His minimal dependence on technology even transfers over to his non-academic life, as he prefers to ride a bike rather than using other means of transportation. Trai also has partial color blindness.
 
-As a person, Trai is creative, disciplined, studious, focused, and reserved. All of these personality traits combined have helped him achieve a 4.0 GPA. He enjoys reading, writing, poetry, birdwatching, and nature. Trai is particularly good at writing poetry, knitting, and has good memory retention. 
+As a person, Trai is creative, disciplined, studious, focused, and reserved. All of these personality traits combined have helped him achieve a 4.0 GPA. Trai is particularly good at writing poetry, knitting, and has good memory retention. He enjoys reading, writing (poetry in particular), birdwatching, and nature. 
 
-With the onset of Covid, Trai realized that he could organize his classes much more efficiently with a digital bullet journal. His lack of familiarity with online materials proved to be a disaster when classes moved online. He is interested in something that is intuitive to use, allows him to link notes and tasks with certain classes, allows him to keep track of all links in one place, and has a high contrast mode.
+With the onset of Covid, Trai wished that he could organize his classes much more efficiently with a digital bullet journal. His lack of familiarity with online materials proved to be a disaster when classes moved online. However, Traj is concerned about his minimal experience with technology preventing him from transitioning to a digital bullet journal, and his partial color blindness keeping him from properly using it.
 
-Traj is concerned about his minimal experience with technology preventing him from transitioning to a digital bullet journal and his partial color blindness from letting him properly use it. 
+By using our product, Trai will be able to pick up the digital medium relatively easily due to our intuitive design. Our product will allow him to link notes and tasks with certain classes, and keep track of all of his links in the same place. Trai's concerns regarding his color blindness will also be answered with accessibility features like our high-contrast mode.
 
 
 ![image](https://user-images.githubusercontent.com/56616510/116929723-ae168680-ac13-11eb-958b-3e6bba76556b.png)
@@ -93,7 +96,7 @@ As a person, Susanna is patient and outgoing, but her personality shines in bein
 
 With technology growing faster than ever, Susanna wanted to catch up with the current times and transition more towards technology. Specifically, she wants to transition into using a digital bullet journal. Since she is used to using technology, her main concerns with using a digital bullet journal lie in the degree of personalization she is allowed, and its effectiveness compared to the analog form, of which she is much more experienced with.
 
-By using our product, Susanna will be able to continue to enjoy the personalization that comes with the analog bullet journal, having the ability to pick colors and fonts to her liking, along with adding stickers and other images. With our product she may find that the digital bullet journal is more convenient due to not having to worry about human-made writing errors, along with the digital medium being faster overall thanks to our rapid logging and task migration features.
+By using our product, Susanna will be able to continue to enjoy some of the personalization that comes with the analog bullet journal, having the ability to pick colors and fonts to her liking, along with adding stickers and other images. With our product she may find that the digital bullet journal is more convenient due to not having to worry about human-made writing errors/inconsistencies, along with the digital medium being faster overall thanks to our rapid logging and task migration features.
 
 ---
 ## Projected Timeline
@@ -101,6 +104,6 @@ By using our product, Susanna will be able to continue to enjoy the personalizat
 
 **Sprint 2** - Add customizability and other secondary features (Finish MVP)
 
-**Sprint 3** - Feature lock and iron out kinks (increase code coverage, ux/ui, testing)
+**Sprint 3** - Feature lock and iron out kinks (increase code coverage, UX/UI, testing)
 
 Keeping in line with our main plan, it’s imperative that we don’t lose focus on our main objective, which is to create a bullet journaling system for students. Hence, that will be the main focus throughout the first two sprints, adding extra customizability features as we see fit. Towards the later weeks of the quarter, we want to lock our feature list and commit to creating the best possible experience we can provide to users with the features that have been implemented, keeping in mind to continually test code and write documentation.
