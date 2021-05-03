@@ -62,7 +62,7 @@ Implementing features that could potentially distract from the core functionalit
 
 ## User Personas and Stories
 
-[insert image here]
+![image](https://user-images.githubusercontent.com/56616510/116929664-9c34e380-ac13-11eb-901b-c967f94ad135.png)
 ### Name: Mark Liang
 Mark is a 3rd year biology major, who works two jobs. He has never used a bullet journal before. He is from UCSD, within Revelle College and needs 2 more years to graduate. He has an overall GPA of 2.8. He likes to attend social events, and surf. He wishes to someday attend Med School and pursue a higher education in biology. 
 
@@ -75,7 +75,7 @@ By using our product, Mark would be able to easily create and link tasks for any
 
 
 
-[insert image here]
+![image](https://user-images.githubusercontent.com/56616510/116929534-6bed4500-ac13-11eb-9d06-f2207b84091d.png)
 ### Name: Trai Suraj
 Traj is a first year lit major who is not the most familiar with technology. He likes having everything on paper rather than digitally and enjoys reading books over electronic media. His minimal dependence on technology even transfers over to his non-academic life, as he prefers to ride a bike rather than using other means of transportation.
 
@@ -87,7 +87,7 @@ Traj is concerned about his minimal experience with technology preventing him fr
 
 
 
-[insert image here]
+![image](https://user-images.githubusercontent.com/56616510/116929723-ae168680-ac13-11eb-958b-3e6bba76556b.png)
 ### Name: Susanna Kim
 Susanna is a second year arts major and is an avid user of an analog bullet journal. She runs a bullet journaling blog online, where she does bullet journal reviews and has a large following of 10k. She is also a student mentor. 
 
