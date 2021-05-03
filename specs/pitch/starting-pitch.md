@@ -58,7 +58,7 @@ Implementing features that could potentially distract from the core functionalit
 
 ---
 ## Wireframes
-[insert image here]
+![image](https://user-images.githubusercontent.com/56616510/116935426-32203c80-ac1b-11eb-907b-58dc32db35c4.png)
 
 ---
 ## User Personas and Stories
