@@ -49,12 +49,12 @@ Our product will be capable of rapid logging, organizing thoughts and ideas, and
     - Initial confusion on how the system would be set up with different school schedules with addition of having daily log in the dashboard
       - Clarification with mentor to have it auto-generated
 
-Implementing features that could potentially distract from the core functionality of the bullet journal. We would avoid this by always keeping our main plan in sight and in mind, making sure that every step we take leads us towards our shared vision of the user’s wants and needs. We also want our bullet journal to be as easy to use as possible, so anything that is not essential or addresses one of persona’s concerns would be implemented afterwards.
-
 #### Over ambitious features
 - There is always a risk of our features being out of the scope of our programming expertise or being too time consuming to implement that it hinders the production of the product
 - One such example of this could be our idea of implementing a block style text editor that automatically categorizes blocks of text as notes, events or tasks based on the initial character typed, and being able to add tags to specific blocks
 - One way to mitigate this is if we realise throughout the sprint that a certain feature was starting to get backlogged, even with more engineers added on to help solve the issue, we must take a step back to simplify the feature and implement a more basic version of the feature (if it is core) or may even decide as a team if it’s best to remove it from the final product altogether. 
+
+Implementing features that could potentially distract from the core functionality of the bullet journal. We would avoid this by always keeping our main plan in sight and in mind, making sure that every step we take leads us towards our shared vision of the user’s wants and needs. We also want our bullet journal to be as easy to use as possible, so anything that is not essential or addresses one of persona’s concerns would be implemented afterwards.
 
 ---
 ## Wireframes
