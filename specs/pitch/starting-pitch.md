@@ -5,7 +5,7 @@
 
 - Hard to keep track of online assignments and due dates  with remote learning (not as much reminders provided compared to in person instruction)   
 
-
+---
 ## Our Solution & Purpose
 We want to create a bullet journal that will help users keep track of their academic life.
 
@@ -13,7 +13,7 @@ We want to create a “single source of truth” for users to keep track of clas
 
 Our product will be capable of rapid logging, organizing thoughts and ideas, and planning for the future.
 
-
+---
 ## Risks and Rabbit Holes
 #### Focusing too much on design over functionality
 - Need to ensure we have a set time for how long we spend on a design and not go over
@@ -56,10 +56,11 @@ Implementing features that could potentially distract from the core functionalit
 - One such example of this could be our idea of implementing a block style text editor that automatically categorizes blocks of text as notes, events or tasks based on the initial character typed, and being able to add tags to specific blocks
 - One way to mitigate this is if we realise throughout the sprint that a certain feature was starting to get backlogged, even with more engineers added on to help solve the issue, we must take a step back to simplify the feature and implement a more basic version of the feature (if it is core) or may even decide as a team if it’s best to remove it from the final product altogether. 
 
-
+---
 ## Wireframes
 [insert image here]
 
+---
 ## User Personas and Stories
 
 ![image](https://user-images.githubusercontent.com/56616510/116929664-9c34e380-ac13-11eb-901b-c967f94ad135.png)
@@ -73,8 +74,6 @@ Currently, he wants to be able to organize and manage his daily tasks. Additiona
 By using our product, Mark would be able to easily create and link tasks for any classes that he’s taking. Our design would be user friendly and straight to the point, so that he doesn’t feel overwhelmed by journaling. In order to accommodate for Mark’s forgetfulness, our app will contain dates and reminders that will notify users of upcoming tasks. Our app will contain daily, weekly, and quarterly logs in order to help Mark keep track of his priorities.  
 
 
-
-
 ![image](https://user-images.githubusercontent.com/56616510/116929534-6bed4500-ac13-11eb-9d06-f2207b84091d.png)
 ### Name: Trai Suraj
 Traj is a first year lit major who is not the most familiar with technology. He likes having everything on paper rather than digitally and enjoys reading books over electronic media. His minimal dependence on technology even transfers over to his non-academic life, as he prefers to ride a bike rather than using other means of transportation.
@@ -84,7 +83,6 @@ As a person, Trai is creative, disciplined, studious, focused, and reserved. All
 With the onset of Covid, Trai realized that he could organize his classes much more efficiently with a digital bullet journal. His lack of familiarity with online materials proved to be a disaster when classes moved online. He is interested in something that is intuitive to use, allows him to link notes and tasks with certain classes, allows him to keep track of all links in one place, and has a high contrast mode.
 
 Traj is concerned about his minimal experience with technology preventing him from transitioning to a digital bullet journal and his partial color blindness from letting him properly use it. 
-
 
 
 ![image](https://user-images.githubusercontent.com/56616510/116929723-ae168680-ac13-11eb-958b-3e6bba76556b.png)
@@ -97,7 +95,7 @@ With technology growing faster than ever, Susanna wanted to catch up with the cu
 
 By using our product, Susanna will be able to continue to enjoy the personalization that comes with the analog bullet journal, having the ability to pick colors and fonts to her liking, along with adding stickers and other images. With our product she may find that the digital bullet journal is more convenient due to not having to worry about human-made writing errors, along with the digital medium being faster overall thanks to our rapid logging and task migration features.
 
-
+---
 ## Projected Timeline
 **Sprint 1** - Core bullet journal functionality (adding tasks, indexing, tagging collections, database)
 
