@@ -1,6 +1,6 @@
 # Group 2 Starting Pitch
 ## Problem
-- No specific tools in the market for students (all other options are generic with way too many auxiliary features that can overwhelm first time journallers)
+- There are no specific tools in the market meant for students (all other options are generic with way too many auxiliary features that can overwhelm first-time journallers)
 
 - Too many links for classes to keep track of (to include zoom links, and all the different sites that instructors may use)
 
@@ -38,18 +38,16 @@ Our product will be capable of rapid logging, organizing thoughts and ideas, and
 #### The Dashboard
 - Hole in the concept
   - Want it to be something that can be easy to look at while getting all necessary and relevant information from your book
-  - Started with a summary of Today's list, calendar, alerts, small version of collections and index on the left, upcoming dates, all editable, (+ more)
+  - Starting concept: a summary of Today's list, calendar, alerts, small version of collections and index on the left, upcoming dates, all editable, (+ more)
   - **Cut Back** on almost everything. 
     - To make the interface more usable for the user
     - More reasonable to implement for developers
     - Remaining concerns:
        - Want to make sure that the user can easily and quickly start typing (adding bullets/notes) from here (less clicks to get to where you want, be straightforward)
-
-- Calendar
+#### Calendar
   - Meet with expert 
     - Initial confusion on how the system would be set up with different school schedules with addition of having daily log in the dashboard
       - Clarification with mentor to have it auto-generated
-
 #### Over ambitious features
 - There is always a risk of our features being out of the scope of our programming expertise or being too time consuming to implement that it hinders the production of the product
 - One such example of this could be our idea of implementing a block style text editor that automatically categorizes blocks of text as notes, events or tasks based on the initial character typed, and being able to add tags to specific blocks
@@ -58,16 +56,20 @@ Our product will be capable of rapid logging, organizing thoughts and ideas, and
 #### Implementing features that could potentially distract from the core functionality of the bullet journal
 - We would avoid this by always keeping our main plan in sight and in mind, making sure that every step we take leads us towards our shared vision of the user’s wants and needs. 
 - We also want our bullet journal to be as easy to use as possible, so anything that is not essential or addresses one of persona’s concerns would be implemented afterwards.
+- We want to avoid redundant features or any type of feature that wouldn't make sense given the bullet journal's main theme of rapid logging
 
 ---
 ## Wireframes
+
 ![image](https://user-images.githubusercontent.com/56616510/116935426-32203c80-ac1b-11eb-907b-58dc32db35c4.png)
+
+###### Click on the image on GitHub for a close-up.
 
 ---
 ## User Personas and Stories
 
 ![image](https://user-images.githubusercontent.com/56616510/116929664-9c34e380-ac13-11eb-901b-c967f94ad135.png)
-### Name: Mark Liang
+### **Name: Mark Liang**
 Mark is a 3rd year biology major, who works two jobs. He has never used a bullet journal before. He is from UCSD, within Revelle College and needs 2 more years to graduate. He has an overall GPA of 2.8. He likes to attend social events, and surf. He wishes to someday attend medical school and pursue a higher education in biology. 
 
 As a person, he’s a forgetful procrastinator that is very flexible and adaptable depending on the situation. He is very sociable and motivated when he wants to be. He doesn’t have too much experience with technology, except for using Zoom and watching Netflix. His understanding of technical skills is sustainable and adequate. 
@@ -79,7 +81,7 @@ By using our product, Mark would be able to easily create and link tasks for any
 <br><br>
 
 ![image](https://user-images.githubusercontent.com/56616510/116929534-6bed4500-ac13-11eb-9d06-f2207b84091d.png)
-### Name: Trai Suraj
+### **Name: Trai Suraj**
 Traj is a first year literature major who is not the most familiar with technology. He likes having everything on paper rather than digitally and enjoys reading books over electronic media. His minimal dependence on technology even transfers over to his non-academic life, as he prefers to ride a bike rather than using other means of transportation. Trai also has partial color blindness.
 
 As a person, Trai is creative, disciplined, studious, focused, and reserved. All of these personality traits combined have helped him achieve a 4.0 GPA. Trai is particularly good at writing poetry, knitting, and has good memory retention. He enjoys reading, writing (poetry in particular), birdwatching, and nature. 
@@ -91,7 +93,7 @@ By using our product, Trai will be able to pick up the digital medium relatively
 <br><br>
 
 ![image](https://user-images.githubusercontent.com/56616510/116929723-ae168680-ac13-11eb-958b-3e6bba76556b.png)
-### Name: Susanna Kim
+### **Name: Susanna Kim**
 Susanna is a second year arts major and is an avid user of an analog bullet journal. She runs a bullet journaling blog online, where she does bullet journal reviews and has a large following of 10k. She is also a student mentor. 
 
 As a person, Susanna is patient and outgoing, but her personality shines in being artsy and detail oriented. Aside from taking care of plants, she takes on interests in graphic design and bullet journaling. She has moderate knowledge about technology as she runs a blog and has a presence on social media. 
