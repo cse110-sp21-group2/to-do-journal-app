@@ -8,9 +8,9 @@
 
 ---
 ## Our Solution & Purpose
-We want to create a bullet journal that will help users keep track of their academic life.
+We want to create a bullet journal that will help users of all kinds of backgrounds efficiently keep track of their academic life.
 
-We want to create a “single source of truth” for users to keep track of classes, such as specific class sites, zoom links, schedule of office hours.
+The bullet journal we create should be a “single source of truth” for users to use to keep track of their classes, including specific class sites, zoom links, schedule of office hours.
 
 Our product will be capable of rapid logging, organizing thoughts and ideas, and planning for the future.
 
@@ -18,7 +18,7 @@ Our product will be capable of rapid logging, organizing thoughts and ideas, and
 ## Risks and Rabbit Holes
 #### Focusing too much on design over functionality
 - Need to ensure we have a set time for how long we spend on a design and not go over
-- Worry about perfecting the css / design after functionality has been implemented
+- Worry about perfecting the CSS / design after functionality has been implemented
 
 
 #### Rabbit Hole: User login
@@ -76,6 +76,7 @@ Currently, he wants to be able to organize and manage his daily tasks. Additiona
 
 By using our product, Mark would be able to easily create and link tasks for any classes that he’s taking. Our design would be user friendly and straight to the point, so that he doesn’t feel overwhelmed by journaling. In order to accommodate for Mark’s forgetfulness, our app will contain dates and reminders that will notify users of upcoming tasks. Our app will contain daily, weekly, and quarterly logs in order to help Mark keep track of his priorities.  
 
+<br><br>
 
 ![image](https://user-images.githubusercontent.com/56616510/116929534-6bed4500-ac13-11eb-9d06-f2207b84091d.png)
 ### Name: Trai Suraj
@@ -83,16 +84,17 @@ Traj is a first year literature major who is not the most familiar with technolo
 
 As a person, Trai is creative, disciplined, studious, focused, and reserved. All of these personality traits combined have helped him achieve a 4.0 GPA. Trai is particularly good at writing poetry, knitting, and has good memory retention. He enjoys reading, writing (poetry in particular), birdwatching, and nature. 
 
-With the onset of Covid, Trai wished that he could organize his classes much more efficiently with a digital bullet journal. His lack of familiarity with online materials proved to be a disaster when classes moved online. However, Traj is concerned about his minimal experience with technology preventing him from transitioning to a digital bullet journal, and his partial color blindness keeping him from properly using it.
+With the onset of Covid, Trai wished that he could organize his classes much more efficiently with a digital bullet journal. His lack of familiarity with online materials proved to be a disaster when classes moved online. However, Trai is concerned about his minimal experience with technology preventing him from transitioning to a digital bullet journal, and his partial color blindness keeping him from properly using it.
 
 By using our product, Trai will be able to pick up the digital medium relatively easily due to our intuitive design. Our product will allow him to link notes and tasks with certain classes, and keep track of all of his links in the same place. Trai's concerns regarding his color blindness will also be answered with accessibility features like our high-contrast mode.
 
+<br><br>
 
 ![image](https://user-images.githubusercontent.com/56616510/116929723-ae168680-ac13-11eb-958b-3e6bba76556b.png)
 ### Name: Susanna Kim
 Susanna is a second year arts major and is an avid user of an analog bullet journal. She runs a bullet journaling blog online, where she does bullet journal reviews and has a large following of 10k. She is also a student mentor. 
 
-As a person, Susanna is patient and outgoing, but her personality shines in being artsy and detail oriented. Aside from taking care of plants, she takes on interests in graphic design and bullet journaling. She has a moderate knowledge about technology as she runs a blog and has a status on social media. 
+As a person, Susanna is patient and outgoing, but her personality shines in being artsy and detail oriented. Aside from taking care of plants, she takes on interests in graphic design and bullet journaling. She has moderate knowledge about technology as she runs a blog and has a presence on social media. 
 
 With technology growing faster than ever, Susanna wanted to catch up with the current times and transition more towards technology. Specifically, she wants to transition into using a digital bullet journal. Since she is used to using technology, her main concerns with using a digital bullet journal lie in the degree of personalization she is allowed, and its effectiveness compared to the analog form, of which she is much more experienced with.
 
