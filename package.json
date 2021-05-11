@@ -7,7 +7,8 @@
   "scripts": {
     "start": "nodemon --no-warnings --experimental-modules --es-module-specifier-resolution=node source/index.js",
     "test": "mocha --recursive ./source/test/* || true",
-    "lint": "./node_modules/.bin/eslint ./source"
+    "lint": "./node_modules/.bin/eslint ./source",
+    "docs": "node_modules/.bin/jsdoc --configure .jsdoc.json --verbose"
   },
   "author": "",
   "license": "ISC",
@@ -29,7 +30,7 @@
     "eslint": "^7.26.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.22.1",
-    "jsdoc": "^3.6.6",
+    "minami": "^1.2.3",
     "mocha": "^8.4.0",
     "prettier": "2.2.1"
   }
