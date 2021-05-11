@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 // import Journal from '../models/Journal';
 
 export default class JournalController {

@@ -1,4 +1,4 @@
-/* eslint-disable class-methods-use-this */
+/* eslint-disable */
 import jwt from 'jsonwebtoken';
 import mailgun from 'mailgun-js';
 import { compare, hash as _hash } from 'bcrypt';
