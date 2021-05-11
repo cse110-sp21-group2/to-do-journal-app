@@ -6,8 +6,9 @@
   "type": "module",
   "scripts": {
     "start": "nodemon --no-warnings --experimental-modules --es-module-specifier-resolution=node source/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "./node_modules/.bin/eslint ./source/*"
+    "test": "mocha --recursive ./source/test/* || true",
+    "lint": "./node_modules/.bin/eslint ./source",
+    "docs": "node_modules/.bin/jsdoc --configure .jsdoc.json --verbose"
   },
   "author": "",
   "license": "ISC",
@@ -25,9 +26,12 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
+    "chai": "^4.3.4",
     "eslint": "^7.26.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.22.1",
+    "minami": "^1.2.3",
+    "mocha": "^8.4.0",
     "prettier": "2.2.1"
   }
 }
