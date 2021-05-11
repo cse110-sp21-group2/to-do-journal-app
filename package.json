@@ -7,7 +7,7 @@
   "scripts": {
     "start": "nodemon --no-warnings --experimental-modules --es-module-specifier-resolution=node source/index.js",
     "test": "mocha --recursive ./source/test/* || true",
-    "lint": "./node_modules/.bin/eslint ./source/*"
+    "lint": "./node_modules/.bin/eslint ./source"
   },
   "author": "",
   "license": "ISC",
