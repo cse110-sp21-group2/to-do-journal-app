@@ -12,7 +12,7 @@ Two-Do is a digital bullet journal system focused on delivering students with th
 
 We will be using the GitFlow Workflow to develop the app. This means that we have a `dev` branch in  parrallel to the `master` branch. The `master` branch stores the official release history of the bullet journal while th edevelop branch serves as an integration branch for features
 
-![GitFlow Workflow] (./misc/lib/gitflow.svg)
+<img src="./misc/lib/gitflow.svg"/>
 
 ### Phase 1 Pipeline
 
@@ -38,5 +38,5 @@ We experimented with the idea of creating a workflow to automatically generate d
 
 #### Pipeline
 
-![CI/CD Pipeline] (./misc/lib/CICD.jpg)
+<img src="./misc/lib/CICD.jpg"/>
 
