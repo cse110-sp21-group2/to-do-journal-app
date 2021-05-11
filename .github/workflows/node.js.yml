@@ -45,7 +45,7 @@ jobs:
     - run: npm run test
 
   lint:
-    name: Linting using the Airbnb base styleguide
+    name: Linting using the Airbnb styleguide
 
     runs-on: ubuntu-latest
 
@@ -61,4 +61,12 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: npm ci
     - run: npm run lint
+  
+  docs:
+    name: Create Documentation
+    uses: andstor/jsdoc-action@v1
+    with:
+      source_dir: ./source
+      recurse: true
+      output_dir: ./docs
 
