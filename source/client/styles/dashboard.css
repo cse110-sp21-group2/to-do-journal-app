@@ -1,0 +1,39 @@
+
+body {
+    background-color: #EDF2FA;
+}
+
+.today-container {
+    background-color: #FFFFFF;
+    box-shadow: 0px 5px 15px rgba(131, 73, 0, 0.5);
+    border: 1px #162A47;
+    box-sizing: border-box;
+    height: 722px;
+    width: 453px;
+    left: 0px;
+    top: 73px;
+    border-radius: 29px;
+
+}
+
+.task-container {
+    background: #FFFFFF;
+    box-shadow: 0px 5px 15px rgba(131, 73, 0, 0.5);
+    border-radius: 29px;
+    height: 306.0799865722656px;
+    width: 380px;
+    left: 782px;
+    top: 243px;
+    border-radius: 29px;
+}
+
+.event-container{
+    background: #FFFFFF;
+    box-shadow: 0px 5px 15px rgba(131, 73, 0, 0.5);
+    border-radius: 29px;
+    height: 378.104736328125px;
+    width: 380px;
+    left: 0px;
+    top: 0px;
+
+}
