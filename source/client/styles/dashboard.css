@@ -1,4 +1,3 @@
-
 body {
     background-color: #EDF2FA;
 }
@@ -14,6 +13,19 @@ body {
     top: 73px;
     border-radius: 29px;
 
+    /* note text */
+    padding-left: 20px;
+    font-family: Roboto Condensed;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 20px;
+    line-height: 50px;
+    letter-spacing: -0.02em;
+
+    color: #000000;
+
+
+
 }
 
 .task-container {
@@ -25,9 +37,20 @@ body {
     left: 782px;
     top: 243px;
     border-radius: 29px;
+
+    /* note text */
+    padding-left: 20px;
+    font-family: Roboto Condensed;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 20px;
+    line-height: 50px;
+    letter-spacing: -0.02em;
+
+    color: #000000;
 }
 
-.event-container{
+.event-container {
     background: #FFFFFF;
     box-shadow: 0px 5px 15px rgba(131, 73, 0, 0.5);
     border-radius: 29px;
@@ -36,4 +59,92 @@ body {
     left: 0px;
     top: 0px;
 
+    /* note text */
+    padding-left: 20px;
+    font-family: Roboto Condensed;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 20px;
+    line-height: 50px;
+    letter-spacing: -0.02em;
+
+    color: #000000;
+}
+
+.title{
+    /* Today (heading) */
+
+    grid-area: title;
+    width: 500px;
+    height: 95px;
+    left: 357px;
+    top: 41px;
+
+    /* Today */
+    font-family: Tw Cen MT Condensed;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 20px;
+    line-height: 107px;
+    /* identical to box height */
+    display: flex;
+    justify-content: left;
+    padding-left: 30px;
+    align-items: center;
+    text-align: center;
+    letter-spacing: -0.02em;
+
+    color: #162A47;
+
+    text-shadow: 0px 4px 5px rgba(0, 0, 0, 0.25);
+
+
+    /* Rectangle 10 */
+
+    background: #162a473b;
+    border-radius: 10px;
+
+
+    
+}
+
+/* Sets up the grid layout */
+.main {
+    display: grid;
+    grid-template-areas:
+        'index index title title search search right right'
+        'index index dashboard dashboard dashboard dashboard right right'
+        'index index dashboard dashboard dashboard dashboard right right'
+        'index index dashboard dashboard dashboard dashboard right right'
+        'index index dashboard dashboard dashboard dashboard right right'
+        'index index dashboard dashboard dashboard dashboard right right'
+        'index index dashboard dashboard dashboard dashboard right right'
+        'index index dashboard dashboard dashboard dashboard right right';
+
+    grid-gap: 10px;
+}
+
+.dashboard-view {
+    display: flex;
+    flex-flow: row wrap-reverse;
+    justify-content: space-evenly;
+
+    grid-area: dashboard;
+}
+
+.task-event-views {
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: space-evenly;
+    padding: 0;
+    margin: 0;
+}
+
+.search-bar { 
+    grid-area: search; 
+    margin-top: 25px;
+}
+
+.title { 
+    grid-area: title; 
 }
