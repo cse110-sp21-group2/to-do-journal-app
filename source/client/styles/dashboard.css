@@ -144,7 +144,3 @@ body {
     grid-area: search; 
     margin-top: 25px;
 }
-
-.title { 
-    grid-area: title; 
-}
