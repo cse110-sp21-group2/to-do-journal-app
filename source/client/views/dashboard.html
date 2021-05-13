@@ -9,29 +9,41 @@
     <link rel="stylesheet" href="../styles/dashboard.css" />
     </head>
     <body>
-        <main>
-            <h1>Today</h1>
+        <main class="main">
+            <div class="title">
+                <h1>Today -- **Date** </h1>
+            </div>
             <div class="search-bar">
                 <form id="nav-bar">
                     <input type="search" id="query" name="qu" placeholder="Search">
                 </form>
             </div>
-            <div class="today-view">
-                <h2>Todays Notes</h2>
-                <div class="today-container">
-                    <p>Place Holder for journal entry object</p>
-                </div>
+            <div class="index-view">
+                <!--This is where the index web component would go-->
             </div>
-            <div class="task-view">
-                <h2>Tasks</h2>
-                <div class="task-container">
-                    <p>Place Holder for journal entry object</p>
-                </div>
+            <div class="right-column-view">
+                <!--This is where the right column web component would go-->
             </div>
-            <div class="event-view">
-                <h2>Events</h2>
-                <div class="event-container">
-                    <p>Place Holder for journal entry object</p>
+            <div class="dashboard-view">
+                <div class="today-view">
+                    <h2>Todays Notes</h2>
+                    <div class="today-container">
+                        <p>Place Holder for journal entry object</p>
+                    </div>
+                </div>
+                <div class="task-event-views">
+                    <div class="task-view">
+                        <h2>Tasks</h2>
+                        <div class="task-container">
+                            <p>Place Holder for journal entry object</p>
+                        </div>
+                    </div>
+                    <div class="event-view">
+                        <h2>Events</h2>
+                        <div class="event-container">
+                            <p>Place Holder for journal entry object</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </main>
