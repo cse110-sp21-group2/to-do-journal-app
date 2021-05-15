@@ -1,0 +1,62 @@
+* {
+    font-family: "Lucida Console", "Courier New", monospace;
+}
+
+.navigation{
+    width: 10%;
+    float: left;
+    position: relative;
+}
+
+.weekly-calendar{
+    float: left;
+    width: 90%;
+    position: relative;
+    left: 10%;
+    margin-top: 150px;
+}
+
+
+/* Float seven columns side by side */
+.column-day {
+    float: left;
+    width: 10%;
+    padding: 0 10px;
+
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* this adds the "card" effect */
+    padding: 1px;
+    text-align: center;
+    border-radius: 25px;
+
+    max-height: 1000px;
+    height: 500px;
+    /* background-color: #f1f1f1; */
+  }
+
+button.date {
+    filter: drop-shadow(0px 10px 10px rgba(0, 0, 0, 0.25));
+    border-radius: 15px;
+    border-color: #162A47;
+    background: white;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    font-size: 12px;
+
+    margin: auto;
+    float: left;
+    position: relative;
+    left: 43%;
+     
+}
+
+/* button.date:hover {
+    background: rgba(238, 238, 238, 0.194);
+} */
+
+
+.right-info-bar {
+    width: 10%;
+    position: relative;
+    float: right;
+}
