@@ -1,0 +1,190 @@
+body {
+  text-align: center;
+}
+
+.user-header{
+    color: #162a47;
+    position: absolute;
+    width: 210px;
+    height: 95px;
+    left: 430px;
+    top: 5px;
+    font-size: 45px;
+    text-decoration: underline;
+}
+
+.user-setting{
+    border-radius: 25px;
+    width: 600px;
+    height: 450px;
+    display: block;
+    text-align: center;
+    margin: 50px auto 0;
+    position: relative;
+    padding: 30px 24px;
+    -webkit-box-shadow: 1px 2px 13px 0px rgba(0, 0, 0, 0.59);
+    box-shadow: 1px 2px 13px 0px rgba(0, 0, 0, 0.59);
+}
+
+form {
+  display: inline-block;
+  text-align: left;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* .academic-period,
+.first-day,
+.language,
+.appearance {
+    float: left;
+    margin-right: 500px;
+} */
+
+.fonts-and-color,
+.academic-period {
+    display: inline-block;
+    color: #000;
+}
+
+
+.fonts-and-color{
+    float:right;
+}
+
+select{
+    background-color: #f4eac1;
+    border-radius: 10px;
+    height: 35px;
+    width: 200px;
+    outline: none;
+    color: #834900;
+}
+
+.manage-btn {
+    background-color: #f4eac1;
+    border-radius: 10px;
+    height: 35px;
+    width: 200px;
+    outline: none;
+    color: #834900;
+}
+
+.category{
+    text-align: left;
+    color: grey;
+}
+
+
+.save {
+    height: 55px;
+    width: 600px;
+    position: relative;
+    vertical-align: center;
+    text-align: center;
+}
+
+.save-btn {
+    float: right;
+    background-color: #c69000;
+    justify-content: center;
+    border: none;
+    border-radius: 15px;
+    color: #fff;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    width: 175px;
+    height: 50px;
+    filter: drop-shadow(0px 5px 10px rgba(217, 173, 16, 0.4));
+    text-align: center;
+}
+
+.nav-btn {
+  border-radius: 50%;
+  cursor: pointer;
+  outline: none;
+  border: none;
+  height: 45px;
+  width: 45px;
+  margin-top: 150px;
+  background: #ffffff;
+  box-shadow: 0px 2.5px 10px rgba(131, 73, 0, 0.87);
+}
+
+.arrow-up {
+  border: solid #834900;
+  border-width: 0 4px 4px 0;
+  display: inline-block;
+  padding: 7px;
+  transform: rotate(45deg);
+  -webkit-transform: rotate(225deg);
+}
+
+/*Fonts and color interface**/
+.font-setting{
+    border-radius: 25px;
+    width: 650px;
+    height: 500px;
+    display: block;
+    text-align: center;
+    margin: 50px auto 0;
+    position: relative;
+    padding: 30px 24px;
+    -webkit-box-shadow: 1px 2px 13px 0px rgba(0, 0, 0, 0.59);
+    box-shadow: 1px 2px 13px 0px rgba(0, 0, 0, 0.59);
+}
+
+
+.section,
+.sub-color{
+    display: inline-block;
+}
+
+.sub-color{
+    padding-left: 90px;
+    float: right;
+}
+
+.hex-code{
+    background-color: #f4eac1;
+    border-radius: 10px;
+    height: 35px;
+    width: 200px;
+    outline: none;
+    color: #834900;
+    text-align: center;
+}
+
+.hex-code,
+.upload-btn{
+    display: inline-block;
+}
+
+.save-changes {
+    float: right;
+    background-color: #c69000;
+    justify-content: center;
+    border: none;
+    border-radius: 15px;
+    color: #fff;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    width: 175px;
+    height: 50px;
+    filter: drop-shadow(0px 5px 10px rgba(217, 173, 16, 0.4));
+    text-align: center;
+}
+
+.restore-default{
+    float: right;
+    background-color: #f4eac1;
+    border-radius: 10px;
+    height: 35px;
+    width: 150px;
+    outline: none;
+    color: #834900;
+    text-align: center;
+    margin-right: 20px;
+}
