@@ -19,8 +19,7 @@
         <h1 class="user-header">User Settings</h1>
         <div class="user-setting">
             <form action="" method="post">
-                <!-- <fieldset> -->
-                <!-- <legend><b>Basic Setting</b></legend> -->
+                <!--Academic Period category-->
                 <div class="academic-period">
                     <h5 class="category">Academic Period</h5>
                     <select id="period">
@@ -28,15 +27,18 @@
                         <option value="semester">Semester</option>
                     </select>
                 </div>
+                <!--Font and Colors category-->
                 <!--TODO Font API? Get Font lists?-->
                 <!--TODO Color API? Get Color Lists? Color circle/wheel-->
                 <div class="fonts-and-color">
                     <h5 class="category">Fonts & Color</h5>
                     <div class="manage">
+                        <!--Should open "fonts_and_color.html" file-->
                         <a href="fonts_and_color.html"><button class="manage-btn">Manage <img src="redirect.jpg"
                                     alt="redirect-img"></button></a>
                     </div>
                 </div>
+                <!--First Day of Week category-->
                 <div class="first-day">
                     <h5 class="category">First Day of the Week</h5>
                     <select id="day">
@@ -49,6 +51,23 @@
                         <option value="sunday">Sunday</option>
                     </select>
                 </div>
+                <!--Labels creation category-->
+                <div class="labels-edit">
+                    <p class="category">
+                        Labels
+                        <!--TODO replace src with real path of image-->
+                        <input type="image" src="some/add_image.png" name="add-label" class="add-btn" id="add-label" />
+                    </p>
+                    <!--QUESTION: Folder selection? Predefined folder? User Created folders?-->
+                    <p class="category">
+                        Folder
+                        <input type="image" src="some/add_image.png" name="add-to-folder" class="add-btn" id="add-label" />
+                    </p>
+                    <!--TODO replace src with real path of image-->
+                    <label class="category" for="label-color">Pick label color</label>
+                    <input type="color" id="label-color" name="label-color" class="color-btn">
+                </div>
+                <!--Language category-->
                 <div class="language">
                     <h5 class="category">Language</h5>
                     <!--TODO implement different languages translation-->
@@ -62,6 +81,7 @@
                     </select>
                 </div>
                 <!--TODO implement different color scheme-->
+                <!--Color Scheme category-->
                 <div class="appearance">
                     <h5 class="category">Appearance</h5>
                     <select id="color-scheme">
@@ -70,7 +90,6 @@
                         <option value="colorblind">Colorblind</option>
                     </select>
                 </div>
-                <!-- </fieldset> -->
                 <div class="save">
                     <input class="save-btn" type="submit" value="Save Changes" />
                 </div>

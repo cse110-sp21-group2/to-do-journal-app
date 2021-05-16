@@ -1,10 +1,12 @@
 body {
   text-align: center;
 }
-
+/*User Setting Main Page css START*/
 .user-header{
     color: #162a47;
     position: absolute;
+    text-align: center;
+    margin-left: 135px;
     width: 210px;
     height: 95px;
     left: 430px;
@@ -33,13 +35,23 @@ form {
   margin-right: auto;
 }
 
-/* .academic-period,
+/*Label Edit box css START*/
 .first-day,
-.language,
-.appearance {
-    float: left;
-    margin-right: 500px;
-} */
+.labels-edit{
+    display: inline-block;
+}
+
+.labels-edit{
+    float:right;
+    padding: 30px 30px;
+    margin-top: 60px;
+    margin-right: 100px;
+    border: 2px solid black;
+    border-radius: 15px;
+    -webkit-box-shadow: 1px 2px 13px 0px rgba(0, 0, 0, 0.59);
+    box-shadow: 1px 2px 13px 0px rgba(0, 0, 0, 0.59);
+}
+/*Label Edit box css END*/
 
 .fonts-and-color,
 .academic-period {
@@ -120,8 +132,9 @@ select{
   transform: rotate(45deg);
   -webkit-transform: rotate(225deg);
 }
+/*User Setting Main Page css END*/
 
-/*Fonts and color interface**/
+/*Fonts and color interface css START**/
 .font-setting{
     border-radius: 25px;
     width: 650px;
@@ -149,6 +162,7 @@ select{
 .hex-code{
     background-color: #f4eac1;
     border-radius: 10px;
+    border: 1pt solid black;
     height: 35px;
     width: 200px;
     outline: none;
@@ -188,3 +202,4 @@ select{
     text-align: center;
     margin-right: 20px;
 }
+/*Fonts and color interface css END**/
