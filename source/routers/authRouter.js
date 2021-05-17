@@ -14,18 +14,8 @@ router.post('/login', (req, res)=> {
 });
 
 // Route for user logout
-router.post('/logout', (req, res)=> {
-  authController.logout(req, res)
-});
-
-// Route for user logout
-router.post('/logout', (req, res)=> {
-  authController.logout(req, res)
-});
-
-// Route for verifying and activating new user account
-router.post('/activate-account', (req, res)=> {
-  authController.activateUserAccount(req, res)
+router.post('/signup', (req, res)=> {
+  authController.userSignup(req, res)
 });
 
 // Route for handling forgotten passwords
