@@ -38,4 +38,6 @@ app.use('/api', journalRouter);
 db.on('err', console.error.bind(console, 'MongoDB connection error:'));
 
 // Listening to which port the server is currently running on
-app.listen(port, () => console.log(`Server running on port: http://localhost:${port}`));
+app.listen(port, () =>
+  console.log(`Server running on port: http://localhost:${port}`)
+);

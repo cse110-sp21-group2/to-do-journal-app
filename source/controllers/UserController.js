@@ -18,7 +18,6 @@ export default class UserController {
       const user = await this.User.findOne({ _id: req.params.id });
 
       res.status(200).json(user);
-
     } catch (error) {
       res.status(400).json({ success: false, error });
     }
@@ -34,7 +33,6 @@ export default class UserController {
       const user = await this.User.findOne({ email: req.params.email });
 
       res.status(200).json(user);
-
     } catch (error) {
       res.status(400).json({ success: false, error });
     }
