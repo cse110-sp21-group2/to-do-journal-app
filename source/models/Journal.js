@@ -10,11 +10,29 @@ const modelName = 'journal';
 const collection = 'Journal';
 
 // Schema
-const JournalSchema = new _Schema({
-  journalEntries: {
-    type: [JournalEntrySchema],
+const JournalSchema = new _Schema(
+  {
+    _id: {
+      type: _Schema.Types.ObjectId,
+    },
+    dailyEntries: {
+      type: [JournalEntrySchema],
+    },
+    weeklyEntries: {
+      type: [JournalEntrySchema],
+    },
+    quarterlyEntries: {
+      type: [JournalEntrySchema],
+    },
+    semesterlyEntries: {
+      type: [JournalEntrySchema],
+    },
+    monthlyEntries: {
+      type: [JournalEntrySchema],
+    },
   },
-}, { timestamps: true });
+  { timestamps: true }
+);
 
 // Create model
 const Journal = model(modelName, JournalSchema, collection);
