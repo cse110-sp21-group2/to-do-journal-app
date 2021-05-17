@@ -52,11 +52,15 @@ export default class JournalController {
    * @returns {object} New journal entry.
    */
   async getJournal(req, res) {
+    // Get user id
     const {
       params: { id },
     } = req;
+
+    // Attempt to retrieve journal for this user
+    let journal;
     try {
-      const journal = await this.Journal.findOne({ _id: id });
+      journal = await this.Journal.findOne({ _id: id });
 
       res.status(200).json(journal);
     } catch (error) {
@@ -70,48 +74,98 @@ export default class JournalController {
    * @returns {object} New journal entry.
    */
   async getJournalEntry(req, res) {
-    try {
-      const journalEntry = await this.Journal.findOne({
-        date: req.params.date,
-      });
+    // Get date for this entry and user id
+    const {
+      body: { date },
+      params: { id }
+    } = req;
 
-      res.status(200).json(journalEntry);
+    // Attempt to get journal for this user
+    let journal
+    try {
+      journal = await this.Journal.findOne({ _id: id });
+
     } catch (error) {
       res.status(400).json({ success: false, error });
     }
+
+    // Get daily entries
+    const { dailyEntries } = journal;
+
+    // Try to find entry on this specific date
+    let entry = dailyEntries.find((e)=> e.date.getDate() === date);
+
+    // If it doesn't exist then we'll create one and add it
+    // to the journal daily entries
+    if (!entry) {
+      entry = {
+        tasks: [],
+        notes: [],
+        events: [],
+        date: new Date(),
+      }
+      journal.dailyEntries.push(entry);
+    }
+
+    // return entry
+    return entry;
   }
 
-  // TO-DO
   /**
    * Gets journal entries.
    * @param {string} startDate - Starting date for journal entries
    * @param {string} endDate - End date for journal entries
+   * @param {string} type - Type of entries to filter
    * @returns {object} All journal entries within this range (inclusive)
    */
   async getJournalEntries(req, res) {
-    try {
-      // Query to find journal entries within this range
-      const journalEntries = await this.Journal.find({
-        dateRange: req.params.dateRange,
-      });
+    // Get user id, from date, to date, and type of entries to retrieve
+    const {
+      body: { fromDate, toDate, type },
+      params: { id },
+    } = req;
 
-      // If successful, return result in json
-      res.status(200).json(journalEntries);
+    // Attempt to get this user journal
+    let journal;
+    try {
+      journal = await this.Journal.findOne({ _id: id });
     } catch (error) {
-      // Else query failed
       res.status(400).json({ success: false, error });
     }
+
+
+    // Filter function for getting correct entries based on
+    // the given from and to dates
+    const filter = (entries)=> {
+      const _entries = entries.filter((entry)=>
+        entry.date.getDate() >= fromDate.getDate() &&
+        entry.date.getDate() <= toDate.getDate())
+
+      return _entries;
+    }
+
+    let filteredEntries;
+
+    // Get entries based on given type
+    if (type === 'Semesterly') {
+      const { semesterlyEntries } = journal;
+      filteredEntries = filter(semesterlyEntries);
+    } else if (type === 'Quarterly') {
+      const { quarterlyEntries } = journal;
+      filteredEntries = filter(quarterlyEntries);
+
+    } else if (type === 'Weekly') {
+      const { weeklyEntries } = journal;
+      filteredEntries = filter(weeklyEntries);
+
+    } else {
+      const { monthlyEntries } = journal;
+      filteredEntries = filter(monthlyEntries);
+    }
+
+    // return the filtered entries
+    return filteredEntries;
   }
-
-  async getWeeklyJournalEntries(req, res) {}
-
-  // TO-DO
-  /**
-   * Get monthly journal entries.
-   * @param {string} month - Month to retrieve journal entries
-   * @returns {object} Journal entries pertaining to given month
-   */
-  async getMonthlyJournalEntries(req, res) {}
 
   // TO-DO
   /**
