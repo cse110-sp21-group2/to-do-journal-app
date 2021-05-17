@@ -18,6 +18,9 @@ const JournalSchema = new _Schema(
     dailyEntries: {
       type: [JournalEntrySchema],
     },
+    weeklyEntries: {
+      type: [JournalEntrySchema],
+    },
     quarterlyEntries: {
       type: [JournalEntrySchema],
     },

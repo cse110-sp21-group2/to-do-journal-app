@@ -63,6 +63,7 @@ export default class JournalController {
       journal = await this.Journal.findOne({ _id: id });
 
       res.status(200).json(journal);
+
     } catch (error) {
       res.status(400).json({ success: false, error });
     }
@@ -153,11 +154,9 @@ export default class JournalController {
     } else if (type === 'Quarterly') {
       const { quarterlyEntries } = journal;
       filteredEntries = filter(quarterlyEntries);
-
     } else if (type === 'Weekly') {
       const { weeklyEntries } = journal;
       filteredEntries = filter(weeklyEntries);
-
     } else {
       const { monthlyEntries } = journal;
       filteredEntries = filter(monthlyEntries);
@@ -174,7 +173,7 @@ export default class JournalController {
    * @param {object} updatedTask - Information to create new journal entry
    * @returns {object} Updated task.
    */
-  async migrateTask(req, res) {}
+  async migrateTask(req, res) { }
 
   // TO-DO
   /**
@@ -182,7 +181,7 @@ export default class JournalController {
    * @param {object} updatedNote - Information to create new journal entry
    * @returns {object} Updated note.
    */
-  async migrateNote(req, res) {}
+  async migrateNote(req, res) { }
 
   // TO-DO
   /**
@@ -190,7 +189,7 @@ export default class JournalController {
    * @param {object} newEntry - Information to create new journal entry
    * @returns {object} Updated event.
    */
-  async migrateEvent(req, res) {}
+  async migrateEvent(req, res) { }
 
   /**
    * Adds a new journal entry.
@@ -230,10 +229,13 @@ export default class JournalController {
     // If this is a new daily entry
     if (type === 'Daily') {
       journal.dailyEntries.push(newEntry);
-      // Else if this is a new term entry
-    } else if (type === 'Term') {
-      journal.termEntries.push(newEntry);
-      // Else if this is a new weekly entry
+      // Else if this is a new quarterly entry
+    } else if (type === 'Quarterly') {
+      journal.quarterlyEntries.push(newEntry);
+      // Else if this is a semesterly entry
+    } else if (type === 'Semesterly') {
+      journal.semesterlyEntries.push(newEntry);
+      //Else if this is a weekly entry
     } else if (type === 'Weekly') {
       journal.weeklyEntries.push(newEntry);
       // Else this is a monthly entry
@@ -275,8 +277,9 @@ export default class JournalController {
       dueDate,
     };
 
+    // Construct journal object
     let journal;
-
+    // Attempt to find journal with user id
     try {
       journal = await this.Journal.findOne({ _id: id });
     } catch (error) {
@@ -294,13 +297,19 @@ export default class JournalController {
       journal.dailyEntries[index].tasks.push(newTask);
 
       // Else if this is a term entry
-    } else if (type === 'Term') {
-      // Get index for correct term entry
-      const index = journal.termEntries.findIndex(isCurrentDate);
+    } else if (type === 'Quarterly') {
+      // Get index for correct quarterly entry
+      const index = journal.quarterlyEntries.findIndex(isCurrentDate);
       // Push new task
-      journal.termEntries[index].tasks.push(newTask);
+      journal.quarterlyEntries[index].tasks.push(newTask);
 
-      // Else if this is a weekly entry
+      // Else if this is a semesterly entry
+    } else if (type === 'Semesterly') {
+      const index = journal.semesterlyEntries.findIndex(isCurrentDate);
+      //Push new task
+      journal.semesterlyEntries[index].tasks.push(newTask);
+
+      // Else if this is a weekly entry|
     } else if (type === 'Weekly') {
       // Get index for correct weekly entry
       const index = journal.weeklyEntries.findIndex(isCurrentDate);
@@ -381,16 +390,27 @@ export default class JournalController {
       // Push new task
       journal.dailyEntries[dailyIndex].tasks[taskIndex] = updatedTask;
 
-      // Else if this is a term entry
-    } else if (type === 'Term') {
-      // Get index for correct term entry
-      const termIndex = journal.termEntries.findIndex(isCurrentDate);
-      // Get index for task to update within term entry
-      const taskIndex = journal.termEntries[termIndex].tasks.findIndex(
+      // Else if this is a quarterly entry
+    } else if (type === 'Quarterly') {
+      // Get index for correct quarterly entry
+      const quarterlyIndex = journal.quarterlyEntries.findIndex(isCurrentDate);
+      // Get index for task to update within quarterly entry
+      const taskIndex = journal.quarterlyEntries[quarterlyIndex].tasks.findIndex(
         isTaskToUpdate
       );
       // Push new task
-      journal.termEntries[termIndex].tasks[taskIndex] = updatedTask;
+      journal.quarterlyEntries[quarterlyIndex].tasks[taskIndex] = updatedTask;
+
+      // Else if this is a semesterly entry
+    } else if (type === 'Semesterly') {
+      // Get index for correct semesterly entry
+      const semesterlyIndex = journal.semesterlyEntries.findIndex(isCurrentDate);
+      // Get index for task to update within semesterly entry
+      const taskIndex = journal.semesterlyEntries[semesterlyIndex].tasks.findIndex(
+        isTaskToUpdate
+      );
+      // Push new task
+      journal.semesterlyEntries[semesterlyIndex].tasks[taskIndex] = updatedTask;
 
       // Else if this is a weekly entry
     } else if (type === 'Weekly') {
@@ -474,16 +494,27 @@ export default class JournalController {
       // Delete this task
       await journal.dailyEntries[dailyIndex].tasks[taskIndex].remove();
 
-      // Else if this is a term entry
-    } else if (type === 'Term') {
-      // Get index for correct term entry
-      const termIndex = journal.termEntries.findIndex(isCurrentDate);
+      // Else if this is a quarterly entry
+    } else if (type === 'Quarterly') {
+      // Get index for correct quarterly entry
+      const quarterlyIndex = journal.quarterlyEntries.findIndex(isCurrentDate);
       // Get index for task to delete
-      const taskIndex = journal.termEntries[termIndex].tasks.findIndex(
+      const taskIndex = journal.quarterlyEntries[quarterlyIndex].tasks.findIndex(
         isTaskToDelete
       );
       // Delete this task
-      await journal.termEntries[termIndex].tasks[taskIndex].remove();
+      await journal.quarterlyEntries[quarterlyIndex].tasks[taskIndex].remove();
+
+      // Else if this is a semesterly entry
+    } else if (type === 'Semesterly') {
+      // Get index for correct semesterly entry
+      const semesterlyIndex = journal.semesterlyEntries.findIndex(isCurrentDate);
+      // Get index for task to delete
+      const taskIndex = journal.semesterlyEntries[semesterlyIndex].tasks.findIndex(
+        isTaskToDelete
+      );
+      // Delete this task
+      await journal.semesterlyEntries[semesterlyIndex].tasks[taskIndex].remove();
 
       // Else if this is a weekly entry
     } else if (type === 'Weekly') {
@@ -555,12 +586,21 @@ export default class JournalController {
       const dailyIndex = journal.dailyEntries.findIndex(isCurrentDate);
       // Push new note
       journal.dailyEntries[dailyIndex].notes.push(newNote);
-      // Else if this is a term entry
-    } else if (type === 'Term') {
-      // Get index for correct term entry
-      const termIndex = journal.dailyEntries.find(isCurrentDate);
+
+      // Else if this is a quarterly entry
+    } else if (type === 'Quarterly') {
+      // Get index for correct quarterly entry
+      const quarterlyIndex = journal.dailyEntries.find(isCurrentDate);
       // Push new note
-      journal.termEntries[termIndex].notes.push(newNote);
+      journal.quarterlyEntries[quarterlyIndex].notes.push(newNote);
+
+      // Else if this is a semesterly entry
+    } else if(type === 'Semesterly') {
+      // Get index for correct semesterly entry
+      const semesterlyIndex = journal.dailyEntries.find(isCurrentDate);
+      // Push new note
+      journal.semesterlyEntries[semesterlyIndex].notes.push(newNote);
+
       // Else if this is a weekly entry
     } else if (type === 'Weekly') {
       // Get index for correct weekly entry
@@ -587,21 +627,198 @@ export default class JournalController {
     res.status(200).json(newNote);
   }
 
-  // TO-DO
   /**
    * Updates a note.
    * @param {string} id - Id for this note.
    * @param {object} updateInfo - Information for updating note
    * @returns {object} updatedNote - Updated note
    */
-  async updateNote(req, res) {}
+  async updateNote(req, res) {
+    //get passed in data and user id for finding journal
+    const {
+      body: { noteId, content, date, type },
+      params: { id },
+    } = req;
 
-  // TO-DO
+    // Construct updated note object
+    const updatedNote = {
+      content,
+      date,
+    };
+
+    // Initialize journal
+    let journal;
+
+    // Attempt to find Journal() object with user id
+    try{
+      journal = await this.Journal.findOne({_id: id});
+    } catch(error) {
+      res.status(400).json({ success: false, error});
+    }
+
+    // Callback function for finding index of journal entry for this date
+    const isCurrentDate = (entry) => entry.date.toLocaleDateString() === date;
+    // Callback function for finding index of note to update
+    const isNotesToUpdate = (note) => note._id.toString() === noteId;
+
+    //if this is a daily entry
+    if (type === 'Daily') {
+      // Get index for correct daily entry
+      const dailyIndex = journal.dailyEntries.findIndex(isCurrentDate);
+      // Get index for note to update within daily entry
+      const noteIndex = journal.dailyEntries[dailyIndex].notes.findIndex(
+        isNotesToUpdate
+      );
+      // Push updated note
+      journal.dailyEntries[dailyIndex].notes[noteIndex] = updatedNote;
+
+      // Else if this is a quarterly entry
+    } else if (type === 'Quarterly') {
+      // Get index for correct quarterly entry
+      const quarterlyIndex = journal.quarterlyEntries.findIndex(isCurrentDate);
+      // Get index for note to update within quarterly entry
+      const noteIndex = journal.quarterlyEntries[quarterlyIndex].notes.findIndex(
+        isNotesToUpdate
+      );
+      // Push updated note
+      journal.quarterlyEntries[quarterlyIndex].notes[noteIndex] = updatedNote;
+
+      // Else if this is a semesterly entry
+    } else if (type === 'Semesterly'){
+      // Get index for correct semesterly entry
+      const semesterlyIndex = journal.semesterlyEntries.findIndex(isCurrentDate);
+      //Get index for note to update within semesterly entry
+      const noteIndex = journal.semesterlyEntries[semesterlyIndex].notes.findIndex(
+        isNotesToUpdate
+      );
+      // Push updated note
+      journal.semesterlyEntries[semesterlyIndex].notes[noteIndex] = updatedNote;
+
+      // Else if this is a weekly entry
+    } else if (type === 'Weekly') {
+      // Get index for correct weekly entry
+      const weeklyIndex = journal.weeklyEntries.find(isCurrentDate);
+      //Get index for note to update within weekly entry
+      const noteIndex = journal.weeklyEntries[weeklyIndex].notes.findIndex(
+        isNotesToUpdate
+      );
+      // Push updated note
+      journal.weeklyEntries[weeklyIndex].notes[noteIndex] = updatedNote;
+
+      // Else this is a monthly entry
+    } else {
+      // Get index for correct monthly entry
+      const monthlyIndex = journal.monthlyEntries.find(isCurrentDate);
+      // Get index for note to update within monthly entry
+      const noteIndex = journal.monthlyEntries[monthlyIndex].notes.findIndex(
+        isNotesToUpdate
+      );
+      // Push updated note
+      journal.monthlyEntries[monthlyIndex].notes[noteIndex] = updatedNote;
+    }
+
+    // Attempt to save changes to journal
+    try {
+      await journal.save();
+      // Failed to validate the schema for this model
+    } catch (error) {
+      // console.log(error)
+    }
+
+    // Return updated note
+    res.status(200).json(updatedNote);
+  }
+
+
   /**
    * Deletes a note.
    * @param {string} id - Id for this note
    */
-  async deleteJournalEntryNote(req, res) {}
+  async deleteJournalEntryNote(req, res) {
+    //get passed in data and user id for finding journal
+    const {
+      body: { noteId, date, type },
+      params: { id },
+    } = req;
+
+    // Initialize journal
+    let journal;
+
+    // Attempt to find Journal() object with user id
+    try {
+      journal = await this.Journal.findOne({ _id: id });
+    } catch (error) {
+      res.status(400).json({ success: false, error });
+    }
+
+    // Callback function for finding index of journal entry for this date
+    const isCurrentDate = (entry) => entry.date.toLocaleDateString() === date;
+    // Callback function for finding index of note to update
+    const isNotesToDelete = (note) => note._id.toString() === noteId;
+
+    if (type === 'Daily') {
+      // Get index for correct daily entry
+      const dailyIndex = journal.dailyEntries.findIndex(isCurrentDate);
+      // Get index for note to Delete
+      const noteIndex = journal.dailyEntries[dailyIndex].notes.findIndex(
+        isNotesToDelete
+      );
+      // Delete this note
+      journal.dailyEntries[dailyIndex].notes[noteIndex].remove();
+
+      // Else if this is a quarterly entry
+    } else if (type === 'Quarterly') {
+      // Get index for correct quarterly entry
+      const quarterlyIndex = journal.quarterlyEntries.findIndex(isCurrentDate);
+      // Get index for note to Delete
+      const noteIndex = journal.quarterlyEntries[quarterlyIndex].notes.findIndex(
+        isNotesToDelete
+      );
+      // Delete this note
+      journal.quarterlyEntries[quarterlyIndex].notes[noteIndex].remove();
+
+      // Else if this is a semesterly entry
+    } else if (type === 'Semesterly') {
+      // Get index for correct semesterly entry
+      const semesterlyIndex = journal.semesterlyEntries.findIndex(isCurrentDate);
+      //Get index for note to Delete
+      const noteIndex = journal.semesterlyEntries[semesterlyIndex].notes.findIndex(
+        isNotesToDelete
+      );
+      // Delete this note
+      journal.semesterlyEntries[semesterlyIndex].notes[noteIndex].remove();
+
+      // Else if this is a weekly entry
+    } else if (type === 'Weekly') {
+      // Get index for correct weekly entry
+      const weeklyIndex = journal.weeklyEntries.find(isCurrentDate);
+      //Get index for note to Delete
+      const noteIndex = journal.weeklyEntries[weeklyIndex].notes.findIndex(
+        isNotesToDelete
+      );
+      // Delete this note
+      journal.weeklyEntries[weeklyIndex].notes[noteIndex].remove();
+
+      // Else this is a monthly entry
+    } else {
+      // Get index for correct monthly entry
+      const monthlyIndex = journal.monthlyEntries.find(isCurrentDate);
+      // Get index for note to Delete
+      const noteIndex = journal.monthlyEntries[monthlyIndex].notes.findIndex(
+        isNotesToDelete
+      );
+      // Delete this note
+      journal.monthlyEntries[monthlyIndex].notes[noteIndex].remove();
+    }
+
+    // Attempt to save changes to journal
+    try {
+      await journal.save();
+      // Failed to validate the schema for this model
+    } catch (error) {
+      // console.log(error)
+    }
+  }
 
   // TO-DO
   /**
@@ -643,18 +860,28 @@ export default class JournalController {
       const dailyIndex = journal.dailyEntries.findIndex(isCurrentDate);
       // Push new event
       journal.dailyEntries[dailyIndex].events.push(newEvent);
-      // Else if this is a term entry
-    } else if (type === 'Term') {
-      // Get index for correct term entry
-      const termIndex = journal.termEntries.find(isCurrentDate);
+
+      // Else if this is a quarterly entry
+    } else if (type === 'Quarterly') {
+      // Get index for correct quarterly entry
+      const quarterlyIndex = journal.quarterlyEntries.find(isCurrentDate);
       // Push new event
-      journal.termEntries[termIndex].events.push(newEvent);
+      journal.quarterlyEntries[quarterlyIndex].events.push(newEvent);
+
+      // Else if this is a semesterly entry
+    } else if (type === 'Semesterly') {
+      // Get index for correct semesterly entry
+      const semesterlyIndex = journal.semesterlyEntries.find(isCurrentDate);
+      // Push new event
+      journal.semesterlyEntries[semesterlyIndex].events.push(newEvent);
+
       // Else if this is a weekly entry
     } else if (type === 'Weekly') {
       // Get index for correct weekly entry
       const weeklyIndex = journal.weeklyEntries.find(isCurrentDate);
       // Push new event
       journal.weeklyEntries[weeklyIndex].events.push(newEvent);
+
       // Else this is a monthly entry
     } else {
       // Get index for correct monthly entry
@@ -675,18 +902,201 @@ export default class JournalController {
     res.status(200).json(newEvent);
   }
 
-  // TO-DO
+
   /**
    * Updates an event
    * @param {string} id - Id for this event
    * @returns {object} Updated event.
    */
-  async updateEvent(req, res) {}
+  async updateEvent(req, res) {
+    // Get passed in data and user id for finding journal
+    const {
+      body: { eventId, content, date, link, type },
+      params: { id },
+    } = req;
 
-  // TO-DO
+    // Construct new event object
+    const updatedEvent = {
+      content,
+      date,
+      link,
+    };
+
+    // Initialize for Journal()
+    let journal;
+
+    // Attempt to find journal with user id
+    try {
+      journal = await this.Journal.findOne({ _id: id });
+      // Failed to find journal for this user
+    } catch (error) {
+      res.status(400).json({ success: false, error });
+    }
+
+    // Callback function for checking dates of entries
+    const isCurrentDate = (entry) => entry.date.toLocaleDateString() === date;
+
+    // Callback function for finding index of event to update
+    const isEventToUpdate = (event) => event._id.toString() === eventId;
+
+    // If this is a daily entry
+    if (type === 'Daily') {
+      // Get index for correct daily entry
+      const dailyIndex = journal.dailyEntries.findIndex(isCurrentDate);
+      // Get event index within daily entry
+      const eventIndex = journal.dailyEntries[dailyIndex].events.findIndex(
+        isEventToUpdate
+      );
+      // Push updated event
+      journal.dailyEntries[dailyIndex].events[eventIndex] = updatedEvent;
+
+      // Else if this is a quarterly entry
+    } else if (type === 'Quarterly') {
+      // Get index for correct quarterly entry
+      const quarterlyIndex = journal.quarterlyEntries.find(isCurrentDate);
+      // Get event index within quarterly entry
+      const eventIndex = journal.quarterlyEntries[quarterlyIndex].events.findIndex(
+        isEventToUpdate
+      );
+      // Push updated event
+      journal.quarterlyEntries[quarterlyIndex].events[eventIndex] = updatedEvent;
+
+      // Else if this is a semesterly entry
+    } else if (type === 'Semesterly') {
+      // Get index for correct semesterly entry
+      const semesterlyIndex = journal.semesterlyEntries.find(isCurrentDate);
+      // Get event index within semesterly entry
+      const eventIndex = journal.semesterlyEntries[semesterlyIndex].events.findIndex(
+        isEventToUpdate
+      );
+      // Push updated event
+      journal.semesterlyEntries[semesterlyIndex].events[eventIndex] = updatedEvent;
+
+      // Else if this is a weekly entry
+    } else if (type === 'Weekly') {
+      // Get index for correct weekly entry
+      const weeklyIndex = journal.weeklyEntries.find(isCurrentDate);
+      // Get event index within weekly entry
+      const eventIndex = journal.weeklyEntries[weeklyIndex].events.findIndex(
+        isEventToUpdate
+      );
+      // Push updated event
+      journal.weeklyEntries[weeklyIndex].events[eventIndex] = updatedEvent;
+
+      // Else this is a monthly entry
+    } else {
+      // Get index for correct monthly entry
+      const monthlyIndex = journal.monthlyEntries.find(isCurrentDate);
+      // Get event index within monthly entry
+      const eventIndex = journal.monthlyEntries[monthlyIndex].events.findIndex(
+        isEventToUpdate
+      );
+      // Push updated event
+      journal.monthlyEntries[monthlyIndex].events[eventIndex] = updatedEvent;
+    }
+
+    // Attempt to save changes to journal
+    try {
+      await journal.save();
+      // Failed to validate the schema for this model
+    } catch (error) {
+      // console.log(error)
+    }
+
+    // Return new note
+    res.status(200).json(updatedEvent);
+  }
+
   /**
    * Deletes an event.
    * @param {string} id - Id for this event.
    */
-  async deleteEvent(req, res) {}
+  async deleteEvent(req, res) {
+    // Get passed in data and user id for finding journal
+    const {
+      body: { eventId, date, type },
+      params: { id },
+    } = req;
+
+    // Initialize for Journal()
+    let journal;
+
+    // Attempt to find journal with user id
+    try {
+      journal = await this.Journal.findOne({ _id: id });
+      // Failed to find journal for this user
+    } catch (error) {
+      res.status(400).json({ success: false, error });
+    }
+
+    // Callback function for checking dates of entries
+    const isCurrentDate = (entry) => entry.date.toLocaleDateString() === date;
+
+    // Callback function for finding index of event to Delete
+    const isEventToDelete = (event) => event._id.toString() === eventId;
+
+    // If this is a daily entry
+    if (type === 'Daily') {
+      // Get index for correct daily entry
+      const dailyIndex = journal.dailyEntries.findIndex(isCurrentDate);
+      // Get event index within daily entry
+      const eventIndex = journal.dailyEntries[dailyIndex].events.findIndex(
+        isEventToDelete
+      );
+      // Delete this event
+      journal.dailyEntries[dailyIndex].events[eventIndex].remove();
+
+      // Else if this is a quarterly entry
+    } else if (type === 'Quarterly') {
+      // Get index for correct quarterly entry
+      const quarterlyIndex = journal.quarterlyEntries.find(isCurrentDate);
+      // Get event index within quarterly entry
+      const eventIndex = journal.quarterlyEntries[quarterlyIndex].events.findIndex(
+        isEventToDelete
+      );
+      // Delete this event
+      journal.quarterlyEntries[quarterlyIndex].events[eventIndex].remove();
+
+      // Else if this is a semesterly entry
+    } else if (type === 'Semesterly') {
+      // Get index for correct semesterly entry
+      const semesterlyIndex = journal.semesterlyEntries.find(isCurrentDate);
+      // Get event index within semesterly entry
+      const eventIndex = journal.semesterlyEntries[semesterlyIndex].events.findIndex(
+        isEventToDelete
+      );
+      // Delete this event
+      journal.semesterlyEntries[semesterlyIndex].events[eventIndex].remove();
+
+      // Else if this is a weekly entry
+    } else if (type === 'Weekly') {
+      // Get index for correct weekly entry
+      const weeklyIndex = journal.weeklyEntries.find(isCurrentDate);
+      // Get event index within weekly entry
+      const eventIndex = journal.weeklyEntries[weeklyIndex].events.findIndex(
+        isEventToDelete
+      );
+      // Delete this event
+      journal.weeklyEntries[weeklyIndex].events[eventIndex].remove();
+
+      // Else this is a monthly entry
+    } else {
+      // Get index for correct monthly entry
+      const monthlyIndex = journal.monthlyEntries.find(isCurrentDate);
+      // Get event index within monthly entry
+      const eventIndex = journal.monthlyEntries[monthlyIndex].events.findIndex(
+        isEventToDelete
+      );
+      // Delete this event
+      journal.monthlyEntries[monthlyIndex].events[eventIndex].remove();
+    }
+
+    // Attempt to save changes to journal
+    try {
+      await journal.save();
+      // Failed to validate the schema for this model
+    } catch (error) {
+      // console.log(error)
+    }
+  }
 }
