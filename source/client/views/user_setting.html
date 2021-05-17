@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title class='title'>User Setting</title>
+
+    <!--Main CSS-->
+    <link rel="stylesheet" href="../styles/user_setting.css" />
+</head>
+
+<body>
+    <main>
+        <button class="nav-btn">
+            <i class="arrow-up"></i>
+        </button>
+        <h1 class="user-header">User Settings</h1>
+        <div class="user-setting">
+            <form action="" method="post">
+                <!--Academic Period category-->
+                <div class="academic-period">
+                    <h5 class="category">Academic Period</h5>
+                    <select id="period">
+                        <option value="quarter">Quarter</option>
+                        <option value="semester">Semester</option>
+                    </select>
+                </div>
+                <!--Font and Colors category-->
+                <!--TODO Font API? Get Font lists?-->
+                <!--TODO Color API? Get Color Lists? Color circle/wheel-->
+                <div class="fonts-and-color">
+                    <h5 class="category">Fonts & Color</h5>
+                    <div class="manage">
+                        <!--Should open "fonts_and_color.html" file-->
+                        <a href="fonts_and_color.html"><button class="manage-btn">Manage <img src="redirect.jpg"
+                                    alt="redirect-img"></button></a>
+                    </div>
+                </div>
+                <!--First Day of Week category-->
+                <div class="first-day">
+                    <h5 class="category">First Day of the Week</h5>
+                    <select id="day">
+                        <option value="monday">Monday</option>
+                        <option value="tuesday">Tuesday</option>
+                        <option value="wednesday">Wednesday</option>
+                        <option value="thursday">Thursday</option>
+                        <option value="friday">Friday</option>
+                        <option value="saturday">Saturday</option>
+                        <option value="sunday">Sunday</option>
+                    </select>
+                </div>
+                <!--Labels creation category-->
+                <div class="labels-edit">
+                    <p class="category">
+                        Labels
+                        <!--TODO replace src with real path of image-->
+                        <input type="image" src="some/add_image.png" name="add-label" class="add-btn" id="add-label" />
+                    </p>
+                    <!--QUESTION: Folder selection? Predefined folder? User Created folders?-->
+                    <p class="category">
+                        Folder
+                        <input type="image" src="some/add_image.png" name="add-to-folder" class="add-btn" id="add-label" />
+                    </p>
+                    <!--TODO replace src with real path of image-->
+                    <label class="category" for="label-color">Pick label color</label>
+                    <input type="color" id="label-color" name="label-color" class="color-btn">
+                </div>
+                <!--Language category-->
+                <div class="language">
+                    <h5 class="category">Language</h5>
+                    <!--TODO implement different languages translation-->
+                    <select id="lang">
+                        <option value="english">English</option>
+                        <option value="spanish">Spanish</option>
+                        <option value="chinese">Chinese</option>
+                        <option value="vietnamese">Vietnamese</option>
+                        <option value="korean">Korean</option>
+                        <option value="tagalog">Togalog</option>
+                    </select>
+                </div>
+                <!--TODO implement different color scheme-->
+                <!--Color Scheme category-->
+                <div class="appearance">
+                    <h5 class="category">Appearance</h5>
+                    <select id="color-scheme">
+                        <option value="light">Light</option>
+                        <option value="dark">Dark</option>
+                        <option value="colorblind">Colorblind</option>
+                    </select>
+                </div>
+                <div class="save">
+                    <input class="save-btn" type="submit" value="Save Changes" />
+                </div>
+            </form>
+        </div>
+    </main>
+</body>
+
+</html>
