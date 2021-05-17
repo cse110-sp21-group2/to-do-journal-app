@@ -1,6 +1,6 @@
-import mongoose from 'mongoose'
+import mongoose from 'mongoose';
 
-const { Schema: _Schema } = mongoose
+const { Schema: _Schema } = mongoose;
 
 const EventSchema = new _Schema(
   {
@@ -15,6 +15,6 @@ const EventSchema = new _Schema(
     },
   },
   { timestamps: true }
-)
+);
 
-export default EventSchema
+export default EventSchema;
