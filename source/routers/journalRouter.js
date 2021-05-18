@@ -25,16 +25,6 @@ router.get('/journal-entries/:dates', (req, res) => {
   journalController.getJournalEntries(req, res);
 });
 
-// Route for getting weekly journal entries
-router.get('/weekly-journal-entries/:dates', (req, res) => {
-  journalController.getWeeklyJournals(req, res);
-});
-
-// Route for getting monthly journal entries
-router.get('/monthly-journal-entries/:dates', (req, res) => {
-  journalController.getMonthlyJournals(req, res);
-});
-
 /* ^^ Routes for getting journal data ^^ */
 
 /* v Routes for moving data to a new journal entry v */
