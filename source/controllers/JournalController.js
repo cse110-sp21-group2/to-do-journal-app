@@ -740,7 +740,7 @@ export default class JournalController {
    * Deletes a note.
    * @param {string} id - Id for this note
    */
-  async deleteJournalEntryNote(req, res) {
+  async deleteNote(req, res) {
     // get passed in data and user id for finding journal
     const {
       body: { noteId, date, type },
