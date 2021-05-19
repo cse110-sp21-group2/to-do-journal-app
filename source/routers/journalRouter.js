@@ -8,6 +8,11 @@ const router = Router();
 // Initialize new Journal Controller
 const journalController = new JournalController(Journal);
 
+
+router.get('/create-journal/:id', (req, res) => {
+  journalController.createJournal(req, res);
+});
+
 /* v Routes for getting journal data v */
 
 // Route for getting user's journal
@@ -16,12 +21,12 @@ router.get('/journal/:id', (req, res) => {
 });
 
 // Route for getting journal entry for today's date
-router.get('/journal-entry/:date', (req, res) => {
+router.get('/journal-entry/:id&:date', (req, res) => {
   journalController.getJournalEntry(req, res);
 });
 
 // Route for getting journal entries for specific date range
-router.get('/journal-entries/:dates', (req, res) => {
+router.get('/journal-entries/:id&:fromDate&:toDate&:type', (req, res) => {
   journalController.getJournalEntries(req, res);
 });
 
@@ -73,7 +78,7 @@ router.post('/add-event/:id', (req, res) => {
 /* v Routes for updating data v */
 
 // Route for updating a task
-router.post('/update-task/:id', (req, res) => {
+router.put('/update-task/:id', (req, res) => {
   journalController.updateTask(req, res);
 });
 
