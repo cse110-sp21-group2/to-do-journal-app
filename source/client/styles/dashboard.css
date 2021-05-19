@@ -14,6 +14,7 @@ body {
 .main {
     display: grid;
     grid-template-columns: 205px 555px auto 205px;
+    grid-template-rows: 118px auto 80px;
     margin: 20px 20px;
 }
 /*shared  Elements End*/
