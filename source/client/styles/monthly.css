@@ -1,158 +1,23 @@
-.logo{
-    width: 200px;
+/*shared  Elements*/
+* { 
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: url("https://i.ibb.co/sFtX9zy/bg.png"); 
+    min-height: 100vh;
+    min-width: 100vw;
 }
 
 .main {
-    background-color: rgb(216, 241, 245);
     display: grid;
-    grid-template-columns: 205px 305px auto 205px;
+    grid-template-columns: 205px 555px auto 205px;
+    grid-template-rows: 118px auto 80px;
     margin: 20px 20px;
 }
-
-.left-nav {
-    grid-column: 1 / 2;
-    grid-row: 1 / 4;
-    padding: 10px 10px;
-    background-color: white;
-    margin: -20px 0px -20px -20px;
-    height: 100vh;
-    box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.25);
-}
-
-.navigation-title {
-    background-color: #E2CB14;
-    margin: 0px -10px 0px -10px;
-    padding: 10px;
-    text-align: center;
-    font-size: 45px;
-    color:#162A47;
-}
-
-.index-link, .collections-link{
-    padding: 10px;
-    margin: 10px -10px 10px -10px;
-    text-align: center;
-}
-
-.collections-button{
-    width: 40px;
-    height: 40px;
-    border-radius: 40px;
-    background-color: white;
-    display: table;
-    margin: 0 auto;
-}
-
-.link-text, .current-link-text{
-    font-weight: 300;
-    font-size: 24px;
-    line-height: 28px;
-    letter-spacing: -0.02em;
-    color: #162A47;
-}
-
-.current-link{
-    background-color: rgba(213, 171, 9, 0.25);
-    border-right-style: solid;
-    border-right-width: 4px;
-    border-color:#D5AB09;
-    padding: 10px;
-    margin: 0px -10px 0px -10px;
-    text-align: center;
-}
-
-.current-link-text{
-    color: #834900;
-}
-
-.search-bar {
-    grid-column: 3 / 4;
-    grid-row: 1 / 2;
-    justify-self: center;
-    background-color: white;
-    
-    display: flex;
-    padding: 10px;
-    width: 480px;
-    height: 56px;
-    border-radius: 200px;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-}
-.search-icon{
-    margin: 5px;
-}
-.search-input{
-    border-style:none;
-    width: 80%;
-}
-
-.account-bar{
-    grid-column: -2 / -1;
-    grid-row: 1 / 2;
-    background-color: white;
-    border-radius: 200px;
-    width: 150px;
-    width: 201px;
-    height: 59px;
-    display:flex;
-    justify-content: space-evenly;
-    align-items: center;
-    box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.25);
-}
-
-.help-button, .notification-button, .account-button {
-    width: 40px;
-    height: 40px;
-    border-radius: 40px;
-    background-color: white;
-}
-
-.right-nav {
-    height: 856px;
-    grid-column: -2 / -1;
-    grid-row: 2 / 3;
-    background-color: white;
-    border-top-left-radius: 20px;
-    border-bottom-left-radius: 20px;
-    margin-right: -20px;
-    display:grid;
-    grid-template-columns: 200px;
-    grid-template-rows: 200px 75px 65px 200px 65px 200px;
-    justify-content: center;
-    align-content: center;
-    box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.25);
-}
-
-.key-label{
-    font-size: 35px;
-    line-height: 37px;
-}
-
-.key-element{
-    font-size: 20px;
-    line-height: 37px;
-    text-align: center;
-}
-
-.calendar-seperator{
-    border-color: #162A47;
-    background-color: #162A47;
-    border-style: solid;
-    border-width: 3px;
-    border-radius: 3px;
-} 
-
-.goals-label{
-    font-size: 35px;
-    line-height: 37px;
-}
-
-.goals-element{
-    font-size: 20px;
-    line-height: 37px;
-    text-align: left;
-}
-
+/*shared  Elements End*/
 .content-region {
     padding-top: 75px;
     grid-column: 2 / 4;
