@@ -14,22 +14,28 @@ const JournalSchema = new _Schema(
   {
     _id: {
       type: _Schema.Types.ObjectId,
+      required: true,
     },
     dailyEntries: {
       type: [JournalEntrySchema],
+      required: true,
     },
     weeklyEntries: {
       type: [JournalEntrySchema],
+      required: true,
     },
     quarterlyEntries: {
       type: [JournalEntrySchema],
+      required: false,
     },
     semesterlyEntries: {
       type: [JournalEntrySchema],
+      required: false,
     },
     monthlyEntries: {
       type: [JournalEntrySchema],
-    },
+      required: true,
+    }
   },
   { timestamps: true }
 );
