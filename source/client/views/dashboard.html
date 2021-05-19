@@ -5,13 +5,15 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Dashboard</title>
-
-    <link rel="stylesheet" href="../styles/dashboard.css" />
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Unica+One&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="../styles/dashboard.css" />
     </head>
     <body>
         <main class="main">
             <div class="title">
-                <h1>Today -- **Date** </h1>
+                <h1 class="title-text">Today -- **Date** </h1>
             </div>
             <div class="search-bar">
                 <img src="" alt="" class="search-icon">
@@ -25,32 +27,31 @@
 
             <div class="dashboard-view">
                 <div class="today-view">
-                    <h2>Todays Notes</h2>
+                    <h2 class="dashboard-title">Todays Notes</h2>
                     <div class="today-container">
                         <p>Place Holder for journal entry object</p>
                     </div>
                 </div>
-                <div class="task-event-views">
-                    <div class="task-view">
-                        <h2>Tasks</h2>
-                        <div class="task-container">
-                            <p>Place Holder for journal entry object</p>
-                        </div>
+                <div class="task-view">
+                    <h2 class="dashboard-title">Tasks</h2>
+                    <div class="task-container">
+                        <p>Place Holder for journal entry object</p>
                     </div>
-                    <div class="event-view">
-                        <h2>Events</h2>
-                        <div class="event-container">
-                            <p>Place Holder for journal entry object</p>
-                        </div>
+                </div>
+                <div class="event-view">
+                    <h2 class="dashboard-title">Events</h2>
+                    <div class="event-container">
+                        <p>Place Holder for journal entry object</p>
                     </div>
                 </div>
             </div>
 
             <div class="left-nav">
+                <img src="/admin/branding/logo500.png" alt="Two-Do logo" class="logo">
                 <h1 class="navigation-title">Index</h1>
                 <h2 class="index-link"><a href="" class="link-text">Daily</a></h2>
                 <h2 class="index-link"><a href="" class="link-text">Weekly</a></h2>
-                <h2 class="current-link"><a href="" class="currrent-link-text">Monthly</a></h2>
+                <h2 class="index-link"><a href="" class="link-text">Monthly</a></h2>
                 <h2 class="index-link"><a href="" class="link-text">Quarterly</a></h2>
                 <br>
                 <h1 class="navigation-title">Collections</h1>
