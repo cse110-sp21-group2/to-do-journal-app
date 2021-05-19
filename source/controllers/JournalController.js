@@ -21,7 +21,7 @@ export default class JournalController {
     } = req;
 
     // Construct new journal object
-    const newJournal = {
+    const newJournalObj = {
       _id: id,
       dailyEntries: [],
       termEntries: [],
@@ -29,21 +29,25 @@ export default class JournalController {
       monthlyEntries: [],
     };
 
+    let journal;
     try {
       // Get Journal model
       const { Journal } = this;
 
       // Create new Journal
-      const journal = new Journal(newJournal);
+      journal = new Journal(newJournalObj);
 
       // Add to database
       await journal.save();
-
-      // successful
-      res.status(200).json(journal);
     } catch (error) {
-      res.status(201).json({ success: false, error });
+      return res.status(400).json({ success: false, error });
     }
+
+    // successful
+    return res.status(201).json({
+      success: true,
+      data: journal,
+    });
   }
 
   /**
@@ -61,11 +65,14 @@ export default class JournalController {
     let journal;
     try {
       journal = await this.Journal.findOne({ _id: id });
-
-      res.status(200).json(journal);
     } catch (error) {
-      res.status(400).json({ success: false, error });
+      return res.status(400).json({ success: false, error });
     }
+
+    return res.status(200).json({
+      success: true,
+      data: journal,
+    });
   }
 
   /**
@@ -76,23 +83,30 @@ export default class JournalController {
   async getJournalEntry(req, res) {
     // Get date for this entry and user id
     const {
-      body: { date },
-      params: { id },
+      params: { id, date },
     } = req;
+
+    // Convert date back to Date object
+    const _date = new Date(date);
 
     // Attempt to get journal for this user
     let journal;
     try {
       journal = await this.Journal.findOne({ _id: id });
     } catch (error) {
-      res.status(400).json({ success: false, error });
+      return res.status(400).json({ success: false, error });
     }
 
     // Get daily entries
     const { dailyEntries } = journal;
 
     // Try to find entry on this specific date
-    let entry = dailyEntries.find((e) => e.date.getDate() === date);
+    let entry = dailyEntries.find(
+      (e) =>
+        e.date.getDate() === _date.getDate() &&
+        e.date.getMonth() === _date.getMonth() &&
+        e.date.getFullYear() === _date.getFullYear()
+    );
 
     // If it doesn't exist then we'll create one and add it
     // to the journal daily entries
@@ -101,13 +115,24 @@ export default class JournalController {
         tasks: [],
         notes: [],
         events: [],
-        date: new Date(),
+        date: _date,
       };
       journal.dailyEntries.push(entry);
+
+      try {
+        await journal.save();
+      } catch (error) {
+        return res.status(400).json({
+          success: false,
+        });
+      }
     }
 
     // return entry
-    return entry;
+    return res.status(200).json({
+      success: true,
+      data: entry,
+    });
   }
 
   /**
@@ -120,16 +145,19 @@ export default class JournalController {
   async getJournalEntries(req, res) {
     // Get user id, from date, to date, and type of entries to retrieve
     const {
-      body: { fromDate, toDate, type },
-      params: { id },
+      params: { id, fromDate, toDate, type },
     } = req;
+
+    // Convert from and to dates back to Date objects
+    const _fromDate = new Date(fromDate);
+    const _toDate = new Date(toDate);
 
     // Attempt to get this user journal
     let journal;
     try {
       journal = await this.Journal.findOne({ _id: id });
     } catch (error) {
-      res.status(400).json({ success: false, error });
+      return res.status(400).json({ success: false, error });
     }
 
     // Filter function for getting correct entries based on
@@ -137,8 +165,8 @@ export default class JournalController {
     const filter = (entries) => {
       const _entries = entries.filter(
         (entry) =>
-          entry.date.getDate() >= fromDate.getDate() &&
-          entry.date.getDate() <= toDate.getDate()
+          entry.date.getTime() >= _fromDate.getTime() &&
+          entry.date.getTime() <= _toDate.getTime()
       );
 
       return _entries;
@@ -147,22 +175,32 @@ export default class JournalController {
     let filteredEntries;
 
     // Get entries based on given type
-    if (type === 'Semesterly') {
+    if (type === 'Daily') {
+      const { dailyEntries } = journal;
+      filteredEntries = filter(dailyEntries);
+      // Semesterly
+    } else if (type === 'Semesterly') {
       const { semesterlyEntries } = journal;
       filteredEntries = filter(semesterlyEntries);
+      // Quarterly
     } else if (type === 'Quarterly') {
       const { quarterlyEntries } = journal;
       filteredEntries = filter(quarterlyEntries);
+      // Weekly
     } else if (type === 'Weekly') {
       const { weeklyEntries } = journal;
       filteredEntries = filter(weeklyEntries);
+      // Monthly
     } else {
       const { monthlyEntries } = journal;
       filteredEntries = filter(monthlyEntries);
     }
 
     // return the filtered entries
-    return filteredEntries;
+    return res.status(200).json({
+      success: true,
+      data: filteredEntries,
+    });
   }
 
   // // TO-DO
@@ -198,18 +236,19 @@ export default class JournalController {
   async addJournalEntry(req, res) {
     // Get passed in data, and user id for finding journal
     const {
-      body: { type },
+      body: { type, date },
       params: { id },
     } = req;
 
-    // const type = 'Daily';
+    // Get new date for this entry
+    const _date = new Date(date);
 
     // Construct new journal entry object
     const newEntry = {
       tasks: [],
       notes: [],
       events: [],
-      date: new Date(),
+      date: _date,
     };
 
     // Initialize journal to hold a Journal() object
@@ -220,7 +259,7 @@ export default class JournalController {
       journal = await this.Journal.findOne({ _id: id });
       // Failed to find this journal
     } catch (error) {
-      res.status(400).json({ success: false, error });
+      return res.status(400).json({ success: false, error });
     }
 
     // If we made it here, then we found the journal and we
@@ -247,11 +286,17 @@ export default class JournalController {
       await journal.save();
       // Failed to validate the schema for this model
     } catch (error) {
-      // console.log(error)
+      return res.status(400).json({
+        success: false,
+        error,
+      });
     }
 
     // Return new entry
-    res.status(200).json(newEntry);
+    return res.status(201).json({
+      success: true,
+      data: newEntry,
+    });
   }
 
   /**
@@ -262,31 +307,37 @@ export default class JournalController {
   async addTask(req, res) {
     // Get passed in data, and user id for finding journal
     const {
-      body: { content, date, dueDate, type },
+      body: { content, entryDate, dueDate, type },
       params: { id },
     } = req;
 
-    // const date = '5/15/2021'
-    // const dueDate = '2021-05-17T05:03:17.453+00:00'
-    // const type = 'Daily';
+    // Get date for this entry
+    const _entryDate = new Date(entryDate);
+    // Get the due date if applicable
+    const _dueDate = new Date(dueDate);
+
     // Construct new task object
     const newTask = {
       content,
-      date,
-      dueDate,
+      dueDate: _dueDate,
     };
 
-    // Construct journal object
-    let journal;
     // Attempt to find journal with user id
+    let journal;
     try {
       journal = await this.Journal.findOne({ _id: id });
     } catch (error) {
-      // console.log(error);
+      return res.status(400).json({
+        success: false,
+        error,
+      });
     }
 
     // Callback function for finding index of journal entry for this date
-    const isCurrentDate = (entry) => entry.date.toLocaleDateString() === date;
+    const isCurrentDate = (entry) =>
+      entry.date.getDate() === _entryDate.getDate() &&
+      entry.date.getMonth() === _entryDate.getMonth() &&
+      entry.date.getFullYear() === _entryDate.getFullYear();
 
     // If this is a daily entry
     if (type === 'Daily') {
@@ -310,11 +361,7 @@ export default class JournalController {
 
       // Else if this is a weekly entry|
     } else if (type === 'Weekly') {
-      // Get index for correct weekly entry
-      const index = journal.weeklyEntries.findIndex(isCurrentDate);
-      // Push new task
-      journal.weeklyEntries[index].tasks.push(newTask);
-
+      // Get index for correct weekly entrydate
       // Else this is a monthly entry
     } else {
       // Get index for correct monthly entry
@@ -328,14 +375,19 @@ export default class JournalController {
       await journal.save();
       // Failed to validate the schema for this model
     } catch (error) {
-      // console.log(error)
+      return res.status(400).json({
+        success: false,
+        error,
+      });
     }
 
     // Return new task
-    res.status(200).json(newTask);
+    return res.status(201).json({
+      success: true,
+      data: newTask,
+    });
   }
 
-  // TO-DO
   /**
    * Updates a task.
    * @param {string} date - Date for journal entry this task belongs to
@@ -346,19 +398,19 @@ export default class JournalController {
   async updateTask(req, res) {
     // Get passed in data, and user id for finding journal
     const {
-      body: { taskId, content, date, dueDate, type },
+      body: { taskId, content, entryDate, dueDate, type },
       params: { id },
     } = req;
 
-    // const taskId = '60a0ae06a7feb551c7bfb66b';
-    // const type = 'Daily';
-    // const date = '5/15/2021'
+    // Get date for this entry
+    const _entryDate = new Date(entryDate);
+    // Get due date
+    const _dueDate = new Date(dueDate);
 
     // // Construct updated task object
     const updatedTask = {
       content,
-      date,
-      dueDate,
+      dueDate: _dueDate,
     };
 
     // Initialize for Journal() object
@@ -369,11 +421,14 @@ export default class JournalController {
       journal = await this.Journal.findOne({ _id: id });
       // Failed to find this journal
     } catch (error) {
-      res.status(400).json({ success: false, error });
+      return res.status(400).json({ success: false, error });
     }
 
     // Callback function for finding index of journal entry for this date
-    const isCurrentDate = (entry) => entry.date.toLocaleDateString() === date;
+    const isCurrentDate = (entry) =>
+      entry.date.getDate() === _entryDate.getDate() &&
+      entry.date.getMonth() === _entryDate.getMonth() &&
+      entry.date.getFullYear() === _entryDate.getFullYear();
 
     // Callback function for finding index of task to update
     const isTaskToUpdate = (task) => task._id.toString() === taskId;
@@ -441,14 +496,19 @@ export default class JournalController {
       await journal.save();
       // Failed to validate the schema for this model
     } catch (error) {
-      // console.log(error)
+      return res.status(400).json({
+        success: false,
+        error,
+      });
     }
 
     // Return new task
-    res.status(200).json(updatedTask);
+    return res.status(200).json({
+      success: true,
+      data: updatedTask,
+    });
   }
 
-  // TO-DO
   /**
    * Deletes a task.
    * @param {string} id - Id for this journal.
@@ -459,13 +519,11 @@ export default class JournalController {
   async deleteTask(req, res) {
     // Get passed in data, and user id for finding journal
     const {
-      body: { taskId, date, type },
+      body: { taskId, entryDate, type },
       params: { id },
     } = req;
 
-    // const taskId = '60a0afb3f9e2a256e8f98e32';
-    // const date = '5/15/2021'
-    // const type = 'Daily';
+    const _entryDate = new Date(entryDate);
 
     // Initialize for Journal() object
     let journal;
@@ -475,11 +533,14 @@ export default class JournalController {
       journal = await this.Journal.findOne({ _id: id });
       // Failed to find this journal
     } catch (error) {
-      res.status(400).json({ success: false, error });
+      return res.status(400).json({ success: false, error });
     }
 
-    // Callback function for checking dates of entries
-    const isCurrentDate = (entry) => entry.date.toLocaleDateString() === date;
+    // Callback function for finding index of journal entry for this date
+    const isCurrentDate = (entry) =>
+      entry.date.getDate() === _entryDate.getDate() &&
+      entry.date.getMonth() === _entryDate.getMonth() &&
+      entry.date.getFullYear() === _entryDate.getFullYear();
 
     // Callback function for finding index of task to delete
     const isTaskToDelete = (task) => task._id.toString() === taskId;
@@ -492,6 +553,7 @@ export default class JournalController {
       const taskIndex = journal.dailyEntries[dailyIndex].tasks.findIndex(
         isTaskToDelete
       );
+
       // Delete this task
       await journal.dailyEntries[dailyIndex].tasks[taskIndex].remove();
 
@@ -549,8 +611,15 @@ export default class JournalController {
       await journal.save();
       // Failed to validate the schema for this model
     } catch (error) {
-      // console.log(error);
+      return res.status(400).json({
+        success: false,
+        error,
+      });
     }
+
+    return res.status(200).json({
+      success: true,
+    });
   }
 
   /**
@@ -561,14 +630,15 @@ export default class JournalController {
   async addNote(req, res) {
     // Get passed in data and user id for finding journal
     const {
-      body: { content, date, type },
+      body: { content, entryDate, type },
       params: { id },
     } = req;
+
+    const _entryDate = new Date(entryDate);
 
     // Construct new note object
     const newNote = {
       content,
-      date,
     };
 
     // Initialize for Journal()
@@ -579,11 +649,14 @@ export default class JournalController {
       journal = await this.Journal.findOne({ _id: id });
       // Failed to find journal for this user
     } catch (error) {
-      res.status(400).json({ success: false, error });
+      return res.status(400).json({ success: false, error });
     }
 
     // Callback function for finding index of journal entry for this date
-    const isCurrentDate = (entry) => entry.date.toLocaleDateString() === date;
+    const isCurrentDate = (entry) =>
+      entry.date.getDate() === _entryDate.getDate() &&
+      entry.date.getMonth() === _entryDate.getMonth() &&
+      entry.date.getFullYear() === _entryDate.getFullYear();
 
     // If this is a daily entry
     if (type === 'Daily') {
@@ -625,11 +698,17 @@ export default class JournalController {
       await journal.save();
       // Failed to validate the schema for this model
     } catch (error) {
-      // console.log(error)
+      return res.status(400).json({
+        success: false,
+        error,
+      });
     }
 
     // Return new note
-    res.status(200).json(newNote);
+    return res.status(201).json({
+      success: true,
+      newNote,
+    });
   }
 
   /**
@@ -641,14 +720,15 @@ export default class JournalController {
   async updateNote(req, res) {
     // get passed in data and user id for finding journal
     const {
-      body: { noteId, content, date, type },
+      body: { noteId, content, entryDate, type },
       params: { id },
     } = req;
+
+    const _entryDate = new Date(entryDate);
 
     // Construct updated note object
     const updatedNote = {
       content,
-      date,
     };
 
     // Initialize journal
@@ -658,11 +738,15 @@ export default class JournalController {
     try {
       journal = await this.Journal.findOne({ _id: id });
     } catch (error) {
-      res.status(400).json({ success: false, error });
+      return res.status(400).json({ success: false, error });
     }
 
     // Callback function for finding index of journal entry for this date
-    const isCurrentDate = (entry) => entry.date.toLocaleDateString() === date;
+    const isCurrentDate = (entry) =>
+      entry.date.getDate() === _entryDate.getDate() &&
+      entry.date.getMonth() === _entryDate.getMonth() &&
+      entry.date.getFullYear() === _entryDate.getFullYear();
+
     // Callback function for finding index of note to update
     const isNotesToUpdate = (note) => note._id.toString() === noteId;
 
@@ -729,11 +813,14 @@ export default class JournalController {
       await journal.save();
       // Failed to validate the schema for this model
     } catch (error) {
-      // console.log(error)
+      return res.status(400).json({ success: false, error });
     }
 
     // Return updated note
-    res.status(200).json(updatedNote);
+    return res.status(200).json({
+      success: true,
+      data: updatedNote,
+    });
   }
 
   /**
@@ -743,9 +830,11 @@ export default class JournalController {
   async deleteNote(req, res) {
     // get passed in data and user id for finding journal
     const {
-      body: { noteId, date, type },
+      body: { noteId, entryDate, type },
       params: { id },
     } = req;
+
+    const _entryDate = new Date(entryDate);
 
     // Initialize journal
     let journal;
@@ -754,11 +843,15 @@ export default class JournalController {
     try {
       journal = await this.Journal.findOne({ _id: id });
     } catch (error) {
-      res.status(400).json({ success: false, error });
+      return res.status(400).json({ success: false, error });
     }
 
     // Callback function for finding index of journal entry for this date
-    const isCurrentDate = (entry) => entry.date.toLocaleDateString() === date;
+    const isCurrentDate = (entry) =>
+      entry.date.getDate() === _entryDate.getDate() &&
+      entry.date.getMonth() === _entryDate.getMonth() &&
+      entry.date.getFullYear() === _entryDate.getFullYear();
+
     // Callback function for finding index of note to update
     const isNotesToDelete = (note) => note._id.toString() === noteId;
 
@@ -824,11 +917,14 @@ export default class JournalController {
       await journal.save();
       // Failed to validate the schema for this model
     } catch (error) {
-      // console.log(error)
+      return res.status(400).json({ success: false, error });
     }
+
+    return res.status(200).json({
+      success: true,
+    });
   }
 
-  // TO-DO
   /**
    * Adds a new event.
    * @param {object} newEvent - Information to create new event.
@@ -837,14 +933,21 @@ export default class JournalController {
   async addEvent(req, res) {
     // Get passed in data and user id for finding journal
     const {
-      body: { content, date, link, type },
+      body: { content, startTime, endTime, entryDate, link, type },
       params: { id },
     } = req;
+
+    // Get the entry date passed in for this journal
+    const _entryDate = new Date(entryDate);
+    // Get start and end time for this new event
+    const _startTime = new Date(startTime);
+    const _endTime = new Date(endTime);
 
     // Construct new event object
     const newEvent = {
       content,
-      date,
+      startTime: _startTime,
+      endTime: _endTime,
       link,
     };
 
@@ -856,11 +959,14 @@ export default class JournalController {
       journal = await this.Journal.findOne({ _id: id });
       // Failed to find journal for this user
     } catch (error) {
-      res.status(400).json({ success: false, error });
+      return res.status(400).json({ success: false, error });
     }
 
-    // Callback function for checking dates of entries
-    const isCurrentDate = (entry) => entry.date.toLocaleDateString() === date;
+    // Callback function for finding index of journal entry for this date
+    const isCurrentDate = (entry) =>
+      entry.date.getDate() === _entryDate.getDate() &&
+      entry.date.getMonth() === _entryDate.getMonth() &&
+      entry.date.getFullYear() === _entryDate.getFullYear();
 
     // If this is a daily entry
     if (type === 'Daily') {
@@ -903,11 +1009,14 @@ export default class JournalController {
       await journal.save();
       // Failed to validate the schema for this model
     } catch (error) {
-      // console.log(error)
+      return res.status(400).json({ success: false, error });
     }
 
     // Return new note
-    res.status(200).json(newEvent);
+    return res.status(201).json({
+      success: true,
+      data: newEvent,
+    });
   }
 
   /**
@@ -918,14 +1027,21 @@ export default class JournalController {
   async updateEvent(req, res) {
     // Get passed in data and user id for finding journal
     const {
-      body: { eventId, content, date, link, type },
+      body: { eventId, content, startTime, endTime, entryDate, link, type },
       params: { id },
     } = req;
+
+    // Get the entry date
+    const _entryDate = new Date(entryDate);
+    // Get the start and end times
+    const _startTime = new Date(startTime);
+    const _endTime = new Date(endTime);
 
     // Construct new event object
     const updatedEvent = {
       content,
-      date,
+      startTime: _startTime,
+      endTime: _endTime,
       link,
     };
 
@@ -937,11 +1053,14 @@ export default class JournalController {
       journal = await this.Journal.findOne({ _id: id });
       // Failed to find journal for this user
     } catch (error) {
-      res.status(400).json({ success: false, error });
+      return res.status(400).json({ success: false, error });
     }
 
-    // Callback function for checking dates of entries
-    const isCurrentDate = (entry) => entry.date.toLocaleDateString() === date;
+    // Callback function for finding index of journal entry for this date
+    const isCurrentDate = (entry) =>
+      entry.date.getDate() === _entryDate.getDate() &&
+      entry.date.getMonth() === _entryDate.getMonth() &&
+      entry.date.getFullYear() === _entryDate.getFullYear();
 
     // Callback function for finding index of event to update
     const isEventToUpdate = (event) => event._id.toString() === eventId;
@@ -1011,11 +1130,14 @@ export default class JournalController {
       await journal.save();
       // Failed to validate the schema for this model
     } catch (error) {
-      // console.log(error)
+      return res.status(400).json({ success: false, error });
     }
 
     // Return new note
-    res.status(200).json(updatedEvent);
+    return res.status(200).json({
+      success: true,
+      data: updatedEvent,
+    });
   }
 
   /**
@@ -1025,10 +1147,12 @@ export default class JournalController {
   async deleteEvent(req, res) {
     // Get passed in data and user id for finding journal
     const {
-      body: { eventId, date, type },
+      body: { eventId, entryDate, type },
       params: { id },
     } = req;
 
+    // Get entry date
+    const _entryDate = new Date(entryDate);
     // Initialize for Journal()
     let journal;
 
@@ -1037,11 +1161,14 @@ export default class JournalController {
       journal = await this.Journal.findOne({ _id: id });
       // Failed to find journal for this user
     } catch (error) {
-      res.status(400).json({ success: false, error });
+      return res.status(400).json({ success: false, error });
     }
 
-    // Callback function for checking dates of entries
-    const isCurrentDate = (entry) => entry.date.toLocaleDateString() === date;
+    // Callback function for finding index of journal entry for this date
+    const isCurrentDate = (entry) =>
+      entry.date.getDate() === _entryDate.getDate() &&
+      entry.date.getMonth() === _entryDate.getMonth() &&
+      entry.date.getFullYear() === _entryDate.getFullYear();
 
     // Callback function for finding index of event to Delete
     const isEventToDelete = (event) => event._id.toString() === eventId;
@@ -1107,7 +1234,9 @@ export default class JournalController {
       await journal.save();
       // Failed to validate the schema for this model
     } catch (error) {
-      // console.log(error)
+      return res.status(400).json({ success: false, error });
     }
+
+    return res.status(200).json({ success: true });
   }
 }

@@ -8,22 +8,23 @@ import TaskSchema from './Task';
 const { Schema: _Schema } = mongoose;
 
 // Schema
-const JournalEntrySchema = new _Schema(
-  {
-    tasks: {
-      type: [TaskSchema],
-    },
-    notes: {
-      type: [NoteSchema],
-    },
-    events: {
-      type: [EventSchema],
-    },
-    date: {
-      type: Date,
-    },
+const JournalEntrySchema = new _Schema({
+  tasks: {
+    type: [TaskSchema],
+    required: true,
   },
-  { timestamps: true }
-);
+  notes: {
+    type: [NoteSchema],
+    required: true,
+  },
+  events: {
+    type: [EventSchema],
+    required: true,
+  },
+  date: {
+    type: Date,
+    required: true,
+  },
+});
 
 export default JournalEntrySchema;

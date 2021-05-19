@@ -24,35 +24,43 @@ export default class AuthController {
   }
 
   async login(req, res) {
-    const { email, password } = req.body;
-
+    const {
+      body: { email, password },
+    } = req;
     let user;
     // Attempt to find this user
     try {
       user = await this.User.findOne({ email });
     } catch (error) {
-      res.status(400).json({ success: false, error });
+      return res.status(400).json({ success: false, error });
     }
 
     // Compare the password entered by taking its hash and comparing
     // to password from db
     try {
-      compare(password, user.password, (result, error) => {
+      compare(password, user.password, (err, response) => {
         // If comparison isn't equal, password is wrong
-        if (!result) {
-          res.status(400).json({
+        if (err) {
+          return res.status(400).json({
             success: false,
             message: 'Password entered is incorrect.',
           });
         }
 
         // Return user
-        res.json({
-          data: user,
-        });
+        if (response) {
+          return res.json({
+            success: true,
+            data: user,
+          });
+        } else {
+          return res.status(400).json({
+            success: false,
+          });
+        }
       });
     } catch (error) {
-      res.status(400).json({ success: false, error });
+      // res.status(400).json({ success: false, error });
     }
   }
 
@@ -71,35 +79,45 @@ export default class AuthController {
 
     // If user exists already, then this email is taken
     if (user) {
-      res.status(400).json({ success: false, error: 'Email already taken.' });
+      return res
+        .status(400)
+        .json({ success: false, error: 'Email already taken.' });
     }
 
     // Else, the email is good and we start the user creation process
     // Perform a hash for the new user's password
-    _hash(password, saltRounds, async (err, hash) => {
-      // Create new user
-      const newUser = new User({
-        name,
-        email,
-        password: hash,
-        term: '',
-        language: 'English',
-      });
+    try {
+      _hash(password, saltRounds, async (err, hash) => {
+        if (err) {
+          return res.status(400).json({
+            success: false,
+            error: err,
+          });
+        }
 
-      // Attempt to update database with new user
-      try {
+        // Create new user
+        const newUser = new User({
+          name,
+          email,
+          password: hash,
+          term: '',
+          language: 'English',
+        });
+
+        // Attempt to update database with new user
         await newUser.save();
-        res.status(200).json({
+        return res.status(201).json({
           success: true,
           data: newUser,
         });
-      } catch (error) {
-        res.status(400).json({
-          error,
-          message: 'Error while trying to register account',
-        });
-      }
-    });
+      });
+    } catch (error) {
+      return res.status(400).json({
+        success: false,
+        error,
+        message: 'Error while trying to register account',
+      });
+    }
   }
 
   async forgotPassword(req, res) {
@@ -112,13 +130,16 @@ export default class AuthController {
     try {
       user = await this.User.findOne({ email });
     } catch (error) {
-      res.status(400).json({ success: false, error });
+      return res.status(400).json({ success: false, error });
     }
 
     // If user wasn't found, account registered with this email
     // doesn't exist
     if (!user) {
-      res.status(404).json({ error: 'User with this email does not exist.' });
+      return res.status(404).json({
+        success: false,
+        error: 'User with this email does not exist.',
+      });
     }
 
     // Else sign a token for resetting user password
@@ -143,11 +164,13 @@ export default class AuthController {
     // Use Mailgun service to send email
     mg.messages().send(data, (error) => {
       if (error) {
-        return res.json({
+        return res.status(400).json({
+          success: false,
           error: error.message,
         });
       }
-      return res.json({
+      return res.status(200).json({
+        success: true,
         message:
           'An email has been sent, please follow the instructions to reset your password.',
       });
@@ -165,7 +188,9 @@ export default class AuthController {
 
     // If reset link doesn't exist, authentication error
     if (!resetLink) {
-      res.status(401).json({ error: 'Authentication error' });
+      return res
+        .status(401)
+        .json({ success: false, error: 'Authentication error' });
     }
 
     // Otherwise, now we need to verify accurate reset link
@@ -174,7 +199,9 @@ export default class AuthController {
       process.env.RESET_PASSWORD_KEY,
       async (error, decodedData) => {
         if (error) {
-          return res.status(401).json({ error: 'Incorrect token or expired.' });
+          return res
+            .status(401)
+            .json({ success: false, error: 'Incorrect token or expired.' });
         }
 
         // Attempt to find user
@@ -182,12 +209,12 @@ export default class AuthController {
         try {
           user = await this.User.findOne({ _id: id });
         } catch (err) {
-          res.status(400).json({ success: false, err });
+          return res.status(400).json({ success: false, err });
         }
 
         // Couldn't find user
         if (!user) {
-          res.status(400).json({
+          return res.status(400).json({
             success: false,
             error: "Couldn't find user",
           });
@@ -201,12 +228,12 @@ export default class AuthController {
             // Save changes
             await user.save();
             // return success
-            res.status(201).json({
+            return res.status(200).json({
               success: true,
               message: 'Password successfully changed',
             });
           } catch (error) {
-            res.status(400).json({
+            return res.status(400).json({
               success: false,
               error,
               message: 'Error while trying to reset password',
