@@ -1,11 +1,20 @@
-import mongoose from 'mongoose';
+import mongoose from 'mongoose'
 
-const { Schema: _Schema } = mongoose;
+const { Schema: _Schema } = mongoose
 
-const EventSchema = new _Schema({
-  content: String,
-  date: Date,
-  link: String,
-}, { timestamps: true });
+const EventSchema = new _Schema(
+  {
+    content: {
+      type: String,
+    },
+    date: {
+      type: Date,
+    },
+    link: {
+      type: String,
+    },
+  },
+  { timestamps: true }
+)
 
-export default EventSchema;
+export default EventSchema
