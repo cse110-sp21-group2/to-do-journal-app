@@ -57,8 +57,10 @@ body {
     border-radius: 200px;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
-.search-icon{
-    margin: 5px;
+#search-icon{
+    margin: 8px;
+    font-size: 20px;
+    color:#0000006b
 }
 .search-input{
     border-style:none;
@@ -71,6 +73,7 @@ body {
     display: table;
     margin: 0 auto;
   }
+
 .left-nav{
     grid-column: 1 / 2;
     grid-row: 1 / 4;
@@ -107,11 +110,11 @@ body {
     height: 40px;
     border-radius: 40px;
     background-color: white;
+    border: solid;
     display: table;
     margin: 0 auto;
 }
 
-/*//TODO: set correct current text*/
 .link-text{
     text-decoration: none;
     font-family: 'Roboto', Condensed;
@@ -124,7 +127,7 @@ body {
 }
 
 /*Top Right Account Bar*/
-.account-bar{
+.account-bar {
     grid-column: -2 / -1;
     grid-row: 1 / 2;
     background-color: white;
@@ -137,13 +140,36 @@ body {
     align-items: center;
     box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.25);
 }
-.help-button, .notification-button, .account-button {
+
+.button-circle {
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+    border:solid;
+    background: white;
+    position:relative;
+    top: 0px;
+    left: 0px;
+}
+
+.help-button,
+.notification-button,
+.account-button {
     width: 40px;
     height: 40px;
     border-radius: 40px;
+    background-color: #ffffff00;
+    border: none;
   }
 
-  /* Right Navigation Bar */
+.help-button i,
+.notification-button i,
+.account-button i {
+    font-size: 40px;
+    color: #263449;
+  }
+
+  /* Right Navigation Bar | Version A (Key, Goals)*/
 .right-nav {
     height: 856px;
     grid-column: -2 / -1;
@@ -161,8 +187,12 @@ body {
 }
 
 .key-label{
-    font-size: 35px;
-    line-height: 37px;
+    font-family: Unica One;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 40px;
+    line-height: 47px;
+    display: flex;
 }
 
 .key-element{
@@ -180,8 +210,12 @@ body {
 } 
 
 .goals-label{
-    font-size: 35px;
-    line-height: 37px;
+    font-family: Unica One;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 40px;
+    line-height: 47px;
+    display: flex;
 }
 
 .goals-element{
@@ -213,7 +247,7 @@ body {
 }
 
 .today-view {
-    grid-column: 1 / 2;
+    grid-column: 1;
     grid-row: 1 / 3;
     flex-grow: 1;
     width: 45%;
@@ -243,6 +277,8 @@ body {
 }
 
 .task-view{
+    grid-column: 2;
+    grid-row: 1;
     min-width: 450px;
     width: 35vw;
 }
@@ -268,6 +304,8 @@ body {
 }
 
 .event-view{
+    grid-column: 2;
+    grid-row: 2;
     min-width: 450px;
     width: 35vw;
 }
