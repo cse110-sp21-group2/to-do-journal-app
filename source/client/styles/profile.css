@@ -19,19 +19,30 @@ body {
 }
 /*shared  Elements End*/
 
-.profile-header {
+/*Top Left Title*/
+.title{
   grid-column: 2 / 3;
   grid-row: 1 / 2;
+  display: flex;
+  justify-content: left;
+  padding-left: 30px;
+  line-height: 75px;
+  align-items: center;
+  text-align: center;
+  letter-spacing: -0.02em;
   color: #162a47;
+  text-shadow: 0px 4px 5px rgba(0, 0, 0, 0.25);
+}
+.title-text{
   text-decoration:underline;
   font-family: Tw Cen MT Condensed;
   font-style: normal;
   font-weight: normal;
   font-size: 60px;
   color: #162A47;
-  text-decoration: underline;
 }
 
+/* Center Content Region */
 .content-area{
   grid-column: 2 / 4;
   grid-row: 2 / 3;
@@ -48,7 +59,7 @@ body {
   width: 60%;
   display: block;
   text-align: center;
-  margin-top: 50px;
+  margin: 50px auto;
   position: relative;
   padding: 30px 24px;
   box-shadow: 1px 2px 13px 0px rgba(0, 0, 0, 0.59);
