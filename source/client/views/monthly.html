@@ -7,14 +7,27 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Unica+One&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+        integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
     <link rel="stylesheet" href="../../../source/client/styles/monthly.css">
 </head>
 
 <body class="main">
-    <div class="month-display">
-        <button type="button" class="period-button">&lt</button>
+    <!-- current date heading and yesterday/tomorrow buttons -->
+    <div class="page-heading">
+
+        <!-- Yesterday Button -->
+        <div class="back-button">
+            <button type="button" class="button-circle"><i class="fas fa-chevron-left"></i></button>
+        </div>
+
         <h1 class="current-month">May 2021</h1>
-        <button type="button" class="period-button">&gt</button>
+
+        <!-- Tomorrow Button -->
+        <div class="forward-button">
+            <button type="button" class="button-circle"><i class="fas fa-chevron-right"></i></button>
+        </div>
+
     </div>
 
     <div class="content-region">
