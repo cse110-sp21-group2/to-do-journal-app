@@ -203,7 +203,6 @@ export default class JournalController {
     });
   }
 
-  // // TO-DO
   // /**
   //  * Moves a task from one journal entry to another.
   //  * @param {object} moveTask - Information to create new journal entry
@@ -352,7 +351,6 @@ export default class JournalController {
     });
   }
 
-  // // TO-DO
   // /**
   //  * Moves a note from one journal entry to another.
   //  * @param {object} moveNote - Information to create new journal entry
@@ -495,7 +493,6 @@ export default class JournalController {
     });
   }
 
-  // // TO-DO
   // /**
   //  * Moves an event from one journal entry to another.
   //  * @param {object} moveEvent - Information to create new journal entry
