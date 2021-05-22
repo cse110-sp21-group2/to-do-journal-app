@@ -1,2 +1,3 @@
-## In order to run this, you are going to need Node and MongoDB installed.
-## npm start will initialize connection to server
+## From the main directory
+1. Run npm install to get all the required modules
+2. Then run npm start to initialize server

@@ -9,33 +9,23 @@ const router = Router();
 const authController = new AuthController(User);
 
 // Route for user login
-router.post('/login', (req, res)=> {
-  authController.login(req, res)
+router.post('/login', (req, res) => {
+  authController.login(req, res);
 });
 
 // Route for user logout
-router.post('/logout', (req, res)=> {
-  authController.logout(req, res)
-});
-
-// Route for user logout
-router.post('/logout', (req, res)=> {
-  authController.logout(req, res)
-});
-
-// Route for verifying and activating new user account
-router.post('/activate-account', (req, res)=> {
-  authController.activateUserAccount(req, res)
+router.post('/signup', (req, res) => {
+  authController.userSignup(req, res);
 });
 
 // Route for handling forgotten passwords
-router.put('/forgot-password', (req, res)=> {
-  authController.forgotPassword(req, res)
+router.put('/forgot-password', (req, res) => {
+  authController.forgotPassword(req, res);
 });
 
 // Route for handling password resets
-router.put('/reset-password', (req, res)=> {
-  authController.resetPassword(req, res)
+router.put('/reset-password', (req, res) => {
+  authController.resetPassword(req, res);
 });
 
 export default router;

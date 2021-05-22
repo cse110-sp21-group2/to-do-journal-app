@@ -14,14 +14,21 @@ export default class UserController {
    * @returns {object} New user.
    */
   async getUserById(req, res) {
+    const {
+      params: { id },
+    } = req;
+
+    let user;
     try {
-      const user = await this.User.findOne({ _id: req.params.id });
-
-      res.status(200).json(user);
-
+      user = await this.User.findOne({ id });
     } catch (error) {
-      res.status(400).json({ success: false, error });
+      return res.status(400).json({ success: false, error });
     }
+
+    return res.status(200).json({
+      success: true,
+      data: user,
+    });
   }
 
   /**
@@ -30,14 +37,21 @@ export default class UserController {
    * @returns {object} user.
    */
   async getUserByEmail(req, res) {
+    const {
+      params: { email },
+    } = req;
+
+    let user;
     try {
-      const user = await this.User.findOne({ email: req.params.email });
-
-      res.status(200).json(user);
-
+      user = await this.User.findOne({ email });
     } catch (error) {
-      res.status(400).json({ success: false, error });
+      return res.status(400).json({ success: false, error });
     }
+
+    return res.status(200).json({
+      success: true,
+      data: user,
+    });
   }
 
   /**

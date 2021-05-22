@@ -9,13 +9,13 @@ const router = Router();
 const userController = new UserController(User);
 
 // Route for getting user by ID
-router.get('/user-by-id/:id', (req, res)=> {
-  userController.getUserById(req, res)
+router.get('/user-by-id/:id', (req, res) => {
+  userController.getUserById(req, res);
 });
 
 // Route for getting user by email
-router.get('/user-by-email/:email', (req, res)=> {
-  userController.getUserByEmail(req, res)
+router.get('/user-by-email/:email', (req, res) => {
+  userController.getUserByEmail(req, res);
 });
 
 export default router;

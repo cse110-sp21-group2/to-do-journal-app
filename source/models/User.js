@@ -7,29 +7,33 @@ const collection = 'User';
 
 const UserSchema = new _Schema(
   {
-    firstName: {
+    name: {
       type: String,
-    },
-    lastName: {
-      type: String,
+      required: true,
     },
     email: {
       type: String,
+      required: true,
     },
     password: {
       type: String,
+      required: true,
     },
     term: {
       type: String,
+      required: false,
     },
     styles: {
       type: String,
+      required: false,
     },
     colors: {
       type: String,
+      required: false,
     },
     language: {
       type: String,
+      required: false,
     },
   },
   { timestamps: true }

@@ -2,19 +2,15 @@ import mongoose from 'mongoose';
 
 const { Schema: _Schema } = mongoose;
 
-const TaskSchema = new _Schema(
-  {
-    content: {
-      type: String,
-    },
-    date: {
-      type: Date,
-    },
-    dueDate: {
-      type: Date,
-    },
+const TaskSchema = new _Schema({
+  content: {
+    type: String,
+    required: true,
   },
-  { timestamps: true }
-);
+  dueDate: {
+    type: Date,
+    required: false,
+  },
+});
 
 export default TaskSchema;
