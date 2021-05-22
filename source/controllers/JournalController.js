@@ -399,7 +399,7 @@ export default class JournalController {
     if (type === 'Daily') { 
       // Get index for correct daily entry
       const dailyIndex = journal.dailyEntries.findIndex(isCurrentDate);
-      //Get index for note within current entry
+      // Get index for note within current entry
       const noteIndex = journal.dailyEntries[dailyIndex].notes.findIndex(
         isNoteToMigrate
       );
@@ -431,7 +431,7 @@ export default class JournalController {
     } else if ( type === 'Quarterly' ) { 
       // Get index for correct quarterly entry
       const quarterlyIndex = journal.quarterlyEntries.findIndex(isCurrentDate);
-      //Get index for note within current entry
+      // Get index for note within current entry
       const noteIndex = journal.quarterlyEntries[quarterlyIndex].notes.findIndex(
         isNoteToMigrate
       );
@@ -513,7 +513,7 @@ export default class JournalController {
     const _startTime = new Date(startTime);
     const _endTime = new Date(endTime);
 
-    //Construct event Object
+    // Construct event Object
     let moveEvent = {
       content,
       startTime: _startTime,
