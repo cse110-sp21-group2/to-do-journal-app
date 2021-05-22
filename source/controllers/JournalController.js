@@ -222,13 +222,13 @@ export default class JournalController {
     const _dueDate = new Date(dueDate);
 
     // Construct new task object based on current entry task
-    const moveTask = {
+    let moveTask = {
       content,
       dueDate: _dueDate,
     };
 
     // find current journal with user id
-    let Journal;
+    let journal;
     try{
       journal = await this.Journal.findOne({ _id: id });
     } catch (error) {
@@ -279,7 +279,7 @@ export default class JournalController {
       moveTask = journal.semesterlyEntries[semesterlyIndex].tasks[taskIndex];
       // Get index for correct destination entry
       const destIndex = journal.semesterlyEntries.findIndex(isDestinationDate);
-      // Remove task from current destination
+      // Remove task from current entry
       journal.semesterlyEntries[semesterlyIndex].tasks[taskIndex].remove();
       // Push task to destination entry
       journal.semesterlyEntries[destIndex].tasks.push(moveTask);
@@ -311,7 +311,7 @@ export default class JournalController {
       moveTask = journal.weeklyEntries[weeklyIndex].tasks[taskIndex];
       // Get index for correct destination entry
       const destIndex = journal.weeklyEntries.findIndex(isDestinationDate);
-      // Remove task from current destination
+      // Remove task from current entry
       journal.weeklyEntries[weeklyIndex].tasks[taskIndex].remove();
       // Push task to destination entry
       journal.weeklyEntries[destIndex].tasks.push(moveTask);
@@ -331,6 +331,8 @@ export default class JournalController {
       const destIndex = journal.monthlyEntries.findIndex(isDestinationDate);
       // Push task to destination entry
       journal.monthlyEntries[destIndex].tasks.push(moveTask);
+      // Remove task from current entry
+      journal.monthlyEntries[monthlyIndex].tasks[taskIndex].remove();
     }
 
     // Attempt to save changes to journal
@@ -358,7 +360,7 @@ export default class JournalController {
   //  */
   async migrateNote(req, res) {
     const {
-      body: { noteId, content, type, entryDate, mibrateDate },
+      body: { noteId, content, type, entryDate, migrateDate },
       params: { id },
     } = req;
     // Get date for current entry
@@ -367,7 +369,7 @@ export default class JournalController {
     const _migrateDate = new Date(migrateDate);
 
     // Construct notes
-    const moveNote = {
+    let moveNote = {
       content,
     };
 
@@ -376,7 +378,7 @@ export default class JournalController {
 
     // Attempt to find Journal() object with user id
     try{
-      journal = await this.journal.findOne({_id: id });
+      journal = await this.Journal.findOne({_id: id });
     } catch(error){
       return res.status(400).json({ success: false, error });
     }
@@ -413,7 +415,7 @@ export default class JournalController {
     } else if ( type === 'Semesterly' ) { 
       // Get index for correct semesterly entry
       const semesterlyIndex = journal.semesterlyEntries.findIndex(isCurrentDate);
-      //Get index for note within current entry
+      // Get index for note within current entry
       const noteIndex = journal.semesterlyEntries[semesterlyIndex].notes.findIndex(
         isNoteToMigrate
       );
@@ -445,7 +447,7 @@ export default class JournalController {
     } else if ( type === 'Weekly' ) { 
       // Get index for correct weekly entry
       const weeklyIndex = journal.weeklyEntries.findIndex(isCurrentDate);
-      //Get index for note within current entry
+      // Get index for note within current entry
       const noteIndex = journal.weeklyEntries[weeklyIndex].notes.findIndex(
         isNoteToMigrate
       );
@@ -461,7 +463,7 @@ export default class JournalController {
     } else {
       // Get index for correct monthly entry
       const monthlyIndex = journal.monthlyEntries.findIndex(isCurrentDate);
-      //Get index for note within current entry
+      // Get index for note within current entry
       const noteIndex = journal.monthlyEntries[monthlyIndex].notes.findIndex(
         isNoteToMigrate
       );
@@ -512,7 +514,7 @@ export default class JournalController {
     const _endTime = new Date(endTime);
 
     //Construct event Object
-    const moveEvent = {
+    let moveEvent = {
       content,
       startTime: _startTime,
       endTime: _endTime,
@@ -524,7 +526,7 @@ export default class JournalController {
 
     // Attempt to find current journal with user id
     try {
-      journal = await this.journal.findOne({ _id: id });
+      journal = await this.Journal.findOne({ _id: id });
     } catch (error) {
       return res.status(400).json({ success: false, error });
     }
@@ -557,7 +559,7 @@ export default class JournalController {
       journal.dailyEntries[destIndex].events.push(moveEvent);
       // Remove event from current entry
       journal.dailyEntries[dailyIndex].events[eventIndex].remove();
-      //Else if this is a semesterly entry
+      // Else if this is a semesterly entry
     } else if ( type === 'Semesterly' ) { 
       // Get index of semesterly entries
       const semesterlyIndex = journal.semesterlyEntries.findIndex(isCurrentDate);
@@ -573,7 +575,7 @@ export default class JournalController {
       journal.semesterlyEntries[destIndex].events.push(moveEvent);
       // Remove event from current entry
       journal.semesterlyEntries[semesterlyIndex].events[eventIndex].remove();
-      //Else if this is a quarterly entry
+      // Else if this is a quarterly entry
     } else if ( type === 'Quarterly' ) {
       // Get index of quarterly entries
       const quarterlyIndex = journal.quarterlyEntries.findIndex(isCurrentDate);
@@ -589,7 +591,7 @@ export default class JournalController {
       journal.quarterlyEntries[destIndex].events.push(moveEvent);
       // Remove event from current entry
       journal.quarterlyEntries[quarterlyIndex].events[eventIndex].remove();
-      //Else if this is a weekly entry
+      // Else if this is a weekly entry
     } else if ( type === 'Weekly' ) {
       // Get index of weekly entries
       const weeklyIndex = journal.weeklyEntries.findIndex(isCurrentDate);
@@ -605,7 +607,7 @@ export default class JournalController {
       journal.weeklyEntries[destIndex].events.push(moveEvent);
       // Remove event from current entry
       journal.weeklyEntries[weeklyIndex].events[eventIndex].remove();
-      //Else if this is a monthly entry
+      // Else if this is a monthly entry
     } else {
       // Get index of monthly entries
       const monthlyIndex = journal.monthlyEntries.findIndex(isCurrentDate);
