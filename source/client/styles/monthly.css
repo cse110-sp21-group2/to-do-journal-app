@@ -1,173 +1,57 @@
-.logo{
-    width: 200px;
+/*shared  Elements*/
+* { 
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: url("https://i.ibb.co/sFtX9zy/bg.png"); 
+    min-height: 100vh;
+    min-width: 100vw;
 }
 
 .main {
-    background-color: rgb(216, 241, 245);
     display: grid;
-    grid-template-columns: 205px 305px auto 205px;
+    grid-template-columns: 205px 555px auto 205px;
+    grid-template-rows: 118px auto 80px;
     margin: 20px 20px;
 }
+/*shared  Elements End*/
 
-.left-nav {
-    grid-column: 1 / 2;
-    grid-row: 1 / 4;
-    padding: 10px 10px;
-    background-color: white;
-    margin: -20px 0px -20px -20px;
-    height: 100vh;
-    box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.25);
+/* buttons */
+.button-circle {
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+    border: solid;
+    color: var(--mainColor);
+    border-color: var(--mainColor);
+    background: white;
+    position:relative;
+    top: 0px;
+    left: 0px;
 }
 
-.navigation-title {
-    background-color: #E2CB14;
-    margin: 0px -10px 0px -10px;
-    padding: 10px;
-    text-align: center;
-    font-size: 45px;
-    color:#162A47;
-}
-
-.index-link, .collections-link{
-    padding: 10px;
-    margin: 10px -10px 10px -10px;
-    text-align: center;
-}
-
-.collections-button{
-    width: 40px;
-    height: 40px;
-    border-radius: 40px;
-    background-color: white;
-    display: table;
-    margin: 0 auto;
-}
-
-.link-text, .current-link-text{
-    font-weight: 300;
-    font-size: 24px;
-    line-height: 28px;
-    letter-spacing: -0.02em;
-    color: #162A47;
-}
-
-.current-link{
-    background-color: rgba(213, 171, 9, 0.25);
-    border-right-style: solid;
-    border-right-width: 4px;
-    border-color:#D5AB09;
-    padding: 10px;
-    margin: 0px -10px 0px -10px;
-    text-align: center;
-}
-
-.current-link-text{
-    color: #834900;
-}
-
-.search-bar {
-    grid-column: 3 / 4;
-    grid-row: 1 / 2;
-    justify-self: center;
-    background-color: white;
-    
-    display: flex;
-    padding: 10px;
-    width: 480px;
-    height: 56px;
-    border-radius: 200px;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-}
-.search-icon{
-    margin: 5px;
-}
-.search-input{
-    border-style:none;
-    width: 80%;
-}
-
-.account-bar{
-    grid-column: -2 / -1;
-    grid-row: 1 / 2;
-    background-color: white;
-    border-radius: 200px;
-    width: 150px;
-    width: 201px;
-    height: 59px;
-    display:flex;
-    justify-content: space-evenly;
-    align-items: center;
-    box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.25);
-}
-
-.help-button, .notification-button, .account-button {
-    width: 40px;
-    height: 40px;
-    border-radius: 40px;
-    background-color: white;
-}
-
-.right-nav {
-    height: 856px;
-    grid-column: -2 / -1;
-    grid-row: 2 / 3;
-    background-color: white;
-    border-top-left-radius: 20px;
-    border-bottom-left-radius: 20px;
-    margin-right: -20px;
-    display:grid;
-    grid-template-columns: 200px;
-    grid-template-rows: 200px 75px 65px 200px 65px 200px;
-    justify-content: center;
-    align-content: center;
-    box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.25);
-}
-
-.key-label{
-    font-size: 35px;
-    line-height: 37px;
-}
-
-.key-element{
-    font-size: 20px;
-    line-height: 37px;
-    text-align: center;
-}
-
-.calendar-seperator{
-    border-color: #162A47;
-    background-color: #162A47;
-    border-style: solid;
-    border-width: 3px;
-    border-radius: 3px;
-} 
-
-.goals-label{
-    font-size: 35px;
-    line-height: 37px;
-}
-
-.goals-element{
-    font-size: 20px;
-    line-height: 37px;
-    text-align: left;
-}
-
+/* Center Calendar Area*/
 .content-region {
-    padding-top: 75px;
     grid-column: 2 / 4;
     grid-row: 2 / 3;
     width: 90%;
-    margin: 1cm;
+    margin: 30px;
     display:grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 50px 1fr 1fr 1fr 1fr 1fr 1fr;
     row-gap: 2px;
     grid-gap: 2px;
+    min-width: 1050px;
 }
 
 .day {
     text-align: center;
     font-size: 32px;
+    font-family: "Unica One";
+    text-shadow: 0px 3px 4px rgba(0, 0, 0, 0.25);
 }
 
 .date {
@@ -175,9 +59,42 @@
     border: 1px solid rgba(155, 150, 150, 0.8);
     font-size: 30px;
     text-align: left;
+    box-shadow: 0px 6px 6px rgba(0, 0, 0, 0.25);
   }
+  .date-number {
+    background-color: white;
+    border-radius: 20px;
+    height: 25px;
+    width: 25px;
+    color: #834900;
+    font-family: Tw Cen MT;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 16px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    text-align:center;
+    display:table-cell;
+    vertical-align: middle;
+    position: relative;
+    top: 5px;
+    left: 5px;
+  }
+#top-left-corner{
+    border-top-left-radius: 20px;
+}
+#top-right-corner{
+    border-top-right-radius: 20px;
+}
+#bottom-left-corner{
+    border-bottom-left-radius: 20px;
+}
+#bottom-right-corner{
+    border-bottom-right-radius: 20px;
+}
 
-.month-display {
+/*Top Left Month Header*/
+.page-heading {
     grid-column: 2 / 3;
     grid-row: 1 / 2;
     display: flex;
@@ -185,17 +102,14 @@
     align-items: center;
     width: 300px;
     margin-top: -20px;
-    flex-wrap: wrap;
+    margin: -20px 0px 0px;
 }
 
 .current-month {
-    font-size: 50px;
+    text-decoration:underline;
+    font-family: Tw Cen MT Condensed;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 60px;
     color: #162A47;
-}
-
-.period-button {
-    width: 40px;
-    height: 40px;
-    border-radius: 40px;
-    background-color: white;
 }

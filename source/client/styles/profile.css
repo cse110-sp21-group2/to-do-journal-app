@@ -1,36 +1,74 @@
+/*shared  Elements*/
+* { 
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
+  background: url("https://i.ibb.co/sFtX9zy/bg.png"); 
+  min-height: 100vh;
+  min-width: 100vw;
+}
+
+.main {
+  display: grid;
+  grid-template-columns: 205px 555px auto 205px;
+  grid-template-rows: 118px auto 80px;
+  margin: 20px 20px;
+}
+/*shared  Elements End*/
+
+/*Top Left Title*/
+.title{
+  grid-column: 2 / 3;
+  grid-row: 1 / 2;
+  display: flex;
+  justify-content: left;
+  padding-left: 30px;
+  line-height: 75px;
+  align-items: center;
   text-align: center;
-}
-
-.profile-header {
+  letter-spacing: -0.02em;
   color: #162a47;
-  position: absolute;
-  width: 210px;
-  height: 95px;
-  left: 475px;
-  top: 5px;
-  font-size: 45px;
-  text-decoration: underline;
+  text-shadow: 0px 4px 5px rgba(0, 0, 0, 0.25);
+}
+.title-text{
+  text-decoration:underline;
+  font-family: Tw Cen MT Condensed;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 60px;
+  color: #162A47;
 }
 
+/* Center Content Region */
+.content-area{
+  grid-column: 2 / 4;
+  grid-row: 2 / 3;
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: auto 100px;
+  margin: 20px;
+}
 .profile {
+  background-color: white;
   border-radius: 25px;
-  width: 640px;
-  height: 325px;
+  height: 500px;
+  min-width: 800px;
+  width: 60%;
   display: block;
   text-align: center;
-  margin: 150px auto 0;
+  margin: 50px auto;
   position: relative;
   padding: 30px 24px;
-  -webkit-box-shadow: 1px 2px 13px 0px rgba(0, 0, 0, 0.59);
   box-shadow: 1px 2px 13px 0px rgba(0, 0, 0, 0.59);
 }
 
 form {
   display: inline-block;
   text-align: left;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 40px
 }
 
 .name,
@@ -71,14 +109,15 @@ input {
 #gender,
 #birthday,
 #email,
-#phone-number {
+#number {
   font-family: Roboto Condensed;
   font-style: normal;
   font-weight: normal;
   font-size: 18px;
   border-width: 2px;
   width: 250px;
-  margin-bottom: 15px;
+  margin-bottom: 25px;
+  margin-top: 10px;
 }
 
 .save {
@@ -111,7 +150,7 @@ input {
   border: none;
   height: 45px;
   width: 45px;
-  margin-top: 50px;
+  margin: auto;
   background: #ffffff;
   box-shadow: 0px 2.5px 10px rgba(131, 73, 0, 0.87);
 }
@@ -122,5 +161,4 @@ input {
   display: inline-block;
   padding: 7px;
   transform: rotate(45deg);
-  -webkit-transform: rotate(45deg);
 }

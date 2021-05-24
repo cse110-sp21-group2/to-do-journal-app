@@ -1,37 +1,82 @@
-* {
-    font-family: "Lucida Console", "Courier New", monospace;
+/*shared  Elements*/
+* { 
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-.navigation{
-    width: 10%;
-    float: left;
-    position: relative;
+body {
+    background: url("https://i.ibb.co/sFtX9zy/bg.png"); 
+    min-height: 100vh;
+    min-width: 100vw;
 }
 
-.weekly-calendar{
-    float: left;
-    width: 90%;
-    position: relative;
-    left: 10%;
-    margin-top: 150px;
+.main {
+    display: grid;
+    grid-template-columns: 205px 555px auto 205px;
+    grid-template-rows: 118px auto 80px;
+    margin: 20px 20px;
+}
+/*shared  Elements End*/
+
+/*Top Left Title*/
+.title{
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
+    display: flex;
+    justify-content: left;
+    padding-left: 30px;
+    line-height: 75px;
+    align-items: center;
+    text-align: center;
+    letter-spacing: -0.02em;
+    color: #162a47;
+    text-shadow: 0px 4px 5px rgba(0, 0, 0, 0.25);
+}
+.title-text{
+    text-decoration:underline;
+    font-family: Tw Cen MT Condensed;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 60px;
+    color: #162A47;
+}
+
+
+.weekly-view{
+    grid-column: 2 / 4;
+    grid-row: 2 / 3;
+    margin: 30px;
+    min-width: 1050px;
+    display: grid;
+    grid-template-columns: auto auto auto auto auto auto auto;
+    column-gap: 10px;
+    justify-items: center;
 }
 
 
 /* Float seven columns side by side */
 .column-day {
-    float: left;
-    width: 10%;
-    padding: 0 10px;
-
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* this adds the "card" effect */
+    /* float: left; */
+    width: 100%;
+    /* padding: 0 10px; */
+    box-shadow: 0px 5px 15px rgba(131, 73, 0, 0.5);
+    border-radius: 29px;
     padding: 1px;
     text-align: center;
-    border-radius: 25px;
 
-    max-height: 1000px;
+    /* max-height: 1000px; */
     height: 500px;
-    /* background-color: #f1f1f1; */
+    background-color: #FFFFFF;
   }
+
+.day-title{
+    font-family: Unica One;
+    font-style:normal;
+    font-weight:normal;
+    font-size: 30px;
+    line-height: 47px;
+}
 
 button.date {
     filter: drop-shadow(0px 10px 10px rgba(0, 0, 0, 0.25));
@@ -53,10 +98,3 @@ button.date {
 /* button.date:hover {
     background: rgba(238, 238, 238, 0.194);
 } */
-
-
-.right-info-bar {
-    width: 10%;
-    position: relative;
-    float: right;
-}

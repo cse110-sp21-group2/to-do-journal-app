@@ -1,40 +1,24 @@
-/* Colors */
-.page {
-  background-color: rgb(225, 237, 247);
+/*shared  Elements*/
+* { 
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.navigation, 
-.collections-button, 
-.week-content-top, 
-.week-content-middle, 
-.week-content-bottom, 
-.content-button,
-.period-button,
-.search-bar,
-.search-input,
-.account-bar,
-.tasks-button,
-.events-button,
-.help-button,
-.notification-button,
-.account-button,
-.tasks-button,
-.events-button,
-.right-info-bar {
-  background-color: #ffffff;
+body {
+  background: url("https://i.ibb.co/sFtX9zy/bg.png"); 
+  min-height: 100vh;
+  min-width: 100vw;
 }
 
-.navigation-title {
-  background-color: #e2cb14;
+.main {
+  display: grid;
+  grid-template-columns: 205px 555px auto 205px;
+  grid-template-rows: 118px auto 80px;
+  margin: 20px 20px;
 }
+/*shared  Elements End*/
 
-.page {
-  background-color: rgb(225, 237, 247);
-}
-
-.current-link {
-  background-color: rgba(213, 171, 9, 0.25);
-}
 .week-number-current {
   background-color: #d5ab09;
 }
@@ -44,88 +28,24 @@
   border-color: #162a47;
 }
 
-/* Visuals (images)*/
-.logo {
-  width: 180px;
-  display: table;
-  margin: 0 auto;
+/* Buttons*/
+.button-circle {
+  width: 30px;
+  height: 30px;
+  border-radius: 15px;
+  border:solid;
+  background: white;
+  position:relative;
+  top: 0px;
+  left: 0px;
 }
 
-/*Overall Container*/
-.page {
-  display: grid;
-  grid-template-columns: 205px 305px auto 205px;
-  grid-template-rows: 118px auto 80px;
-  margin: 20px 20px;
-  column-gap: 20px;
-}
-
-/*Left Navigation Bar*/
-.navigation {
-  grid-column: 1 / 2;
-  grid-row: 1 / 4;
-  padding: 10px 10px;
-  margin: -20px 0px -20px -20px;
-  min-height: 1000px;
-  height: 100vh;
-  box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.25);
-}
-
-.navigation-title {
-  margin: 0px -10px 0px -10px;
-  padding: 10px;
-  text-align: center;
-  font-family: Tw Cen MT Condensed;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 45px;
-  color:#162A47;
-}
-
-.index-link, .collections-link {
-  padding: 10px;
-  margin: 10px -10px 10px -10px;
-  text-align: center;
-}
-
-.collections-button {
-  width: 40px;
-  height: 40px;
-  border-radius: 40px;
-  display: table;
-   margin: 0 auto;
-}
-
-.link-text,
-.current-link-text {
-  text-decoration: none;
-  font-family: 'Roboto', Condensed;
-  font-style: normal;
-  font-weight: 300;
-  font-size: 24px;
-  line-height: 28px;
-  letter-spacing: -0.02em;
-  color: #162A47;
-}
-
-.current-link-text {
-  color: #834900;
-}
-
-.current-link {
-  border-right-style: solid;
-  border-right-width: 4px;
-  border-color:#D5AB09;
-  padding: 10px;
-  margin: 0px -10px 0px -10px;
-  text-align: center;
-}
-
-/*Middle Entries Display */
+/*Main Content Area */
 .content-region {
   padding-top: 75px;
   grid-column: 2 / 4;
   grid-row: 2 / 3;
+  min-width:1050px;
   width: 90%;
   margin: 1cm;
   display:grid;
@@ -167,6 +87,7 @@
 .week-content-top,
 .week-content-middle,
 .week-content-bottom {
+  background-color: white;
   padding: 10px;
   box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.25);
 }
@@ -182,10 +103,12 @@
 }
 
 .content-button {
+  background-color: white;
   grid-column: 2 / 3;
   width: 40px;
   height: 40px;
   border-radius: 40px;
+  border: solid;
   margin: auto;
 }
 
@@ -216,50 +139,9 @@
   border-radius: 40px;
 }
 
-/* Top Middle Search Bar*/
-.search-bar {
-  grid-column: 3 / 4;
-  grid-row: 1 / 2;
-  justify-self: center;
-  display: flex;
-  padding: 10px;
-  width: 480px;
-  height: 56px;
-  border-radius: 200px;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-}
-
-.search-icon {
-  margin: 5px;
-}
-
-.search-input{
-  border-style:none;
-  width: 80%;
-}
-
-/* Top Right Account Bar*/
-.account-bar{
-  grid-column: -2 / -1;
-  grid-row: 1 / 2;
-  border-radius: 200px;
-  width: 150px;
-  width: 201px;
-  height: 59px;
-  display:flex;
-  justify-content: space-evenly;
-  align-items: center;
-  box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.25);
-}
-
-.help-button, .notification-button, .account-button {
-  width: 40px;
-  height: 40px;
-  border-radius: 40px;
-}
-
-/* Right Info Bar */
-.right-info-bar {
+/* Right Navigation Bar | Version B, (containing calndar, task, and events)*/
+.right-nav-bar {
+  background-color: white;
   height: 856px;
   grid-column: -2 / -1;
   grid-row: 2 / 3;
@@ -276,7 +158,45 @@
 .calendar-region{
   width: 200px;
   height:200px;
+  display:grid;
+  grid-template-columns: auto;
+  grid-template-rows: 30px auto;
 }
+
+.month-selector {
+  margin: 0px auto;
+  background-color: #d5ab09;
+  border-radius: 20px;
+  color:white;
+  width: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.month-selector i {
+  color: white;
+}
+
+.month-days{
+  display:grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+  margin: 10px;
+}
+.right-month-button,
+.left-month-button {
+  background-color: #ffffff00;
+  border: none;
+}
+
+.date-number {
+  font-family: Tw Cen MT;
+  width: 18px;
+  height: 20px;
+  text-align: center;
+  color:#162a47
+}
+
 .calendar-seperator{
   border-style: solid;
   border-width: 3px;
@@ -298,10 +218,12 @@
 }
 
 .tasks-button, .events-button{
+  background-color: white;
   width: 20px;
   height: 20px;
   border-radius: 20px;
   margin: 4px;
+  border:solid;
 }
 .tasks-content, .events-content{
   width: 200px;

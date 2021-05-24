@@ -6,9 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Daily</title>
-
     <!-- import -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Unica+One&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+        integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
     <!-- <link href="http://fonts.cdnfonts.com/css/tw-cen-mt-condensed" rel="stylesheet">     -->
 
     <link rel="stylesheet" href="../styles/daily.css" />
@@ -16,53 +19,50 @@
 
 
 <body>
-    <main>
-        <header>
-            <!-- bookmark here (click on to get back to current day) -->
+    <main class="main">
+        <!-- bookmark here (click on to get back to current day) -->
 
 
-            <!-- current date heading and yesterday/tomorrow buttons -->
-            <div class="page-heading">
+        <!-- current date heading and yesterday/tomorrow buttons -->
+        <div class="page-heading">
 
-                <!-- Yesterday Button -->
-                <div class="back-button">
-                    <button type="button" class="button-circle"><i class="fas fa-chevron-left"></i></button>
-                </div>       
-
-                <h1 class="daily-date">May 5, 2021(placeholder)</h1>
-
-                <!-- Tomorrow Button -->                
-                <div class="forward-button">
-                    <button type="button" class="button-circle"><i class="fas fa-chevron-right"></i></button>
-                </div> 
-
+            <!-- Yesterday Button -->
+            <div class="back-button">
+                <button type="button" class="button-circle"><i class="fas fa-chevron-left"></i></button>
             </div>
 
-            <!-- search bar here -->
+            <h1 class="daily-date">May 5, 2021</h1>
+
+            <!-- Tomorrow Button -->
+            <div class="forward-button">
+                <button type="button" class="button-circle"><i class="fas fa-chevron-right"></i></button>
+            </div>
+
+        </div>
+
+        <!-- search bar here -->
 
 
-            <!-- help/notifications/account menu here -->
-            
+        <!-- help/notifications/account menu here -->
 
 
-        </header>
+
+
 
         <!-- Main Content -->
         <div class="daily-grid">
             <!-- Events -->
-            <div id="events-container">
-
-                <div class="section-header" id="events-header">
-                    <div class="heading" id="events-heading">Events</div>
-                </div>
-
+            <div class="section-header" id="events-header">
+                <h1 class="heading" id="events-heading">Events</h1>
                 <!-- Add Event Button (submit) -->
                 <div class="add-button" id="add-event">
-                    <button type="submit" value="Submit" class="button-circle" id="submitButton" />
-                        <i class="fas fa-plus"></i>
+                    <button type="submit" value="Submit" class="button-circle" id="submitButton">
+                    <i class="fas fa-plus"></i>
                     </button>
                 </div>
+            </div>
 
+            <div id="events-container">
                 <div id="events-content">
                     <!-- Time Picker for Events -->
                     <div class="time-picker">
@@ -202,40 +202,38 @@
             </div>
 
             <!-- Notes -->
-            <div id="notes-container">
+            <div class="section-header" id="notes-header">
+                <h1 class="heading" id="notes-heading">Notes</h1>
 
-                <div class="section-header" id="notes-header">
-                    <div class="heading" id="notes-heading">Notes</div>
+                <!-- stickers/photos/audio/video/link menu -->
+                <div id="add-media-container">
+                    <!-- add stickers/emoji button -->
+                    <div class="add-media-button" id="sticker-button">
+                        <button type="button" class="button-circle"><i class="far fa-grin"></i></button>
+                    </div>
 
-                    <!-- stickers/photos/audio/video/link menu -->
-                    <div id="add-media-container">
-                            <!-- add stickers/emoji button -->
-                            <div class="add-media-button" id="sticker-button">
-                                <button type="button" class="button-circle"><i class="far fa-grin"></i></button>
-                            </div>
-                            
-                            <!-- add photo button -->
-                            <div class="add-media-button" id="photo-button">
-                                <button type="button" class="button-circle"><i class="fas fa-images"></i></button>
-                            </div>       
-                            
-                            <!-- add audio button -->
-                            <div class="add-media-button" id="audio-button">
-                                <button type="button" class="button-circle"><i class="fas fa-microphone"></i></button>
-                            </div>
-                            
-                            <!-- add video button -->
-                            <div class="add-media-button" id="video-button">
-                                <button type="button" class="button-circle"><i class="fas fa-play"></i></button>
-                            </div>         
-                            
-                            <!-- add link button -->
-                            <div class="add-media-button" id="link-button">
-                                <button type="button" class="button-circle"><i class="fas fa-link"></i></button>
-                            </div>     
-                        </div>                     
+                    <!-- add photo button -->
+                    <div class="add-media-button" id="photo-button">
+                        <button type="button" class="button-circle"><i class="fas fa-images"></i></button>
+                    </div>
+
+                    <!-- add audio button -->
+                    <div class="add-media-button" id="audio-button">
+                        <button type="button" class="button-circle"><i class="fas fa-microphone"></i></button>
+                    </div>
+
+                    <!-- add video button -->
+                    <div class="add-media-button" id="video-button">
+                        <button type="button" class="button-circle"><i class="fas fa-play"></i></button>
+                    </div>
+
+                    <!-- add link button -->
+                    <div class="add-media-button" id="link-button">
+                        <button type="button" class="button-circle"><i class="fas fa-link"></i></button>
+                    </div>
                 </div>
-
+            </div>
+            <div id="notes-container">
                 <div id="notes-content">
                     <textarea id="notes" rows="41" cols="80"></textarea>
                 </div>
@@ -243,22 +241,19 @@
             </div>
 
             <!-- Tasks -->
-            <div id="tasks-container">
-
-                <div class="section-header" id="tasks-header">
-                    <div class="heading" id="tasks-heading">Tasks</div>
-                </div>
-
+            <div class="section-header" id="tasks-header">
+                <h1 class="heading" id="tasks-heading">Tasks</h1>
                 <!-- Add Task Button -->
                 <div class="add-button" id="add-task">
                     <button type="button" class="button-circle"><i class="fas fa-plus"></i></button>
                 </div>
-
+            </div>
+            <div id="tasks-container">
                 <div id="tasks-content">
                 </div>
 
-            </div>   
-        </div>     
+            </div>
+        </div>
 
     </main>
 
