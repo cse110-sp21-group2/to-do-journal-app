@@ -1,6 +1,6 @@
-import mongoose from 'mongoose';
+import mongoose from 'mongoose'
 
-const { Schema: _Schema } = mongoose;
+const { Schema: _Schema } = mongoose
 
 const EventSchema = new _Schema({
   content: {
@@ -21,4 +21,4 @@ const EventSchema = new _Schema({
   },
 });
 
-export default EventSchema;
+export default EventSchema

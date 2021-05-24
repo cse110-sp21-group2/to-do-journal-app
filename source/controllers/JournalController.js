@@ -203,30 +203,448 @@ export default class JournalController {
     });
   }
 
-  // // TO-DO
   // /**
   //  * Moves a task from one journal entry to another.
-  //  * @param {object} updatedTask - Information to create new journal entry
-  //  * @param {object} updatedTask - Information to create new journal entry
-  //  * @returns {object} Updated task.
+  //  * @param {object} moveTask - Information to create new journal entry
+  //  * @returns {object} migrated task.
   //  */
-  // async migrateTask(req, res) {}
+  async migrateTask(req, res) {
+    const {
+      body: { taskId, content, entryDate, dueDate, migrateDate, type },
+      params: { id },
+    } = req;
 
-  // // TO-DO
+    // Get date for this current entry
+    const _entryDate = new Date(entryDate);
+    // Get date for destination entry
+    const _migrateDate = new Date(migrateDate);
+    // Get the due date if applicable
+    const _dueDate = new Date(dueDate);
+
+    // Construct new task object based on current entry task
+    let moveTask = {
+      content,
+      dueDate: _dueDate,
+    };
+
+    // find current journal with user id
+    let journal;
+    try{
+      journal = await this.Journal.findOne({ _id: id });
+    } catch (error) {
+      return res.status(400).json({
+        success: false,
+        error,
+      });
+    }
+    // Callback function for finding index of journal entry for this date
+    const isCurrentDate = (entry) =>
+      entry.date.getDate() === _entryDate.getDate() &&
+      entry.date.getMonth() === _entryDate.getMonth() &&
+      entry.date.getFullYear() === _entryDate.getFullYear();
+    // Callback function for finding index of destination journal entry for destination date
+    const isDestinationDate = (entry) =>
+      entry.date.getDate() === _migrateDate.getDate() &&
+      entry.date.getMonth() === _migrateDate.getMonth() &&
+      entry.date.getFullYear() === _migrateDate.getFullYear();
+
+    // Callback function to find correct task in current entry
+    const isTaskToMigrate = (task) => task._id.toString() === taskId;
+
+
+    if ( type === 'Daily') {
+      // Get index for correct daily entry
+      const dailyIndex = journal.dailyEntries.findIndex(isCurrentDate);
+      // Get index for task within the current entry to move
+      const taskIndex = journal.dailyEntries[dailyIndex].tasks.findIndex(
+        isTaskToMigrate
+      );
+      // Getting specific task from current entry of type Daily
+      moveTask = journal.dailyEntries[dailyIndex].tasks[taskIndex];
+      // Get index for correct destination entry
+      const destIndex = journal.dailyEntries.findIndex(isDestinationDate);
+      // Remove task from current entry
+      journal.dailyEntries[dailyIndex].tasks[taskIndex].remove();
+      // Push task to destination entry
+      journal.dailyEntries[destIndex].tasks.push(moveTask);
+      // Else if this is a semesterly entry
+    } else if (type === 'Semesterly'){
+      // Get index for correct semesterly entry
+      const semesterlyIndex = journal.semesterlyEntries.findIndex(isCurrentDate);
+      // Get index for task within the current entry to move
+      const taskIndex = journal.semesterlyEntries[semesterlyIndex].tasks.findIndex(
+        isTaskToMigrate
+      );
+      // Getting specific task from current entry of type semesterly
+      moveTask = journal.semesterlyEntries[semesterlyIndex].tasks[taskIndex];
+      // Get index for correct destination entry
+      const destIndex = journal.semesterlyEntries.findIndex(isDestinationDate);
+      // Remove task from current entry
+      journal.semesterlyEntries[semesterlyIndex].tasks[taskIndex].remove();
+      // Push task to destination entry
+      journal.semesterlyEntries[destIndex].tasks.push(moveTask);
+      // Else if this is a quarterly entry
+    } else if (type === 'Quarterly'){
+      // Get index for correct quarterly entry
+      const quarterlyIndex = journal.quarterlyEntries.findIndex(isCurrentDate);
+      // Get index for task within the current entry to move
+      const taskIndex = journal.quarterlyEntries[quarterlyIndex].tasks.findIndex(
+        isTaskToMigrate
+      );
+      // Getting specific task from current entry of type quarterly
+      moveTask = journal.quarterlyEntries[quarterlyIndex].tasks[taskIndex];
+      // Get index for correct destination entry
+      const destIndex = journal.quarterlyEntries.findIndex(isDestinationDate);
+      // Remove task from current destination
+      journal.quarterlyEntries[quarterlyIndex].tasks[taskIndex].remove();
+      // Push task to destination entry
+      journal.quarterlyEntries[destIndex].tasks.push(moveTask);
+      // Else if this is a weekly entry
+    } else if (type === 'Weekly'){
+      // Get index for correct weekly entry
+      const weeklyIndex = journal.weeklyEntries.findIndex(isCurrentDate);
+      // Get index for task within the current entry to move
+      const taskIndex = journal.weeklyEntries[weeklyIndex].tasks.findIndex(
+        isTaskToMigrate
+      );
+      // Getting specific task from current entry of type weekly
+      moveTask = journal.weeklyEntries[weeklyIndex].tasks[taskIndex];
+      // Get index for correct destination entry
+      const destIndex = journal.weeklyEntries.findIndex(isDestinationDate);
+      // Remove task from current entry
+      journal.weeklyEntries[weeklyIndex].tasks[taskIndex].remove();
+      // Push task to destination entry
+      journal.weeklyEntries[destIndex].tasks.push(moveTask);
+      // Else if this is a monthly entry
+    } else {
+      // Get index for correct monthly entry
+      const monthlyIndex = journal.monthlyEntries.findIndex(isCurrentDate);
+      // Get index for task within the current entry to move
+      const taskIndex = journal.monthlyEntries[monthlyIndex].tasks.findIndex(
+        isTaskToMigrate
+      );
+      // Getting specific task from current entry of type monthly
+      moveTask = journal.monthlyEntries[monthlyIndex].tasks[taskIndex];
+      // Remove task from current destination
+      journal.monthlyEntries[monthlyIndex].tasks[taskIndex].remove();
+      // Get index for correct destination entry
+      const destIndex = journal.monthlyEntries.findIndex(isDestinationDate);
+      // Push task to destination entry
+      journal.monthlyEntries[destIndex].tasks.push(moveTask);
+      // Remove task from current entry
+      journal.monthlyEntries[monthlyIndex].tasks[taskIndex].remove();
+    }
+
+    // Attempt to save changes to journal
+    try {
+      await journal.save();
+      // Failed to validate the schema for this model
+    } catch (error) {
+      return res.status(400).json({
+        success: false,
+        error,
+      });
+    }
+
+    // Return migrated task
+    return res.status(200).json({
+      success: true,
+      data: moveTask,
+    });
+  }
+
   // /**
   //  * Moves a note from one journal entry to another.
-  //  * @param {object} updatedNote - Information to create new journal entry
-  //  * @returns {object} Updated note.
+  //  * @param {object} moveNote - Information to create new journal entry
+  //  * @returns {object} migrated note.
   //  */
-  // async migrateNote(req, res) {}
+  async migrateNote(req, res) {
+    const {
+      body: { noteId, content, type, entryDate, migrateDate },
+      params: { id },
+    } = req;
+    // Get date for current entry
+    const _entryDate = new Date(entryDate);
+    // Get date for migrate entry
+    const _migrateDate = new Date(migrateDate);
 
-  // // TO-DO
+    // Construct notes
+    let moveNote = {
+      content,
+    };
+
+    // Initialize Journal
+    let journal;
+
+    // Attempt to find Journal() object with user id
+    try{
+      journal = await this.Journal.findOne({_id: id });
+    } catch(error){
+      return res.status(400).json({ success: false, error });
+    }
+
+    // Callback function for finding index of current journal entry
+    const isCurrentDate = (entry) => 
+      entry.date.getDate() === _entryDate.getDate() &&
+      entry.date.getMonth() === _entryDate.getMonth() &&
+      entry.date.getFullYear() === _entryDate.getFullYear();
+    // Callback function for finding index of destination journal entry
+    const isDestinationDate = (entry) => 
+      entry.date.getDate() === _migrateDate.getDate() &&
+      entry.date.getMonth() === _migrateDate.getMonth() &&
+      entry.date.getFullYear() === migrateDate.getFullYear();
+
+    const isNoteToMigrate = (note) => note._id.toString() === noteId;
+
+    if (type === 'Daily') { 
+      // Get index for correct daily entry
+      const dailyIndex = journal.dailyEntries.findIndex(isCurrentDate);
+      // Get index for note within current entry
+      const noteIndex = journal.dailyEntries[dailyIndex].notes.findIndex(
+        isNoteToMigrate
+      );
+      // Get specific note from current entry of type Daily
+      moveNote = journal.dailyEntries[dailyIndex].notes[noteIndex];
+      // Get index for correct destination entry
+      const destIndex = journal.dailyEntries.findIndex(isDestinationDate);
+      // Push note to destination entry
+      journal.dailyEntries[destIndex].notes.push(moveNote);
+      // Remove note from current entry
+      journal.dailyEntries[dailyIndex].notes[noteIndex].remove();
+      // Else if this is a semesterly entry
+    } else if ( type === 'Semesterly' ) { 
+      // Get index for correct semesterly entry
+      const semesterlyIndex = journal.semesterlyEntries.findIndex(isCurrentDate);
+      // Get index for note within current entry
+      const noteIndex = journal.semesterlyEntries[semesterlyIndex].notes.findIndex(
+        isNoteToMigrate
+      );
+      // Get specific note from current entry of type semesterly
+      moveNote = journal.semesterlyEntries[semesterlyIndex].notes[noteIndex];
+      // Get index for correct destination entry
+      const destIndex = journal.semesterlyEntries.findIndex(isDestinationDate);
+      // Push note to destination entry
+      journal.semesterlyEntries[destIndex].notes.push(moveNote);
+      // Remove note from current entry
+      journal.semesterlyEntries[semesterlyIndex].notes[noteIndex].remove();
+      // Else if this is a quarterly entry
+    } else if ( type === 'Quarterly' ) { 
+      // Get index for correct quarterly entry
+      const quarterlyIndex = journal.quarterlyEntries.findIndex(isCurrentDate);
+      // Get index for note within current entry
+      const noteIndex = journal.quarterlyEntries[quarterlyIndex].notes.findIndex(
+        isNoteToMigrate
+      );
+      // Get specific note from current entry of type quarterly
+      moveNote = journal.quarterlyEntries[quarterlyIndex].notes[noteIndex];
+      // Get index for correct destination entry
+      const destIndex = journal.quarterlyEntries.findIndex(isDestinationDate);
+      // Push note to destination entry
+      journal.quarterlyEntries[destIndex].notes.push(moveNote);
+      // Remove note from current entry
+      journal.quarterlyEntries[quarterlyIndex].notes[noteIndex].remove();
+      // Else if this is a weekly entry
+    } else if ( type === 'Weekly' ) { 
+      // Get index for correct weekly entry
+      const weeklyIndex = journal.weeklyEntries.findIndex(isCurrentDate);
+      // Get index for note within current entry
+      const noteIndex = journal.weeklyEntries[weeklyIndex].notes.findIndex(
+        isNoteToMigrate
+      );
+      // Get specific note from current entry of type weekly
+      moveNote = journal.weeklyEntries[weeklyIndex].notes[noteIndex];
+      // Get index for correct destination entry
+      const destIndex = journal.weeklyEntries.findIndex(isDestinationDate);
+      // Push note to destination entry
+      journal.weeklyEntries[destIndex].notes.push(moveNote);
+      // Remove note from current entry
+      journal.weeklyEntries[weeklyIndex].notes[noteIndex].remove();
+      // Else this is a monthly entry
+    } else {
+      // Get index for correct monthly entry
+      const monthlyIndex = journal.monthlyEntries.findIndex(isCurrentDate);
+      // Get index for note within current entry
+      const noteIndex = journal.monthlyEntries[monthlyIndex].notes.findIndex(
+        isNoteToMigrate
+      );
+      // Get specific note from current entry of type monthly
+      moveNote = journal.monthlyEntries[monthlyIndex].notes[noteIndex];
+      // Get index for correct destination entry
+      const destIndex = journal.monthlyEntries.findIndex(isDestinationDate);
+      // Push note to destination entry
+      journal.monthlyEntries[destIndex].notes.push(moveNote);
+      // Remove note from current entry
+      journal.monthlyEntries[monthlyIndex].notes[noteIndex].remove();
+    }
+
+    // Attempt to save changes to journal
+    try {
+      await journal.save();
+      // Failed to validate the schema for this model
+    } catch (error) {
+      return res.status(400).json({
+        success: false,
+        error,
+      });
+    }
+
+    // Return migrated task
+    return res.status(200).json({
+      success: true,
+      data: moveNote,
+    });
+  }
+
   // /**
   //  * Moves an event from one journal entry to another.
-  //  * @param {object} newEntry - Information to create new journal entry
-  //  * @returns {object} Updated event.
+  //  * @param {object} moveEvent - Information to create new journal entry
+  //  * @returns {object} migrated event.
   //  */
-  // async migrateEvent(req, res) {}
+  async migrateEvent(req, res) {
+    const {
+      body: { eventId, content, startTime, endTime, entryDate, migrateDate, link, type },
+      params: { id },
+    } = req;
+    // Get the entry date passed in for current journal entry
+    const _entryDate = new Date(entryDate);
+    // Get the destination date for the destination entry
+    const _migrateDate = new Date(migrateDate);
+    // Get start and end time for this event
+    const _startTime = new Date(startTime);
+    const _endTime = new Date(endTime);
+
+    // Construct event Object
+    let moveEvent = {
+      content,
+      startTime: _startTime,
+      endTime: _endTime,
+      link,
+    };
+
+    // Initialize for journal()
+    let journal;
+
+    // Attempt to find current journal with user id
+    try {
+      journal = await this.Journal.findOne({ _id: id });
+    } catch (error) {
+      return res.status(400).json({ success: false, error });
+    }
+
+    // Callback function for finding index of current journal entry
+    const isCurrentDate = (entry) =>
+      entry.date.getDate() === _entryDate.getDate() &&
+      entry.date.getMonth() === _entryDate.getMonth() &&
+      entry.date.getFullYear() === _entryDate.getFullYear();
+    // Callback function for finding index of destination journal entry
+    const isDestinationDate = (entry) =>
+      entry.date.getDate() === _migrateDate.getDate() &&
+      entry.date.getMonth() === _migrateDate.getMonth() &&
+      entry.date.getFullYear() === _migrateDate.getFullYear();
+    // Callback function for finding index of event to migrate
+    const isEventToMigrate = (event) => event._id.toString() === eventId;
+
+    if ( type === 'Daily' ) {
+      // Get index of daily entries
+      const dailyIndex = journal.dailyEntries.findIndex(isCurrentDate);
+      // Get index of event in that entry
+      const eventIndex = journal.dailyEntries[dailyIndex].events.findIndex(
+        isEventToMigrate
+      );
+      // Get specific event from current entry of type Daily 
+      moveEvent = journal.dailyEntries[dailyIndex].events[eventIndex];
+      // Get index for correct destination entry
+      const destIndex = journal.dailyEntries.findIndex(isDestinationDate);
+      // Push event to destination entry
+      journal.dailyEntries[destIndex].events.push(moveEvent);
+      // Remove event from current entry
+      journal.dailyEntries[dailyIndex].events[eventIndex].remove();
+      // Else if this is a semesterly entry
+    } else if ( type === 'Semesterly' ) { 
+      // Get index of semesterly entries
+      const semesterlyIndex = journal.semesterlyEntries.findIndex(isCurrentDate);
+      // Get index of event in that entry
+      const eventIndex = journal.semesterlyEntries[semesterlyIndex].events.findIndex(
+        isEventToMigrate
+      );
+      // Get specific event from current entry of type semesterly 
+      moveEvent = journal.semesterlyEntries[semesterlyIndex].events[eventIndex];
+      // Get index for correct destination entry
+      const destIndex = journal.semesterlyEntries.findIndex(isDestinationDate);
+      // Push event to destination entry
+      journal.semesterlyEntries[destIndex].events.push(moveEvent);
+      // Remove event from current entry
+      journal.semesterlyEntries[semesterlyIndex].events[eventIndex].remove();
+      // Else if this is a quarterly entry
+    } else if ( type === 'Quarterly' ) {
+      // Get index of quarterly entries
+      const quarterlyIndex = journal.quarterlyEntries.findIndex(isCurrentDate);
+      // Get index of event in that entry
+      const eventIndex = journal.quarterlyEntries[quarterlyIndex].events.findIndex(
+        isEventToMigrate
+      );
+      // Get specific event from current entry of type quarterly 
+      moveEvent = journal.quarterlyEntries[quarterlyIndex].events[eventIndex];
+      // Get index for correct destination entry
+      const destIndex = journal.quarterlyEntries.findIndex(isDestinationDate);
+      // Push event to destination entry
+      journal.quarterlyEntries[destIndex].events.push(moveEvent);
+      // Remove event from current entry
+      journal.quarterlyEntries[quarterlyIndex].events[eventIndex].remove();
+      // Else if this is a weekly entry
+    } else if ( type === 'Weekly' ) {
+      // Get index of weekly entries
+      const weeklyIndex = journal.weeklyEntries.findIndex(isCurrentDate);
+      // Get index of event in that entry
+      const eventIndex = journal.weeklyEntries[weeklyIndex].events.findIndex(
+        isEventToMigrate
+      );
+      // Get specific event from current entry of type weekly 
+      moveEvent = journal.weeklyEntries[weeklyIndex].events[eventIndex];
+      // Get index for correct destination entry
+      const destIndex = journal.weeklyEntries.findIndex(isDestinationDate);
+      // Push event to destination entry
+      journal.weeklyEntries[destIndex].events.push(moveEvent);
+      // Remove event from current entry
+      journal.weeklyEntries[weeklyIndex].events[eventIndex].remove();
+      // Else if this is a monthly entry
+    } else {
+      // Get index of monthly entries
+      const monthlyIndex = journal.monthlyEntries.findIndex(isCurrentDate);
+      // Get index of event in that entry
+      const eventIndex = journal.monthlyEntries[monthlyIndex].events.findIndex(
+        isEventToMigrate
+      );
+      // Get specific event from current entry of type monthly 
+      moveEvent = journal.monthlyEntries[monthlyIndex].events[eventIndex];
+      // Get index for correct destination entry
+      const destIndex = journal.monthlyEntries.findIndex(isDestinationDate);
+      // Push event to destination entry
+      journal.monthlyEntries[destIndex].events.push(moveEvent);
+      // Remove event from current entry
+      journal.monthlyEntries[monthlyIndex].events[eventIndex].remove();
+    }
+
+    // Attempt to save changes to journal
+    try {
+      await journal.save();
+      // Failed to validate the schema for this model
+    } catch (error) {
+      return res.status(400).json({
+        success: false,
+        error,
+      });
+    }
+
+    // Return migrated task
+    return res.status(200).json({
+      success: true,
+      data: moveEvent,
+    });
+  }
+
+
+
 
   /**
    * Adds a new journal entry.
@@ -362,6 +780,9 @@ export default class JournalController {
       // Else if this is a weekly entry|
     } else if (type === 'Weekly') {
       // Get index for correct weekly entrydate
+      const index = journal.weeklyEntries.findIndex(isCurrentDate);
+      // Push new Task
+      journal.weeklyEntries[index].tasks.push(newTask);
       // Else this is a monthly entry
     } else {
       // Get index for correct monthly entry
@@ -553,7 +974,6 @@ export default class JournalController {
       const taskIndex = journal.dailyEntries[dailyIndex].tasks.findIndex(
         isTaskToDelete
       );
-
       // Delete this task
       await journal.dailyEntries[dailyIndex].tasks[taskIndex].remove();
 
