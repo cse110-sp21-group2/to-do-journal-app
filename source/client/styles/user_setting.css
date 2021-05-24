@@ -115,6 +115,11 @@ form {
     display: grid;
     grid-template-columns: 50% 50%;
     column-gap: 15px;
+
+    font-family: Roboto Condensed;
+    font-style: normal;
+    font-weight: normal;
+
     
 }
 

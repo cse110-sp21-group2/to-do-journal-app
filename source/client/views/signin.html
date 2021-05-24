@@ -8,7 +8,12 @@
       name="google-signin-client_id"
       content="http://110656900996-fi7ahcr6josugvshub5bh4mm0lbl9m69.apps.googleusercontent.com/"
     />
-    <title>Login</title>
+    <title>Sign In</title>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Unica+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+      
 
     <!-- Main CSS -->
     <link rel="stylesheet" href="../styles/signin.css" />
@@ -18,12 +23,13 @@
     <main>
       <div class="row">
         <div class="column hero-banner">
-          <img className="column hero-banner-image" alt="" />
+          <img class="column hero-banner-image" src="https://i.ibb.co/mBnjFw3/laurel-wreath.png" alt="" />
         </div>
         <div class="column login-form">
           <form action="http://localhost:4000/auth/login-user" method="post">
-            <img src="../styles/hkuanny.gif" alt="Avatar" class="avatar" />
+            <img src="../../../admin/branding/logo256.png" alt="Avatar" class="avatar" />
             <br />
+            <h1 class="header">Sign In</h1>
             <br />
             <label for="email">Email</label>
             <input
