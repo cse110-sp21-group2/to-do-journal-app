@@ -1,6 +1,5 @@
 body {
   margin: 0;
-  font-family: Roboto Condensed;
 }
 
 .row {
@@ -22,7 +21,7 @@ img.hero-banner-image {
   height: 70%;
   width: auto;
   margin: auto;
-  /* padding: 20%; */
+  margin-top: 110px;
 
 
 }
@@ -59,7 +58,7 @@ img.hero-banner-image {
 }
 
 label {
-  font-family: Roboto Condensed;
+  font-family: 'Roboto', Condensed;
   font-style: normal;
   font-weight: normal;
   font-size: 24px;
@@ -68,11 +67,11 @@ label {
   align-items: center;
   letter-spacing: -0.02em;
   display: block;
-  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 a {
-  font-family: Roboto Condensed;
+  font-family: 'Roboto', Condensed;
   font-style: normal;
   font-weight: normal;
   font-size: 18px;
@@ -86,7 +85,7 @@ a {
 #name,
 #email,
 #password {
-  font-family: Roboto Condensed;
+  font-family: 'Roboto', Condensed;
   font-style: normal;
   font-weight: normal;
   font-size: 18px;
@@ -94,7 +93,7 @@ a {
   border-color: black;
   outline: 0;
   width: 300px;
-  margin-top: 15px;
+  margin-bottom: 15px;
 }
 
 .login-btn-container {

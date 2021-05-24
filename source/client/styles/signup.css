@@ -1,6 +1,5 @@
 body {
   margin: 0;
-  font-family: Roboto Condensed;
 }
 
 .row {
@@ -43,7 +42,7 @@ img.hero-banner-image {
 }
 
 label {
-  font-family: Roboto Condensed;
+  font-family: 'Roboto', Condensed;
   font-style: normal;
   font-weight: normal;
   font-size: 24px;
@@ -58,7 +57,7 @@ label {
 #name,
 #email,
 #password {
-  font-family: Roboto Condensed;
+  font-family: 'Roboto', Condensed;
   font-style: normal;
   font-weight: normal;
   font-size: 18px;
