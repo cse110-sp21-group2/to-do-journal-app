@@ -9,7 +9,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Unica+One&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
-    integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+            integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
         <link rel="stylesheet" href="../styles/dashboard.css" />
     </head>
     <body>
@@ -48,42 +48,73 @@
                 </div>
             </div>
 
-            <div class="left-nav">
-                <img src="../../../admin/branding/logo500.png" alt="Two-Do logo" class="logo">
-                <h1 class="navigation-title">Index</h1>
-                <h2 class="index-link"><a href="" class="link-text">Daily</a></h2>
-                <h2 class="index-link"><a href="" class="link-text">Weekly</a></h2>
-                <h2 class="index-link"><a href="" class="link-text">Monthly</a></h2>
-                <h2 class="index-link"><a href="" class="link-text">Quarterly</a></h2>
-                <br>
-                <h1 class="navigation-title">Collections</h1>
-                <h2 class="collections-link"><a href="" class="link-text">Grocery List</a></h2>
-                <h2 class="collections-link"><a href="" class="link-text">Bucket List</a></h2>
-                <h2 class="collections-link"><a href="" class="link-text">Finance Planner</a></h2>
-                <h2 class="collections-link"><a href="" class="link-text">Fitness Planner</a></h2>
-                <h2 class="collections-link"><a href="" class="link-text">Reading Collection</a></h2>
-                <button type="button" class="collections-button"><i class="fas fa-chevron-down"></i></button>
-        
-            </div>
+            <div class="left-nav"></div>
             
             <div class="right-nav">
-                <div class="key-container">
-                    <h2 class="key-label">Key</h2>
-                    <div class="key-element">Workout</div>
-                    <div class="key-element">Exam</div>
-                    <div class="key-element">Study</div>
-                    <div class="key-element">Homework</div>
+                <div class="calendar-region">
+                    <div class="month-selector">
+                        <button type="button" class=left-month-button><i class="fas fa-chevron-left"></i></button>
+                        <h3 class="current month">May</h3>
+                        <button type="button" class="right-month-button"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                    <div class="month-days">
+                        <div class="date-number">26</div>
+                        <div class="date-number">27</div>
+                        <div class="date-number">28</div>
+                        <div class="date-number">29</div>
+                        <div class="date-number">30</div>
+                        <div class="date-number">1</div>
+                        <div class="date-number">2</div>
+                        <div class="date-number">3</div>
+                        <div class="date-number">4</div>
+                        <div class="date-number">5</div>
+                        <div class="date-number">6</div>
+                        <div class="date-number">7</div>
+                        <div class="date-number">8</div>
+                        <div class="date-number">9</div>
+                        <div class="date-number">10</div>
+                        <div class="date-number">11</div>
+                        <div class="date-number">12</div>
+                        <div class="date-number">13</div>
+                        <div class="date-number">14</div>
+                        <div class="date-number">15</div>
+                        <div class="date-number">16</div>
+                        <div class="date-number">17</div>
+                        <div class="date-number">18</div>
+                        <div class="date-number">19</div>
+                        <div class="date-number">20</div>
+                        <div class="date-number">21</div>
+                        <div class="date-number">22</div>
+                        <div class="date-number">23</div>
+                        <div class="date-number">24</div>
+                        <div class="date-number">25</div>
+                        <div class="date-number">26</div>
+                        <div class="date-number">27</div>
+                        <div class="date-number">28</div>
+                        <div class="date-number">29</div>
+                        <div class="date-number">30</div>
+                        <div class="date-number">31</div>
+                        <div class="date-number">1</div>
+                        <div class="date-number">2</div>
+                        <div class="date-number">3</div>
+                        <div class="date-number">4</div>
+                        <div class="date-number">5</div>
+                        <div class="date-number">6</div>
+                    </div>
+                </div>
                 <div>
-                <hr class="calendar-seperator">
-                <div class="goals-container">
+                    <hr class="calendar-seperator">
                     <h2 class="goals-label">Goals</h2>
+                </div>
+                <div class="goals-container">
                     <div class="goals-element">Study for at least 2 hours</div>
                     <div class="goals-element">Maintain workout schedule</div>
                 </div>
-        
             </div>
 
-            
         </main>
+
+        <!-- left-nav web component -->
+        <script src="../components/left-nav-component.js" type="module"></script>
     </body>
 </html>
