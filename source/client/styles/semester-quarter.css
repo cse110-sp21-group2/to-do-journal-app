@@ -28,7 +28,46 @@ body {
   border-color: #162a47;
 }
 
-/* Buttons*/
+/*Top Center Search Bar*/
+.search-bar {
+  grid-column: 3 / 4;
+  grid-row: 1 / 2;
+  justify-self: center;
+  background-color: white;
+  
+  display: flex;
+  padding: 10px;
+  margin: 10px;
+  width: 480px;
+  height: 56px;
+  border-radius: 200px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+#search-icon{
+  margin: 8px;
+  font-size: 20px;
+  color:#0000006b
+}
+.search-input{
+  border-style:none;
+  width: 80%;
+}
+
+/*Top Right Account Bar*/
+.account-bar {
+  grid-column: -2 / -1;
+  grid-row: 1 / 2;
+  background-color: white;
+  border-radius: 200px;
+  width: 150px;
+  width: 201px;
+  height: 59px;
+  display:flex;
+  justify-content: space-evenly;
+  align-items: center;
+  box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.25);
+}
+
 .button-circle {
   width: 30px;
   height: 30px;
@@ -38,6 +77,23 @@ body {
   position:relative;
   top: 0px;
   left: 0px;
+}
+
+.help-button,
+.notification-button,
+.account-button {
+  width: 40px;
+  height: 40px;
+  border-radius: 40px;
+  background-color: #ffffff00;
+  border: none;
+}
+
+.help-button i,
+.notification-button i,
+.account-button i {
+  font-size: 40px;
+  color: #263449;
 }
 
 /*Main Content Area */
@@ -139,8 +195,20 @@ body {
   border-radius: 40px;
 }
 
+/*Left Navigation Area*/
+.left-nav{
+  grid-column: 1 / 2;
+  grid-row: 1 / 4;
+  padding: 10px 10px;
+  background-color: white;
+  margin: -20px 0px -20px -20px;
+  min-height: 1000px;
+  height: 100vh;
+  box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.25);
+}
+
 /* Right Navigation Bar | Version B, (containing calndar, task, and events)*/
-.right-nav-bar {
+.right-nav {
   background-color: white;
   height: 856px;
   grid-column: -2 / -1;
