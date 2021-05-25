@@ -10,7 +10,7 @@ class LeftNav extends document.HTMLElement {
             <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
             integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
         </head>
-		<style>
+		    <style>
             .logo {
                 width: 180px;
                 display: table;
@@ -57,7 +57,7 @@ class LeftNav extends document.HTMLElement {
                 letter-spacing: -0.02em;
                 color: #162A47;
             }
-		</style>
+		    </style>
         <img src="../../../admin/branding/logo500.png" alt="Two-Do logo" class="logo">
         <h1 class="navigation-title">Index</h1>
         <h2 class="index-link"><a href="" class="link-text">Daily</a></h2>
