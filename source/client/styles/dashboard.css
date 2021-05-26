@@ -211,8 +211,8 @@ body {
     margin: 30px;
     min-width: 1050px;
     display: grid;
-    grid-template-columns: auto auto;
-    grid-template-rows: auto auto;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
     column-gap: 10px;
     row-gap: 10px;
     justify-items: center;
@@ -230,7 +230,8 @@ body {
     grid-column: 1;
     grid-row: 1 / 3;
     flex-grow: 1;
-    width: 45%;
+    width: 90%;
+    height: 100%;
     margin: 1em;
     min-width: 450px;
 }
@@ -240,7 +241,7 @@ body {
     box-shadow: 0px 5px 15px rgba(131, 73, 0, 0.5);
     border: 1px #162A47;
     box-sizing: border-box;
-    height: 94%;
+    height: 90%;
     width: 100%;
     border-radius: 29px;
 
@@ -259,15 +260,14 @@ body {
 .task-view{
     grid-column: 2;
     grid-row: 1;
-    min-width: 450px;
-    width: 35vw;
+    width: 90%;
 }
 
 .task-container {
     background: #FFFFFF;
     box-shadow: 0px 5px 15px rgba(131, 73, 0, 0.5);
     border-radius: 29px;
-    height: 87%;
+    height: 82%;
     width: 100%;
     border-radius: 29px;
 
@@ -286,15 +286,14 @@ body {
 .event-view{
     grid-column: 2;
     grid-row: 2;
-    min-width: 450px;
-    width: 35vw;
+    width: 90%;
 }
 
 .event-container {
     background: #FFFFFF;
     box-shadow: 0px 5px 15px rgba(131, 73, 0, 0.5);
     border-radius: 29px;
-    height: 87%;
+    height: 82%;
     width: 100%;
 
     /* note text */
