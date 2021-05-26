@@ -31,14 +31,11 @@ const user = session.getUser();
 const id = user._id;
 console.log("Print current user's id: " + id);
 
-// TEST case with current data
-// const url = `api/journal-entry/60ac3af75cc18f1184f58b9e&
-// 2021-05-24T23:50:03.282+00:00`;
-
-const url = `api/journal-entry/${id}&${today}`
-
 // GET entry promise and set it to JSON
-const journalEntry = await journalAPI.getJournalEntry(id, today);
+const journalEntry = await journalAPI.getJournalEntry(id, today, 'Daily');
+// TEST getting journal entry from DB
+// const journalEntry = await journalAPI.getJournalEntry("60ac3af75cc18f1184f58b9e", "2021-05-24T23:50:03.282+00:00", 'Daily');
+
 const { data: entry } = await journalEntry.json();
 
 
