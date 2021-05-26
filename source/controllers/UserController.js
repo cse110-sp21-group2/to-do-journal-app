@@ -10,7 +10,7 @@ export default class UserController {
 
   /**
    * Retrieves a user by their id.
-   * @param {string} id - Id for this user
+   * @param {string} id - Id for this user.
    * @returns {object} User.
    */
   async getUserById(req, res) {
@@ -33,8 +33,8 @@ export default class UserController {
 
   /**
    * Retrieves a user by their email.
-   * @param {string} email - Email for this user
-   * @returns {object} User.
+   * @param {string} email - Email for this user.
+   * @returns {Object} User.
    */
   async getUserByEmail(req, res) {
     const {
@@ -56,8 +56,8 @@ export default class UserController {
 
   /**
    * Updates a user.
-   * @param {object} id - Id for this user
-   * @param {object} updatedUser - Information for this new user
+   * @param {object} id - Id for this user.
+   * @param {Object} updatedUser - Information for this new user.
    */
   async updateUserInfo(id, updatedUser) {
     const filter = { id };

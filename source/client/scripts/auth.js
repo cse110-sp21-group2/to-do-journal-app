@@ -8,10 +8,10 @@ import session from './session.js';
 const auth = {};
 
 /**
- * Handles user login
- * @param {string} email - Email for this user
- * @param {string} password - Password for this user
- * @returns {object} User.
+ * Handles user login.
+ * @param {string} email - Email for this user.
+ * @param {string} password - Password for this user.
+ * @returns {Object} User.
  */
 auth.login = async (email, password) => {
   const { user, journal } = await authAPI.login(email, password);
@@ -30,11 +30,11 @@ auth.login = async (email, password) => {
   }
 }
 /**
- * Handles new user registration
- * @param {string} name - Name for this user
- * @param {string} email - Email for this user
- * @param {string} password - Password for this user
- * @returns {object} New User.
+ * Handles new user registration.
+ * @param {string} name - Name for this user.
+ * @param {string} email - Email for this user.
+ * @param {string} password - Password for this user.
+ * @returns {Object} New User.
  */
 auth.register = async (name, email, password) => {
   const { user, journal } = await authAPI.register(name, email, password);
