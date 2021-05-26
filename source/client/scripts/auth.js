@@ -2,9 +2,9 @@
 /* eslint-disable import/extensions */
 /* eslint-disable no-console */
 
-import authAPI from '../api/authAPI.js';
+// import authAPI from '../api/authAPI.js';
 // Get session
-import session from './session.js';
+// import session from './session.js';
 
 const auth = {};
 
@@ -14,22 +14,21 @@ const auth = {};
  * @param {string} password - Password for this user
  * @returns {object} User.
  */
-auth.login = async (email, password) => {
-  const { user, journal } = await authAPI.login(email, password);
+auth.login = async () => {
+  // const { user, journal } = await authAPI.login(email, password);
 
-  if (user && journal) {
+  // if (user && journal) {
     // Set session user
-    session.setUser(user);
+    // session.setUser(user);
     // Set session journal
-    session.setJournal(journal);
+    // session.setJournal(journal);
 
-    const sessionUser = session.getUser();
-    const userJournal = session.getJournal();
+    // const sessionUser = session.getUser();
+    // const userJournal = session.getJournal();
 
-    console.log(sessionUser);
-    console.log(userJournal);
+    // console.log(sessionUser);
+    // console.log(userJournal);
   }
-};
 
 /**
  * Handles new user registration
@@ -38,21 +37,21 @@ auth.login = async (email, password) => {
  * @param {string} password - Password for this user
  * @returns {object} New User.
  */
-auth.register = async (name, email, password) => {
-  const { user, journal } = await authAPI.register(name, email, password);
+auth.register = async () => {
+  // const { user, journal } = await authAPI.register(name, email, password);
 
-  if (user && journal) {
-    // Set session user
-    session.setUser(user);
-    // Set session journal
-    session.setJournal(journal);
+  // if (user && journal) {
+  //   // Set session user
+  //   session.setUser(user);
+  //   // Set session journal
+  //   session.setJournal(journal);
 
-    const sessionUser = session.getUser();
-    const userJournal = session.getJournal();
+  //   const sessionUser = session.getUser();
+  //   const userJournal = session.getJournal();
 
-    console.log(sessionUser);
-    console.log(userJournal);
-  }
+  //   console.log(sessionUser);
+  //   console.log(userJournal);
+  // }
 };
 
 export default auth;
