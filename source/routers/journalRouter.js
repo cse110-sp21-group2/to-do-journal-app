@@ -21,7 +21,7 @@ router.get('/journal/:id', (req, res) => {
 });
 
 // Route for getting journal entry for today's date
-router.get('/journal-entry/:id&:date', (req, res) => {
+router.get('/journal-entry/:id&:date&:type', (req, res) => {
   journalController.getJournalEntry(req, res);
 });
 
