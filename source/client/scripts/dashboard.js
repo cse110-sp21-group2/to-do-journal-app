@@ -1,3 +1,6 @@
+import journalAPI from '../api/journalAPI.js';
+import session from './session.js';
+
 /* eslint-disable no-console */
 /* eslint-disable no-undef */
 
@@ -23,7 +26,7 @@
 // Today's date
 const today = new Date();    
 // Current User
-const user = JSON.parse(localStorage.getItem('sessionUser'));
+const user = session.getUser();
 // Current user's id
 const id = user._id;
 console.log("Print current user's id: " + id);
@@ -35,9 +38,7 @@ console.log("Print current user's id: " + id);
 const url = `api/journal-entry/${id}&${today}`
 
 // GET entry promise and set it to JSON
-const journalEntry = await fetch(url, {
-    method: 'GET'
-});
+const journalEntry = await journalAPI.getJournalEntry(id, today);
 const { data: entry } = await journalEntry.json();
 
 
