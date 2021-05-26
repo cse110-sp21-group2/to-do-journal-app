@@ -750,11 +750,11 @@ export default class JournalController {
 
   /**
    * Adds a new task.
-   * @param {string} id - User Id
-   * @param {string} content - Task content
-   * @param {Date} dueDate - Due date for task
-   * @param {Date} entry - Date for journal entry
-   * @param {string} type - Type of journal entry
+   * @param {string} id - User Id.
+   * @param {string} content - Task content.
+   * @param {Date} dueDate - Due date for task.
+   * @param {Date} entry - Date for this journal entry.
+   * @param {string} type - Type of journal entry.
    * @returns {object} New task.
    */
   async addTask(req, res) {
@@ -847,9 +847,9 @@ export default class JournalController {
   /**
    * Updates a task.
    * @param {string} id - User Id
-   * @param {string} content - Updated content for task
-   * @param {Date} dueDate - Due date for task
-   * @param {Date} entryDate - Date for journal entry this event belongs to
+   * @param {string} content - Updated content for task.
+   * @param {Date} dueDate - Due date for task.
+   * @param {Date} entryDate - Date for journal entry this event belongs to.
    * @param {string} type - Type of journal entry
    * @returns {object} Updated event
    */

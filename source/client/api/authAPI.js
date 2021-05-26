@@ -3,9 +3,9 @@
 const authAPI = {};
 
 /**
- * Handles user login
- * @param {string} email - Email for this user
- * @param {string} password - Password for this user
+ * Handles user login.
+ * @param {string} email - Email for this user.
+ * @param {string} password - Password for this user.
  * @returns {object} User.
  */
 authAPI.login = async (email, password) => {
@@ -50,10 +50,10 @@ authAPI.login = async (email, password) => {
 };
 
 /**
- * Handles new user registration
- * @param {string} name - Name for this user
- * @param {string} email - Email for this user
- * @param {string} password - Password for this user
+ * Handles new user registration.
+ * @param {string} name - Name for this user.
+ * @param {string} email - Email for this user.
+ * @param {string} password - Password for this user.
  * @returns {object} New User.
  */
 authAPI.register = async (name, email, password) => {
