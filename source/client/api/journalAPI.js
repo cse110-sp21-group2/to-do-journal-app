@@ -90,7 +90,7 @@ journalAPI.addJournalEntry = async (id, date, type) => {
  * Adds a new task.
  * @param {string} id - User Id.
  * @param {string} content - Task content.
- * @param {Date} [dueDate] - Due date for task.
+ * @param {Date} dueDate - Due date for task.
  * @param {Date} entry - Date for this journal entry.
  * @param {string} type - Type of journal entry.
  * @returns {Object} New task.
@@ -119,8 +119,8 @@ journalAPI.addTask = async (id, content, entryDate, dueDate, type) => {
  * Updates a task.
  * @param {string} id - User Id.
  * @param {string} taskId - Task Id.
- * @param {string} [content] - Updated text for this task.
- * @param {Date} [dueDate] - Date task is due.
+ * @param {string} content - Updated text for this task.
+ * @param {Date} dueDate - Date task is due.
  * @param {Date} entryDate - Date for journal entry this task belongs to.
  * @param {string} type - Type of journal entry.
  * @returns {Object} Updated task.
@@ -272,7 +272,7 @@ journalAPI.deleteNote = async (id, noteId, entryDate, type) => {
  * Adds a new event.
  * @param {string} id - User Id.
  * @param {string} content - Event content.
- * @param {string} [link] - URL link.
+ * @param {string} link - URL link.
  * @param {Date} startTime - Start time for this event.
  * @param {Date} endTime - End time for this event.
  * @param {Date} entryDate - Date for journal entry this event belongs to.
@@ -307,7 +307,7 @@ journalAPI.addEvent = async (id, content, startTime, endTime, link, entryDate, t
  * Updates an event.
  * @param {string} id - User Id.
  * @param {string} content - Updated event content.
- * @param {string} [link] - URL link.
+ * @param {string} link - URL link.
  * @param {Date} startTime - Start time for this event.
  * @param {Date} endTime - End time for this event.
  * @param {string} eventId - Event Id.
