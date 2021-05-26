@@ -236,7 +236,7 @@ body {
     min-width: 1020px;
     min-height: 826px;
     display: grid;
-    grid-template-columns: auto auto auto;
+    grid-template-columns: 2fr 10fr 5fr;
     grid-template-rows: 60px auto;
     justify-items: start;
     align-items: start;
