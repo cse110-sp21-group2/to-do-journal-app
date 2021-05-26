@@ -37,12 +37,12 @@ userAPI.getUserByEmail = async (email) => {
  * @param {string} id - Id for this user
  * @returns {object} User.
  */
-userAPI.updateUserInfo = async (id, updatedUser) => {
-  const url = `/api/user-by-email/${email}`;
-  const response = await fetch(url).catch((err) => console.log(err));
-  const result = response.json();
+// userAPI.updateUserInfo = async (id, updatedUser) => {
+//   const url = `/api/user-by-email/${email}`;
+//   const response = await fetch(url).catch((err) => console.log(err));
+//   const result = response.json();
 
-  return result;
-};
+//   return result;
+// };
 
 export default userAPI;
