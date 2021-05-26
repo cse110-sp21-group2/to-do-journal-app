@@ -36,9 +36,6 @@ const journalEntry = await journalAPI.getJournalEntry(id, today, 'Daily');
 // TEST getting journal entry from DB
 // const journalEntry = await journalAPI.getJournalEntry("60ac3af75cc18f1184f58b9e", "2021-05-24T23:50:03.282+00:00", 'Daily');
 
-const { data: entry } = await journalEntry.json();
-
-
 // GET each task from entry and DISPLAY it
 entry.tasks.forEach((task) => {
     let newTask = document.createElement('task-toggle');
