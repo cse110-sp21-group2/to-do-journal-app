@@ -1,4 +1,4 @@
-class LeftNav extends document.HTMLElement {
+class LeftNav extends HTMLElement {
     constructor() {
       super();
   
