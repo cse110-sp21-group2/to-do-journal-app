@@ -6,7 +6,7 @@
   "globals": {
     "window": true,
     "document": true,
-    "HTMLElement": true
+    "HTMLElement": true 
   },
   "extends": [
     "airbnb-base",
