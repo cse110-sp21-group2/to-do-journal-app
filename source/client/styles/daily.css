@@ -7,8 +7,6 @@
 
 body {
     background: url("https://i.ibb.co/sFtX9zy/bg.png"); 
-    min-height: 100vh;
-    min-width: 100vw;
     margin: 0;
     padding: 0;
 }
