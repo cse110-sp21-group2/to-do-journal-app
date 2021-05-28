@@ -50,11 +50,14 @@ body {
     grid-column: 2 / 3;
     grid-row: 1 / 2;
     display: flex;
-    justify-content: space-between;
+    justify-content: left;
+    padding-left: 30px;
+    line-height: 75px;
     align-items: center;
-    width: 300px;
-    margin-top: -20px;
-    margin: -20px 0px 0px;
+    text-align: center;
+    letter-spacing: -0.02em;
+    color: #162a47;
+    text-shadow: 0px 4px 5px rgba(0, 0, 0, 0.25);
 }
 
 .daily-date {
@@ -64,6 +67,25 @@ body {
     font-weight: normal;
     font-size: 60px;
     color: #162A47;
+}
+/*Bookmark*/
+.bookmark{
+    margin: 10px;
+    margin-top: -50px;
+    margin: -50px 50px 0px 10px;
+}
+.solid-bookmark-div{
+    background-color: #00649c;
+    width: 20px;
+    height: 200px;
+}
+.bookmark-cutout-div{
+    background-color: #edf2fA;
+    width:20px;
+    height: 20px;
+    position: relative;
+    top: -5px;
+    transform: rotate(-45deg);
 }
 
 /*Top Center Search Bar*/
