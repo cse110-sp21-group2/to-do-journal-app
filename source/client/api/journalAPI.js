@@ -7,7 +7,7 @@ const journalAPI = {};
 /**
  * Creates a new Journal.
  * @param {object} id - User Id.
- * @returns {Object} New Journal.
+ * @returns {object} New Journal.
  */
 journalAPI.createJournal = async (id) => {
   const url = `/api/create-journal/${id}`;
@@ -35,7 +35,7 @@ journalAPI.getJournal = async (id) => {
  * @param {string} id - User Id.
  * @param {Date} date - Date for this journal entry.
  * @param {string} type - Type of journal entry.
- * @returns {Object} Journal entry for this date.
+ * @returns {object} Journal entry for this date.
  */
 journalAPI.getJournalEntry = async (id, date, type) => {
   const url = `/api/journal-entry/${id}&${date}&${type}`;
@@ -51,7 +51,7 @@ journalAPI.getJournalEntry = async (id, date, type) => {
  * @param {Date} fromDate - Starting date for journal entries.
  * @param {Date} toDate - End date for journal entries.
  * @param {string} type - Type of journal entries.
- * @returns {Object} All journal entries within this range (inclusive).
+ * @returns {object} All journal entries within this range (inclusive).
  */
 journalAPI.getJournalEntries = async (id, fromDate, toDate, type) => {
   const url = `/api/journal-entries/${id}&${fromDate}&${toDate}&${type}`;
@@ -93,7 +93,7 @@ journalAPI.addJournalEntry = async (id, date, type) => {
  * @param {Date} dueDate - Due date for task.
  * @param {Date} entry - Date for this journal entry.
  * @param {string} type - Type of journal entry.
- * @returns {Object} New task.
+ * @returns {object} New task.
  */
 journalAPI.addTask = async (id, content, entryDate, dueDate, type) => {
   const url = `/api/add-task/${id}`;
@@ -123,7 +123,7 @@ journalAPI.addTask = async (id, content, entryDate, dueDate, type) => {
  * @param {Date} dueDate - Date task is due.
  * @param {Date} entryDate - Date for journal entry this task belongs to.
  * @param {string} type - Type of journal entry.
- * @returns {Object} Updated task.
+ * @returns {object} Updated task.
  */
 journalAPI.updateTask = async (
   id,
@@ -160,7 +160,7 @@ journalAPI.updateTask = async (
  * @param {string} taskId - Task Id.
  * @param {Date} entryDate - Date for journal entry this task belongs to.
  * @param {string} type - Type of journal entry this task belongs to.
- *
+ * @returns {boolean} Success status.
  */
 journalAPI.deleteTask = async (id, taskId, entryDate, type) => {
   const url = `/api/delete-task/${id}`;
@@ -217,7 +217,7 @@ journalAPI.addNote = async (id, content, entryDate, type) => {
  * @param {string} content - Updated text for this note.
  * @param {Date} entryDate - Date for journal entry this note belongs to.
  * @param {string} type - Type of journal entry this note belongs to.
- * @returns {Object} Updated note
+ * @returns {object} Updated note
  */
 journalAPI.updateNote = async (id, noteId, content, entryDate, type) => {
   const url = `/api/update-note/${id}`;
@@ -277,10 +277,17 @@ journalAPI.deleteNote = async (id, noteId, entryDate, type) => {
  * @param {Date} endTime - End time for this event.
  * @param {Date} entryDate - Date for journal entry this event belongs to.
  * @param {string} type - Type of journal entry this event belongs to.
- * @returns {Object} New event.
+ * @returns {object} New event.
  */
-
-journalAPI.addEvent = async (id, content, startTime, endTime, link, entryDate, type) => {
+journalAPI.addEvent = async (
+  id,
+  content,
+  startTime,
+  endTime,
+  link,
+  entryDate,
+  type
+) => {
   const url = `/api/add-event/${id}`;
 
   const response = await fetch(url, {
@@ -313,7 +320,7 @@ journalAPI.addEvent = async (id, content, startTime, endTime, link, entryDate, t
  * @param {string} eventId - Event Id.
  * @param {Date} entryDate - Date for journal entry this event belongs to.
  * @param {string} type - Type of journal entry this event belongs to.
- * @returns {Object} Updated event.
+ * @returns {object} Updated event.
  */
 journalAPI.updateEvent = async (id, content, link, entryDate, type) => {
   const url = `/api/update-event/${id}`;
@@ -342,7 +349,7 @@ journalAPI.updateEvent = async (id, content, link, entryDate, type) => {
  * @param {string} eventId - Event Id.
  * @param {Date} entryDate - Date for journal entry this event belongs to.
  * @param {string} type - Type of journal entry this event belongs to.
- *
+ * @returns {boolean} Success status.
  */
 journalAPI.deleteEvent = async (id, eventId, entryDate, type) => {
   const url = `/api/delete-event/${id}`;
@@ -352,6 +359,127 @@ journalAPI.deleteEvent = async (id, eventId, entryDate, type) => {
     body: JSON.stringify({
       eventId,
       entryDate,
+      type,
+    }),
+    headers: {
+      'Content-type': 'application/json; charset=UTF-8',
+    },
+  }).catch((err) => console.log(err));
+
+  const result = response.json();
+
+  return result;
+};
+
+/**
+ * Migrates a task.
+ * @param {string} id - User Id.
+ * @param {string} taskId - Task Id.
+ * @param {string} content - Task content.
+ * @param {Date} dueDate - Due date for task if applicable.
+ * @param {Date} entryDate - Date for journal entry this task belongs to.
+ * @param {Date} migrateDate - Date for journal entry this task is being moved to.
+ * @param {string} type - Type of journal entry this task belongs to.
+ * @returns {object} Migrated task.
+ */
+journalAPI.migrateTask = async (
+  id,
+  taskId,
+  content,
+  entryDate,
+  dueDate,
+  migrateDate,
+  type
+) => {
+  const url = `/api/migrate-task/${id}`;
+
+  // id, taskId, content, entryDate, dueDate, migrateDate, type
+  const response = await fetch(url, {
+    method: 'PUT',
+    body: JSON.stringify({
+      taskId,
+      entryDate,
+      content,
+      dueDate,
+      migrateDate,
+      type,
+    }),
+    headers: {
+      'Content-type': 'application/json; charset=UTF-8',
+    },
+  }).catch((err) => console.log(err));
+
+  const result = response.json();
+
+  return result;
+};
+
+/**
+ * Migrates a note.
+ * @param {string} id - User Id.
+ * @param {string} noteId - Note Id.
+ * @param {string} content - Note content.
+ * @param {Date} entryDate - Date for journal entry this note belongs to.
+ * @param {Date} migrateDate - Date for journal entry this note is being moved to.
+ * @param {string} type - Type of journal entry this note belongs to.
+ * @returns {object} Migrated note.
+ */
+journalAPI.migrateNote = async (
+  id,
+  noteId,
+  content,
+  entryDate,
+  migrateDate,
+  type
+) => {
+  const url = `/api/migrate-note/${id}`;
+
+  const response = await fetch(url, {
+    method: 'PUT',
+    body: JSON.stringify({
+      noteId,
+      content,
+      entryDate,
+      migrateDate,
+      type,
+    }),
+    headers: {
+      'Content-type': 'application/json; charset=UTF-8',
+    },
+  }).catch((err) => console.log(err));
+
+  const result = response.json();
+
+  return result;
+};
+
+/**
+ * Migrates an event.
+ * @param {string} id - User Id.
+ * @param {string} eventId - Event Id.
+ * @param {string} content - Event content.
+ * @param {Date} entryDate - Date for journal entry this event belongs to.
+ * @param {Date} migrateDate - Date for journal entry this event is being moved to.
+ * @param {string} type - Type of journal entry this event belongs to.
+ * @returns {object} Migrated event.
+ */
+journalAPI.migrateEvent = async (
+  id,
+  eventId,
+  content,
+  entryDate,
+  migrateDate,
+  type
+) => {
+  const url = `/api/migrate-event/${id}`;
+
+  const response = await fetch(url, {
+    method: 'PUT',
+    body: JSON.stringify({
+      eventId,
+      content,
+      entryDate,
+      migrateDate,
       type,
     }),
     headers: {
