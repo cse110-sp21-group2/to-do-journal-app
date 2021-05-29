@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+
 class AccountBar extends HTMLElement{
     constructor(){
         super();
