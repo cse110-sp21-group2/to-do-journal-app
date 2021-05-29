@@ -72,7 +72,6 @@ authAPI.register = async (name, email, password) => {
       'Content-type': 'application/json; charset=UTF-8',
     },
   });
-
   const { success, data: user } = await newUser.json();
 
   // If registration wasn't successful, i.e. user with
@@ -102,5 +101,50 @@ authAPI.register = async (name, email, password) => {
     journal,
   };
 };
+
+/**
+ * Handles forgotten passwords.
+ * @param {string} email - Email for this user.
+ */
+authAPI.forgotPassword = async (email) => {
+  const url = '/auth/forgot-password';
+
+  // Attempt to send reset link to user with given email
+  await fetch(url, {
+    method: 'POST',
+    body: JSON.stringify({
+      email,
+    }),
+    // Adding headers to the request
+    headers: {
+      'Content-type': 'application/json; charset=UTF-8',
+    },
+  });
+}
+
+/**
+ * Handles forgotten passwords.
+ * @param {string} email - Email for this user.
+ * @param {string} newPassword - New password for this user
+ * @param {string} resetLink - Reset link given from email.
+ */
+ authAPI.resetPassword = async (token, newPassword) => {
+  const url = '/auth/reset-password';
+  // Attempt to send reset link to user with given email
+  const response = await fetch(url, {
+    method: 'PUT',
+    body: JSON.stringify({
+      token,
+      newPassword
+    }),
+    // Adding headers to the request
+    headers: {
+      'Content-type': 'application/json; charset=UTF-8',
+    },
+  });
+
+  const result = response.json();
+  return result;
+}
 
 export default authAPI;

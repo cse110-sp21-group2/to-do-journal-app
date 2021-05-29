@@ -53,4 +53,23 @@ auth.register = async (name, email, password) => {
   }
 };
 
+/**
+ * Handles forgotten passwords.
+ * @param {string} email - Email for this user.
+ */
+auth.forgotPassword = async (email) => {
+  await authAPI.forgotPassword(email);
+}
+
+/**
+ * Handles resetting user password.
+ * @param {string} token - JWT token.
+ * @param {string} newPassword - New password for this user
+ */
+ auth.resetPassword = async (token, newPassword) => {
+  const result = await authAPI.resetPassword(token, newPassword);
+  // console.log(result);
+  return result;
+}
+
 export default auth;
