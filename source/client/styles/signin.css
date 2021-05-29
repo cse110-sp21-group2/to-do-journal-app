@@ -13,17 +13,14 @@ body {
 }
 
 .column.hero-banner {
-  background: #162A47;
+  background: #162a47;
 }
 
 img.hero-banner-image {
-
   height: 70%;
   width: auto;
   margin: auto;
   margin-top: 110px;
-
-
 }
 
 .header {
@@ -133,11 +130,13 @@ a {
 }
 
 .google {
-  display: inline-block;
+  display: flex;
+  width: 370px;
 }
 
-.facebook {
-  float: right;
+#google-sign-in {
+  margin: 0 auto;
+  width: 250px;
 }
 
 a.sign-up {
