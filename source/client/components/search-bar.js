@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+
 class SearchBar extends HTMLElement{
     constructor(){
         super();
