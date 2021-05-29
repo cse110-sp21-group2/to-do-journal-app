@@ -1,6 +1,6 @@
-const event_template = document.createElement('template');
+const eventTemplate = document.createElement('template');
 // Contain style and mark-up/structure of custom element
-event_template.innerHTML = `
+eventTemplate.innerHTML = `
     <style>
 
         .time {
@@ -30,7 +30,7 @@ class Events extends HTMLElement{
 
     // Create shadowRoot for webcomponent
     this.attachShadow({ mode: 'open' });
-    this.shadowRoot.appendChild(event_template.content.cloneNode(true));
+    this.shadowRoot.appendChild(eventTemplate.content.cloneNode(true));
     }
 
     /**

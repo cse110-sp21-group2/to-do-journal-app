@@ -62,3 +62,5 @@ entry.notes.forEach((note) => {
     newNote.content = note;
     document.querySelector('.today-container').appendChild(newNote);
 });
+
+//Scroll through tasks, events, and notes with overflow property

@@ -1,6 +1,6 @@
-const task_template = document.createElement('template');
+const taskTemplate = document.createElement('template');
 // Contain style and mark-up/structure of custom element
-task_template.innerHTML = `
+taskTemplate.innerHTML = `
     <style>
 
         .task {
@@ -48,7 +48,7 @@ class Task extends HTMLElement {
 
     // Create a shadow root for this web component
     this.attachShadow({ mode: 'open' });
-    this.shadowRoot.appendChild(task_template.content.cloneNode(true));
+    this.shadowRoot.appendChild(taskTemplate.content.cloneNode(true));
     }
 
     /**

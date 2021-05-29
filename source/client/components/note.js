@@ -1,6 +1,6 @@
-const note_template = document.createElement('template');
+const noteTemplate = document.createElement('template');
 // Contain style and mark-up/structure of custom element
-note_template.innerHTML = `
+noteTemplate.innerHTML = `
     <style>
         .note {
             border: 2px solid black;
@@ -17,7 +17,7 @@ class Notes extends HTMLElement {
 
         // Create shadowRoot for web component
         this.attachShadow({ mode: 'open' });
-        this.shadowRoot.appendChild(note_template.content.cloneNode(true));
+        this.shadowRoot.appendChild(noteTemplate.content.cloneNode(true));
     }
 
     /**
