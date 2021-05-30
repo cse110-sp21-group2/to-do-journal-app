@@ -1,8 +1,8 @@
-import journalAPI from '../api/journalAPI.js';
-import session from './session.js';
-
 /* eslint-disable no-console */
 /* eslint-disable no-undef */
+
+import journalAPI from '../api/journalAPI.js';
+import session from './session.js';
 
 /** 
  * TODO:
@@ -29,28 +29,28 @@ const today = new Date();
 const user = session.getUser();
 // Current user's id
 const id = user._id;
-console.log("Print current user's id: " + id);
+console.log("Print current user's id: ", id);
 console.log(today);
 // GET entry promise and set it to JSON
-const entry = await journalAPI.getJournalEntry(id, today, "Daily");
+const entry = journalAPI.getJournalEntry(id, today, "Daily");
 // TEST getting journal entry from DB
-//  const entry = await journalAPI.getJournalEntry("60ac3af75cc18f1184f58b9e", "2021-05-24T23:47:03.282+00:00", "Daily");
+// const entry = await journalAPI.getJournalEntry("60ac3af75cc18f1184f58b9e", "2021-05-24T23:47:03.282+00:00", "Daily");
 
 
 // GET each task from entry and DISPLAY it
 entry.data.tasks.forEach((task) => {
-    let newTask = document.createElement('task-toggle');
+    const newTask = document.createElement('task-toggle');
     newTask.content = task;
-    let taskDate = new Date(task.dueDate);
+    const taskDate = new Date(task.dueDate);
     newTask.date = taskDate;
     document.querySelector(".task-container").appendChild(newTask);
 });
 
 // GET each event from entry and DISPLAY it
 entry.data.events.forEach((event) => {
-    let newEvent= document.createElement('event-toggle'); 
-    let startTime = new Date(event.startTime);
-    let endTime = new Date(event.endTime);
+    const newEvent= document.createElement('event-toggle'); 
+    const startTime = new Date(event.startTime);
+    const endTime = new Date(event.endTime);
     newEvent.content = event;
     newEvent.startTime = startTime;
     newEvent.endTime = endTime;
@@ -59,9 +59,9 @@ entry.data.events.forEach((event) => {
 
 // GET each note from entry and DISPLAY it
 entry.data.notes.forEach((note) => {
-    let newNote = document.createElement('note-toggle');
+    const newNote = document.createElement('note-toggle');
     newNote.content = note;
     document.querySelector('.today-container').appendChild(newNote);
 });
 
-//Scroll through tasks, events, and notes with overflow property
+// Scroll through tasks, events, and notes with overflow property
