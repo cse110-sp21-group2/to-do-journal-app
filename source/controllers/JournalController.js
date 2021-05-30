@@ -50,18 +50,8 @@ export default class JournalController {
     );
   }
 
-  // returns true if this is the item to update
-  static isItemToUpdate(item, id) {
-    return item._id.toString() === id;
-  }
-
-  // returns true if this is the item to delete
-  static isItemToDelete(item, id) {
-    return item._id.toString() === id;
-  }
-
-  // returns true if this is the item to migrate
-  static isItemToMigrate(item, id) {
+  // returns true if this is the item we're looking for
+  static isItem(item, id) {
     return item._id.toString() === id;
   }
 
@@ -250,9 +240,7 @@ export default class JournalController {
     // Get the index for the task we're trying to move
     const taskIndex = journal[entryType][
       originEntryIndex
-    ].tasks.findIndex((task) =>
-      JournalController.isItemToMigrate(task, taskId)
-    );
+    ].tasks.findIndex((task) => JournalController.isItem(task, taskId));
 
     // Get the index of the entry which this task is being moved to
     const destEntryIndex = journal[entryType].findIndex((entry) =>
@@ -320,9 +308,7 @@ export default class JournalController {
     // Get the index for the note we're moving
     const noteIndex = journal[entryType][
       originEntryIndex
-    ].notes.findIndex((note) =>
-      JournalController.isItemToMigrate(note, noteId)
-    );
+    ].notes.findIndex((note) => JournalController.isItem(note, noteId));
 
     // Get the index for the entry which this note is being moved to
     const destEntryIndex = journal[entryType].findIndex((entry) =>
@@ -403,9 +389,7 @@ export default class JournalController {
     // Get index of the event we're going to move
     const eventIndex = journal[entryType][
       originEntryIndex
-    ].events.findIndex((event) =>
-      JournalController.isItemToMigrate(event, eventId)
-    );
+    ].events.findIndex((event) => JournalController.isItem(event, eventId));
 
     // Get index of the entry which were moving this event to
     const destEntryIndex = journal[entryType].findIndex((entry) =>
@@ -601,7 +585,7 @@ export default class JournalController {
     );
     // Get index of task to update
     const taskIndex = journal[entryType][entryIndex].tasks.findIndex((entry) =>
-      JournalController.isItemToUpdate(entry, taskId)
+      JournalController.isItem(entry, taskId)
     );
 
     // Set new updated task
@@ -658,7 +642,7 @@ export default class JournalController {
     );
     // Get the index of the task to delete
     const taskIndex = journal[entryType][entryIndex].tasks.findIndex((task) =>
-      JournalController.isItemToDelete(task, taskId)
+      JournalController.isItem(task, taskId)
     );
 
     // Delete task
@@ -779,7 +763,7 @@ export default class JournalController {
     );
     // Get the index of the note we need to update
     const noteIndex = journal[entryType][entryIndex].notes.findIndex((note) =>
-      JournalController.isItemToUpdate(note, noteId)
+      JournalController.isItem(note, noteId)
     );
     // Update note
     journal[entryType][entryIndex].notes[noteIndex] = updatedNote;
@@ -831,7 +815,7 @@ export default class JournalController {
     );
     // Get the index of the note to delete
     const noteIndex = journal[entryType][entryIndex].notes.findIndex((note) =>
-      JournalController.isItemToDelete(note, noteId)
+      JournalController.isItem(note, noteId)
     );
 
     // Delete note
@@ -962,9 +946,7 @@ export default class JournalController {
     // Get the index of the event to update
     const eventIndex = journal[entryType][
       entryIndex
-    ].events.findIndex((event) =>
-      JournalController.isItemToUpdate(event, eventId)
-    );
+    ].events.findIndex((event) => JournalController.isItem(event, eventId));
 
     // Update event
     journal[entryType][entryIndex].events[eventIndex] = updatedEvent;
@@ -1018,9 +1000,7 @@ export default class JournalController {
     // Get the index of the event to delete
     const eventIndex = journal[entryType][
       entryIndex
-    ].events.findIndex((event) =>
-      JournalController.isItemToDelete(event, eventId)
-    );
+    ].events.findIndex((event) => JournalController.isItem(event, eventId));
 
     // Remove event
     journal[entryType][entryIndex].events[eventIndex].remove();

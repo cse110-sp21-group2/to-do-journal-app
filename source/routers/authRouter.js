@@ -19,7 +19,7 @@ router.post('/signup', (req, res) => {
 });
 
 // Route for handling forgotten passwords
-router.put('/forgot-password', (req, res) => {
+router.post('/forgot-password', (req, res) => {
   authController.forgotPassword(req, res);
 });
 
