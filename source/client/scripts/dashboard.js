@@ -30,14 +30,15 @@ const user = session.getUser();
 // Current user's id
 const id = user._id;
 console.log("Print current user's id: " + id);
-
+console.log(today);
 // GET entry promise and set it to JSON
-const journalEntry = await journalAPI.getJournalEntry(id, today, 'Daily');
+const entry = await journalAPI.getJournalEntry(id, today, "Daily");
 // TEST getting journal entry from DB
-// const journalEntry = await journalAPI.getJournalEntry("60ac3af75cc18f1184f58b9e", "2021-05-24T23:50:03.282+00:00", 'Daily');
+//  const entry = await journalAPI.getJournalEntry("60ac3af75cc18f1184f58b9e", "2021-05-24T23:47:03.282+00:00", "Daily");
+
 
 // GET each task from entry and DISPLAY it
-entry.tasks.forEach((task) => {
+entry.data.tasks.forEach((task) => {
     let newTask = document.createElement('task-toggle');
     newTask.content = task;
     let taskDate = new Date(task.dueDate);
@@ -46,7 +47,7 @@ entry.tasks.forEach((task) => {
 });
 
 // GET each event from entry and DISPLAY it
-entry.events.forEach((event) => {
+entry.data.events.forEach((event) => {
     let newEvent= document.createElement('event-toggle'); 
     let startTime = new Date(event.startTime);
     let endTime = new Date(event.endTime);
@@ -57,7 +58,7 @@ entry.events.forEach((event) => {
 });
 
 // GET each note from entry and DISPLAY it
-entry.notes.forEach((note) => {
+entry.data.notes.forEach((note) => {
     let newNote = document.createElement('note-toggle');
     newNote.content = note;
     document.querySelector('.today-container').appendChild(newNote);

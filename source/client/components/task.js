@@ -58,7 +58,7 @@ class Task extends HTMLElement {
      * @params task - task object that contains task properties
      */
     set content(task){
-        this.shadowRoot.querySelector('p.task-content').innerHTML = JSON.stringify(task.content).replace(/\"/g, "");
+        this.shadowRoot.querySelector('p.task-content').innerHTML = JSON.stringify(task.content).replace(/"/g, "");
     }
 
     /**

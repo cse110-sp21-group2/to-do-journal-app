@@ -27,7 +27,7 @@ class Notes extends HTMLElement {
      * @params note - note object that contains note properties
      */
     set content(note){
-        this.shadowRoot.querySelector('p.note-content').innerHTML = `**BULLET POINT** ${JSON.stringify(note.content).replace(/\"/g, "")}`;
+        this.shadowRoot.querySelector('p.note-content').innerHTML = `**BULLET POINT** ${JSON.stringify(note.content).replace(/"/g, "")}`;
     }
 }
 

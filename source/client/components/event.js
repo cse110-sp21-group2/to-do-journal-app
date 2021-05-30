@@ -40,7 +40,7 @@ class Events extends HTMLElement{
      * @params event - event object that contains event properties
      */
     set content(event) {
-        this.shadowRoot.querySelector('p.event-content').innerHTML = JSON.stringify(event.content).replace(/\"/g, "");
+        this.shadowRoot.querySelector('p.event-content').innerHTML = JSON.stringify(event.content).replace(/"/g, "");
     }
 
     /**
