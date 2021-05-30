@@ -14,8 +14,8 @@ export default class AuthController {
 
   /**
    * User login.
-   * @param {email} email - User email
-   * @param {password} password - User password
+   * @param {string} email - User email
+   * @param {string} password - User password
    * @returns {object} User
    */
   async login(req, res) {
@@ -53,9 +53,9 @@ export default class AuthController {
 
   /**
    * User signup.
-   * @param {name} name - User name
-   * @param {email} email - User email
-   * @param {password} password - User password
+   * @param {string} name - User name
+   * @param {string} email - User email
+   * @param {string} password - User password
    * @returns {object} User
    */
   async userSignup(req, res) {
@@ -98,6 +98,103 @@ export default class AuthController {
         data: newUser,
       });
       // Error while trying to hash password
+    } catch (error) {
+      return res.status(400).json({
+        success: false,
+        error,
+        message: 'Failed to sign up user',
+      });
+    }
+  }
+
+  /**
+   * User login through Google OAuth.
+   * @param {string} email - User email
+   * @param {string} googleId - User Google Id
+   * @returns {object} User
+   */
+  async googleLogin(req, res) {
+    const {
+      body: { email, googleId },
+    } = req;
+
+    // Attempt to find this user
+    let user;
+    try {
+      user = await this.User.findOne({ email });
+      // Failed to find user
+    } catch (error) {
+      return res.status(400).json({ success: false, error });
+    }
+
+    // Compare the password entered by taking its hash and comparing
+    // to hashed password from db
+    const isValidGoogleId = user.google.id === googleId;
+
+    // If it was the correct google Id, return user
+    if (isValidGoogleId) {
+      return res.json({
+        success: true,
+        data: user,
+      });
+      // Else this was the incorrect google Id given
+    } else {
+      return res.status(400).json({
+        success: false,
+        message: "Google Id's do not match",
+      });
+    }
+  }
+
+  /**
+   * User signup through Google OAuth.
+   * @param {string} name - User name
+   * @param {string} email - User email
+   * @param {string} googleId - User password
+   * @returns {object} User
+   */
+  async googleUserSignup(req, res) {
+    // Initial information required is their name, email and password
+    const {
+      body: { name, email, googleId },
+    } = req;
+
+    // Get User model
+    const { User } = this;
+
+    // Attempt to find user with this email
+    const user = await this.User.findOne({ email });
+
+    // If user exists already, then this email is taken
+    if (user) {
+      return res
+        .status(400)
+        .json({ success: false, error: 'Email already taken.' });
+    }
+
+    // Create new user obj
+    const newUser = new User({
+      name,
+      email,
+      term: '',
+      language: 'English',
+      google: {
+        id: googleId,
+        email,
+        name,
+      },
+    });
+
+    try {
+      // Save new user
+      await newUser.save();
+      // Return new user
+      return res.status(200).json({
+        success: true,
+        message: 'User successfully signed up',
+        data: newUser,
+      });
+      // Error while trying to register new user through Google OAuth
     } catch (error) {
       return res.status(400).json({
         success: false,
@@ -165,8 +262,8 @@ export default class AuthController {
 
   /**
    * Handles user password reset.
-   * @param {email} email - User email
-   * @param {password} password - User password
+   * @param {string} email - User email
+   * @param {string} password - User password
    * @returns {object} Updated User
    */
   async resetPassword(req, res) {
