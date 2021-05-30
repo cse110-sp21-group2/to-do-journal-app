@@ -39,6 +39,16 @@ app.get('/signup', (req, res) => {
   res.sendFile(path.join(__dirname, 'source/client/views/signup.html'));
 });
 
+// Forgot password page
+app.get('/forgot-password', (req, res) => {
+  res.sendFile(path.join(__dirname, 'source/client/views/forgot-password.html'));
+});
+
+// Reset password page
+app.get('/reset-password', (req, res) => {
+  res.sendFile(path.join(__dirname, 'source/client/views/reset-password.html'));
+});
+
 // Dashboard
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'source/client/views/dashboard.html'));

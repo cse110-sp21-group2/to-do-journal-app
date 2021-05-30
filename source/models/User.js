@@ -17,7 +17,7 @@ const UserSchema = new _Schema(
     },
     password: {
       type: String,
-      required: true,
+      required: false,
     },
     term: {
       type: String,
@@ -33,6 +33,12 @@ const UserSchema = new _Schema(
     },
     language: {
       type: String,
+      required: false,
+    },
+    google: {
+      id: String,
+      email: String,
+      name: String,
       required: false,
     },
   },

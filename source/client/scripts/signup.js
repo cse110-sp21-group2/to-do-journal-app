@@ -1,6 +1,6 @@
 /* eslint-disable import/extensions */
 /* eslint-disable no-console */
-import auth from "./auth.js";
+import auth from './auth.js';
 
 const emailInput = document.getElementById('email');
 const passwordInput = document.getElementById('password');
@@ -16,6 +16,5 @@ submitBtn.addEventListener('click', async (e) => {
   const { value: email } = emailInput;
   const { value: password } = passwordInput;
 
-  await auth.register(name, email, password)
-
+  await auth.register(name, email, password);
 });
