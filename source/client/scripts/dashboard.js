@@ -32,7 +32,7 @@ const id = user._id;
 console.log("Print current user's id: " + id);
 console.log(today);
 // GET entry promise and set it to JSON
-const entry = await journalAPI.getJournalEntry(id, today, "Daily");
+const entry = journalAPI.getJournalEntry(id, today, "Daily");
 // TEST getting journal entry from DB
 //  const entry = await journalAPI.getJournalEntry("60ac3af75cc18f1184f58b9e", "2021-05-24T23:47:03.282+00:00", "Daily");
 
