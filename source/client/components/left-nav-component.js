@@ -1,4 +1,6 @@
-class LeftNav extends document.HTMLElement {
+/* eslint-disable no-undef */
+
+class LeftNav extends HTMLElement { 
     constructor() {
       super();
   
@@ -83,6 +85,6 @@ class LeftNav extends document.HTMLElement {
 }
   
 // Define, instantiate, and add the component to its respective div to the calling document
-document.customElements.define('left-nav-component', LeftNav);
+customElements.define('left-nav-component', LeftNav);
 const comp = document.createElement('left-nav-component');
 document.querySelector('.left-nav').appendChild(comp);
