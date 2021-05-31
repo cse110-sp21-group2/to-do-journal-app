@@ -1,15 +1,13 @@
 /* eslint-disable no-shadow */
 /* eslint-disable no-console */
-/* eslint-disable no-underscore-dangle */
-/* eslint-disable no-undef */
 const journalAPI = {};
 
 /**
  * Creates a new Journal.
  * @param {object} id - User Id.
- * @returns {object} New Journal.
+ * @returns {object} journal.
  */
-journalAPI.createJournal = async (id) => {
+journalAPI.createJournal = async ({ id }) => {
   const url = `/api/create-journal/${id}`;
   const response = await fetch(url).catch((err) => console.log(err));
   const result = response.json();
@@ -18,12 +16,26 @@ journalAPI.createJournal = async (id) => {
 };
 
 /**
- * Gets journal in relation to the User.
+ * Gets User Journal.
  * @param {string} id -User Id.
- * @returns {object} User journal.
+ * @returns {object} journal.
  */
-journalAPI.getJournal = async (id) => {
+journalAPI.getJournal = async ({ id }) => {
   const url = `/api/journal/${id}`;
+  const response = await fetch(url).catch((err) => console.log(err));
+  const result = response.json();
+
+  return result;
+};
+
+/**
+ * Gets a journal collection.
+ * @param {string} id -User Id.
+ * @param {string} collectionId - Collection Id.
+ * @returns {object} collection.
+ */
+journalAPI.getJournalCollection = async ({ id, collectionId }) => {
+  const url = `/api/journal/${id}&${collectionId}`;
   const response = await fetch(url).catch((err) => console.log(err));
   const result = response.json();
 
@@ -35,9 +47,9 @@ journalAPI.getJournal = async (id) => {
  * @param {string} id - User Id.
  * @param {Date} date - Date for this journal entry.
  * @param {string} type - Type of journal entry.
- * @returns {object} Journal entry for this date.
+ * @returns {object} entry.
  */
-journalAPI.getJournalEntry = async (id, date, type) => {
+journalAPI.getJournalEntry = async ({ id, date, type }) => {
   const url = `/api/journal-entry/${id}&${date}&${type}`;
   const response = await fetch(url).catch((err) => console.log(err));
   const result = response.json();
@@ -51,9 +63,14 @@ journalAPI.getJournalEntry = async (id, date, type) => {
  * @param {Date} fromDate - Starting date for journal entries.
  * @param {Date} toDate - End date for journal entries.
  * @param {string} type - Type of journal entries.
- * @returns {object} All journal entries within this range (inclusive).
+ * @returns {object} filteredEntries.
  */
-journalAPI.getJournalEntries = async (id, fromDate, toDate, type) => {
+journalAPI.getJournalEntries = async ({
+  id,
+  fromDate,
+  toDate,
+  type,
+}) => {
   const url = `/api/journal-entries/${id}&${fromDate}&${toDate}&${type}`;
   const response = await fetch(url).catch((err) => console.log(err));
   const result = response.json();
@@ -66,9 +83,9 @@ journalAPI.getJournalEntries = async (id, fromDate, toDate, type) => {
  * @param {string} id - User Id.
  * @param {Date} date - Date for this journal entry.
  * @param {string} type - Type of journal entry.
- * @returns {object} New journal entry.
+ * @returns {object} newEntry.
  */
-journalAPI.addJournalEntry = async (id, date, type) => {
+journalAPI.addJournalEntry = async ({ id, date, type }) => {
   const url = `/api/add-journal-entry/${id}`;
   const response = await fetch(url, {
     method: 'POST',
@@ -87,21 +104,53 @@ journalAPI.addJournalEntry = async (id, date, type) => {
 };
 
 /**
+ * Adds a new journal collection.
+ * @param {string} id - User Id.
+ * @param {string} name - Name for this new collection.
+ * @returns {object} newCollection.
+ */
+journalAPI.addJournalCollection = async ({ id, name }) => {
+  const url = `/api/add-journal-entry/${id}`;
+  const response = await fetch(url, {
+    method: 'POST',
+    body: JSON.stringify({
+      name,
+    }),
+    headers: {
+      'Content-type': 'application/json; charset=UTF-8',
+    },
+  }).catch((err) => console.log(err));
+
+  const result = response.json();
+
+  return result;
+};
+
+/**
  * Adds a new task.
  * @param {string} id - User Id.
  * @param {string} content - Task content.
  * @param {Date} dueDate - Due date for task.
- * @param {Date} entry - Date for this journal entry.
+ * @param {string} collectionId - Collection Id.
+ * @param {Date} entryDate - Date for this journal entry.
  * @param {string} type - Type of journal entry.
- * @returns {object} New task.
+ * @returns {object} newTask.
  */
-journalAPI.addTask = async (id, content, entryDate, dueDate, type) => {
+journalAPI.addTask = async ({
+  id,
+  content,
+  collectionId = null,
+  entryDate = null,
+  dueDate,
+  type,
+}) => {
   const url = `/api/add-task/${id}`;
   const response = await fetch(url, {
     method: 'POST',
     body: JSON.stringify({
       content,
       dueDate,
+      collectionId,
       entryDate,
       type,
     }),
@@ -121,18 +170,20 @@ journalAPI.addTask = async (id, content, entryDate, dueDate, type) => {
  * @param {string} taskId - Task Id.
  * @param {string} content - Updated text for this task.
  * @param {Date} dueDate - Date task is due.
+ * @param {string} collectionId - Collection Id.
  * @param {Date} entryDate - Date for journal entry this task belongs to.
  * @param {string} type - Type of journal entry.
- * @returns {object} Updated task.
+ * @returns {object} updatedTask.
  */
-journalAPI.updateTask = async (
+journalAPI.updateTask = async ({
   id,
   taskId,
   content,
   dueDate,
-  entryDate,
-  type
-) => {
+  collectionId = null,
+  entryDate = null,
+  type,
+}) => {
   const url = `/api/update-task/${id}`;
 
   const response = await fetch(url, {
@@ -140,6 +191,7 @@ journalAPI.updateTask = async (
     body: JSON.stringify({
       taskId,
       content,
+      collectionId,
       entryDate,
       dueDate,
       type,
@@ -158,17 +210,25 @@ journalAPI.updateTask = async (
  * Deletes a task.
  * @param {string} id - User Id.
  * @param {string} taskId - Task Id.
+ * @param {string} collectionId - Collection Id.
  * @param {Date} entryDate - Date for journal entry this task belongs to.
  * @param {string} type - Type of journal entry this task belongs to.
- * @returns {boolean} Success status.
+ * @returns {boolean} success.
  */
-journalAPI.deleteTask = async (id, taskId, entryDate, type) => {
+journalAPI.deleteTask = async ({
+  id,
+  taskId,
+  collectionId = null,
+  entryDate = null,
+  type,
+}) => {
   const url = `/api/delete-task/${id}`;
 
   const response = await fetch(url, {
     method: 'POST',
     body: JSON.stringify({
       taskId,
+      collectionId,
       entryDate,
       type,
     }),
@@ -186,19 +246,27 @@ journalAPI.deleteTask = async (id, taskId, entryDate, type) => {
  * Adds a new note.
  * @param {string} id - User Id.
  * @param {string} content - Note content.
+ * @param {string} collectionId - Collection Id.
  * @param {Date} entryDate - Date for this journal entry.
  * @param {string} type - Type of journal entry.
- * @returns {object} New note.
+ * @returns {object} newNote.
  */
-journalAPI.addNote = async (id, content, entryDate, type) => {
+journalAPI.addNote = async ({
+  id,
+  content,
+  collectionId = null,
+  entryDate = null,
+  type,
+}) => {
   const url = `/api/add-note/${id}`;
 
   const response = await fetch(url, {
     method: 'POST',
     body: JSON.stringify({
       content,
-      type,
+      collectionId,
       entryDate,
+      type,
     }),
     headers: {
       'Content-type': 'application/json; charset=UTF-8',
@@ -214,12 +282,20 @@ journalAPI.addNote = async (id, content, entryDate, type) => {
  * Updates a note.
  * @param {string} id - User Id.
  * @param {string} noteId - Note Id.
- * @param {string} content - Updated text for this note.
- * @param {Date} entryDate - Date for journal entry this note belongs to.
+ * @param {string} content - Note contents.
+ * @param {string|undefined} collectionId - Collection Id (if this is a collection).
+ * @param {Date|undefined} entryDate - Journal Entry Date (if this is an entry).
  * @param {string} type - Type of journal entry this note belongs to.
- * @returns {object} Updated note
+ * @returns {object} updatedNote.
  */
-journalAPI.updateNote = async (id, noteId, content, entryDate, type) => {
+journalAPI.updateNote = async ({
+  id,
+  noteId,
+  content,
+  collectionId = null,
+  entryDate = null,
+  type,
+}) => {
   const url = `/api/update-note/${id}`;
 
   const response = await fetch(url, {
@@ -227,8 +303,9 @@ journalAPI.updateNote = async (id, noteId, content, entryDate, type) => {
     body: JSON.stringify({
       noteId,
       content,
-      type,
+      collectionId,
       entryDate,
+      type,
     }),
     headers: {
       'Content-type': 'application/json; charset=UTF-8',
@@ -243,18 +320,26 @@ journalAPI.updateNote = async (id, noteId, content, entryDate, type) => {
 /**
  * Deletes a note.
  * @param {string} id - User Id.
- * @param {string} noteId - Note  Id.
- * @param {Date} entryDate - Date for journal entry this note belongs to.
+ * @param {string} noteId - Note Id.
+ * @param {string|undefined} collectionId - Collection Id (if this is a collection).
+ * @param {Date|undefined} entryDate - Journal Entry Date (if this is an entry).
  * @param {string} type - Type of journal entry this note belongs to.
- *
+ * @returns {boolean} success.
  */
-journalAPI.deleteNote = async (id, noteId, entryDate, type) => {
+journalAPI.deleteNote = async ({
+  id,
+  noteId,
+  collectionId = null,
+  entryDate = null,
+  type,
+}) => {
   const url = `/api/delete-note/${id}`;
 
   const response = await fetch(url, {
     method: 'POST',
     body: JSON.stringify({
       noteId,
+      collectionId,
       entryDate,
       type,
     }),
@@ -275,30 +360,33 @@ journalAPI.deleteNote = async (id, noteId, entryDate, type) => {
  * @param {string} link - URL link.
  * @param {Date} startTime - Start time for this event.
  * @param {Date} endTime - End time for this event.
- * @param {Date} entryDate - Date for journal entry this event belongs to.
+ * @param {string|undefined} collectionId - Collection Id (if this is a collection).
+ * @param {Date|undefined} entryDate - Journal Entry Date (if this is an entry).
  * @param {string} type - Type of journal entry this event belongs to.
- * @returns {object} New event.
+ * @returns {object} newEvent.
  */
-journalAPI.addEvent = async (
+journalAPI.addEvent = async ({
   id,
   content,
   startTime,
   endTime,
   link,
-  entryDate,
-  type
-) => {
+  collectionId = null,
+  entryDate = null,
+  type,
+}) => {
   const url = `/api/add-event/${id}`;
 
   const response = await fetch(url, {
     method: 'POST',
     body: JSON.stringify({
-      type,
-      entryDate,
       content,
       startTime,
       endTime,
       link,
+      collectionId,
+      entryDate,
+      type,
     }),
     headers: {
       'Content-type': 'application/json; charset=UTF-8',
@@ -313,25 +401,40 @@ journalAPI.addEvent = async (
 /**
  * Updates an event.
  * @param {string} id - User Id.
+ * @param {string} eventId - Event Id.
  * @param {string} content - Updated event content.
  * @param {string} link - URL link.
  * @param {Date} startTime - Start time for this event.
  * @param {Date} endTime - End time for this event.
- * @param {string} eventId - Event Id.
- * @param {Date} entryDate - Date for journal entry this event belongs to.
+ * @param {string|undefined} collectionId - Collection Id (if this is a collection).
+ * @param {Date|undefined} entryDate - Journal Entry Date (if this is an entry).
  * @param {string} type - Type of journal entry this event belongs to.
- * @returns {object} Updated event.
+ * @returns {object} updatedEvent.
  */
-journalAPI.updateEvent = async (id, content, link, entryDate, type) => {
+journalAPI.updateEvent = async ({
+  id,
+  eventId,
+  content,
+  link,
+  startTime,
+  endTime,
+  collectionId = null,
+  entryDate = null,
+  type,
+}) => {
   const url = `/api/update-event/${id}`;
 
   const response = await fetch(url, {
     method: 'PUT',
     body: JSON.stringify({
+      eventId,
       content,
+      link,
+      startTime,
+      endTime,
+      collectionId,
       entryDate,
       type,
-      link,
     }),
     headers: {
       'Content-type': 'application/json; charset=UTF-8',
@@ -347,17 +450,25 @@ journalAPI.updateEvent = async (id, content, link, entryDate, type) => {
  * Deletes an event.
  * @param {string} id - User Id.
  * @param {string} eventId - Event Id.
- * @param {Date} entryDate - Date for journal entry this event belongs to.
+ * @param {string|undefined} collectionId - Collection Id (if this is a collection).
+ * @param {Date|undefined} entryDate - Journal Entry Date (if this is an entry).
  * @param {string} type - Type of journal entry this event belongs to.
  * @returns {boolean} Success status.
  */
-journalAPI.deleteEvent = async (id, eventId, entryDate, type) => {
+journalAPI.deleteEvent = async ({
+  id,
+  eventId,
+  collectionId = null,
+  entryDate = null,
+  type,
+}) => {
   const url = `/api/delete-event/${id}`;
 
   const response = await fetch(url, {
     method: 'POST',
     body: JSON.stringify({
       eventId,
+      collectionId,
       entryDate,
       type,
     }),
@@ -382,15 +493,15 @@ journalAPI.deleteEvent = async (id, eventId, entryDate, type) => {
  * @param {string} type - Type of journal entry this task belongs to.
  * @returns {object} Migrated task.
  */
-journalAPI.migrateTask = async (
+journalAPI.migrateTask = async ({
   id,
   taskId,
   content,
   entryDate,
   dueDate,
   migrateDate,
-  type
-) => {
+  type,
+}) => {
   const url = `/api/migrate-task/${id}`;
 
   // id, taskId, content, entryDate, dueDate, migrateDate, type
@@ -424,14 +535,14 @@ journalAPI.migrateTask = async (
  * @param {string} type - Type of journal entry this note belongs to.
  * @returns {object} Migrated note.
  */
-journalAPI.migrateNote = async (
+journalAPI.migrateNote = async ({
   id,
   noteId,
   content,
   entryDate,
   migrateDate,
-  type
-) => {
+  type,
+}) => {
   const url = `/api/migrate-note/${id}`;
 
   const response = await fetch(url, {
@@ -463,14 +574,14 @@ journalAPI.migrateNote = async (
  * @param {string} type - Type of journal entry this event belongs to.
  * @returns {object} Migrated event.
  */
-journalAPI.migrateEvent = async (
+journalAPI.migrateEvent = async ({
   id,
   eventId,
   content,
   entryDate,
   migrateDate,
-  type
-) => {
+  type,
+}) => {
   const url = `/api/migrate-event/${id}`;
 
   const response = await fetch(url, {
