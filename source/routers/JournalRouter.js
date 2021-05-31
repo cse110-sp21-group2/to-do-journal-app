@@ -29,6 +29,11 @@ router.get('/journal-entries/:id&:fromDate&:toDate&:type', (req, res) => {
   journalController.getJournalEntries(req, res);
 });
 
+// Route for getting journal collection
+router.get('/journal-entry/:id&:collectionId', (req, res) => {
+  journalController.getJournalCollection(req, res);
+});
+
 /* ^^ Routes for getting journal data ^^ */
 
 /* v Routes for moving data to a new journal entry v */
@@ -55,6 +60,11 @@ router.put('/migrate-event/:id', (req, res) => {
 // Route for creating a new journal entry
 router.post('/add-journal-entry/:id', (req, res) => {
   journalController.addJournalEntry(req, res);
+});
+
+// Route for creating a new journal collection
+router.post('/add-journal-collection/:id', (req, res) => {
+  journalController.addJournalCollection(req, res);
 });
 
 // Route for adding new task

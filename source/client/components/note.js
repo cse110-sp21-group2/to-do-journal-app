@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 const noteTemplate = document.createElement('template');
 // Contain style and mark-up/structure of custom element
 noteTemplate.innerHTML = `
@@ -23,7 +24,7 @@ class Notes extends HTMLElement {
     /**
      * SET content property of 'note-toggle' element/object
      * and put it in HTML
-     * 
+     *
      * @params note - note object that contains note properties
      */
     set content(note){
