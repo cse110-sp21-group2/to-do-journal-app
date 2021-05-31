@@ -13,8 +13,8 @@ const auth = {};
  * @param {string} password - Password for this user.
  * @returns {Object} User and Journal.
  */
-auth.login = async (email, password) => {
-  const { user, journal } = await authAPI.login(email, password);
+auth.login = async (payload) => {
+  const { user, journal } = await authAPI.login(payload);
 
   if (user && journal) {
     // Set session user
@@ -29,6 +29,7 @@ auth.login = async (email, password) => {
     journal,
   };
 };
+
 /**
  * Handles new user registration.
  * @param {string} name - Name for this user.
@@ -36,8 +37,8 @@ auth.login = async (email, password) => {
  * @param {string} password - Password for this user.
  * @returns {Object} New User and Journal.
  */
-auth.register = async (name, email, password) => {
-  const { user, journal } = await authAPI.register(name, email, password);
+auth.register = async (payload) => {
+  const { user, journal } = await authAPI.register(payload);
 
   if (user && journal) {
     // Set session user
@@ -55,12 +56,13 @@ auth.register = async (name, email, password) => {
 
 /**
  * Handles user login.
+ * @param {Object} payload - Data for this user.
  * @param {string} email - Email for this user.
  * @param {string} googleId - Google Id for this user.
  * @returns {Object} User and Journal.
  */
-auth.googleLogin = async (email, googleId) => {
-  const { user, journal } = await authAPI.googleLogin(email, googleId);
+auth.googleLogin = async (payload) => {
+  const { user, journal } = await authAPI.googleLogin(payload);
   if (user && journal) {
     // Set session user
     session.setUser(user);
@@ -77,13 +79,11 @@ auth.googleLogin = async (email, googleId) => {
 
 /**
  * Handles new user registration.
- * @param {string} name - Name for this user.
- * @param {string} email - Email for this user.
- * @param {string} googleId - Google Id for this user.
+ * @param {Object} payload - Data for this user.
  * @returns {Object} New User and Journal.
  */
-auth.googleRegister = async (name, email, googleId) => {
-  const { user, journal } = await authAPI.googleRegister(name, email, googleId);
+auth.googleRegister = async (payload) => {
+  const { user, journal } = await authAPI.googleRegister(payload);
 
   if (user && journal) {
     // Set session user
@@ -101,19 +101,18 @@ auth.googleRegister = async (name, email, googleId) => {
 
 /**
  * Handles forgotten passwords.
- * @param {string} email - Email for this user.
+ * @param {Object} payload - Email for this user.
  */
-auth.forgotPassword = async (email) => {
-  await authAPI.forgotPassword(email);
+auth.forgotPassword = async (payload) => {
+  await authAPI.forgotPassword(payload);
 };
 
 /**
  * Handles resetting user password.
- * @param {string} token - JWT token.
- * @param {string} newPassword - New password for this user
+ * @param {Object} payload - JWT token and new password.
  */
-auth.resetPassword = async (token, newPassword) => {
-  const result = await authAPI.resetPassword(token, newPassword);
+auth.resetPassword = async (payload) => {
+  const result = await authAPI.resetPassword(payload);
   // console.log(result);
   return result;
 };
