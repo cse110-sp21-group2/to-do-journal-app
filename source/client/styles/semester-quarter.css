@@ -99,7 +99,7 @@ body {
   grid-column: 2 / 4;
   grid-row: 2 / 3;
   min-width:1050px;
-  width: 90%;
+  width: auto;
   margin: 1cm;
   padding: 30px 0px;
   display:grid;
