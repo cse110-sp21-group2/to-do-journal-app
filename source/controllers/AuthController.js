@@ -18,11 +18,7 @@ export default class AuthController {
    * @param {string} password - User password
    * @returns {object} User
    */
-  async login(req, res) {
-    const {
-      body: { email, password },
-    } = req;
-
+  async login({ body: { email, password } }, res) {
     // Attempt to find this user
     let user;
     try {
@@ -34,7 +30,10 @@ export default class AuthController {
 
     // Compare the password entered by taking its hash and comparing
     // to hashed password from db
-    const isValidPassword = await bcrypt.compare(password, user.password);
+    const isValidPassword = await bcrypt.compare(
+      password,
+      user.password
+    );
 
     // If it was the correct password, return user
     if (isValidPassword) {
@@ -58,12 +57,7 @@ export default class AuthController {
    * @param {string} password - User password
    * @returns {object} User
    */
-  async userSignup(req, res) {
-    // Initial information required is their name, email and password
-    const {
-      body: { name, email, password },
-    } = req;
-
+  async userSignup({ body: { name, email, password } }, res) {
     // Get User model
     const { User } = this;
 
@@ -91,12 +85,7 @@ export default class AuthController {
       newUser.password = await bcrypt.hash(password, saltRounds);
       // Save new user
       await newUser.save();
-      // Return new user
-      return res.status(200).json({
-        success: true,
-        message: 'User successfully signed up',
-        data: newUser,
-      });
+
       // Error while trying to hash password
     } catch (error) {
       return res.status(400).json({
@@ -105,6 +94,13 @@ export default class AuthController {
         message: 'Failed to sign up user',
       });
     }
+
+    // Return new user
+    return res.status(200).json({
+      success: true,
+      message: 'User successfully signed up',
+      data: newUser,
+    });
   }
 
   /**
@@ -113,11 +109,7 @@ export default class AuthController {
    * @param {string} googleId - User Google Id
    * @returns {object} User
    */
-  async googleLogin(req, res) {
-    const {
-      body: { email, googleId },
-    } = req;
-
+  async googleLogin({ body: { email, googleId } }, res) {
     // Attempt to find this user
     let user;
     try {
@@ -153,12 +145,7 @@ export default class AuthController {
    * @param {string} googleId - User password
    * @returns {object} User
    */
-  async googleUserSignup(req, res) {
-    // Initial information required is their name, email and password
-    const {
-      body: { name, email, googleId },
-    } = req;
-
+  async googleUserSignup({ body: { name, email, googleId } }, res) {
     // Get User model
     const { User } = this;
 
@@ -188,12 +175,7 @@ export default class AuthController {
     try {
       // Save new user
       await newUser.save();
-      // Return new user
-      return res.status(200).json({
-        success: true,
-        message: 'User successfully signed up',
-        data: newUser,
-      });
+
       // Error while trying to register new user through Google OAuth
     } catch (error) {
       return res.status(400).json({
@@ -202,6 +184,13 @@ export default class AuthController {
         message: 'Failed to sign up user',
       });
     }
+
+    // Return new user
+    return res.status(200).json({
+      success: true,
+      message: 'User successfully signed up',
+      data: newUser,
+    });
   }
 
   /**
@@ -209,11 +198,7 @@ export default class AuthController {
    * @param {email} email - User email
    * @returns {boolean} Success status
    */
-  async forgotPassword(req, res) {
-    const {
-      body: { email },
-    } = req;
-
+  async forgotPassword({ body: { email } }, res) {
     // Attempt to find user with given email
     let user;
     try {
@@ -232,9 +217,13 @@ export default class AuthController {
     }
 
     // Else sign a token for resetting user password
-    const token = jwt.sign({ _id: user._id }, process.env.RESET_PASSWORD_KEY, {
-      expiresIn: '20m',
-    });
+    const token = jwt.sign(
+      { _id: user._id },
+      process.env.RESET_PASSWORD_KEY,
+      {
+        expiresIn: '20m',
+      }
+    );
 
     // Link for email
     const RESET_LINK = `${process.env.CLIENT_URL}/reset-password/?resetToken=${token}`;
@@ -266,12 +255,7 @@ export default class AuthController {
    * @param {string} password - User password
    * @returns {object} Updated User
    */
-  async resetPassword(req, res) {
-    // Get reset token and new password
-    const {
-      body: { token, newPassword },
-    } = req;
-
+  async resetPassword({ body: { token, newPassword } }, res) {
     // If reset token doesn't exist, authentication error
     if (!token) {
       return res
@@ -280,7 +264,10 @@ export default class AuthController {
     }
 
     // Verify this token
-    const decodedToken = jwt.verify(token, process.env.RESET_PASSWORD_KEY);
+    const decodedToken = jwt.verify(
+      token,
+      process.env.RESET_PASSWORD_KEY
+    );
 
     let user;
     try {
@@ -290,12 +277,7 @@ export default class AuthController {
       user.password = await bcrypt.hash(newPassword, saltRounds);
       // Save new password
       await user.save();
-      // Return user
-      return res.status(200).json({
-        success: true,
-        message: 'Password successfully changed',
-        data: user,
-      });
+
       // Error while trying to hash new password
     } catch (error) {
       return res.status(400).json({
@@ -304,5 +286,12 @@ export default class AuthController {
         message: 'Error while trying to reset password',
       });
     }
+
+    // Return user
+    return res.status(200).json({
+      success: true,
+      message: 'Password successfully changed',
+      data: user,
+    });
   }
 }
