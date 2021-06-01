@@ -1,4 +1,6 @@
-class LeftNav extends document.HTMLElement {
+/* eslint-disable no-undef */
+
+class LeftNav extends HTMLElement {
     constructor() {
       super();
   
