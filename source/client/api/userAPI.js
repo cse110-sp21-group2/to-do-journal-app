@@ -31,18 +31,24 @@ userAPI.getUserByEmail = async (email) => {
   return result;
 };
 
-// TO-DO
 /**
- * Retrieves a user by their email.
- * @param {string} id - Id for this user.
- * @returns {object} User.
+ * Updates user info / settings / preferences
+ * @param {string} id - User Id.
+ * @param {object} updatedUser - contains the updated info for the user
+ * @returns {object} Updated user info
  */
-// userAPI.updateUserInfo = async (id, updatedUser) => {
-//   const url = `/api/user-by-email/${email}`;
-//   const response = await fetch(url).catch((err) => console.log(err));
-//   const result = response.json();
+ userAPI.updateUserInfo = async (id, updatedUser) => {
+  const url = `/api/update-user-info/${id}`;
 
-//   return result;
-// };
+  const response = await fetch(url, {
+    method: 'PUT',
+    body: JSON.stringify(updatedUser),
+    /* SHOULD I ADD A HEADER???? */
+  }).catch((err) => console.log(err));
+
+  const result = response.json();
+
+  return result;
+}
 
 export default userAPI;
