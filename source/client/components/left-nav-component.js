@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 
-class LeftNav extends HTMLElement { 
+class LeftNav extends HTMLElement {
     constructor() {
       super();
   
