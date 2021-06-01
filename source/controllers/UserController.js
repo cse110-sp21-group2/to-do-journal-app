@@ -13,14 +13,10 @@ export default class UserController {
    * @param {string} id - Id for this user.
    * @returns {object} User.
    */
-  async getUserById(req, res) {
-    const {
-      params: { id },
-    } = req;
-
+  async getUserById({ params: { id } }, res) {
     let user;
     try {
-      user = await this.User.findOne({ id });
+      user = await this.User.findOne({ _id: id });
     } catch (error) {
       return res.status(400).json({ success: false, error });
     }
@@ -36,11 +32,7 @@ export default class UserController {
    * @param {string} email - Email for this user.
    * @returns {Object} User.
    */
-  async getUserByEmail(req, res) {
-    const {
-      params: { email },
-    } = req;
-
+  async getUserByEmail({ params: { email } }, res) {
     let user;
     try {
       user = await this.User.findOne({ email });

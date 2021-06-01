@@ -12,9 +12,9 @@ import path from 'path';
 import db from './server';
 
 // Import all of our routes
-import authRouter from './routers/authRouter';
-import userRouter from './routers/userRouter';
-import journalRouter from './routers/journalRouter';
+import AuthRouter from './routers/AuthRouter';
+import UserRouter from './routers/UserRouter';
+import JournalRouter from './routers/JournalRouter';
 
 // Allows use of .env variables
 dotenv.config();
@@ -90,9 +90,9 @@ app.use(json());
 app.use(urlencoded({ extended: false }));
 
 /* Routes for API calls */
-app.use('/auth', authRouter);
-app.use('/api', userRouter);
-app.use('/api', journalRouter);
+app.use('/auth', AuthRouter);
+app.use('/api', UserRouter);
+app.use('/api', JournalRouter);
 /*  */
 
 // Listening for any connection errors with database

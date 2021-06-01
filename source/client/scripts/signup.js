@@ -16,5 +16,11 @@ submitBtn.addEventListener('click', async (e) => {
   const { value: email } = emailInput;
   const { value: password } = passwordInput;
 
-  await auth.register(name, email, password);
+  const payload = {
+    name,
+    email,
+    password,
+  };
+
+  await auth.register(payload);
 });

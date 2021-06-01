@@ -12,5 +12,10 @@ loginBtn.addEventListener('click', async (e) => {
   const { value: email } = emailInput;
   const { value: password } = passwordInput;
 
-  await auth.login(email, password);
+  const payload = {
+    email,
+    password,
+  };
+
+  await auth.login(payload);
 });

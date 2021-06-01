@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 const taskTemplate = document.createElement('template');
 // Contain style and mark-up/structure of custom element
 taskTemplate.innerHTML = `
@@ -15,7 +16,7 @@ taskTemplate.innerHTML = `
         }
 
         .task,
-        .date { 
+        .date {
             display: inline-block;
             margin-bottom: 2px;
         }
@@ -54,7 +55,7 @@ class Task extends HTMLElement {
     /**
      * SET task property of 'event-toggle' element/object
      * and put it in HTML
-     * 
+     *
      * @params task - task object that contains task properties
      */
     set content(task){
@@ -64,7 +65,7 @@ class Task extends HTMLElement {
     /**
      * SET date property of 'event-toggle' element/object
      * and put it in HTML
-     * 
+     *
      * @params date - date object in task object
      */
     set date(date){

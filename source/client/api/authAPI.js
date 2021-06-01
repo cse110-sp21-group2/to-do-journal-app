@@ -6,9 +6,9 @@ const authAPI = {};
  * Handles user login.
  * @param {string} email - Email for this user.
  * @param {string} password - Password for this user.
- * @returns {object} User.
+ * @returns {Object} User and Journal.
  */
-authAPI.login = async (email, password) => {
+authAPI.login = async ({ email, password }) => {
   let url = '/auth/login';
 
   // Attempt to fetch user with given email and password
@@ -56,7 +56,7 @@ authAPI.login = async (email, password) => {
  * @param {string} password - Password for this user.
  * @returns {object} New User.
  */
-authAPI.register = async (name, email, password) => {
+authAPI.register = async ({ name, email, password }) => {
   let url = '/auth/signup';
 
   // Attempt to create user with given information
@@ -87,10 +87,15 @@ authAPI.register = async (name, email, password) => {
   url = `/api/create-journal/${id}`;
 
   // Attempt to create and fetch new user journal
-  const newJournal = await fetch(url).catch((err) => console.log(err));
+  const newJournal = await fetch(url).catch((err) =>
+    console.log(err)
+  );
 
   // Get parsed user journal
-  const { success: journalSuccess, data: journal } = await newJournal.json();
+  const {
+    success: journalSuccess,
+    data: journal,
+  } = await newJournal.json();
 
   if (!journalSuccess) {
     // Do something here
@@ -108,7 +113,7 @@ authAPI.register = async (name, email, password) => {
  * @param {string} googleId - Google Id for this user.
  * @returns {object} User and Journal.
  */
-authAPI.googleLogin = async (email, googleId) => {
+authAPI.googleLogin = async ({ email, googleId }) => {
   let url = '/auth/google-login';
 
   // Attempt to fetch user with given email and password
@@ -156,7 +161,7 @@ authAPI.googleLogin = async (email, googleId) => {
  * @param {string} googleId - Google Id.
  * @returns {object} New User.
  */
-authAPI.googleRegister = async (name, email, googleId) => {
+authAPI.googleRegister = async ({ name, email, googleId }) => {
   let url = '/auth/google-signup';
 
   // Attempt to create user with given information
@@ -187,10 +192,15 @@ authAPI.googleRegister = async (name, email, googleId) => {
   url = `/api/create-journal/${id}`;
 
   // Attempt to create and fetch new user journal
-  const newJournal = await fetch(url).catch((err) => console.log(err));
+  const newJournal = await fetch(url).catch((err) =>
+    console.log(err)
+  );
 
   // Get parsed user journal
-  const { success: journalSuccess, data: journal } = await newJournal.json();
+  const {
+    success: journalSuccess,
+    data: journal,
+  } = await newJournal.json();
 
   if (!journalSuccess) {
     // Do something here
@@ -206,7 +216,7 @@ authAPI.googleRegister = async (name, email, googleId) => {
  * Handles forgotten passwords.
  * @param {string} email - Email for this user.
  */
-authAPI.forgotPassword = async (email) => {
+authAPI.forgotPassword = async ({ email }) => {
   const url = '/auth/forgot-password';
 
   // Attempt to send reset link to user with given email
@@ -228,7 +238,7 @@ authAPI.forgotPassword = async (email) => {
  * @param {string} newPassword - New password for this user
  * @param {string} resetLink - Reset link given from email.
  */
-authAPI.resetPassword = async (token, newPassword) => {
+authAPI.resetPassword = async ({ token, newPassword }) => {
   const url = '/auth/reset-password';
   // Attempt to send reset link to user with given email
   const response = await fetch(url, {

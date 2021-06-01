@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 const eventTemplate = document.createElement('template');
 // Contain style and mark-up/structure of custom element
 eventTemplate.innerHTML = `
@@ -36,7 +37,7 @@ class Events extends HTMLElement{
     /**
      * SET content property of 'event-toggle' element/object
      * and put it in HTML
-     * 
+     *
      * @params event - event object that contains event properties
      */
     set content(event) {
@@ -46,7 +47,7 @@ class Events extends HTMLElement{
     /**
      * SET startTime property of 'event-toggle' element/object
      * and put it in HTML
-     * 
+     *
      * @params date - date object stored in event object
      */
     set startTime(date) {
@@ -59,10 +60,10 @@ class Events extends HTMLElement{
     /**
      * SET endTime property of 'event-toggle' element/object
      * and put it in HTML
-     * 
+     *
      * @params date - date object stored in event object
      */
-    set endTime(date) { 
+    set endTime(date) {
         const hour = date.getHours() % 12;
         const minute = date.getMinutes();
         const ampm = hour >= 12 ? 'PM' : 'AM';
