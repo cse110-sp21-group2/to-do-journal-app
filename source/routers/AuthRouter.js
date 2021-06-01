@@ -13,13 +13,23 @@ router.post('/login', (req, res) => {
   authController.login(req, res);
 });
 
-// Route for user logout
+// Route for user signup
 router.post('/signup', (req, res) => {
   authController.userSignup(req, res);
 });
 
+// Route for user login through Google OAuth
+router.post('/google-login', (req, res) => {
+  authController.googleLogin(req, res);
+});
+
+// Route for user signup through Google OAuth
+router.post('/google-signup', (req, res) => {
+  authController.googleUserSignup(req, res);
+});
+
 // Route for handling forgotten passwords
-router.put('/forgot-password', (req, res) => {
+router.post('/forgot-password', (req, res) => {
   authController.forgotPassword(req, res);
 });
 

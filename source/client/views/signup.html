@@ -4,12 +4,25 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="google-signin-client_id"
+      content="110656900996-fi7ahcr6josugvshub5bh4mm0lbl9m69.apps.googleusercontent.com"
+    />
     <title>Sign Up</title>
 
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Unica+One&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Unica+One&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Unica+One&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Unica+One&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
 
     <!-- Main CSS -->
     <link rel="stylesheet" href="../styles/signup.css" />
@@ -19,11 +32,19 @@
     <main>
       <div class="row">
         <div class="column hero-banner">
-          <img class="column hero-banner-image" src="https://i.ibb.co/mBnjFw3/laurel-wreath.png" alt="" />
+          <img
+            class="column hero-banner-image"
+            src="https://i.ibb.co/mBnjFw3/laurel-wreath.png"
+            alt=""
+          />
         </div>
-        <div class="column registration-form"> 
-          <form action="http://localhost:4000/auth/register-user" method="post">
-            <img src="../../../admin/branding/logo256.png" alt="Avatar" class="avatar" />
+        <div class="column registration-form">
+          <form>
+            <img
+              src="../../../admin/branding/logo256.png"
+              alt="Avatar"
+              class="avatar"
+            />
             <label for="name">Name</label>
             <input
               type="text"
@@ -62,33 +83,24 @@
             <br />
             <input class="submit-btn" type="submit" value="Sign Up" />
           </form>
-          <div class="google-facebook">
+          <div class="google">
             <hr class="horizontal-rule" />
-            <div
-              class="fb-login-button"
-              data-width=""
-              data-size="large"
-              data-button-type="login_with"
-              data-layout="rounded"
-              data-auto-logout-link="false"
-              data-use-continue-as="false"
-            ></div>
+            <div id="google-sign-in"></div>
             <div class="sign-in-container">
-              <a class="sign-in" href="/">Already have an account?</a>
+              <a class="sign-in" href="/signin">Already have an account?</a>
             </div>
+          </div>
           </div>
         </div>
       </div>
     </main>
-
-    <!-- Main Script -->
-    <script src="../scripts/signup.js" type="module"></script>
+    <!-- Scripts -->
     <script
+      src="https://apis.google.com/js/platform.js?onload"
       async
       defer
-      crossorigin="anonymous"
-      src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v10.0&appId=2832298687018922&autoLogAppEvents=1"
-      nonce="S82ByYDR"
     ></script>
+    <script src="../scripts/signup.js" type="module"></script>
+    <script src="../scripts/googleAuth/googleAuthRegister.js" type="module"></script>
   </body>
 </html>
