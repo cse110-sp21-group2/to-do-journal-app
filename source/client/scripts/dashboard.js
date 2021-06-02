@@ -57,7 +57,7 @@ const entry = getEntry();
 // const entry = test_entry.data;
 
 // GET each task from entry and DISPLAY it
-entry.then(entry => entry.tasks.forEach((task) => {
+entry.then(res => res.tasks.forEach((task) => {
     const newTask = document.createElement('task-toggle');
     newTask.content = task;
     const taskDate = new Date(task.dueDate);
@@ -66,7 +66,7 @@ entry.then(entry => entry.tasks.forEach((task) => {
 }));
 
 // GET each event from entry and DISPLAY it
-entry.then(entry => entry.events.forEach((event) =>{
+entry.then(res => res.events.forEach((event) =>{
   const newEvent = document.createElement('event-toggle');
   const startTime = new Date(event.startTime);
   const endTime = new Date(event.endTime);
@@ -77,7 +77,7 @@ entry.then(entry => entry.events.forEach((event) =>{
 }))
 
 // GET each note from entry and DISPLAY it
-entry.then(entry => entry.notes.forEach((note)=>{
+entry.then(res => res.notes.forEach((note)=>{
   const newNote = document.createElement('note-toggle');
   newNote.content = note;
   document.querySelector('.today-container').appendChild(newNote);

@@ -94,7 +94,7 @@ createTaskTemplate.innerHTML =`
         </div>
     </form> 
 `
-
+// Component for Creating a Task
 class createTask extends HTMLElement{
     constructor(){
         super();
@@ -104,46 +104,50 @@ class createTask extends HTMLElement{
     }
     /**
      * TODO:
-     *      - Know when it's quarterly or semesterly(User Setting)
-     *      - GET journal
-     *      - GET entries (semester or quqarter)
-     *      - Go through each entry to see if there exist an entry for current date
-     *          - Make new entry otherwise based on date
-     *      - In that entry, create new task
+     *      - SET task content property value
+     *      - SET note content property value
+     *      - SET Link property value
+     *      - SET time property value
+     *      
+     *      - GET task content
+     *      - GET note content
+     *      - GET Link
+     *      - GET time
+     *      
      */
 
-    /**
-     * Getter that gets the name/content of task
-     */
-    get getTaskContent(){
-        console.log(document.querySelector('input#task-name').value);
-        return document.querySelector('input#task-name').value;
-    }
+    // /**
+    //  * Getter that gets the name/content of task
+    //  */
+    // get getTaskContent(){
+    //     console.log(document.querySelector('input#task-name').value);
+    //     return document.querySelector('input#task-name').value;
+    // }
 
-    /**
-     * Getter that gets the start Date: MM/DD/YYYY
-     */
-    get getStartDate(){
-        console.log(document.querySelector('input#start-date').value);
-        return document.querySelector('input#task-name').value;
-    }
+    // /**
+    //  * Getter that gets the start Date: MM/DD/YYYY
+    //  */
+    // get getStartDate(){
+    //     console.log(document.querySelector('input#start-date').value);
+    //     return document.querySelector('input#task-name').value;
+    // }
 
-    /**
-     * Getter that gets the link
-     */
-    get getLink(){
-        console.log(document.querySelector('input#link').value);
-        return document.querySelector('input#link').value;
-    }
+    // /**
+    //  * Getter that gets the link
+    //  */
+    // get getLink(){
+    //     console.log(document.querySelector('input#link').value);
+    //     return document.querySelector('input#link').value;
+    // }
 
 
-    /**
-     * Getter that gets the End Time 00:00 PM ? AM
-     */
-    get getTime() {
-        console.log(document.querySelector('input#input-time').value);
-        return document.querySelector('input#input-time').value;
-    }
+    // /**
+    //  * Getter that gets the End Time 00:00 PM ? AM
+    //  */
+    // get getTime() {
+    //     console.log(document.querySelector('input#input-time').value);
+    //     return document.querySelector('input#input-time').value;
+    // }
     
 }
 
