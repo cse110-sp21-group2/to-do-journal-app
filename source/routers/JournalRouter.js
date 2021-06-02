@@ -8,7 +8,7 @@ const router = Router();
 // Initialize new Journal Controller
 const journalController = new JournalController(Journal);
 
-router.get('/create-journal/:id', (req, res) => {
+router.post('/create-journal/:id', (req, res) => {
   journalController.createJournal(req, res);
 });
 

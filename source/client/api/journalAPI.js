@@ -61,7 +61,7 @@ journalAPI.getJournalEntry = async ({ id, date, type }) => {
  * Gets a journal term.
  * @param {string} id - User Id.
  * @param {Date} date - Current date.
- * @returns {object} newCollection.
+ * @returns {object} term.
  */
 journalAPI.getJournalTerm = async ({ id, date }) => {
   const url = `/api/journal-term/${id}&${date}`;
@@ -622,7 +622,7 @@ journalAPI.addEntryEvent = async ({
   content,
   startTime,
   endTime,
-  URL,
+  URL = null,
   entryDate,
   type,
 }) => {
@@ -664,7 +664,7 @@ journalAPI.addTermEvent = async ({
   content,
   startTime,
   endTime,
-  URL,
+  URL = null,
   termId,
   weekNumber,
 }) => {
@@ -705,7 +705,7 @@ journalAPI.addCollectionEvent = async ({
   content,
   startTime,
   endTime,
-  URL,
+  URL = null,
   collectionId,
 }) => {
   const url = `/api/add-collection-event/${id}`;
@@ -734,7 +734,7 @@ journalAPI.addCollectionEvent = async ({
  * @param {string} id - User Id.
  * @param {string} eventId - Event Id.
  * @param {string} content - Updated event content.
- * @param {string} url - URL.
+ * @param {string} URL - URL.
  * @param {Date} startTime - Start time for this event.
  * @param {Date} endTime - End time for this event.
  * @param {Date} entryDate - Date for this journal entry.
@@ -745,7 +745,7 @@ journalAPI.updateEntryEvent = async ({
   id,
   eventId,
   content,
-  URL,
+  URL = null,
   startTime,
   endTime,
   entryDate,
@@ -790,7 +790,7 @@ journalAPI.updateTermEvent = async ({
   id,
   eventId,
   content,
-  URL,
+  URL = null,
   startTime,
   endTime,
   termId,
@@ -834,7 +834,7 @@ journalAPI.updateCollectionEvent = async ({
   id,
   eventId,
   content,
-  URL,
+  URL = null,
   startTime,
   endTime,
   collectionId,

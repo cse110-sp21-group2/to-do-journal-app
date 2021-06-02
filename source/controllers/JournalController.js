@@ -40,7 +40,10 @@ export default class JournalController {
   static isCurrentTerm(term, date) {
     const _date = new Date(date);
 
-    return term.startDate <= _date && term.endDate >= _date;
+    return (
+      term.startDate.getTime() <= _date.getTime() &&
+      term.endDate.getTime() >= _date.getTime()
+    );
   }
 
   // Returns the entry which matches the given date
@@ -66,9 +69,11 @@ export default class JournalController {
 
   // Initializes a new term based on type,
   // i.e. 'Semester' or 'Quarter', and start date
-  static initializeTerm(type, date) {
+  static initializeTerm(type, _date) {
     const termId = mongoose.Types.ObjectId();
     const term = {};
+
+    const date = new Date(_date);
 
     term._id = termId;
     term.weeks = [];
@@ -300,11 +305,14 @@ export default class JournalController {
    * @returns {Object} New Entry.
    */
   async addJournalEntry({ body: { type, date }, params: { id } }, res) {
+    const newEntryId = mongoose.Types.ObjectId();
+
     // Get new date for this entry
     const _date = new Date(date);
 
     // Construct new journal entry object
     const newEntry = {
+      _id: newEntryId,
       tasks: [],
       notes: [],
       events: [],
@@ -406,7 +414,7 @@ export default class JournalController {
    */
   async addJournalTerm({ body: { type, startDate, endDate }, params: { id } }, res) {
     // Construct new collection object
-    const newTerm = JournalController.initializeTerm(type, startDate, endDate);
+    const newTerm = JournalController.initializeTerm(type, startDate);
 
     newTerm.startDate = new Date(startDate);
     newTerm.endDate = new Date(endDate);
@@ -550,7 +558,7 @@ export default class JournalController {
     );
 
     // Using termIndex and weekNumber, add new task
-    journal.terms[termIndex][weekNumber].tasks.push(newTask);
+    journal.terms[termIndex].weeks[weekNumber].tasks.push(newTask);
 
     // Attempt to save changes to journal
     try {
@@ -663,8 +671,8 @@ export default class JournalController {
     }
 
     // Get index of term we need by id
-    const termIndex = journal.terms.findIndex((entry) =>
-      JournalController.isItem({ item: entry, termId })
+    const termIndex = journal.terms.findIndex((term) =>
+      JournalController.isItem({ item: term, id: termId })
     );
 
     // Get index of task to update by id
@@ -775,12 +783,12 @@ export default class JournalController {
     );
 
     // Get task index to delete
-    const taskIndex = journal.terms[termIndex][weekNumber].tasks.findIndex((task) =>
+    const taskIndex = journal.terms[termIndex].weeks[weekNumber].tasks.findIndex((task) =>
       JournalController.isItem({ item: task, id: taskId })
     );
 
     // Delete task
-    await journal.terms[termIndex][weekNumber].tasks[taskIndex].remove();
+    await journal.terms[termIndex].weeks[weekNumber].tasks[taskIndex].remove();
 
     // Attempt to save changes to journal
     try {
@@ -888,7 +896,7 @@ export default class JournalController {
     );
 
     // Using termIndex and weekNumber, add note
-    journal.terms[termIndex][weekNumber].notes.push(newNote);
+    journal.terms[termIndex].weeks[weekNumber].notes.push(newNote);
 
     // Attempt to save changes to journal
     try {
@@ -941,7 +949,7 @@ export default class JournalController {
     );
 
     // Add note
-    journal.collection[collectionIndex].notes.push(newNote);
+    journal.collections[collectionIndex].notes.push(newNote);
 
     // Attempt to save changes to journal
     try {
@@ -1048,7 +1056,7 @@ export default class JournalController {
     );
 
     // Get index of task to update by id
-    const noteIndex = journal.terms[termIndex][weekNumber].notes.findIndex((note) =>
+    const noteIndex = journal.terms[termIndex].weeks[weekNumber].notes.findIndex((note) =>
       JournalController.isItem({ item: note, id: noteId })
     );
 
@@ -1294,7 +1302,10 @@ export default class JournalController {
    * @returns {Object} New event.
    */
   async addEntryEvent(
-    { body: { content, URL, startTime, endTime, entryDate, type }, params: { id } },
+    {
+      body: { content, URL = null, startTime, endTime, entryDate, type },
+      params: { id },
+    },
     res
   ) {
     const eventId = mongoose.Types.ObjectId();
@@ -1586,16 +1597,16 @@ export default class JournalController {
       JournalController.isItem({ item: term, id: termId })
     );
 
-    // Get index of task to update by id
-    const eventIndex = journal.terms[termIndex].weeks[weekNumber].findIndex((event) =>
-      JournalController.isItem({ item: event, id: eventId })
-    );
+    // Get index of event to update by id
+    const eventIndex = journal.terms[termIndex].weeks[
+      weekNumber
+    ].events.findIndex((event) => JournalController.isItem({ item: event, id: eventId }));
 
     // Update event
-    journal.terms[termIndex].events[eventIndex].content = content;
-    journal.terms[termIndex].events[eventIndex].startTime = _startTime;
-    journal.terms[termIndex].events[eventIndex].endTime = _endTime;
-    journal.terms[termIndex].events[eventIndex].URL = URL;
+    journal.terms[termIndex].weeks[weekNumber].events[eventIndex].content = content;
+    journal.terms[termIndex].weeks[weekNumber].events[eventIndex].startTime = _startTime;
+    journal.terms[termIndex].weeks[weekNumber].events[eventIndex].endTime = _endTime;
+    journal.terms[termIndex].weeks[weekNumber].events[eventIndex].URL = URL;
 
     // Attempt to save changes to journal
     try {
@@ -1606,7 +1617,7 @@ export default class JournalController {
     }
 
     // Get updated event
-    const updatedEvent = journal.terms[termIndex].events[eventIndex];
+    const updatedEvent = journal.terms[termIndex].weeks[weekNumber].events[eventIndex];
 
     // Return new note
     return res.status(200).json({
@@ -1750,9 +1761,9 @@ export default class JournalController {
     );
 
     // Using termIndex and weekNumber, get the index of the event to delete
-    const eventIndex = journal.terms[termIndex].weeks[weekNumber].findIndex((event) =>
-      JournalController.isItem({ item: event, id: eventId })
-    );
+    const eventIndex = journal.terms[termIndex].weeks[
+      weekNumber
+    ].events.findIndex((event) => JournalController.isItem({ item: event, id: eventId }));
 
     // Delete event
     await journal.terms[termIndex].weeks[weekNumber].events[eventIndex].remove();
