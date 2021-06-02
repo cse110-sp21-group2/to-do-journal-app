@@ -17,6 +17,6 @@ submitBtn.addEventListener('click', async (e) => {
   const { value: newPassword } = confirmPasswordInput;
 
   if (_newPassword === newPassword) {
-    await auth.resetPassword(token, newPassword);
+    await auth.resetPassword({ token, newPassword });
   }
 });

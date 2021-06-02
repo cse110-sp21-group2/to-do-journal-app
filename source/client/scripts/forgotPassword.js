@@ -12,5 +12,5 @@ submitBtn.addEventListener('click', async (e) => {
 
   const { value: email } = emailInput;
 
-  await auth.forgotPassword(email);
+  await auth.forgotPassword({ email });
 });

@@ -182,8 +182,11 @@ authAPI.googleRegister = async ({ name, email, googleId }) => {
       'Content-type': 'application/json; charset=UTF-8',
     },
   });
+
   const { success, data: user } = await newUser.json();
 
+  console.log(user);
+  console.log(success);
   // If registration wasn't successful, i.e. user with
   // this given email already exists
   if (!success) {
@@ -197,7 +200,12 @@ authAPI.googleRegister = async ({ name, email, googleId }) => {
   url = `/api/create-journal/${id}`;
 
   // Attempt to create and fetch new user journal
-  const newJournal = await fetch(url).catch((err) =>
+  const newJournal = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-type': 'application/json; charset=UTF-8',
+    }
+  }).catch((err) =>
     console.log(err)
   );
 
