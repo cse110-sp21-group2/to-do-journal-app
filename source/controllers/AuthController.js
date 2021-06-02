@@ -76,8 +76,6 @@ export default class AuthController {
       name,
       email,
       password: '',
-      term: '',
-      language: 'English',
     });
 
     try {
