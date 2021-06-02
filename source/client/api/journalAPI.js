@@ -944,8 +944,6 @@ journalAPI.migrateEntryTask = async ({ id, taskId, entryDate, migrateDate, type 
     body: JSON.stringify({
       taskId,
       entryDate,
-      content,
-      dueDate,
       migrateDate,
       type,
     }),
