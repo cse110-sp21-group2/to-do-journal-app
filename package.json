@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "start": "nodemon --no-warnings --experimental-modules --es-module-specifier-resolution=node source/index.js",
-    "test": "mocha --recursive ./source/test/* || true",
+    "test": "mocha --recursive --no-warnings --experimental-modules --es-module-specifier-resolution=node ./source/test/* || true",
     "lint": "./node_modules/.bin/eslint ./source",
     "docs": "node_modules/.bin/jsdoc --configure .jsdoc.json --verbose"
   },
@@ -14,6 +14,7 @@
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.0.1",
+    "chai-http": "^4.3.0",
     "cors": "^2.8.5",
     "dotenv": "^9.0.0",
     "eslint-config-prettier": "^8.3.0",
