@@ -9,8 +9,8 @@ const transport = {
   auth: {
     user: process.env.SMTP_FROM_EMAIL,
     pass: process.env.STMP_FROM_PASSWORD,
-  }
-}
+  },
+};
 
 export default class EmailService {
   constructor() {
@@ -21,7 +21,7 @@ export default class EmailService {
       } else {
         console.log('Email Service setup successful');
       }
-    })
+    });
   }
 
   /**
@@ -29,20 +29,18 @@ export default class EmailService {
    * @param {object} emailOptions - Content to send message
    * @returns {object} Success status
    */
-  async sendMessage (mailOptions) {
+  async sendMessage(mailOptions) {
     try {
       await this.transporter.sendMail(mailOptions);
-
     } catch (error) {
       return {
         success: false,
-        error
+        error,
       };
     }
 
     return {
-      success: true
+      success: true,
     };
   }
 }
-

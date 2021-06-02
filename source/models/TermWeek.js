@@ -8,7 +8,7 @@ import TaskSchema from './Task';
 const { Schema: _Schema } = mongoose;
 
 // Schema
-const JournalEntrySchema = new _Schema({
+const TermWeekSchema = new _Schema({
   _id: {
     type: _Schema.Types.ObjectId,
     required: true,
@@ -25,10 +25,14 @@ const JournalEntrySchema = new _Schema({
     type: [EventSchema],
     required: true,
   },
-  date: {
+  startDate: {
+    type: Date,
+    required: true,
+  },
+  endDate: {
     type: Date,
     required: true,
   },
 });
 
-export default JournalEntrySchema;
+export default TermWeekSchema;
