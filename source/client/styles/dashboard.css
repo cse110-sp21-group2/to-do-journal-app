@@ -272,6 +272,8 @@ body {
     line-height: 50px;
     letter-spacing: -0.02em;
 
+    /* scroll option */
+    overflow: scroll;
     color: #000000;
 }
 
@@ -298,6 +300,9 @@ body {
     line-height: 50px;
     letter-spacing: -0.02em;
 
+    /* scroll option */
+    overflow: scroll;
+
     color: #000000;
 }
 
@@ -323,5 +328,8 @@ body {
     line-height: 50px;
     letter-spacing: -0.02em;
 
+    /* scroll option */
+    overflow: scroll;
+    
     color: #000000;
 }
