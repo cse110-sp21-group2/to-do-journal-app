@@ -1,4 +1,6 @@
 /* eslint-disable no-underscore-dangle */
+/* eslint no-param-reassign: "error" */
+import mongoose from 'mongoose';
 
 /**
  * Journal Controller
@@ -18,14 +20,8 @@ export default class JournalController {
         return 'dailyEntries';
       case 'Weekly':
         return 'weeklyEntries';
-      case 'Semesterly':
-        return 'semesterlyEntries';
-      case 'Quarterly':
-        return 'quarterlyEntries';
-      case 'Monthly':
-        return 'monthlyEntries';
       default:
-        return 'collections';
+        return 'monthlyEntries';
     }
   }
 
@@ -62,19 +58,53 @@ export default class JournalController {
     return item._id.toString() === id;
   }
 
+  // Initializes a new term based on type,
+  // i.e. 'Semester' or 'Quarter', and start date
+  static initializeTerm(type, date) {
+    const termId = mongoose.Types.ObjectId();
+    const term = {};
+
+    term._id = termId;
+    term.weeks = [];
+
+    const week = {
+      tasks: [],
+      notes: [],
+      events: [],
+    };
+
+    const max = type === 'Quarter' ? 11 : 16;
+
+    for (let i = 0; i < max; i += 1) {
+      const startDate = new Date(date.getTime() + 7 * i * 86400000);
+      const endDate = new Date(startDate.getTime() + 7 * 86400000);
+
+      const weekId = mongoose.Types.ObjectId();
+
+      week._id = weekId;
+      week.startDate = startDate;
+      week.endDate = endDate;
+
+      term.weeks.push(week);
+    }
+
+    return term;
+  }
+
   /**
    * Creates a new Journal.
    * @param {string} id - User Id.
-   * @returns {object} New Journal.
+   * @returns {Object} New Journal.
    */
   async createJournal({ params: { id } }, res) {
     // Construct new journal object
     const newJournalObj = {
       _id: id,
       dailyEntries: [],
-      termEntries: [],
       weeklyEntries: [],
       monthlyEntries: [],
+      terms: [],
+      collections: [],
     };
 
     let journal;
@@ -101,7 +131,7 @@ export default class JournalController {
   /**
    * Gets journal in relation to the User
    * @param {string} id - User Id.
-   * @returns {object} User Journal.
+   * @returns {Object} User Journal.
    */
   async getJournal({ params: { id } }, res) {
     // Attempt to retrieve journal for this user
@@ -123,7 +153,7 @@ export default class JournalController {
    * @param {string} id - User Id to create journal.
    * @param {string} date - Specific date for this journal entry.
    * @param {string} type - Type of journal entry.
-   * @returns {object} Journal entry.
+   * @returns {Object} Journal entry.
    */
   async getJournalEntry({ params: { id, date, type } }, res) {
     // Attempt to get journal for this user
@@ -162,12 +192,9 @@ export default class JournalController {
    * @param {string} fromDate - Starting date for journal entries.
    * @param {string} toDate - End date for journal entries.
    * @param {string} type - Type of entries to filter.
-   * @returns {[object]} All journal entries within this range (inclusive).
+   * @returns {[Object]} All journal entries within this range (inclusive).
    */
-  async getJournalEntries(
-    { params: { id, fromDate, toDate, type } },
-    res
-  ) {
+  async getJournalEntries({ params: { id, fromDate, toDate, type } }, res) {
     // Attempt to get this user journal
     let journal;
     try {
@@ -197,7 +224,7 @@ export default class JournalController {
    * Get a journal collection.
    * @param {string} id - User Id.
    * @param {string} collectionId - Collection Id.
-   * @returns {object} Journal Collection.
+   * @returns {Object} Journal Collection.
    */
   async getJournalCollection({ params: { id, collectionId } }, res) {
     // Attempt to get journal for this user
@@ -228,16 +255,47 @@ export default class JournalController {
   }
 
   /**
+   * Get a journal term.
+   * @param {string} id - User Id.
+   * @param {string} termId - Term Id.
+   * @returns {Object} Journal Term.
+   */
+  async getJournalTerm({ params: { id, termId } }, res) {
+    // Attempt to get journal for this user
+    let journal;
+    try {
+      journal = await this.Journal.findOne({ _id: id });
+    } catch (error) {
+      return res.status(400).json({ success: false, error });
+    }
+
+    // Get the collection
+    const term = journal.terms.find((t) =>
+      JournalController.isItem({ item: t, id: termId })
+    );
+
+    // If no entry exists for this given date, return success false
+    if (!term) {
+      return res.status(400).json({
+        success: false,
+      });
+    }
+
+    // return entry
+    return res.status(200).json({
+      success: true,
+      data: term,
+    });
+  }
+
+  /**
    * Adds a new journal entry.
    * @param {string} id - User Id.
    * @param {Date} date - Date for this entry.
    * @param {string} type - Type of entry.
-   * @returns {object} New Entry.
+   * @returns {Object} New Entry.
    */
-  async addJournalEntry(
-    { body: { type, date }, params: { id } },
-    res
-  ) {
+  async addJournalEntry({ body: { type, date }, params: { id } }, res) {
     // Get new date for this entry
     const _date = new Date(date);
 
@@ -288,14 +346,14 @@ export default class JournalController {
    * Adds a new journal collection.
    * @param {string} id - User Id.
    * @param {string} name - Name for this collection.
-   * @returns {object} New Journal Collection.
+   * @returns {Object} New Journal Collection.
    */
-  async addJournalCollection(
-    { body: { name }, params: { id } },
-    res
-  ) {
+  async addJournalCollection({ body: { name }, params: { id } }, res) {
+    const newCollectionId = mongoose.Types.ObjectId();
+
     // Construct new collection object
     const newCollection = {
+      _id: newCollectionId,
       name,
       tasks: [],
       notes: [],
@@ -335,33 +393,69 @@ export default class JournalController {
   }
 
   /**
-   * Adds a new task.
+   * Adds a new journal term.
+   * @param {string} id - User Id.
+   * @param {string} type - Type of academic term, i.e. quarter / semester.
+   * @returns {object} New Journal Term.
+   */
+  async addJournalTerm({ body: { type }, params: { id } }, res) {
+    // Construct new collection object
+    const newTerm = JournalController.initializeTerm(type);
+
+    // Initialize journal to hold a Journal() object
+    let journal;
+
+    // Attempt to find journal with user id
+    try {
+      journal = await this.Journal.findOne({ _id: id });
+      // Failed to find this journal
+    } catch (error) {
+      return res.status(400).json({ success: false, error });
+    }
+
+    // Add new collection to journal
+    journal.terms.push(newTerm);
+
+    // Attempt to save changes to journal
+    try {
+      await journal.save();
+      // Failed to validate the schema for this model
+    } catch (error) {
+      return res.status(400).json({
+        success: false,
+        error,
+      });
+    }
+
+    // Return new entry
+    return res.status(201).json({
+      success: true,
+      data: newTerm,
+    });
+  }
+
+  /**
+   * Adds a entry task.
    * @param {string} id - User Id.
    * @param {string} content - Task content.
    * @param {Date} dueDate - Due date for task.
    * @param {string} collectionId - Collection Id.
    * @param {Date} entryDate - Date for this journal entry.
-   * @param {string} type - Name for journal property to.
-   * @returns {object} New task.
+   * @param {string} type - Type of journal entry, i,e, daily, weekly, or monthly.
+   * @returns {Object} New task.
    */
-  async addTask(
-    {
-      body: {
-        content,
-        dueDate = null,
-        collectionId = null,
-        entryDate = null,
-        type,
-      },
-      params: { id },
-    },
+  async addEntryTask(
+    { body: { content, dueDate = null, entryDate, type }, params: { id } },
     res
   ) {
+    const newTaskId = mongoose.Types.ObjectId();
+
     // Get the due date if applicable
     const _dueDate = dueDate ? new Date(dueDate) : null;
 
     // Construct new task object
     const newTask = {
+      _id: newTaskId,
       content,
       dueDate: _dueDate,
     };
@@ -376,13 +470,12 @@ export default class JournalController {
         error,
       });
     }
-
-    // Get the name of the journal property we want to access
+    // Get type of entries to access
     const propertyName = JournalController.getPropertyName(type);
 
-    // Get the index of the journal property which this note belongs to
-    const propertyIndex = journal[propertyName].findIndex((item) =>
-      JournalController.isItem({ item, id: collectionId, entryDate })
+    // Get index of entry
+    const propertyIndex = journal[propertyName].findIndex((entry) =>
+      JournalController.isItem({ item: entry, entryDate })
     );
 
     // Add new task
@@ -407,68 +500,51 @@ export default class JournalController {
   }
 
   /**
-   * Updates a task.
+   * Adds a term task.
    * @param {string} id - User Id.
-   * @param {string} content - Updated content for task.
+   * @param {string} content - Task content.
    * @param {Date} dueDate - Due date for task.
-   * @param {string} collectionId - Collection Id.
-   * @param {Date} entryDate - Date for journal entry this task belongs to.
-   * @param {string} type - Name for journal property to.
-   * @returns {object} Updated task.
+   * @param {string} termId - Term Id.
+   * @param {Date} weekNumber - Week number in term.
+   * @returns {Object} New task.
    */
-  async updateTask(
+  async addTermTask(
     {
-      body: {
-        taskId,
-        content,
-        collectionId = null,
-        entryDate = null,
-        dueDate = null,
-        type,
-      },
+      body: { content, dueDate = null, termId = null, weekNumber = null },
       params: { id },
     },
     res
   ) {
-    // Get due date if applicable
+    const newTaskId = mongoose.Types.ObjectId();
+
+    // Get the due date if applicable
     const _dueDate = dueDate ? new Date(dueDate) : null;
 
-    // // Construct updated task object
-    const updatedTask = {
+    // Construct new task object
+    const newTask = {
+      _id: newTaskId,
       content,
       dueDate: _dueDate,
     };
 
-    // Initialize for Journal() object
-    let journal;
-
     // Attempt to find journal with user id
+    let journal;
     try {
       journal = await this.Journal.findOne({ _id: id });
-      // Failed to find this journal
     } catch (error) {
-      return res.status(400).json({ success: false, error });
+      return res.status(400).json({
+        success: false,
+        error,
+      });
     }
 
-    // Get the name of the journal property we want to access
-    const propertyName = JournalController.getPropertyName(type);
-
-    // Get the index of the journal property which this note belongs to
-    const propertyIndex = journal[propertyName].findIndex((item) =>
-      JournalController.isItem({ item, id: collectionId, entryDate })
+    // Get index of term
+    const termIndex = journal.terms.findIndex((term) =>
+      JournalController.isItem({ item: term, id: termId })
     );
 
-    // Get index of task to update
-    const taskIndex = journal[propertyName][
-      propertyIndex
-    ].tasks.findIndex((task) =>
-      JournalController.isItem({ item: task, id: taskId })
-    );
-
-    // Set new updated task
-    journal[propertyName][propertyIndex].tasks[
-      taskIndex
-    ] = updatedTask;
+    // Using termIndex and weekNumber, add new task
+    journal.terms[termIndex][weekNumber].tasks.push(newTask);
 
     // Attempt to save changes to journal
     try {
@@ -482,27 +558,28 @@ export default class JournalController {
     }
 
     // Return new task
-    return res.status(200).json({
+    return res.status(201).json({
       success: true,
-      data: updatedTask,
+      data: newTask,
     });
   }
 
   /**
-   * Deletes a task.
-   * @param {string} id - Id for this journal.
-   * @param {string} taskId - Id for this task.
-   * @param {string} collectionId - Collection Id.
-   * @param {Date} entryDate - Date for this journal entry.
-   * @param {string} type - Name for journal property to this task is related to.
+   * Updates an entry task.
+   * @param {string} id - User Id.
+   * @param {string} content - Updated content for task.
+   * @param {Date} dueDate - Due date for task.
+   * @param {Date} entryDate - Date for journal entry this task belongs to.
+   * @param {string} type - Type of journal entry, i,e, daily, weekly, or monthly.
+   * @returns {Object} Updated task.
    */
-  async deleteTask(
-    {
-      body: { taskId, collectionId = null, entryDate = null, type },
-      params: { id },
-    },
+  async updateEntryTask(
+    { body: { taskId, content, dueDate = null, entryDate, type }, params: { id } },
     res
   ) {
+    // Get due date if applicable
+    const _dueDate = dueDate ? new Date(dueDate) : null;
+
     // Initialize for Journal() object
     let journal;
 
@@ -514,25 +591,141 @@ export default class JournalController {
       return res.status(400).json({ success: false, error });
     }
 
-    // Get the name of the journal property we want to access
+    // Get type of entries to access
     const propertyName = JournalController.getPropertyName(type);
 
-    // Get the index of the journal property which this note belongs to
-    const propertyIndex = journal[propertyName].findIndex((item) =>
-      JournalController.isItem({ item, id: collectionId, entryDate })
+    // Get index of entry we need by date
+    const entryIndex = journal[propertyName].findIndex((entry) =>
+      JournalController.isItem({ item: entry, entryDate })
     );
 
-    // Get the index of the task to delete
-    const taskIndex = journal[propertyName][
-      propertyIndex
-    ].tasks.findIndex((task) =>
+    // Get index of task to update by id
+    const taskIndex = journal[propertyName][entryIndex].tasks.findIndex((task) =>
+      JournalController.isItem({ item: task, id: taskId })
+    );
+
+    // Update task
+    journal[propertyName][entryIndex].tasks[taskIndex].content = content;
+    journal[propertyName][entryIndex].tasks[taskIndex].dueDate = _dueDate;
+
+    // Attempt to save changes to journal
+    try {
+      await journal.save();
+      // Failed to validate the schema for this model
+    } catch (error) {
+      return res.status(400).json({
+        success: false,
+        error,
+      });
+    }
+
+    // Get updated task
+    const updatedTask = journal[propertyName][entryIndex].tasks[taskIndex];
+
+    // Return updated task
+    return res.status(200).json({
+      success: true,
+      data: updatedTask,
+    });
+  }
+
+  /**
+   * Updates a term task.
+   * @param {string} id - User Id.
+   * @param {string} content - Updated content for task.
+   * @param {Date} dueDate - Due date for task.
+   * @param {string} termId - Term Id.
+   * @param {number} weekNumber - Week number for this term.
+   * @returns {Object} Updated task.
+   */
+  async updateTermTask(
+    { body: { taskId, content, dueDate = null, termId, weekNumber }, params: { id } },
+    res
+  ) {
+    // Get due date if applicable
+    const _dueDate = dueDate ? new Date(dueDate) : null;
+
+    // Initialize for Journal() object
+    let journal;
+
+    // Attempt to find journal with user id
+    try {
+      journal = await this.Journal.findOne({ _id: id });
+      // Failed to find this journal
+    } catch (error) {
+      return res.status(400).json({ success: false, error });
+    }
+
+    // Get index of term we need by id
+    const termIndex = journal.terms.findIndex((entry) =>
+      JournalController.isItem({ item: entry, termId })
+    );
+
+    // Get index of task to update by id
+    const taskIndex = journal.terms[termIndex].weeks[weekNumber].tasks.findIndex((task) =>
+      JournalController.isItem({ item: task, id: taskId })
+    );
+
+    // Update task
+    journal.terms[termIndex].weeks[weekNumber].tasks[taskIndex].content = content;
+    journal.terms[termIndex].weeks[weekNumber].tasks[taskIndex].dueDate = _dueDate;
+
+    // Attempt to save changes to journal
+    try {
+      await journal.save();
+      // Failed to validate the schema for this model
+    } catch (error) {
+      return res.status(400).json({
+        success: false,
+        error,
+      });
+    }
+
+    // Get updated task
+    const updatedTask = journal.terms[termIndex].weeks[weekNumber].tasks[taskIndex];
+
+    // Return new task
+    return res.status(200).json({
+      success: true,
+      data: updatedTask,
+    });
+  }
+
+  /**
+   * Deletes an entry task.
+   * @param {string} id - Id for this journal.
+   * @param {string} taskId - Id for this task.
+   * @param {Date} entryDate - Date for this journal entry.
+   * @param {string} type - Type of journal entry, i,e, daily, weekly, or monthly.
+   * @returns {boolean} Success status.
+   */
+  async deleteEntryTask({ body: { taskId, entryDate, type }, params: { id } }, res) {
+    // Initialize for Journal() object
+    let journal;
+
+    // Attempt to find journal with user id
+    try {
+      journal = await this.Journal.findOne({ _id: id });
+      // Failed to find this journal
+    } catch (error) {
+      return res.status(400).json({ success: false, error });
+    }
+
+    // Get the name of the entries we want to access
+    const propertyName = JournalController.getPropertyName(type);
+
+    // Get the index of the entry
+    const propertyIndex = journal[propertyName].findIndex((entry) =>
+      JournalController.isItem({ item: entry, entryDate })
+    );
+
+    // Get index of task to delete
+    const taskIndex = journal[propertyName][propertyIndex].tasks.findIndex((task) =>
       JournalController.isItem({ item: task, id: taskId })
     );
 
     // Delete task
-    await journal[propertyName][propertyIndex].tasks[
-      taskIndex
-    ].remove();
+    await journal[propertyName][propertyIndex].tasks[taskIndex].remove();
 
     // Attempt to save changes to journal
     try {
@@ -551,46 +744,88 @@ export default class JournalController {
   }
 
   /**
-   * Adds a new note.
-   * @param {string} id - User Id
-   * @param {string} content - Note content
-   * @param {string} collectionId - Collection Id.
-   * @param {Date} entryDate - Date for journal entry
-   * @param {string} type - Name for journal property to
-   * @returns {object} New note.
+   * Deletes a term task.
+   * @param {string} id - Id for this journal.
+   * @param {string} taskId - Id for this task.
+   * @param {string} termId - Term Id.
+   * @param {number} entryDate - Week number for this term.
+   * @returns {boolean} Success status.
    */
-  async addNote(
-    {
-      body: { content, collectionId, entryDate, type },
-      params: { id },
-    },
-    res
-  ) {
-    // Construct new note object
-    const newNote = {
-      content,
-    };
-
-    // Initialize for Journal()
+  async deleteTermTask({ body: { taskId, termId, weekNumber }, params: { id } }, res) {
+    // Initialize for Journal() object
     let journal;
 
     // Attempt to find journal with user id
     try {
       journal = await this.Journal.findOne({ _id: id });
-      // Failed to find journal for this user
+      // Failed to find this journal
     } catch (error) {
       return res.status(400).json({ success: false, error });
     }
 
-    // Get the name of the journal property we want to access
-    const propertyName = JournalController.getPropertyName(type);
-
-    // Get the index of the journal property which this note belongs to
-    const propertyIndex = journal[propertyName].findIndex((item) =>
-      JournalController.isItem({ item, id: collectionId, entryDate })
+    // Get index of term to access
+    const termIndex = journal.terms.findIndex((term) =>
+      JournalController.isItem({ item: term, id: termId })
     );
 
-    // Add new note
+    // Get task index to delete
+    const taskIndex = journal.terms[termIndex][weekNumber].tasks.findIndex((task) =>
+      JournalController.isItem({ item: task, id: taskId })
+    );
+
+    // Delete task
+    await journal.terms[termIndex][weekNumber].tasks[taskIndex].remove();
+
+    // Attempt to save changes to journal
+    try {
+      await journal.save();
+      // Failed to validate the schema for this model
+    } catch (error) {
+      return res.status(400).json({
+        success: false,
+        error,
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+    });
+  }
+
+  /**
+   * Adds a entry note.
+   * @param {string} id - User Id.
+   * @param {string} content - Note content.
+   * @param {Date} entryDate - Date for this journal entry.
+   * @param {string} type - Type of journal entry, i,e, daily, weekly, or monthly.
+   * @returns {Object} New note.
+   */
+  async addEntryNote({ body: { content, entryDate, type }, params: { id } }, res) {
+    // Construct new note object
+    const newNote = {
+      content,
+    };
+
+    // Attempt to find journal with user id
+    let journal;
+    try {
+      journal = await this.Journal.findOne({ _id: id });
+    } catch (error) {
+      return res.status(400).json({
+        success: false,
+        error,
+      });
+    }
+
+    // Get type of entries to access
+    const propertyName = JournalController.getPropertyName(type);
+
+    // Get index of entry we need by date
+    const propertyIndex = journal[propertyName].findIndex((entry) =>
+      JournalController.isItem({ item: entry, entryDate })
+    );
+
+    // Add note
     journal[propertyName][propertyIndex].notes.push(newNote);
 
     // Attempt to save changes to journal
@@ -604,41 +839,130 @@ export default class JournalController {
       });
     }
 
-    // Return new note
+    // Return new task
     return res.status(201).json({
       success: true,
-      newNote,
+      data: newNote,
     });
   }
 
   /**
-   * Updates a note.
+   * Adds a term note.
+   * @param {string} id - User Id.
+   * @param {string} content - Note content.
+   * @param {string} termId - Term Id.
+   * @param {Date} weekNumber - Week number in term.
+   * @returns {Object} New Note.
+   */
+  async addTermNote({ body: { content, termId, weekNumber }, params: { id } }, res) {
+    // Construct new note object
+    const newNote = {
+      content,
+    };
+
+    // Attempt to find journal with user id
+    let journal;
+    try {
+      journal = await this.Journal.findOne({ _id: id });
+    } catch (error) {
+      return res.status(400).json({
+        success: false,
+        error,
+      });
+    }
+    // Get index of term to access
+    const termIndex = journal.terms.findIndex((term) =>
+      JournalController.isItem({ item: term, id: termId })
+    );
+
+    // Using termIndex and weekNumber, add note
+    journal.terms[termIndex][weekNumber].notes.push(newNote);
+
+    // Attempt to save changes to journal
+    try {
+      await journal.save();
+      // Failed to validate the schema for this model
+    } catch (error) {
+      return res.status(400).json({
+        success: false,
+        error,
+      });
+    }
+
+    // Return new task
+    return res.status(201).json({
+      success: true,
+      data: newNote,
+    });
+  }
+
+  /**
+   * Adds a collection note.
+   * @param {string} id - User Id.
+   * @param {string} content - Note content.
+   * @param {string} collectionId - Collection Id.
+   * @returns {Object} New note.
+   */
+  async addCollectionNote(
+    { body: { content, collectionId = null }, params: { id } },
+    res
+  ) {
+    // Construct new task object
+    const newNote = {
+      content,
+    };
+
+    // Attempt to find journal with user id
+    let journal;
+    try {
+      journal = await this.Journal.findOne({ _id: id });
+    } catch (error) {
+      return res.status(400).json({
+        success: false,
+        error,
+      });
+    }
+
+    // Get index of collection to access
+    const collectionIndex = journal.collections.findIndex((collection) =>
+      JournalController.isItem({ item: collection, id: collectionId })
+    );
+
+    // Add note
+    journal.collection[collectionIndex].notes.push(newNote);
+
+    // Attempt to save changes to journal
+    try {
+      await journal.save();
+      // Failed to validate the schema for this model
+    } catch (error) {
+      return res.status(400).json({
+        success: false,
+        error,
+      });
+    }
+
+    // Return new task
+    return res.status(201).json({
+      success: true,
+      data: newNote,
+    });
+  }
+
+  /**
+   * Updates a entry note.
    * @param {string} id - User Id.
    * @param {string} noteId - Note Id.
    * @param {string} content - Updated text for this Note
    * @param {string} collectionId - Collection Id
    * @param {Date} entryDate - Date for journal entry this note belongs to
-   * @param {string} type - Name for journal property to
-   * @returns {object} Updated note
+   * @param {string} type - Type of journal entry, i,e, daily, weekly, or monthly
+   * @returns {Object} Updated note
    */
-  async updateNote(
-    {
-      body: {
-        noteId,
-        content,
-        collectionId = null,
-        entryDate = null,
-        type,
-      },
-      params: { id },
-    },
+  async updateEntryNote(
+    { body: { noteId, content, entryDate, type }, params: { id } },
     res
   ) {
-    // Construct updated note object
-    const updatedNote = {
-      content,
-    };
-
     // Initialize journal
     let journal;
 
@@ -649,25 +973,21 @@ export default class JournalController {
       return res.status(400).json({ success: false, error });
     }
 
-    // Get the name of the journal property we want to access
     const propertyName = JournalController.getPropertyName(type);
+    // Get the index of the item to delete
 
-    // Get the index of the journal property which this note belongs to
-    const propertyIndex = journal[propertyName].findIndex((item) =>
-      JournalController.isItem({ item, id: collectionId, entryDate })
+    // Get index of entry we need by date
+    const entryIndex = journal[propertyName].findIndex((entry) =>
+      JournalController.isItem({ item: entry, entryDate })
     );
 
-    // Get the index of the note we need to update
-    const noteIndex = journal[propertyName][
-      propertyIndex
-    ].notes.findIndex((note) =>
+    // Get index of task to update by id
+    const noteIndex = journal[propertyName][entryIndex].notes.findIndex((note) =>
       JournalController.isItem({ item: note, id: noteId })
     );
 
     // Update note
-    journal[propertyName][propertyIndex].notes[
-      noteIndex
-    ] = updatedNote;
+    journal[propertyName][entryIndex].notes[noteIndex].content = content;
 
     // Attempt to save changes to journal
     try {
@@ -677,6 +997,9 @@ export default class JournalController {
       return res.status(400).json({ success: false, error });
     }
 
+    // Get updated note
+    const updatedNote = journal[propertyName][entryIndex].notes[noteIndex];
+
     // Return updated note
     return res.status(200).json({
       success: true,
@@ -685,17 +1008,125 @@ export default class JournalController {
   }
 
   /**
-   * Deletes a note.
+   * Updates a term note.
+   * @param {string} id - User Id.
+   * @param {string} noteId - Note Id.
+   * @param {string} content - Updated text for this Note
+   * @param {string} termId - Term Id
+   * @param {number} weekNumber - Week number in this term.
+   * @returns {Object} Updated note
+   */
+  async updateTermNote(
+    { body: { noteId, content, termId, weekNumber }, params: { id } },
+    res
+  ) {
+    // Initialize journal
+    let journal;
+
+    // Attempt to find Journal() object with user id
+    try {
+      journal = await this.Journal.findOne({ _id: id });
+    } catch (error) {
+      return res.status(400).json({ success: false, error });
+    }
+
+    // Get index of entry we need by date
+    const termIndex = journal.terms.findIndex((term) =>
+      JournalController.isItem({ item: term, id: termId })
+    );
+
+    // Get index of task to update by id
+    const noteIndex = journal.terms[termIndex][weekNumber].notes.findIndex((note) =>
+      JournalController.isItem({ item: note, id: noteId })
+    );
+
+    // Update note
+    journal.terms[termIndex].weeks[weekNumber].notes[noteIndex].content = content;
+
+    // Attempt to save changes to journal
+    try {
+      await journal.save();
+      // Failed to validate the schema for this model
+    } catch (error) {
+      return res.status(400).json({ success: false, error });
+    }
+
+    // Get updated note
+    const updatedNote = journal.terms[termIndex].weeks[weekNumber].notes[noteIndex];
+
+    // Return updated note
+    return res.status(200).json({
+      success: true,
+      data: updatedNote,
+    });
+  }
+
+  /**
+   * Updates a collection note.
+   * @param {string} id - User Id.
+   * @param {string} noteId - Note Id.
+   * @param {string} content - Updated text for this Note
+   * @param {string} collectionId - Collection Id
+   * @returns {Object} Updated note
+   */
+  async updateCollectionNote(
+    { body: { noteId, content, collectionId }, params: { id } },
+    res
+  ) {
+    // Initialize journal
+    let journal;
+
+    // Attempt to find Journal() object with user id
+    try {
+      journal = await this.Journal.findOne({ _id: id });
+    } catch (error) {
+      return res.status(400).json({ success: false, error });
+    }
+
+    // Get index of entry we need by date
+    const collectionIndex = journal.collections.findIndex((collection) =>
+      JournalController.isItem({ item: collection, id: collectionId })
+    );
+
+    // Get index of task to update by id
+    const noteIndex = journal.collections[collectionIndex].notes.findIndex((note) =>
+      JournalController.isItem({ item: note, id: noteId })
+    );
+
+    // Update note
+    journal.collections[collectionIndex].notes[noteIndex].content = content;
+
+    // Attempt to save changes to journal
+    try {
+      await journal.save();
+      // Failed to validate the schema for this model
+    } catch (error) {
+      return res.status(400).json({ success: false, error });
+    }
+
+    // Get updated note
+    const updatedNote = journal.collections[collectionIndex].notes[noteIndex];
+
+    // Return updated note
+    return res.status(200).json({
+      success: true,
+      data: updatedNote,
+    });
+  }
+
+  /**
+   * Deletes an entry note.
    * @param {string} id - Id for this user.
    * @param {string} noteId - Id for this note.
-   * @param {string} collectionId - Collection Id
+   * @param {string} collectionId - Collection Id.
    * @param {Date} entryDate - Date for this journal entry.
-   * @param {string} type - Name for journal property to this task is related to.
+   * @param {string} type - Type of journal entry, i,e, daily, weekly, or monthly.
+   * @returns {boolean} Success status.
    */
-  async deleteNote(req, res) {
+  async deleteEntryNote(req, res) {
     // get passed in data and user id for finding journal
     const {
-      body: { noteId, collectionId = null, entryDate = null, type },
+      body: { noteId, entryDate = null, type },
       params: { id },
     } = req;
 
@@ -712,20 +1143,18 @@ export default class JournalController {
     // Get the name of the journal property we want to access
     const propertyName = JournalController.getPropertyName(type);
 
-    // Get the index of the journal property which this note belongs to
-    const propertyIndex = journal[propertyName].findIndex((item) =>
-      JournalController.isItem({ item, id: collectionId, entryDate })
+    // Get the index for this entry
+    const propertyIndex = journal[propertyName].findIndex((entry) =>
+      JournalController.isItem({ item: entry, entryDate })
     );
 
-    // Get the index of the note to delete
-    const noteIndex = journal[propertyName][
-      propertyIndex
-    ].notes.findIndex((note) =>
+    // Get index of note to delete
+    const noteIndex = journal[propertyName][propertyIndex].notes.findIndex((note) =>
       JournalController.isItem({ item: note, id: noteId })
     );
 
     // Delete note
-    journal[propertyName][propertyIndex].notes[noteIndex].remove();
+    await journal[propertyName][propertyIndex].notes[noteIndex].remove();
 
     // Attempt to save changes to journal
     try {
@@ -741,42 +1170,134 @@ export default class JournalController {
   }
 
   /**
-   * Adds a new event.
+   * Deletes a term note.
+   * @param {string} id - Id for this user.
+   * @param {string} noteId - Id for this note.
+   * @param {string} termId - Collection Id.
+   * @param {number} weekNumber - Week number in this term.
+   * @returns {boolean} Success status.
+   */
+  async deleteTermNote(req, res) {
+    // get passed in data and user id for finding journal
+    const {
+      body: { noteId, termId, weekNumber },
+      params: { id },
+    } = req;
+
+    // Initialize journal
+    let journal;
+
+    // Attempt to find Journal() object with user id
+    try {
+      journal = await this.Journal.findOne({ _id: id });
+    } catch (error) {
+      return res.status(400).json({ success: false, error });
+    }
+
+    // Get index of term to access
+    const termIndex = journal.terms.findIndex((term) =>
+      JournalController.isItem({ item: term, id: termId })
+    );
+
+    // Get index of note to delete
+    const noteIndex = journal.terms[termIndex].weeks[weekNumber].notes.findIndex((note) =>
+      JournalController.isItem({ item: note, id: noteId })
+    );
+
+    // Delete note
+    await journal.terms[termIndex].weeks[weekNumber].notes[noteIndex].remove();
+
+    // Attempt to save changes to journal
+    try {
+      await journal.save();
+      // Failed to validate the schema for this model
+    } catch (error) {
+      return res.status(400).json({ success: false, error });
+    }
+
+    return res.status(200).json({
+      success: true,
+    });
+  }
+
+  /**
+   * Deletes a collection note.
+   * @param {string} id - Id for this user.
+   * @param {string} noteId - Id for this note.
+   * @param {string} collectionId - Collection Id.
+   * @returns {boolean} Success status.
+   */
+  async deleteCollectionNote(req, res) {
+    // get passed in data and user id for finding journal
+    const {
+      body: { noteId, collectionId },
+      params: { id },
+    } = req;
+
+    // Initialize journal
+    let journal;
+
+    // Attempt to find Journal() object with user id
+    try {
+      journal = await this.Journal.findOne({ _id: id });
+    } catch (error) {
+      return res.status(400).json({ success: false, error });
+    }
+
+    // Get index of collection to access
+    const collectionIndex = journal.collections.findIndex((collection) =>
+      JournalController.isItem({ item: collection, id: collectionId })
+    );
+
+    // Get index of note to delete
+    const noteIndex = journal.collections[collectionIndex].notes.findIndex((note) =>
+      JournalController.isItem({ item: note, id: noteId })
+    );
+
+    // Delete note
+    await journal.collections[collectionIndex].notes[noteIndex].remove();
+
+    // Attempt to save changes to journal
+    try {
+      await journal.save();
+      // Failed to validate the schema for this model
+    } catch (error) {
+      return res.status(400).json({ success: false, error });
+    }
+
+    return res.status(200).json({
+      success: true,
+    });
+  }
+
+  /**
+   * Adds a new entry event.
    * @param {string} id - User Id
    * @param {string} content - Event content.
-   * @param {string} link - URL link.
+   * @param {string} URL - URL.
    * @param {Date} startTime - Start time for event.
    * @param {Date} endTime - End time for event.
-   * @param {string} collectionId - Collection Id.
    * @param {Date} entryDate - Date for journal entry.
-   * @param {string} type - Type for property name,
-   * @returns {object} New event.
+   * @param {string} type - Type of journal entry, i,e, daily, weekly, or monthly.
+   * @returns {Object} New event.
    */
-  async addEvent(
-    {
-      body: {
-        content,
-        link,
-        startTime,
-        endTime,
-        collectionId = null,
-        entryDate = null,
-        type,
-      },
-      params: { id },
-    },
+  async addEntryEvent(
+    { body: { content, URL, startTime, endTime, entryDate, type }, params: { id } },
     res
   ) {
+    const eventId = mongoose.Types.ObjectId();
+
     // Get start and end time for this new event
     const _startTime = new Date(startTime);
     const _endTime = new Date(endTime);
 
     // Construct new event object
     const newEvent = {
+      _id: eventId,
       content,
       startTime: _startTime,
       endTime: _endTime,
-      link,
+      URL,
     };
 
     // Initialize for Journal()
@@ -790,16 +1311,143 @@ export default class JournalController {
       return res.status(400).json({ success: false, error });
     }
 
-    // Get the name of the journal property we want to access
+    // Get type of entries to access
     const propertyName = JournalController.getPropertyName(type);
 
-    // Get the index of the journal property which this note belongs to
-    const propertyIndex = journal[propertyName].findIndex((item) =>
-      JournalController.isItem({ item, id: collectionId, entryDate })
+    // Get index for this entry
+    const propertyIndex = journal[propertyName].findIndex((entry) =>
+      JournalController.isItem({ item: entry, entryDate })
     );
 
-    // Add new event
+    // Add event
     journal[propertyName][propertyIndex].events.push(newEvent);
+
+    // Attempt to save changes to journal
+    try {
+      await journal.save();
+      // Failed to validate the schema for this model
+    } catch (error) {
+      return res.status(400).json({ success: false, error });
+    }
+
+    // Return new note
+    return res.status(201).json({
+      success: true,
+      data: newEvent,
+    });
+  }
+
+  /**
+   * Adds a new term event.
+   * @param {string} id - User Id
+   * @param {string} content - Event content.
+   * @param {string} URL - URL.
+   * @param {Date} startTime - Start time for event.
+   * @param {Date} endTime - End time for event.
+   * @param {string} termId - Term Id.
+   * @param {number} weekNumber - Week number for current term,
+   * @returns {Object} New event.
+   */
+  async addTermEvent(
+    { body: { content, URL, startTime, endTime, termId, weekNumber }, params: { id } },
+    res
+  ) {
+    const eventId = mongoose.Types.ObjectId();
+
+    // Get start and end time for this new event
+    const _startTime = new Date(startTime);
+    const _endTime = new Date(endTime);
+
+    // Construct new event object
+    const newEvent = {
+      _id: eventId,
+      content,
+      startTime: _startTime,
+      endTime: _endTime,
+      URL,
+    };
+
+    // Initialize for Journal()
+    let journal;
+
+    // Attempt to find journal with user id
+    try {
+      journal = await this.Journal.findOne({ _id: id });
+      // Failed to find journal for this user
+    } catch (error) {
+      return res.status(400).json({ success: false, error });
+    }
+
+    // Get index of term
+    const termIndex = journal.terms.findIndex((term) =>
+      JournalController.isItem({ item: term, id: termId })
+    );
+
+    // Using termIndex and weekNumber, add event
+    journal.terms[termIndex].weeks[weekNumber].events.push(newEvent);
+
+    // Attempt to save changes to journal
+    try {
+      await journal.save();
+      // Failed to validate the schema for this model
+    } catch (error) {
+      return res.status(400).json({ success: false, error });
+    }
+
+    // Return new note
+    return res.status(201).json({
+      success: true,
+      data: newEvent,
+    });
+  }
+
+  /**
+   * Adds a new collection event.
+   * @param {string} id - User Id
+   * @param {string} content - Event content.
+   * @param {string} URL - URL.
+   * @param {Date} startTime - Start time for event.
+   * @param {Date} endTime - End time for event.
+   * @param {string} collectionId - Collection Id.
+   * @returns {Object} New event.
+   */
+  async addCollectionEvent(
+    { body: { content, URL, startTime, endTime, collectionId }, params: { id } },
+    res
+  ) {
+    const eventId = mongoose.Types.ObjectId();
+
+    // Get start and end time for this new event
+    const _startTime = new Date(startTime);
+    const _endTime = new Date(endTime);
+
+    // Construct new event object
+    const newEvent = {
+      _id: eventId,
+      content,
+      startTime: _startTime,
+      endTime: _endTime,
+      URL,
+    };
+
+    // Initialize for Journal()
+    let journal;
+
+    // Attempt to find journal with user id
+    try {
+      journal = await this.Journal.findOne({ _id: id });
+      // Failed to find journal for this user
+    } catch (error) {
+      return res.status(400).json({ success: false, error });
+    }
+
+    // Get index of collection to access
+    const collectionIndex = journal.collections.findIndex((collection) =>
+      JournalController.isItem({ item: collection, id: collectionId })
+    );
+
+    // Add event
+    journal.collections[collectionIndex].events.push(newEvent);
 
     // Attempt to save changes to journal
     try {
@@ -821,26 +1469,17 @@ export default class JournalController {
    * @param {string} id - User Id.
    * @param {string} eventId - Event Id.
    * @param {string} content - Updated content for event.
-   * @param {string} link - URL link for this event.
+   * @param {string} URL - URL for this event.
    * @param {Date} startTime - Start time for this event.
    * @param {Date} endTime - End time for this event.
    * @param {string} collectionId - Collection Id.
    * @param {Date} entryDate - Date for journal entry this event belongs to.
-   * @param {string} type - Name for journal property to
-   * @returns {object} Updated event
+   * @param {string} type - Type of journal entry, i,e, daily, weekly, or monthly
+   * @returns {Object} Updated event
    */
-  async updateEvent(
+  async updateEntryEvent(
     {
-      body: {
-        eventId,
-        content,
-        link,
-        startTime,
-        endTime,
-        collectionId = null,
-        entryDate = null,
-        type,
-      },
+      body: { eventId, content, URL, startTime, endTime, entryDate, type },
       params: { id },
     },
     res
@@ -848,14 +1487,6 @@ export default class JournalController {
     // Get the start and end times
     const _startTime = new Date(startTime);
     const _endTime = new Date(endTime);
-
-    // Construct new event object
-    const updatedEvent = {
-      content,
-      startTime: _startTime,
-      endTime: _endTime,
-      link,
-    };
 
     // Initialize for Journal()
     let journal;
@@ -868,25 +1499,23 @@ export default class JournalController {
       return res.status(400).json({ success: false, error });
     }
 
-    // Get the name of the journal property we want to access
     const propertyName = JournalController.getPropertyName(type);
 
-    // Get the index of the journal property which this note belongs to
-    const propertyIndex = journal[propertyName].findIndex((item) =>
-      JournalController.isItem({ item, id: collectionId, entryDate })
+    // Get index of entry we need by date
+    const propertyIndex = journal[propertyName].findIndex((term) =>
+      JournalController.isItem({ item: term, entryDate })
     );
 
-    // Get the index of the event to update
-    const eventIndex = journal[propertyName][
-      propertyIndex
-    ].events.findIndex((event) =>
+    // Get index of event to update by id
+    const eventIndex = journal[propertyName][propertyIndex].events.findIndex((event) =>
       JournalController.isItem({ item: event, id: eventId })
     );
 
     // Update event
-    journal[propertyName][propertyIndex].events[
-      eventIndex
-    ] = updatedEvent;
+    journal[propertyName][propertyIndex].events[eventIndex].content = content;
+    journal[propertyName][propertyIndex].events[eventIndex].startTime = _startTime;
+    journal[propertyName][propertyIndex].events[eventIndex].endTime = _endTime;
+    journal[propertyName][propertyIndex].events[eventIndex].URL = URL;
 
     // Attempt to save changes to journal
     try {
@@ -896,6 +1525,9 @@ export default class JournalController {
       return res.status(400).json({ success: false, error });
     }
 
+    // Get updated event
+    const updatedEvent = journal[propertyName][propertyIndex].events[eventIndex];
+
     // Return new note
     return res.status(200).json({
       success: true,
@@ -904,20 +1536,28 @@ export default class JournalController {
   }
 
   /**
-   * Deletes an event.
-   * @param {string} id - Id for this user.
-   * @param {string} eventId - Id for this event.
-   * @param {string} collectionId - Collection Id.
-   * @param {Date} entryDate - Date for this journal entry.
-   * @param {string} type - Name for journal property to this event is related to.
+   * Updates an event.
+   * @param {string} id - User Id.
+   * @param {string} eventId - Event Id.
+   * @param {string} content - Updated content for event.
+   * @param {string} URL - URL for this event.
+   * @param {Date} startTime - Start time for this event.
+   * @param {Date} endTime - End time for this event.
+   * @param {string} termId - Term Id.
+   * @param {string} weekNumber - Week number for this term
+   * @returns {Object} Updated event
    */
-  async deleteEvent(
+  async updateTermEvent(
     {
-      body: { eventId, collectionId = null, entryDate = null, type },
+      body: { eventId, content, URL, startTime, endTime, termId, weekNumber },
       params: { id },
     },
     res
   ) {
+    // Get the start and end times
+    const _startTime = new Date(startTime);
+    const _endTime = new Date(endTime);
+
     // Initialize for Journal()
     let journal;
 
@@ -929,23 +1569,223 @@ export default class JournalController {
       return res.status(400).json({ success: false, error });
     }
 
-    // Get the name of the journal property we want to access
-    const propertyName = JournalController.getPropertyName(type);
-
-    // Get the index of the journal property which this note belongs to
-    const propertyIndex = journal[propertyName].findIndex((item) =>
-      JournalController.isItem({ item, id: collectionId, entryDate })
+    // Get index of entry we need by date
+    const termIndex = journal.terms.findIndex((term) =>
+      JournalController.isItem({ item: term, id: termId })
     );
 
-    // Get the index of the event to delete
-    const eventIndex = journal[propertyName][
-      propertyIndex
-    ].events.findIndex((event) =>
+    // Get index of task to update by id
+    const eventIndex = journal.terms[termIndex].weeks[weekNumber].findIndex((event) =>
+      JournalController.isItem({ item: event, id: eventId })
+    );
+
+    // Update event
+    journal.terms[termIndex].events[eventIndex].content = content;
+    journal.terms[termIndex].events[eventIndex].startTime = _startTime;
+    journal.terms[termIndex].events[eventIndex].endTime = _endTime;
+    journal.terms[termIndex].events[eventIndex].URL = URL;
+
+    // Attempt to save changes to journal
+    try {
+      await journal.save();
+      // Failed to validate the schema for this model
+    } catch (error) {
+      return res.status(400).json({ success: false, error });
+    }
+
+    // Get updated event
+    const updatedEvent = journal.terms[termIndex].events[eventIndex];
+
+    // Return new note
+    return res.status(200).json({
+      success: true,
+      data: updatedEvent,
+    });
+  }
+
+  /**
+   * Updates a collection event.
+   * @param {string} id - User Id.
+   * @param {string} eventId - Event Id.
+   * @param {string} content - Updated content for event.
+   * @param {string} URL - URL for this event.
+   * @param {Date} startTime - Start time for this event.
+   * @param {Date} endTime - End time for this event.
+   * @param {string} collectionId - Collection Id.
+   * @returns {Object} Updated event
+   */
+
+  async updateCollectionEvent(
+    { body: { eventId, content, URL, startTime, endTime, collectionId }, params: { id } },
+    res
+  ) {
+    // Get the start and end times
+    const _startTime = new Date(startTime);
+    const _endTime = new Date(endTime);
+
+    // Initialize for Journal()
+    let journal;
+
+    // Attempt to find journal with user id
+    try {
+      journal = await this.Journal.findOne({ _id: id });
+      // Failed to find journal for this user
+    } catch (error) {
+      return res.status(400).json({ success: false, error });
+    }
+
+    // Get index of entry we need by date
+    const collectionIndex = journal.collections.findIndex((collection) =>
+      JournalController.isItem({ item: collection, id: collectionId })
+    );
+
+    // Get index of task to update by id
+    const eventIndex = journal.collections[collectionIndex].events.findIndex((event) =>
+      JournalController.isItem({ item: event, id: eventId })
+    );
+
+    // Update event
+    journal.collections[collectionIndex].events[eventIndex].content = content;
+    journal.collections[collectionIndex].events[eventIndex].startTime = _startTime;
+    journal.collections[collectionIndex].events[eventIndex].endTime = _endTime;
+    journal.collections[collectionIndex].events[eventIndex].URL = URL;
+
+    // Attempt to save changes to journal
+    try {
+      await journal.save();
+      // Failed to validate the schema for this model
+    } catch (error) {
+      return res.status(400).json({ success: false, error });
+    }
+    // Get updated event
+    const updatedEvent = journal.collections[collectionIndex].events[eventIndex];
+
+    // Return new note
+    return res.status(200).json({
+      success: true,
+      data: updatedEvent,
+    });
+  }
+
+  /**
+   * Deletes an entry event.
+   * @param {string} id - Id for this user.
+   * @param {string} eventId - Id for this event.
+   * @param {Date} entryDate - Date for this journal entry.
+   * @param {string} type - Type of journal entry, i,e, daily, weekly, or monthly.
+   * @returns {boolean} Success status
+   */
+  async deleteEntryEvent({ body: { eventId, entryDate, type }, params: { id } }, res) {
+    // Initialize for Journal()
+    let journal;
+
+    // Attempt to find journal with user id
+    try {
+      journal = await this.Journal.findOne({ _id: id });
+      // Failed to find journal for this user
+    } catch (error) {
+      return res.status(400).json({ success: false, error });
+    }
+    // Get type of entries to access
+    const propertyName = JournalController.getPropertyName(type);
+
+    // Get index for the entry we need
+    const propertyIndex = journal[propertyName].findIndex((entry) =>
+      JournalController.isItem({ item: entry, entryDate })
+    );
+
+    // Get the event to delete index
+    const eventIndex = journal[propertyName][propertyIndex].events.findIndex((event) =>
       JournalController.isItem({ item: event, id: eventId })
     );
 
     // Remove event
-    journal[propertyName][propertyIndex].events[eventIndex].remove();
+    await journal[propertyName][propertyIndex].events[eventIndex].remove();
+
+    // Attempt to save changes to journal
+    try {
+      await journal.save();
+      // Failed to validate the schema for this model
+    } catch (error) {
+      return res.status(400).json({ success: false, error });
+    }
+
+    return res.status(200).json({ success: true });
+  }
+
+  /**
+   * Deletes a term event.
+   * @param {string} id - Id for this user.
+   * @param {string} eventId - Id for this event.
+   * @param {string} termId - Collection Id.
+   * @param {string} weekNumber - Week number for term.
+   * @returns {boolean} Success status
+   */
+  async deleteTermEvent({ body: { eventId, termId, weekNumber }, params: { id } }, res) {
+    // Initialize for Journal()
+    let journal;
+
+    // Attempt to find journal with user id
+    try {
+      journal = await this.Journal.findOne({ _id: id });
+      // Failed to find journal for this user
+    } catch (error) {
+      return res.status(400).json({ success: false, error });
+    }
+    // Get the term this event belongs to
+    const termIndex = journal.terms.findIndex((term) =>
+      JournalController.isItem({ item: term, id: termId })
+    );
+
+    // Using termIndex and weekNumber, get the index of the event to delete
+    const eventIndex = journal.terms[termIndex].weeks[weekNumber].findIndex((event) =>
+      JournalController.isItem({ item: event, id: eventId })
+    );
+
+    // Delete event
+    await journal.terms[termIndex].weeks[weekNumber].events[eventIndex].remove();
+
+    // Attempt to save changes to journal
+    try {
+      await journal.save();
+      // Failed to validate the schema for this model
+    } catch (error) {
+      return res.status(400).json({ success: false, error });
+    }
+
+    return res.status(200).json({ success: true });
+  }
+
+  /**
+   * Deletes a collection event.
+   * @param {string} id - Id for this user.
+   * @param {string} eventId - Id for this event.
+   * @param {string} collectionId - Collection Id.
+   * @returns {boolean} Success status
+   */
+  async deleteCollectionEvent({ body: { eventId, collectionId }, params: { id } }, res) {
+    // Initialize for Journal()
+    let journal;
+
+    // Attempt to find journal with user id
+    try {
+      journal = await this.Journal.findOne({ _id: id });
+      // Failed to find journal for this user
+    } catch (error) {
+      return res.status(400).json({ success: false, error });
+    }
+    // Get index of collection to access
+    const collectionIndex = journal.collections.findIndex((collection) =>
+      JournalController.isItem({ item: collection, id: collectionId })
+    );
+
+    // Get index for this event
+    const eventIndex = journal.collections[collectionIndex].events.findIndex((event) =>
+      JournalController.isItem({ item: event, id: eventId })
+    );
+
+    // Delete event
+    await journal.collections[collectionIndex].events[eventIndex].remove();
 
     // Attempt to save changes to journal
     try {
@@ -960,32 +1800,17 @@ export default class JournalController {
 
   /**
    * Moves a task from one journal entry to another.
-   * @param {object} moveTask - Information to create new journal entry
-   * @returns {object} migrated task.
+   * @param {string} id - User Id.
+   * @param {string} taskId - Task Id.
+   * @param {Date} entryDate - Date of journal entry.
+   * @param {Date} migrateDate - Date of journal entry event is being moved to.
+   * @param {string} type - Type of journal entry, i,e, daily, weekly, or monthly.
+   * @returns {Object} Updated task.
    */
-  async migrateTask(
-    {
-      body: {
-        taskId,
-        content,
-        entryDate,
-        dueDate,
-        migrateDate,
-        type,
-      },
-      params: { id },
-    },
+  async migrateEntryTask(
+    { body: { taskId, entryDate, migrateDate, type }, params: { id } },
     res
   ) {
-    // Get the due date if applicable
-    const _dueDate = dueDate ? new Date(dueDate) : null;
-
-    // Construct new task object based on current entry task
-    const moveTask = {
-      content,
-      dueDate: _dueDate,
-    };
-
     // find current journal with user id
     let journal;
     try {
@@ -1001,35 +1826,31 @@ export default class JournalController {
     const propertyName = JournalController.getPropertyName(type);
 
     // Get the index for the entry which has the task we're trying to move
-    const originPropertyIndex = journal[
-      propertyName
-    ].findIndex((entry) =>
+    const originPropertyIndex = journal[propertyName].findIndex((entry) =>
       JournalController.isItem({ item: entry, entryDate })
     );
 
     // Get the index for the task we're trying to move
-    const taskIndex = journal[propertyName][
-      originPropertyIndex
-    ].tasks.findIndex((task) =>
+    const taskIndex = journal[propertyName][originPropertyIndex].tasks.findIndex((task) =>
       JournalController.isItem({ item: task, id: taskId })
     );
 
     // Get the index of the entry which this task is being moved to
-    const destPropertyIndex = journal[propertyName].findIndex(
-      (entry) =>
-        JournalController.isItem({
-          item: entry,
-          entryDate: migrateDate,
-        })
+    const destPropertyIndex = journal[propertyName].findIndex((entry) =>
+      JournalController.isItem({
+        item: entry,
+        entryDate: migrateDate,
+      })
     );
 
+    // Get copy of task
+    const taskCopy = journal[propertyName][originPropertyIndex].tasks[taskIndex];
+
     // Add task
-    journal[propertyName][destPropertyIndex].tasks.push(moveTask);
+    journal[propertyName][destPropertyIndex].tasks.push(taskCopy);
 
     // Remove task from old entry
-    journal[propertyName][originPropertyIndex].tasks[
-      taskIndex
-    ].remove();
+    journal[propertyName][originPropertyIndex].tasks[taskIndex].remove();
 
     // Attempt to save changes to journal
     try {
@@ -1045,27 +1866,83 @@ export default class JournalController {
     // Return migrated task
     return res.status(200).json({
       success: true,
-      data: moveTask,
+      data: taskCopy,
     });
   }
 
   /**
    * Moves a note from one journal entry to another.
-   * @param {object} moveNote - Information to create new journal entry
-   * @returns {object} migrated note.
+   * @param {string} id - User Id.
+   * @param {string} taskId - Task Id.
+   * @param {string} termId - Term Id.
+   * @param {number} weekNumber - Week number in this term.
+   * @param {number} migrateWeekNumber - Week number to move task to.
+   * @returns {Object} Updated task.
    */
-  async migrateNote(
-    {
-      body: { noteId, content, type, entryDate, migrateDate },
-      params: { id },
-    },
+  async migrateTermTask(
+    { body: { taskId, termId, weekNumber, migrateWeekNumber }, params: { id } },
     res
   ) {
-    // Construct notes
-    const moveNote = {
-      content,
-    };
+    // find current journal with user id
+    let journal;
+    try {
+      journal = await this.Journal.findOne({ _id: id });
+    } catch (error) {
+      return res.status(400).json({
+        success: false,
+        error,
+      });
+    }
 
+    // Get the index for the term which has the task we're trying to move
+    const termIndex = journal.terms.findIndex((term) =>
+      JournalController.isItem({ item: term, id: termId })
+    );
+
+    // Get the index for the task we're trying to move
+    const taskIndex = journal.terms[termIndex].weeks[weekNumber].tasks.findIndex((task) =>
+      JournalController.isItem({ item: task, id: taskId })
+    );
+
+    // Get copy of task
+    const taskCopy = journal.terms[termIndex].weeks[weekNumber].tasks[taskIndex];
+
+    // Add task
+    journal.terms[termIndex].weeks[migrateWeekNumber].tasks.push(taskCopy);
+
+    // Remove task from old week
+    journal.terms[termIndex].weeks[weekNumber].tasks[taskIndex].remove();
+
+    // Attempt to save changes to journal
+    try {
+      await journal.save();
+      // Failed to validate the schema for this model
+    } catch (error) {
+      return res.status(400).json({
+        success: false,
+        error,
+      });
+    }
+
+    // Return migrated task
+    return res.status(200).json({
+      success: true,
+      data: taskCopy,
+    });
+  }
+
+  /**
+   * Moves a note from one journal entry to another.
+   * @param {string} id - User Id.
+   * @param {string} noteId - Note Id.
+   * @param {Date} entryDate - Date of journal entry.
+   * @param {Date} migrateDate - Date of journal entry event is being moved to.
+   * @returns {Object} Updated note.
+   */
+  async migrateEntryNote(
+    { body: { noteId, type, entryDate, migrateDate }, params: { id } },
+    res
+  ) {
     // Initialize Journal
     let journal;
 
@@ -1080,35 +1957,30 @@ export default class JournalController {
     const propertyName = JournalController.getPropertyName(type);
 
     // Get the index for the entry which has the note we're trying to move
-    const originPropertyIndex = journal[
-      propertyName
-    ].findIndex((entry) =>
+    const originPropertyIndex = journal[propertyName].findIndex((entry) =>
       JournalController.isItem({ item: entry, entryDate })
     );
 
     // Get the index for the note we're moving
-    const noteIndex = journal[propertyName][
-      originPropertyIndex
-    ].notes.findIndex((note) =>
+    const noteIndex = journal[propertyName][originPropertyIndex].notes.findIndex((note) =>
       JournalController.isItem({ item: note, id: noteId })
     );
 
     // Get the index for the entry which this note is being moved to
-    const destPropertyIndex = journal[propertyName].findIndex(
-      (entry) =>
-        JournalController.isItem({
-          item: entry,
-          entryDate: migrateDate,
-        })
+    const destPropertyIndex = journal[propertyName].findIndex((entry) =>
+      JournalController.isItem({
+        item: entry,
+        entryDate: migrateDate,
+      })
     );
+    // Get copy of note
+    const noteCopy = journal[propertyName][originPropertyIndex].notes[noteIndex];
 
     // Push note to new destination entry
-    journal[propertyName][destPropertyIndex].notes.push(moveNote);
+    journal[propertyName][destPropertyIndex].notes.push(noteCopy);
 
     // Remove note from old entry
-    journal[propertyName][originPropertyIndex].notes[
-      noteIndex
-    ].remove();
+    journal[propertyName][originPropertyIndex].notes[noteIndex].remove();
 
     // Attempt to save changes to journal
     try {
@@ -1124,43 +1996,83 @@ export default class JournalController {
     // Return migrated task
     return res.status(200).json({
       success: true,
-      data: moveNote,
+      data: noteCopy,
+    });
+  }
+
+  /**
+   * Moves a term note from one week to another.
+   * @param {string} id - User Id.
+   * @param {string} noteId - Note Id.
+   * @param {string} content - Updated content for this event.
+   * @param {string} termId - Term Id.
+   * @param {number} weekNumber - Week number in this term.
+   * @param {Date} migrateWeekNumber - Week number note is being moved to
+   * @returns {Object} Updated note.
+   */
+  async migrateTermNote(
+    { body: { noteId, termId, weekNumber, migrateWeekNumber }, params: { id } },
+    res
+  ) {
+    // Initialize Journal
+    let journal;
+
+    // Attempt to find Journal() object with user id
+    try {
+      journal = await this.Journal.findOne({ _id: id });
+    } catch (error) {
+      return res.status(400).json({ success: false, error });
+    }
+
+    // Get the index for the term which has the task we're trying to move
+    const termIndex = journal.terms.findIndex((term) =>
+      JournalController.isItem({ item: term, id: termId })
+    );
+
+    // Get the index for the task we're trying to move
+    const noteIndex = journal.terms[termIndex].weeks[weekNumber].notes.findIndex((task) =>
+      JournalController.isItem({ item: task, id: noteId })
+    );
+    // Get copy of task
+    const noteCopy = journal.terms[termIndex].weeks[weekNumber].notes[noteIndex];
+
+    // Add task to new week
+    journal.terms[termIndex].weeks[migrateWeekNumber].notes.push(noteCopy);
+
+    // Remove task from old week
+    journal.terms[termIndex].weeks[weekNumber].notes[noteIndex].remove();
+
+    // Attempt to save changes to journal
+    try {
+      await journal.save();
+      // Failed to validate the schema for this model
+    } catch (error) {
+      return res.status(400).json({
+        success: false,
+        error,
+      });
+    }
+
+    // Return migrated task
+    return res.status(200).json({
+      success: true,
+      data: noteCopy,
     });
   }
 
   /**
    * Moves an event from one journal entry to another.
-   * @param {object} moveEvent - Information to create new journal entry
-   * @returns {object} migrated event.
+   * @param {string} id - User Id.
+   * @param {string} eventId - Event Id.
+   * @param {Date} entryDate - Date of journal entry.
+   * @param {Date} migrateDate - Date of journal entry event is being moved to.
+   * @param {string} type - Type of journal entry, i.e. daily, weekly, monthly.
+   * @returns {Object} Updated event.
    */
-  async migrateEvent(
-    {
-      body: {
-        eventId,
-        content,
-        startTime,
-        endTime,
-        entryDate,
-        migrateDate,
-        link,
-        type,
-      },
-      params: { id },
-    },
+  async migrateEntryEvent(
+    { body: { eventId, entryDate, migrateDate, type }, params: { id } },
     res
   ) {
-    // Get start and end times for this event
-    const _startTime = new Date(startTime);
-    const _endTime = new Date(endTime);
-
-    // Construct event object
-    const moveEvent = {
-      content,
-      startTime: _startTime,
-      endTime: _endTime,
-      link,
-    };
-
     // Initialize for journal()
     let journal;
 
@@ -1175,35 +2087,31 @@ export default class JournalController {
     const propertyName = JournalController.getPropertyName(type);
 
     // Get index of the entry this event currently resides in
-    const originPropertyIndex = journal[
-      propertyName
-    ].findIndex((entry) =>
+    const originPropertyIndex = journal[propertyName].findIndex((entry) =>
       JournalController.isItem({ item: entry, entryDate })
     );
 
     // Get index of the event we're going to move
     const eventIndex = journal[propertyName][
       originPropertyIndex
-    ].events.findIndex((event) =>
-      JournalController.isItem({ item: event, id: eventId })
-    );
+    ].events.findIndex((event) => JournalController.isItem({ item: event, id: eventId }));
 
     // Get index of the entry which were moving this event to
-    const destPropertyIndex = journal[propertyName].findIndex(
-      (entry) =>
-        JournalController.isItem({
-          item: entry,
-          entryDate: migrateDate,
-        })
+    const destPropertyIndex = journal[propertyName].findIndex((entry) =>
+      JournalController.isItem({
+        item: entry,
+        entryDate: migrateDate,
+      })
     );
 
+    // Get copy of event to move
+    const eventCopy = journal[propertyName][originPropertyIndex].events[eventIndex];
+
     // Add event to new future entry
-    journal[propertyName][destPropertyIndex].events.push(moveEvent);
+    journal[propertyName][destPropertyIndex].events.push(eventCopy);
 
     // Remove event from old entry
-    journal[propertyName][originPropertyIndex].events[
-      eventIndex
-    ].remove();
+    journal[propertyName][originPropertyIndex].events[eventIndex].remove();
 
     // Attempt to save changes to journal
     try {
@@ -1219,7 +2127,67 @@ export default class JournalController {
     // Return migrated task
     return res.status(200).json({
       success: true,
-      data: moveEvent,
+      data: eventCopy,
+    });
+  }
+
+  /**
+   * Moves a term event from one week to another.
+   * @param {string} id - User Id.
+   * @param {string} eventId - Event Id.
+   * @param {string} termId - Term Id.
+   * @param {number} weekNumber - Week number in term.
+   * @param {number} migrateWeekNumber - Term week number to move event to
+   * @returns {Object} Updated event
+   */
+  async migrateTermEvent(
+    { body: { eventId, termId, weekNumber, migrateWeekNumber }, params: { id } },
+    res
+  ) {
+    // Initialize for journal()
+    let journal;
+
+    // Attempt to find current journal with user id
+    try {
+      journal = await this.Journal.findOne({ _id: id });
+    } catch (error) {
+      return res.status(400).json({ success: false, error });
+    }
+
+    // Get the index for the term which has the event we're trying to move
+    const termIndex = journal.terms.findIndex((term) =>
+      JournalController.isItem({ item: term, id: termId })
+    );
+
+    // Get the index for the event we're trying to move
+    const eventIndex = journal.terms[termIndex].weeks[
+      weekNumber
+    ].events.findIndex((task) => JournalController.isItem({ item: task, id: eventId }));
+
+    // Get copy of event to move
+    const eventCopy = journal.terms[termIndex].weeks[weekNumber].events[eventIndex];
+
+    // Add task
+    journal.terms[termIndex].weeks[migrateWeekNumber].events.push(eventCopy);
+
+    // Remove task from old week
+    journal.terms[termIndex].weeks[weekNumber].events[eventIndex].remove();
+
+    // Attempt to save changes to journal
+    try {
+      await journal.save();
+      // Failed to validate the schema for this model
+    } catch (error) {
+      return res.status(400).json({
+        success: false,
+        error,
+      });
+    }
+
+    // Return migrated task
+    return res.status(200).json({
+      success: true,
+      data: eventCopy,
     });
   }
 }
