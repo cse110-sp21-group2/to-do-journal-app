@@ -42,6 +42,57 @@ body {
     color: #162A47;
 }
 
+/*Bookmark*/
+.bookmark{
+    margin: 10px;
+    margin-top: -50px;
+    margin: -50px 50px 0px 10px;
+}
+.solid-bookmark-div{
+    background-color: #00649c;
+    width: 20px;
+    height: 200px;
+}
+.bookmark-cutout-div{
+    background-color: #edf2fA;
+    width:20px;
+    height: 20px;
+    position: relative;
+    top: -5px;
+    transform: rotate(-45deg);
+}
+
+/* Navigation Buttons left and right */
+.nav-btn {
+    border-radius: 50%;
+    cursor: pointer;
+    outline: none;
+    border: none;
+    height: 35px;
+    width: 35px;
+    margin: 9px;
+    background: #ffffff;
+    box-shadow: 0px 2.5px 10px ;
+  }
+  
+  .arrow-left {
+    border: solid #162A47;
+    border-width: 3px 3px 0 0;
+    display: inline-block;
+    padding: 6px;
+    transform: rotate(45deg);
+    -webkit-transform: rotate(225deg);
+  }
+  
+  .arrow-right{
+    border: solid #162A47;
+    border-width: 0 0px 3px 3px;
+    display: inline-block;
+    padding: 6px;
+    transform: rotate(45deg);
+    -webkit-transform: rotate(225deg);
+  }
+
 /*Top Center Search Bar*/
 .search-bar {
     grid-column: 3 / 4;
@@ -216,7 +267,7 @@ body {
     text-align: center;
 
     /* max-height: 1000px; */
-    height: 500px;
+    height: 600px;
     background-color: #FFFFFF;
   }
 

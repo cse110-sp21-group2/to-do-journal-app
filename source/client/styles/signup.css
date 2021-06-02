@@ -46,7 +46,7 @@ p.welcome-back {
   margin-top: 35%;  
   margin-left: 10%;
   font-family: hello honey;
-  font-size: 15vh;
+  font-size: 13vh;
   line-height: 130px;
   text-align: center;
   
@@ -56,6 +56,27 @@ p.welcome-back {
 
   text-shadow: 2px 4px 15px rgba(0, 0, 0, 0.25);
 }
+/*Bookmark*/
+.bookmark{
+  /* margin: 2 */
+  margin-top: -50px;
+  /* margin-left: 30px; */
+  /* margin: -50px 50px 0px 10px; */
+}
+.solid-bookmark-div{
+  background-color: #00649c;
+  width: 30px;
+  height: 830px;
+}
+.bookmark-cutout-div{
+  width: 0;
+  height: 0;
+  border-left: 15px solid #00649c;
+  border-right: 15px solid #00649c;
+  border-bottom: 25px solid white;
+  margin-top: -25px
+}
+
 
 .avatar {
   border-radius: 50%;
