@@ -71,9 +71,7 @@ app.get('/monthly', (req, res) => {
 
 // Semester / Quarter view
 app.get('/term', (req, res) => {
-  res.sendFile(
-    path.join(__dirname, 'source/client/views/semester-quarter.html')
-  );
+  res.sendFile(path.join(__dirname, 'source/client/views/semester-quarter.html'));
 });
 
 // Profile
