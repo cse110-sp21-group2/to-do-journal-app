@@ -35,7 +35,7 @@ journalAPI.getJournal = async ({ id }) => {
  * @returns {object} collection.
  */
 journalAPI.getJournalCollection = async ({ id, collectionId }) => {
-  const url = `/api/journal/${id}&${collectionId}`;
+  const url = `/api/journal-collection/${id}&${collectionId}`;
   const response = await fetch(url).catch((err) => console.log(err));
   const result = response.json();
 
@@ -51,6 +51,20 @@ journalAPI.getJournalCollection = async ({ id, collectionId }) => {
  */
 journalAPI.getJournalEntry = async ({ id, date, type }) => {
   const url = `/api/journal-entry/${id}&${date}&${type}`;
+  const response = await fetch(url).catch((err) => console.log(err));
+  const result = response.json();
+
+  return result;
+};
+
+/**
+ * Gets a journal term.
+ * @param {string} id - User Id.
+ * @param {Date} date - Current date.
+ * @returns {object} newCollection.
+ */
+journalAPI.getJournalTerm = async ({ id, date }) => {
+  const url = `/api/journal-term/${id}&${date}`;
   const response = await fetch(url).catch((err) => console.log(err));
   const result = response.json();
 
@@ -102,14 +116,18 @@ journalAPI.addJournalEntry = async ({ id, date, type }) => {
  * Adds a new journal term.
  * @param {string} id - User Id.
  * @param {string} type - Type of academic term, i.e., Quarter or Semester
+ * @param {Date} startDate - Start date for this term
+ * @param {Date} endDate - End date for this term
  * @returns {object} newCollection.
  */
-journalAPI.addJournalTerm = async ({ id, type }) => {
+journalAPI.addJournalTerm = async ({ id, type, startDate, endDate }) => {
   const url = `/api/add-journal-term/${id}`;
   const response = await fetch(url, {
     method: 'POST',
     body: JSON.stringify({
       type,
+      startDate,
+      endDate,
     }),
     headers: {
       'Content-type': 'application/json; charset=UTF-8',
@@ -153,7 +171,7 @@ journalAPI.addJournalCollection = async ({ id, name }) => {
  * @param {string} type - Type of journal entry: 'Daily', 'Weekly', 'Monthly'
  * @returns {object} newTask.
  */
-journalAPI.addEntryTask = async ({ id, content, dueDate, entryDate, type }) => {
+journalAPI.addEntryTask = async ({ id, content, dueDate = null, entryDate, type }) => {
   const url = `/api/add-entry-task/${id}`;
   const response = await fetch(url, {
     method: 'POST',
@@ -182,7 +200,7 @@ journalAPI.addEntryTask = async ({ id, content, dueDate, entryDate, type }) => {
  * @param {number} weekNumber - Week number for this term.
  * @returns {object} newTask.
  */
-journalAPI.addTermTask = async ({ id, content, dueDate, termId, weekNumber }) => {
+journalAPI.addTermTask = async ({ id, content, dueDate = null, termId, weekNumber }) => {
   const url = `/api/add-term-task/${id}`;
   const response = await fetch(url, {
     method: 'POST',
@@ -216,7 +234,7 @@ journalAPI.updateEntryTask = async ({
   id,
   taskId,
   content,
-  dueDate,
+  dueDate = null,
   entryDate,
   type,
 }) => {
@@ -227,8 +245,8 @@ journalAPI.updateEntryTask = async ({
     body: JSON.stringify({
       taskId,
       content,
-      entryDate,
       dueDate,
+      entryDate,
       type,
     }),
     headers: {
@@ -255,7 +273,7 @@ journalAPI.updateTermTask = async ({
   id,
   taskId,
   content,
-  dueDate,
+  dueDate = null,
   termId,
   weekNumber,
 }) => {
@@ -457,7 +475,7 @@ journalAPI.updateEntryNote = async ({ id, noteId, content, entryDate, type }) =>
  * @param {number} weekNumber - Week number for this term.
  * @returns {object} updatedNote.
  */
-journalAPI.updateTermNote = async ({ id, noteId, content, termId, weekNumber, type }) => {
+journalAPI.updateTermNote = async ({ id, noteId, content, termId, weekNumber }) => {
   const url = `/api/update-term-note/${id}`;
 
   const response = await fetch(url, {
@@ -467,7 +485,6 @@ journalAPI.updateTermNote = async ({ id, noteId, content, termId, weekNumber, ty
       content,
       termId,
       weekNumber,
-      type,
     }),
     headers: {
       'Content-type': 'application/json; charset=UTF-8',
@@ -609,7 +626,7 @@ journalAPI.addEntryEvent = async ({
   entryDate,
   type,
 }) => {
-  const url = `/api/add-event/${id}`;
+  const url = `/api/add-entry-event/${id}`;
 
   const response = await fetch(url, {
     method: 'POST',
@@ -651,7 +668,7 @@ journalAPI.addTermEvent = async ({
   termId,
   weekNumber,
 }) => {
-  const url = `/api/add-event/${id}`;
+  const url = `/api/add-term-event/${id}`;
 
   const response = await fetch(url, {
     method: 'POST',
@@ -691,7 +708,7 @@ journalAPI.addCollectionEvent = async ({
   URL,
   collectionId,
 }) => {
-  const url = `/api/add-event/${id}`;
+  const url = `/api/add-collection-event/${id}`;
 
   const response = await fetch(url, {
     method: 'POST',
@@ -997,20 +1014,20 @@ journalAPI.migrateTermTask = async ({
 /**
  * Migrates a entry note.
  * @param {string} id - User Id.
- * @param {string} taskId - Task Id.
+ * @param {string} noteId - Note Id.
  * @param {Date} entryDate - Date for journal entry this task belongs to.
  * @param {Date} migrateDate - Date for journal entry this task is being moved to.
  * @param {string} type - Type of journal entry: 'Daily', 'Weekly', 'Monthly'
  * @returns {object} Migrated task.
  */
-journalAPI.migrateEntryNote = async ({ id, taskId, entryDate, migrateDate, type }) => {
+journalAPI.migrateEntryNote = async ({ id, noteId, entryDate, migrateDate, type }) => {
   const url = `/api/migrate-entry-note/${id}`;
 
   // id, taskId, content, entryDate, dueDate, migrateDate, type
   const response = await fetch(url, {
     method: 'PUT',
     body: JSON.stringify({
-      taskId,
+      noteId,
       entryDate,
       migrateDate,
       type,
@@ -1028,7 +1045,7 @@ journalAPI.migrateEntryNote = async ({ id, taskId, entryDate, migrateDate, type 
 /**
  * Migrate a term note.
  * @param {string} id - User Id.
- * @param {string} taskId - Task Id.
+ * @param {string} noteId - Note Id.
  * @param {string} termId - Term Id.
  * @param {number} weekNumber - Current week number for this note.
  * @param {number} migrateWeekNumber - Week number to move this note to.
@@ -1036,7 +1053,7 @@ journalAPI.migrateEntryNote = async ({ id, taskId, entryDate, migrateDate, type 
  */
 journalAPI.migrateTermNote = async ({
   id,
-  taskId,
+  noteId,
   termId,
   weekNumber,
   migrateWeekNumber,
@@ -1047,7 +1064,7 @@ journalAPI.migrateTermNote = async ({
   const response = await fetch(url, {
     method: 'PUT',
     body: JSON.stringify({
-      taskId,
+      noteId,
       termId,
       weekNumber,
       migrateWeekNumber,
