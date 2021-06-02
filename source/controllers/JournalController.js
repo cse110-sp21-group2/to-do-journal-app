@@ -37,6 +37,12 @@ export default class JournalController {
     );
   }
 
+  static isCurrentTerm(term, date) {
+    const _date = new Date(date);
+
+    return term.startDate <= _date && term.endDate >= _date;
+  }
+
   // Returns the entry which matches the given date
   static isCurrentDate(entry, entryDate) {
     const _entryDate = new Date(entryDate);
@@ -260,7 +266,7 @@ export default class JournalController {
    * @param {string} termId - Term Id.
    * @returns {Object} Journal Term.
    */
-  async getJournalTerm({ params: { id, termId } }, res) {
+  async getJournalTerm({ params: { id, date } }, res) {
     // Attempt to get journal for this user
     let journal;
     try {
@@ -270,9 +276,7 @@ export default class JournalController {
     }
 
     // Get the collection
-    const term = journal.terms.find((t) =>
-      JournalController.isItem({ item: t, id: termId })
-    );
+    const term = journal.terms.find((t) => JournalController.isCurrentTerm(t, date));
 
     // If no entry exists for this given date, return success false
     if (!term) {
@@ -396,11 +400,16 @@ export default class JournalController {
    * Adds a new journal term.
    * @param {string} id - User Id.
    * @param {string} type - Type of academic term, i.e. quarter / semester.
+   * @param {Date} startDate - Start date for this term
+   * @param {Date} endDate - End date for this term
    * @returns {object} New Journal Term.
    */
-  async addJournalTerm({ body: { type }, params: { id } }, res) {
+  async addJournalTerm({ body: { type, startDate, endDate }, params: { id } }, res) {
     // Construct new collection object
-    const newTerm = JournalController.initializeTerm(type);
+    const newTerm = JournalController.initializeTerm(type, startDate, endDate);
+
+    newTerm.startDate = new Date(startDate);
+    newTerm.endDate = new Date(endDate);
 
     // Initialize journal to hold a Journal() object
     let journal;
@@ -448,14 +457,14 @@ export default class JournalController {
     { body: { content, dueDate = null, entryDate, type }, params: { id } },
     res
   ) {
-    const newTaskId = mongoose.Types.ObjectId();
+    const taskId = mongoose.Types.ObjectId();
 
     // Get the due date if applicable
     const _dueDate = dueDate ? new Date(dueDate) : null;
 
     // Construct new task object
     const newTask = {
-      _id: newTaskId,
+      _id: taskId,
       content,
       dueDate: _dueDate,
     };
@@ -509,10 +518,7 @@ export default class JournalController {
    * @returns {Object} New task.
    */
   async addTermTask(
-    {
-      body: { content, dueDate = null, termId = null, weekNumber = null },
-      params: { id },
-    },
+    { body: { content, dueDate = null, termId, weekNumber }, params: { id } },
     res
   ) {
     const newTaskId = mongoose.Types.ObjectId();
@@ -801,8 +807,11 @@ export default class JournalController {
    * @returns {Object} New note.
    */
   async addEntryNote({ body: { content, entryDate, type }, params: { id } }, res) {
+    const noteId = mongoose.Types.ObjectId();
+
     // Construct new note object
     const newNote = {
+      _id: noteId,
       content,
     };
 
@@ -855,8 +864,11 @@ export default class JournalController {
    * @returns {Object} New Note.
    */
   async addTermNote({ body: { content, termId, weekNumber }, params: { id } }, res) {
+    const noteId = mongoose.Types.ObjectId();
+
     // Construct new note object
     const newNote = {
+      _id: noteId,
       content,
     };
 
@@ -903,12 +915,12 @@ export default class JournalController {
    * @param {string} collectionId - Collection Id.
    * @returns {Object} New note.
    */
-  async addCollectionNote(
-    { body: { content, collectionId = null }, params: { id } },
-    res
-  ) {
+  async addCollectionNote({ body: { content, collectionId }, params: { id } }, res) {
+    const noteId = mongoose.Types.ObjectId();
+
     // Construct new task object
     const newNote = {
+      _id: noteId,
       content,
     };
 
@@ -1126,7 +1138,7 @@ export default class JournalController {
   async deleteEntryNote(req, res) {
     // get passed in data and user id for finding journal
     const {
-      body: { noteId, entryDate = null, type },
+      body: { noteId, entryDate, type },
       params: { id },
     } = req;
 

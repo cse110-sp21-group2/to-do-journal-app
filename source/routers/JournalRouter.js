@@ -30,7 +30,7 @@ router.get('/journal-entries/:id&:fromDate&:toDate&:type', (req, res) => {
 });
 
 // Route for getting journal term
-router.get('/journal-term/:id&:termId', (req, res) => {
+router.get('/journal-term/:id&:date', (req, res) => {
   journalController.getJournalTerm(req, res);
 });
 
@@ -50,7 +50,7 @@ router.post('/add-journal-entry/:id', (req, res) => {
 
 // Route for creating a new journal term
 router.post('/add-journal-term/:id', (req, res) => {
-  journalController.addJournalCollection(req, res);
+  journalController.addJournalTerm(req, res);
 });
 
 // Route for creating a new journal collection
