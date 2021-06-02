@@ -252,9 +252,9 @@ body {
 .daily-grid {
     grid-column: 2 / 4;
     grid-row: 2 / 3;
-    margin: 30px;
-    min-width: 1020px;
-    min-height: 826px;
+    margin: 1cm;
+    min-width: 1050px;
+    width: auto;
     display: grid;
     grid-template-columns: 2fr 10fr 5fr;
     grid-template-rows: 60px auto;
@@ -330,6 +330,17 @@ body {
 }
 #add-media-container > div{
     display: table;
+}
+
+#notes {
+  height: 640px;
+}
+
+.time-col{
+  height: 640px;
+}
+.timeGroup{
+  height: 42.66px;
 }
 
 /* events time selector */
