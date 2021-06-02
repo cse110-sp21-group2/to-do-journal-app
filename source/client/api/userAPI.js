@@ -7,7 +7,7 @@ const userAPI = {};
 
 /**
  * Retrieves a user by their id.
- * @param {string} id - Id for this user
+ * @param {string} id - Id for this user.
  * @returns {object} User.
  */
 userAPI.getUserById = async (id) => {
@@ -20,7 +20,7 @@ userAPI.getUserById = async (id) => {
 
 /**
  * Retrieves a user by their email.
- * @param {string} email - Email for this user
+ * @param {string} email - Email for this user.
  * @returns {object} User.
  */
 userAPI.getUserByEmail = async (email) => {
@@ -34,7 +34,7 @@ userAPI.getUserByEmail = async (email) => {
 // TO-DO
 /**
  * Retrieves a user by their email.
- * @param {string} id - Id for this user
+ * @param {string} id - Id for this user.
  * @returns {object} User.
  */
 // userAPI.updateUserInfo = async (id, updatedUser) => {

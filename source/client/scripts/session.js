@@ -1,21 +1,21 @@
 const session = {};
 
 /**
- * Sets the user for this session
+ * Sets the user for this session.
  */
 session.setUser = (user) => {
   localStorage.setItem('sessionUser', JSON.stringify(user));
 };
 
 /**
- * Gets session user
+ * Gets session user.
  * @returns {object} User.
  */
 session.getUser = () => JSON.parse(localStorage.getItem('sessionUser'));
 
 /**
- * Checks if user is currently logged in
- * @returns {bool}.
+ * Checks if user is currently logged in.
+ * @returns {bool}
  */
 session.isUserLoggedIn = () => {
   const user = JSON.parse(localStorage.getItem('sessionUser'));

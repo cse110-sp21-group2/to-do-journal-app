@@ -12,9 +12,9 @@ import path from 'path';
 import db from './server';
 
 // Import all of our routes
-import authRouter from './routers/authRouter';
-import userRouter from './routers/userRouter';
-import journalRouter from './routers/journalRouter';
+import AuthRouter from './routers/AuthRouter';
+import UserRouter from './routers/UserRouter';
+import JournalRouter from './routers/JournalRouter';
 
 // Allows use of .env variables
 dotenv.config();
@@ -39,6 +39,16 @@ app.get('/signup', (req, res) => {
   res.sendFile(path.join(__dirname, 'source/client/views/signup.html'));
 });
 
+// Forgot password page
+app.get('/forgot-password', (req, res) => {
+  res.sendFile(path.join(__dirname, 'source/client/views/forgot-password.html'));
+});
+
+// Reset password page
+app.get('/reset-password', (req, res) => {
+  res.sendFile(path.join(__dirname, 'source/client/views/reset-password.html'));
+});
+
 // Dashboard
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'source/client/views/dashboard.html'));
@@ -61,7 +71,9 @@ app.get('/monthly', (req, res) => {
 
 // Semester / Quarter view
 app.get('/term', (req, res) => {
-  res.sendFile(path.join(__dirname, 'source/client/views/semester-quarter.html'));
+  res.sendFile(
+    path.join(__dirname, 'source/client/views/semester-quarter.html')
+  );
 });
 
 // Profile
@@ -80,9 +92,9 @@ app.use(json());
 app.use(urlencoded({ extended: false }));
 
 /* Routes for API calls */
-app.use('/auth', authRouter);
-app.use('/api', userRouter);
-app.use('/api', journalRouter);
+app.use('/auth', AuthRouter);
+app.use('/api', UserRouter);
+app.use('/api', JournalRouter);
 /*  */
 
 // Listening for any connection errors with database

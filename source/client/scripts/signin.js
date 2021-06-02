@@ -1,11 +1,9 @@
 /* eslint-disable import/extensions */
-import auth from "./auth.js";
-
+import auth from './auth.js';
 
 const emailInput = document.getElementById('email');
 const passwordInput = document.getElementById('password');
 const loginBtn = document.querySelector('.login-btn');
-
 
 loginBtn.addEventListener('click', async (e) => {
   // Prevent page refresh
@@ -14,5 +12,10 @@ loginBtn.addEventListener('click', async (e) => {
   const { value: email } = emailInput;
   const { value: password } = passwordInput;
 
-  await auth.login(email, password)
+  const payload = {
+    email,
+    password,
+  };
+
+  await auth.login(payload);
 });

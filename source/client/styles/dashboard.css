@@ -226,7 +226,7 @@ body {
 .dashboard-view {
     grid-column: 2 / 4;
     grid-row: 2 / 3;
-    margin: 30px;
+    margin: 1cm;
     min-width: 1050px;
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -272,6 +272,8 @@ body {
     line-height: 50px;
     letter-spacing: -0.02em;
 
+    /* scroll option */
+    overflow: scroll;
     color: #000000;
 }
 
@@ -298,6 +300,9 @@ body {
     line-height: 50px;
     letter-spacing: -0.02em;
 
+    /* scroll option */
+    overflow: scroll;
+
     color: #000000;
 }
 
@@ -323,5 +328,8 @@ body {
     line-height: 50px;
     letter-spacing: -0.02em;
 
+    /* scroll option */
+    overflow: scroll;
+    
     color: #000000;
 }

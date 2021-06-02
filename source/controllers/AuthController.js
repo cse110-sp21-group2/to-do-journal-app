@@ -1,21 +1,10 @@
 /* eslint-disable */
 import jwt from 'jsonwebtoken';
-import mailgun from 'mailgun-js';
-import { compare, hash as _hash } from 'bcrypt';
-
-import _ from 'lodash';
-
-// For creating and verifying tokens for user authentication / creation
-const { sign, verify } = jwt;
+import bcrypt from 'bcrypt';
+import EmailService from '../services/EmailService';
 
 // Increases cost factor to calculate a Bcrypt password hash
 const saltRounds = 10;
-
-// Domain to be used for sending out emails from
-const DOMAIN = 'logic-workspace.com';
-
-// Service for handling our emails
-const mg = mailgun({ apiKey: process.env.MAILGUN_API_KEY, domain: DOMAIN });
 
 export default class AuthController {
   // Set our passed in User model
@@ -23,54 +12,52 @@ export default class AuthController {
     this.User = UserModel;
   }
 
-  async login(req, res) {
-    const {
-      body: { email, password },
-    } = req;
-    let user;
+  /**
+   * User login.
+   * @param {string} email - User email
+   * @param {string} password - User password
+   * @returns {object} User
+   */
+  async login({ body: { email, password } }, res) {
     // Attempt to find this user
+    let user;
     try {
       user = await this.User.findOne({ email });
+      // Failed to find user
     } catch (error) {
       return res.status(400).json({ success: false, error });
     }
 
     // Compare the password entered by taking its hash and comparing
-    // to password from db
-    try {
-      compare(password, user.password, (err, response) => {
-        // If comparison isn't equal, password is wrong
-        if (err) {
-          return res.status(400).json({
-            success: false,
-            message: 'Password entered is incorrect.',
-          });
-        }
+    // to hashed password from db
+    const isValidPassword = await bcrypt.compare(
+      password,
+      user.password
+    );
 
-        // Return user
-        if (response) {
-          return res.json({
-            success: true,
-            data: user,
-          });
-        } else {
-          return res.status(400).json({
-            success: false,
-          });
-        }
+    // If it was the correct password, return user
+    if (isValidPassword) {
+      return res.json({
+        success: true,
+        data: user,
       });
-    } catch (error) {
-      // res.status(400).json({ success: false, error });
+      // Else this was the incorrect password entered
+    } else {
+      return res.status(400).json({
+        success: false,
+        message: 'Password entered is incorrect.',
+      });
     }
   }
 
-  // Handles new users wanting to register
-  async userSignup(req, res) {
-    // Initial information required is their name, email and password
-    const {
-      body: { name, email, password },
-    } = req;
-
+  /**
+   * User signup.
+   * @param {string} name - User name
+   * @param {string} email - User email
+   * @param {string} password - User password
+   * @returns {object} User
+   */
+  async userSignup({ body: { name, email, password } }, res) {
     // Get User model
     const { User } = this;
 
@@ -84,47 +71,134 @@ export default class AuthController {
         .json({ success: false, error: 'Email already taken.' });
     }
 
-    // Else, the email is good and we start the user creation process
-    // Perform a hash for the new user's password
+    // Create new user obj
+    const newUser = new User({
+      name,
+      email,
+      password: '',
+      term: '',
+      language: 'English',
+    });
+
     try {
-      _hash(password, saltRounds, async (err, hash) => {
-        if (err) {
-          return res.status(400).json({
-            success: false,
-            error: err,
-          });
-        }
+      // Set user password to hash of password entered
+      newUser.password = await bcrypt.hash(password, saltRounds);
+      // Save new user
+      await newUser.save();
 
-        // Create new user
-        const newUser = new User({
-          name,
-          email,
-          password: hash,
-          term: '',
-          language: 'English',
-        });
-
-        // Attempt to update database with new user
-        await newUser.save();
-        return res.status(201).json({
-          success: true,
-          data: newUser,
-        });
-      });
+      // Error while trying to hash password
     } catch (error) {
       return res.status(400).json({
         success: false,
         error,
-        message: 'Error while trying to register account',
+        message: 'Failed to sign up user',
+      });
+    }
+
+    // Return new user
+    return res.status(200).json({
+      success: true,
+      message: 'User successfully signed up',
+      data: newUser,
+    });
+  }
+
+  /**
+   * User login through Google OAuth.
+   * @param {string} email - User email
+   * @param {string} googleId - User Google Id
+   * @returns {object} User
+   */
+  async googleLogin({ body: { email, googleId } }, res) {
+    // Attempt to find this user
+    let user;
+    try {
+      user = await this.User.findOne({ email });
+      // Failed to find user
+    } catch (error) {
+      return res.status(400).json({ success: false, error });
+    }
+
+    // Compare the password entered by taking its hash and comparing
+    // to hashed password from db
+    const isValidGoogleId = user.google.id === googleId;
+
+    // If it was the correct google Id, return user
+    if (isValidGoogleId) {
+      return res.json({
+        success: true,
+        data: user,
+      });
+      // Else this was the incorrect google Id given
+    } else {
+      return res.status(400).json({
+        success: false,
+        message: "Google Id's do not match",
       });
     }
   }
 
-  async forgotPassword(req, res) {
-    const {
-      body: { email },
-    } = req;
+  /**
+   * User signup through Google OAuth.
+   * @param {string} name - User name
+   * @param {string} email - User email
+   * @param {string} googleId - User password
+   * @returns {object} User
+   */
+  async googleUserSignup({ body: { name, email, googleId } }, res) {
+    // Get User model
+    const { User } = this;
 
+    // Attempt to find user with this email
+    const user = await this.User.findOne({ email });
+
+    // If user exists already, then this email is taken
+    if (user) {
+      return res
+        .status(400)
+        .json({ success: false, error: 'Email already taken.' });
+    }
+
+    // Create new user obj
+    const newUser = new User({
+      name,
+      email,
+      term: '',
+      language: 'English',
+      google: {
+        id: googleId,
+        email,
+        name,
+      },
+    });
+
+    try {
+      // Save new user
+      await newUser.save();
+
+      // Error while trying to register new user through Google OAuth
+    } catch (error) {
+      return res.status(400).json({
+        success: false,
+        error,
+        message: 'Failed to sign up user',
+      });
+    }
+
+    // Return new user
+    return res.status(200).json({
+      success: true,
+      message: 'User successfully signed up',
+      data: newUser,
+    });
+  }
+
+  /**
+   * User forgot password.
+   * @param {email} email - User email
+   * @returns {boolean} Success status
+   */
+  async forgotPassword({ body: { email } }, res) {
     // Attempt to find user with given email
     let user;
     try {
@@ -143,17 +217,21 @@ export default class AuthController {
     }
 
     // Else sign a token for resetting user password
-    const token = sign({ _id: user.id }, process.env.RESET_PASSWORD_KEY, {
-      expiresIn: '20m',
-    });
+    const token = jwt.sign(
+      { _id: user._id },
+      process.env.RESET_PASSWORD_KEY,
+      {
+        expiresIn: '20m',
+      }
+    );
 
     // Link for email
-    const RESET_LINK = `https://logic-workspace.herokuapp.com/reset-password/${token}`;
+    const RESET_LINK = `${process.env.CLIENT_URL}/reset-password/?resetToken=${token}`;
 
     // Build email
-    const data = {
-      from: 'noreply@two-do-bujo.com',
-      to: 'markbussard@outlook.com',
+    const emailOptions = {
+      from: process.env.SMTP_FROM_EMAIL,
+      to: email,
       subject: 'Password Reset Link',
       html: `
         <p>Please click on given link to reset your password</p>
@@ -161,86 +239,59 @@ export default class AuthController {
       `,
     };
 
-    // Use Mailgun service to send email
-    mg.messages().send(data, (error) => {
-      if (error) {
-        return res.status(400).json({
-          success: false,
-          error: error.message,
-        });
-      }
-      return res.status(200).json({
-        success: true,
-        message:
-          'An email has been sent, please follow the instructions to reset your password.',
-      });
-    });
+    // Initialize service for sending emails
+    const emailService = new EmailService();
+
+    // Get success status for this send
+    const { success } = await emailService.sendMessage(emailOptions);
+
+    // Return success status
+    return success;
   }
 
-  // Handles resetting user password after user has clicked
-  // reset link and has finished entering new password
-  async resetPassword(req, res) {
-    // Get reset link and new password
-    const {
-      body: { resetLink, newPassword },
-      params: { id },
-    } = req;
-
-    // If reset link doesn't exist, authentication error
-    if (!resetLink) {
+  /**
+   * Handles user password reset.
+   * @param {string} email - User email
+   * @param {string} password - User password
+   * @returns {object} Updated User
+   */
+  async resetPassword({ body: { token, newPassword } }, res) {
+    // If reset token doesn't exist, authentication error
+    if (!token) {
       return res
         .status(401)
         .json({ success: false, error: 'Authentication error' });
     }
 
-    // Otherwise, now we need to verify accurate reset link
-    verify(
-      resetLink,
-      process.env.RESET_PASSWORD_KEY,
-      async (error, decodedData) => {
-        if (error) {
-          return res
-            .status(401)
-            .json({ success: false, error: 'Incorrect token or expired.' });
-        }
-
-        // Attempt to find user
-        let user;
-        try {
-          user = await this.User.findOne({ _id: id });
-        } catch (err) {
-          return res.status(400).json({ success: false, err });
-        }
-
-        // Couldn't find user
-        if (!user) {
-          return res.status(400).json({
-            success: false,
-            error: "Couldn't find user",
-          });
-        }
-
-        // Hash new password
-        _hash(newPassword, saltRounds, async (err, hash) => {
-          try {
-            // Set new user password
-            user.password = hash;
-            // Save changes
-            await user.save();
-            // return success
-            return res.status(200).json({
-              success: true,
-              message: 'Password successfully changed',
-            });
-          } catch (error) {
-            return res.status(400).json({
-              success: false,
-              error,
-              message: 'Error while trying to reset password',
-            });
-          }
-        });
-      }
+    // Verify this token
+    const decodedToken = jwt.verify(
+      token,
+      process.env.RESET_PASSWORD_KEY
     );
+
+    let user;
+    try {
+      // Find user using verified token _id
+      user = await this.User.findOne({ _id: decodedToken._id });
+      // Set user password to hash of new password entered
+      user.password = await bcrypt.hash(newPassword, saltRounds);
+      // Save new password
+      await user.save();
+
+      // Error while trying to hash new password
+    } catch (error) {
+      return res.status(400).json({
+        success: false,
+        error,
+        message: 'Error while trying to reset password',
+      });
+    }
+
+    // Return user
+    return res.status(200).json({
+      success: true,
+      message: 'Password successfully changed',
+      data: user,
+    });
   }
 }

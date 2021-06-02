@@ -21,19 +21,19 @@ body {
 
 .column {
   display: flex;
-  width: 50vw;
 
 }
 
 .column.hero-banner {
   background: #162A47;
+  position: relative;
 }
 
 img.hero-banner-image {
-  width: 90%;
-  height: 60%;
+  max-width: 90%;
+  height: auto;
   margin: auto;
-  margin-top: 110px;
+  margin-top: 80px;
   align-items: center;
   justify-content: center;
 }
@@ -41,13 +41,13 @@ img.hero-banner-image {
 
 p.welcome-back {
   position: absolute;
-  max-width: 400px;
-  margin-top: 180px;  
-  margin-left: 40px;
+  display: inline-block;
+  max-width: 80%;
+  margin-top: 35%;  
+  margin-left: 10%;
   font-family: hello honey;
-  font-size: 115px;
+  font-size: 15vh;
   line-height: 130px;
-  /* display: flex; */
   text-align: center;
   
   letter-spacing: -0.02em;    
@@ -68,8 +68,7 @@ p.welcome-back {
 
 .column.registration-form {
   margin-left: 150px;
-  margin-top: 75px;
-  height: 85%;
+  margin-top: 70px;
 }
 
 label {
