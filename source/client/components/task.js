@@ -33,6 +33,7 @@ taskTemplate.innerHTML = `
             background-color: #d5ab09;
             border-radius: 0px 20px 20px 0px;
             line-height: 1.5;
+            font-family: "Roboto";
         }
         .curr-date {
             font-size: 12px;
