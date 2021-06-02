@@ -81,7 +81,7 @@ app.get('/profile', (req, res) => {
 
 // User settings
 app.get('/settings', (req, res) => {
-  res.sendFile(path.join(__dirname, 'source/client/views/user_setting.html'));
+  res.sendFile(path.join(__dirname, 'source/client/views/user_settings.html'));
 });
 
 // For recognizing incoming requests as a JSON object

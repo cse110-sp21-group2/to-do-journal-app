@@ -14,7 +14,15 @@ const submitBtn = document.querySelector('.save-btn');
 // Current User
 const user = session.getUser();
 // Current user's id
-const id = user._id;
+//const id = user._id;
+const id = '60b7ec68c67f03bea8ba2fb9';
+
+//Initialize the input fields to display the current user's info
+/*nameInput.value = user.userName;
+emailInput.value = user.email;
+termInput;
+stylesInput;
+languageInput;*/
 
 /**
  * Updates the settings of the user
@@ -27,8 +35,7 @@ submitBtn.addEventListener('click', async () => {
     email: emailInput.value,
     term: termInput.value,
     styles: stylesInput.value,
-    language: languageInput.value,
-    colors: null
+    language: languageInput.value
   }
   
   // Update the user info in the database
