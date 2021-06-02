@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 
 import JournalEntrySchema from './JournalEntry';
 import CollectionSchema from './Collection';
+import TermSchema from './Term';
 
 const { Schema: _Schema, model } = mongoose;
 
@@ -24,16 +25,12 @@ const JournalSchema = new _Schema(
       type: [JournalEntrySchema],
       required: true,
     },
-    quarterlyEntries: {
-      type: [JournalEntrySchema],
-      required: false,
-    },
-    semesterlyEntries: {
-      type: [JournalEntrySchema],
-      required: false,
-    },
     monthlyEntries: {
       type: [JournalEntrySchema],
+      required: true,
+    },
+    terms: {
+      type: [TermSchema],
       required: true,
     },
     collections: {
