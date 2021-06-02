@@ -10,6 +10,10 @@ const { Schema: _Schema } = mongoose;
 // Schema
 const CollectionSchema = new _Schema(
   {
+    _id: {
+      type: _Schema.Types.ObjectId,
+      required: true,
+    },
     name: {
       type: String,
       required: true,

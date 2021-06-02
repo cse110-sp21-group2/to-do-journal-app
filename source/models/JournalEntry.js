@@ -9,6 +9,10 @@ const { Schema: _Schema } = mongoose;
 
 // Schema
 const JournalEntrySchema = new _Schema({
+  _id: {
+    type: _Schema.Types.ObjectId,
+    required: true,
+  },
   tasks: {
     type: [TaskSchema],
     required: true,
