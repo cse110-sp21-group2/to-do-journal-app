@@ -111,7 +111,7 @@ label {
   font-weight: normal;
   font-size: 22px;
   line-height: 28px;
-  display: flex;
+  display:inline-block;
   align-items: center;
   text-align: center;
   letter-spacing: -0.02em;
@@ -119,6 +119,7 @@ label {
   /* White */
   color: #ffffff;
 }
+
 
 .horizontal-rule {
   margin: 10px 0 40px;
