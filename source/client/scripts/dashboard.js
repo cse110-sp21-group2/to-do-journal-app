@@ -26,40 +26,47 @@ import session from './session.js';
 
 // Today's date
 const today = new Date();
+console.log(`Today's date: ${today}`);
 // Current User
 const user = session.getUser();
 // Current user's id
 const id = user._id;
 console.log(`Print current user's id: ${id}`);
 
-console.log("Print current user's id: ", id);
-console.log(today);
 // GET entry promise and set it to JSON
 const getEntry = async () => {
   const payload = {
     id,
     today,
-    type: 'Daily',
+    type: "Daily",
   };
-  const { entry } = await journalAPI.getJournalEntry(payload);
+  const  { data: entry }  = await journalAPI.getJournalEntry(payload);
+  // Output entry data
+  console.log("This is the entry: ", entry);
 
   return entry;
 };
-
+// GET entry promise
 const entry = getEntry();
+
 // TEST getting journal entry from DB
-// const entry = await journalAPI.getJournalEntry("60ac3af75cc18f1184f58b9e", "2021-05-24T23:47:03.282+00:00", "Daily");
+// const test_entry = await journalAPI.getJournalEntry({
+//   id: "60ac3af75cc18f1184f58b9e", 
+//   date: "2021-05-24T23:47:03.282+00:00", 
+//   type: "Daily" });
+// const entry = test_entry.data;
 
 // GET each task from entry and DISPLAY it
-entry.tasks.forEach((task) => {
-  const newTask = document.createElement('task-toggle');
-  newTask.content = task;
-  const taskDate = new Date(task.dueDate);
-  newTask.date = taskDate;
-  document.querySelector('.task-container').appendChild(newTask);
-});
+entry.then(entry => entry.tasks.forEach((task) => {
+    const newTask = document.createElement('task-toggle');
+    newTask.content = task;
+    const taskDate = new Date(task.dueDate);
+    newTask.date = taskDate;
+    document.querySelector('.task-container').appendChild(newTask);
+}));
 
-entry.events.forEach((event) => {
+// GET each event from entry and DISPLAY it
+entry.then(entry => entry.events.forEach((event) =>{
   const newEvent = document.createElement('event-toggle');
   const startTime = new Date(event.startTime);
   const endTime = new Date(event.endTime);
@@ -67,13 +74,11 @@ entry.events.forEach((event) => {
   newEvent.startTime = startTime;
   newEvent.endTime = endTime;
   document.querySelector('.event-container').appendChild(newEvent);
-});
+}))
 
 // GET each note from entry and DISPLAY it
-entry.notes.forEach((note) => {
+entry.then(entry => entry.notes.forEach((note)=>{
   const newNote = document.createElement('note-toggle');
   newNote.content = note;
   document.querySelector('.today-container').appendChild(newNote);
-});
-
-// Scroll through tasks, events, and notes with overflow property
+}))
