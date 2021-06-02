@@ -20,6 +20,7 @@ body {
 
 .column {
   display: flex;
+  display: 50vw;
 }
 
 .column.hero-banner {
@@ -56,14 +57,12 @@ p.welcome-back {
 }
 /*Bookmark*/
 .bookmark{
-  /* margin: 2 */
   margin-top: -50px;
-  /* margin: -50px 50px 0px 10px; */
 }
 .solid-bookmark-div{
   background-color: #00649c;
-  width: 30px;
-  height: 830px;
+  width: 100%;
+  height: 80%;
 }
 .bookmark-cutout-div{
   width: 0;
