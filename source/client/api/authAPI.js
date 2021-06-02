@@ -87,7 +87,12 @@ authAPI.register = async ({ name, email, password }) => {
   url = `/api/create-journal/${id}`;
 
   // Attempt to create and fetch new user journal
-  const newJournal = await fetch(url).catch((err) =>
+  const newJournal = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-type': 'application/json; charset=UTF-8',
+    }
+  }).catch((err) =>
     console.log(err)
   );
 
