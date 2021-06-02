@@ -10,7 +10,7 @@ const onSuccess = async (googleUser) => {
   const email = googleUser.getBasicProfile().getEmail();
   const googleId = googleUser.getBasicProfile().getId();
 
-  await auth.googleLogin(email, googleId);
+  await auth.googleLogin({email, googleId});
 };
 
 // Failed google auth login

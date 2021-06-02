@@ -161,8 +161,6 @@ export default class AuthController {
     const newUser = new User({
       name,
       email,
-      term: '',
-      language: 'English',
       google: {
         id: googleId,
         email,

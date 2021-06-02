@@ -16,9 +16,20 @@ const auth = {};
 auth.login = async (payload) => {
   const { user, journal } = await authAPI.login(payload);
 
-  if (user && journal) {
+  const { _id, email, name, firstDayOfTheWeek, term, theme } = user;
+
+  const _user = {
+    _id,
+    email,
+    name,
+    firstDayOfTheWeek,
+    term,
+    theme,
+  };
+
+  if (_user && journal) {
     // Set session user
-    session.setUser(user);
+    session.setUser(_user);
     // Set session journal
     session.setJournal(journal);
   }
@@ -40,9 +51,20 @@ auth.login = async (payload) => {
 auth.register = async (payload) => {
   const { user, journal } = await authAPI.register(payload);
 
-  if (user && journal) {
+  const { _id, email, name, firstDayOfTheWeek, term, theme } = user;
+
+  const _user = {
+    _id,
+    email,
+    name,
+    firstDayOfTheWeek,
+    term,
+    theme,
+  };
+
+  if (_user && journal) {
     // Set session user
-    session.setUser(user);
+    session.setUser(_user);
     // Set session journal
     session.setJournal(journal);
   }
@@ -63,9 +85,21 @@ auth.register = async (payload) => {
  */
 auth.googleLogin = async (payload) => {
   const { user, journal } = await authAPI.googleLogin(payload);
-  if (user && journal) {
+
+  const { _id, email, name, firstDayOfTheWeek, term, theme } = user;
+
+  const _user = {
+    _id,
+    email,
+    name,
+    firstDayOfTheWeek,
+    term,
+    theme,
+  };
+
+  if (_user && journal) {
     // Set session user
-    session.setUser(user);
+    session.setUser(_user);
     // Set session journal
     session.setJournal(journal);
   }
@@ -85,9 +119,18 @@ auth.googleLogin = async (payload) => {
 auth.googleRegister = async (payload) => {
   const { user, journal } = await authAPI.googleRegister(payload);
 
-  if (user && journal) {
+  const { _id, email, name, firstDayOfTheWeek, term, theme } = user;
+  const _user = {
+    _id,
+    email,
+    name,
+    firstDayOfTheWeek,
+    term,
+    theme,
+  };
+  if (_user && journal) {
     // Set session user
-    session.setUser(user);
+    session.setUser(_user);
     // Set session journal
     session.setJournal(journal);
   }
@@ -113,7 +156,7 @@ auth.forgotPassword = async (payload) => {
  */
 auth.resetPassword = async (payload) => {
   const result = await authAPI.resetPassword(payload);
-  // console.log(result);
+
   return result;
 };
 
