@@ -15,7 +15,7 @@ const submitBtn = document.querySelector('.save-btn');
 const user = session.getUser();
 // Current user's id
 //const id = user._id;
-const id = '60b7ec68c67f03bea8ba2fb9';
+const id = "60b7ec68c67f03bea8ba2fb9";
 
 //Initialize the input fields to display the current user's info
 /*nameInput.value = user.userName;
@@ -31,7 +31,7 @@ submitBtn.addEventListener('click', async () => {
 
   // Get the values of the form field
   const updatedUser = {
-    userName: nameInput.value,
+    name: nameInput.value,
     email: emailInput.value,
     term: termInput.value,
     styles: stylesInput.value,
@@ -39,7 +39,7 @@ submitBtn.addEventListener('click', async () => {
   }
   
   // Update the user info in the database
-  await userAPI.updateUserInfo(id, updatedUser);
+  await userAPI.updateUserInfo({id, updatedUser});
 
   // Update the user info locally
   session.setUser(updatedUser);
