@@ -3,42 +3,77 @@ const taskTemplate = document.createElement('template');
 // Contain style and mark-up/structure of custom element
 taskTemplate.innerHTML = `
     <style>
+        .task-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 8fr 2fr;
+            grid-template-rows: auto;
+            width: 90%;
+            margin: 5px;
+        }
 
+        .task-icon {
+            background-color: #00649c;
+            width: 100%;
+            height: 100%;
+            border-radius: 30px 0px 0px 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .inner-icon {
+            width: 8px;
+            height: 8px;
+            border-radius: 8px;
+            background-color: white;
+        }
         .task {
-            border: 2px solid black;
-            width: 60%;
-            height: 50px;
-            float: left;
-        }
-        .task-content,
-        .curr-date {
-            margin-top: 1px;
-        }
-
-        .task,
-        .date {
-            display: inline-block;
-            margin-bottom: 2px;
-        }
-
-        .curr-date {
-            font-size: 14px;
-        }
-        .date {
             border: 1px solid black;
-            border-radius: 0px 20px 20px 0px;
-            height: 50px;
-            float: left;
-            padding-left: 10px;
-            padding-right: 10px;
+            width: 100%;
+            height: 100%;
+            display: table;
         }
-    </style>
 
-    <div class="task">
-        <p class="task-content"></p>
-    </div>
-    <div class="date">
-        <p class="curr-date"></p>
+        .task-content {
+            line-height: 1.5;
+            font-family: "Roboto";
+            font-size: 18px;
+            text-align: center;
+            vertical-align: middle;
+            display: table-cell;
+            padding: 10px;
+        }
+        .date {
+            width: 100%;
+            height: 100%;
+            display: table;
+            background-color: #d5ab09;
+            border-radius: 0px 30px 30px 0px;
+            line-height: 1.5;
+            font-family: "Roboto";
+        }
+        .curr-date {
+            font-size: 12px;
+            color: white;
+            margin: 5px;
+            text-align: center;
+            vertical-align: middle;
+            display: table-cell;
+            padding: 10px;
+        }
+        
+
+    </style>
+    <div class="task-grid">
+        <div class="task-icon">
+            <div class="inner-icon">
+            </div>
+        </div>
+        <div class="task">
+            <p class="task-content"></p>
+        </div>
+        <div class="date">
+            <p class="curr-date"></p>
+        </div>
     </div>
 `;
 

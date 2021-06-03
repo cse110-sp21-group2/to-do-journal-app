@@ -4,11 +4,35 @@ const noteTemplate = document.createElement('template');
 noteTemplate.innerHTML = `
     <style>
         .note {
-            border: 2px solid black;
+            margin: 5px;
+            display: grid;
+            grid-template-rows: auto;
+            grid-template-columns: 15px auto;
+        }
+        .bullet {
+            margin-top: 4px;
+            width: 8px;
+            height: 8px;
+            border-radius: 8px;
+            background-color: #162a47;
+        }
+        .note-container {
+            display: table;
+        }
+        .note-content {
+            display: table-cell;
+            text-align: left;
+            vertical-align: middle;
+            font-family: "Roboto";
+            font-size: 18px;
+            line-height: 1;
         }
     </style>
     <div class="note">
-        <p class="note-content"></p>
+        <div class="bullet"></div>
+        <div class="note-container">
+            <p class="note-content"></p>
+        </div>
     </div>
 `
 // 'note-toggle' component
@@ -28,7 +52,7 @@ class Notes extends HTMLElement {
      * @params note - note object that contains note properties
      */
     set content(note){
-        this.shadowRoot.querySelector('p.note-content').innerHTML = `**BULLET POINT** ${JSON.stringify(note.content).replace(/"/g, "")}`;
+        this.shadowRoot.querySelector('p.note-content').innerHTML = `${JSON.stringify(note.content).replace(/"/g, "")}`;
     }
 }
 

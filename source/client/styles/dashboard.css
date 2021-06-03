@@ -228,9 +228,10 @@ body {
     grid-row: 2 / 3;
     margin: 1cm;
     min-width: 1050px;
+    max-height: 830px;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
+    grid-template-rows: 415px 415px;
     column-gap: 10px;
     row-gap: 10px;
     justify-items: center;
@@ -273,7 +274,7 @@ body {
     letter-spacing: -0.02em;
 
     /* scroll option */
-    overflow: scroll;
+    overflow: auto;
     color: #000000;
 }
 
@@ -301,7 +302,7 @@ body {
     letter-spacing: -0.02em;
 
     /* scroll option */
-    overflow: scroll;
+    overflow: auto;
 
     color: #000000;
 }
@@ -329,7 +330,7 @@ body {
     letter-spacing: -0.02em;
 
     /* scroll option */
-    overflow: scroll;
+    overflow: auto;
     
     color: #000000;
 }
