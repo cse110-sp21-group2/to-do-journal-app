@@ -14,11 +14,23 @@ taskTemplate.innerHTML = `
         .task-icon {
             background-color: #00649c;
             width: 100%;
+            height: 100%;
             border-radius: 20px 0px 0px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .inner-icon {
+            width: 8px;
+            height: 8px;
+            border-radius: 8px;
+            background-color: white;
         }
         .task {
             border: 1px solid black;
             width: 100%;
+            height: 100%;
+            display: table;
         }
 
         .task-content {
@@ -27,9 +39,14 @@ taskTemplate.innerHTML = `
             font-family: "Roboto";
             font-size: 18px;
             vertical-align: middle;
+            text-align: center;
+            vertical-align: middle;
+            display: table-cell;
         }
         .date {
             width: 100%;
+            height: 100%;
+            display: table;
             background-color: #d5ab09;
             border-radius: 0px 20px 20px 0px;
             line-height: 1.5;
@@ -39,12 +56,17 @@ taskTemplate.innerHTML = `
             font-size: 12px;
             color: white;
             margin: 5px;
+            text-align: center;
+            vertical-align: middle;
+            display: table-cell;
         }
         
 
     </style>
     <div class="task-grid">
         <div class="task-icon">
+            <div class="inner-icon">
+            </div>
         </div>
         <div class="task">
             <p class="task-content"></p>
