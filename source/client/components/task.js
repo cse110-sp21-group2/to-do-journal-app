@@ -15,7 +15,7 @@ taskTemplate.innerHTML = `
             background-color: #00649c;
             width: 100%;
             height: 100%;
-            border-radius: 20px 0px 0px 20px;
+            border-radius: 30px 0px 0px 30px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -34,21 +34,20 @@ taskTemplate.innerHTML = `
         }
 
         .task-content {
-            margin: 5px;
             line-height: 1.5;
             font-family: "Roboto";
             font-size: 18px;
-            vertical-align: middle;
             text-align: center;
             vertical-align: middle;
             display: table-cell;
+            padding: 10px;
         }
         .date {
             width: 100%;
             height: 100%;
             display: table;
             background-color: #d5ab09;
-            border-radius: 0px 20px 20px 0px;
+            border-radius: 0px 30px 30px 0px;
             line-height: 1.5;
             font-family: "Roboto";
         }
@@ -59,6 +58,7 @@ taskTemplate.innerHTML = `
             text-align: center;
             vertical-align: middle;
             display: table-cell;
+            padding: 10px;
         }
         
 

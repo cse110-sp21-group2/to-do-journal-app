@@ -14,34 +14,34 @@ eventTemplate.innerHTML = `
         .time {
             width: 100%;
             height: 100%;
-            padding: 10px;
             background-color: #43748A;
             color: white;
             display: table;
         }
         .event-time {
-            line-height: 1;
+            line-height: 1.5;
             font-family: "Roboto";
             font-size: 14px;
             text-align: center;
             vertical-align: middle;
             display: table-cell;
+            padding: 10px;
         }
         .event {
             width: 100%;
             height: 100%;
-            padding: 10px;
             border: 2px solid #43748A;
             display: table;
         }
         .event-content {
-            line-height: 1;
+            line-height: 1.5;
             font-family: "Roboto";
             font-size: 14px;
             font-weight: 400;
             text-align: center;
             vertical-align: middle;
             display: table-cell;
+            padding: 10px;
         }
 
     </style>
