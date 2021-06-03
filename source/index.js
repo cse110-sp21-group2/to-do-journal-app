@@ -71,9 +71,7 @@ app.get('/monthly', (req, res) => {
 
 // Semester / Quarter view
 app.get('/term', (req, res) => {
-  res.sendFile(
-    path.join(__dirname, 'source/client/views/semester-quarter.html')
-  );
+  res.sendFile(path.join(__dirname, 'source/client/views/semester-quarter.html'));
 });
 
 // Profile
@@ -83,7 +81,7 @@ app.get('/profile', (req, res) => {
 
 // User settings
 app.get('/settings', (req, res) => {
-  res.sendFile(path.join(__dirname, 'source/client/views/user_setting.html'));
+  res.sendFile(path.join(__dirname, 'source/client/views/user_settings.html'));
 });
 
 // For recognizing incoming requests as a JSON object
@@ -104,3 +102,8 @@ db.on('err', console.error.bind(console, 'MongoDB connection error:'));
 app.listen(port, () =>
   console.log(`Server running on port: http://localhost:${port}`)
 );
+
+
+// get picture resources
+
+export default app;

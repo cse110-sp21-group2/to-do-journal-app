@@ -1,6 +1,18 @@
-body {
+/*shared  Elements*/
+* { 
   margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
+
+body {
+  min-height: 100vh;
+  min-width: 100vw;
+  font-family: 'Roboto', Condensed;
+}
+
+/*shared  Elements End*/
+
 
 .row {
   display: flex;
@@ -8,23 +20,62 @@ body {
 }
 
 .column {
-  width: 50%;
+  display: flex;
+
 }
 
 .column.hero-banner {
   background: #162A47;
+  position: relative;
 }
 
 img.hero-banner-image {
-
-  height: 70%;
-  width: auto;
+  max-width: 90%;
+  height: auto;
   margin: auto;
-  margin-top: 110px;
-  /* padding: 20%; */
+  margin-top: 80px;
+  align-items: center;
+  justify-content: center;
+}
 
+
+p.welcome-back {
+  position: absolute;
+  display: inline-block;
+  max-width: 80%;
+  margin-top: 35%;  
+  margin-left: 10%;
+  font-family: hello honey;
+  font-size: 13vh;
+  line-height: 130px;
+  text-align: center;
+  
+  letter-spacing: -0.02em;    
+
+  color: #FFFFFF;
+
+  text-shadow: 2px 4px 15px rgba(0, 0, 0, 0.25);
+}
+/*Bookmark*/
+.bookmark{
+
+  margin-top: -50px;
 
 }
+.solid-bookmark-div{
+  background-color: #00649c;
+  width: 100%;
+  height: 80%;
+}
+.bookmark-cutout-div{
+  width: 0;
+  height: 0;
+  border-left: 15px solid #00649c;
+  border-right: 15px solid #00649c;
+  border-bottom: 25px solid white;
+  margin-top: -25px
+}
+
 
 .avatar {
   border-radius: 50%;
@@ -37,8 +88,7 @@ img.hero-banner-image {
 
 .column.registration-form {
   margin-left: 150px;
-  margin-top: 75px;
-  height: 85%;
+  margin-top: 70px;
 }
 
 label {
@@ -75,12 +125,12 @@ label {
   cursor: pointer;
   height: 45px;
   width: 125px;
-  font-family: Roboto Condensed;
+  font-family: 'Roboto', Condensed;
   font-style: normal;
   font-weight: normal;
   font-size: 22px;
   line-height: 28px;
-  display: flex;
+  display:inline-block;
   align-items: center;
   text-align: center;
   letter-spacing: -0.02em;
@@ -88,6 +138,7 @@ label {
   /* White */
   color: #ffffff;
 }
+
 
 .horizontal-rule {
   margin: 10px 0 40px;

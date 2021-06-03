@@ -7,8 +7,6 @@
 
 body {
   background: url("https://i.ibb.co/sFtX9zy/bg.png"); 
-  min-height: 100vh;
-  min-width: 100vw;
 }
 
 .main {
@@ -98,15 +96,15 @@ body {
 
 /*Main Content Area */
 .content-region {
-  padding-top: 75px;
   grid-column: 2 / 4;
   grid-row: 2 / 3;
   min-width:1050px;
-  width: 90%;
+  width: auto;
   margin: 1cm;
+  padding: 30px 0px;
   display:grid;
   grid-template-columns: 110px auto;
-  grid-template-rows: 150px 150px 150px 100px;
+  grid-template-rows: 1fr 1fr 1fr 100px;
   row-gap: 2px;
 }
 
@@ -144,8 +142,11 @@ body {
 .week-content-middle,
 .week-content-bottom {
   background-color: white;
-  padding: 10px;
   box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.25);
+  display: grid;
+
+  grid-template-columns: 80% 20%;
+  grid-template-rows: 1fr 1fr 1fr;
 }
 
 .week-content-top {
@@ -155,6 +156,26 @@ body {
 
 .week-content-bottom {
   border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
+
+.left-week-subdivision {
+  grid-column: 1;
+  grid-row: 1 / 4;
+}
+
+.right-top-week-subdivision,
+.right-middle-week-subdivision,
+.right-bottom-week-subdivision {
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+}
+
+.week-content-top .right-top-week-subdivision {
+  border-top-right-radius: 20px;
+}
+
+.week-content-bottom .right-bottom-week-subdivision {
   border-bottom-right-radius: 20px;
 }
 
@@ -171,13 +192,16 @@ body {
 /* Top Left Academic Period Header*/
 .academic-period {
   grid-column: 2 / 3;
-  grid-row: 1 / 2;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 300px;
-  margin-top: -20px;
-  flex-wrap: wrap;
+    grid-row: 1 / 2;
+    display: flex;
+    justify-content: left;
+    padding-left: 30px;
+    line-height: 75px;
+    align-items: center;
+    text-align: center;
+    letter-spacing: -0.02em;
+    color: #162a47;
+    text-shadow: 0px 4px 5px rgba(0, 0, 0, 0.25);
 }
 
 .current-period {
@@ -193,6 +217,26 @@ body {
   width: 40px;
   height: 40px;
   border-radius: 40px;
+}
+
+/*Bookmark*/
+.bookmark{
+  margin: 10px;
+  margin-top: -50px;
+  margin: -50px 50px 0px 10px;
+}
+.solid-bookmark-div{
+  background-color: #00649c;
+  width: 20px;
+  height: 200px;
+}
+.bookmark-cutout-div{
+  background-color: #edf2fA;
+  width:20px;
+  height: 20px;
+  position: relative;
+  top: -5px;
+  transform: rotate(-45deg);
 }
 
 /*Left Navigation Area*/

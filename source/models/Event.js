@@ -1,8 +1,12 @@
-import mongoose from 'mongoose'
+import mongoose from 'mongoose';
 
-const { Schema: _Schema } = mongoose
+const { Schema: _Schema } = mongoose;
 
 const EventSchema = new _Schema({
+  _id: {
+    type: _Schema.Types.ObjectId,
+    required: true,
+  },
   content: {
     type: String,
     required: true,
@@ -15,10 +19,10 @@ const EventSchema = new _Schema({
     type: Date,
     required: false,
   },
-  link: {
+  URL: {
     type: String,
     required: false,
   },
 });
 
-export default EventSchema
+export default EventSchema;

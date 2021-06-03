@@ -3,10 +3,10 @@
 class LeftNav extends HTMLElement {
     constructor() {
       super();
-  
+
       // templated HTML content
       const template = document.createElement('template');
-  
+
       template.innerHTML = `
         <head>
             <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
@@ -18,7 +18,7 @@ class LeftNav extends HTMLElement {
                 display: table;
                 margin: 0 auto;
             }
-            
+
             .navigation-title {
                 /*block*/
                 background-color: #E2CB14;
@@ -32,13 +32,13 @@ class LeftNav extends HTMLElement {
                 font-size: 45px;
                 color:#162A47;
             }
-            
+
             .index-link, .collections-link{
                 padding: 10px;
                 margin: 10px -10px 10px -10px;
                 text-align: center;
             }
-            
+
             .collections-button{
                 width: 40px;
                 height: 40px;
@@ -48,7 +48,7 @@ class LeftNav extends HTMLElement {
                 display: table;
                 margin: 0 auto;
             }
-            
+
             .link-text{
                 text-decoration: none;
                 font-family: 'Roboto', Condensed;
@@ -75,15 +75,15 @@ class LeftNav extends HTMLElement {
         <h2 class="collections-link"><a href="" class="link-text">Reading Collection</a></h2>
         <button type="button" class="collections-button"><i class="fas fa-chevron-down"></i></button>
         `;
-    
+
       // create a shadow root for this web component
       this.attachShadow({ mode: 'open' })
-      // attach cloned content of template to shadow DOM 
+      // attach cloned content of template to shadow DOM
       this.shadowRoot.appendChild(template.content.cloneNode(true))
     }
-  
+
 }
-  
+
 // Define, instantiate, and add the component to its respective div to the calling document
 customElements.define('left-nav-component', LeftNav);
 const comp = document.createElement('left-nav-component');

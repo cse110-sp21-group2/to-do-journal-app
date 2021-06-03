@@ -21,19 +21,23 @@ const UserSchema = new _Schema(
     },
     term: {
       type: String,
-      required: false,
+      default: 'Quarter',
     },
-    styles: {
+    fonts: {
       type: String,
       required: false,
     },
-    colors: {
+    theme: {
       type: String,
-      required: false,
+      default: 'Light',
     },
     language: {
       type: String,
-      required: false,
+      default: 'English',
+    },
+    firstDayOfTheWeek: {
+      type: String,
+      default: 'Monday',
     },
     google: {
       id: String,

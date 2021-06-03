@@ -11,12 +11,18 @@
     rel="stylesheet">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
     integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
-  <link rel="stylesheet" href="../../../source/client/styles/semester-quarter.css">
+  <link rel="stylesheet" href="../styles/semester-quarter.css" />
 </head>
 
 <body>
   <main class="main">
+    <!-- Top Left Header -->
     <div class="academic-period">
+      <!--Bookmark-->
+      <div class='bookmark'>
+        <div class="solid-bookmark-div"></div>
+        <div class="bookmark-cutout-div"></div>
+      </div>
       <div class="back-button">
         <button type="button" class="button-circle"><i class="fas fa-chevron-left"></i></button>
       </div>
@@ -25,37 +31,55 @@
         <button type="button" class="button-circle"><i class="fas fa-chevron-right"></i></button>
       </div>
     </div>
+    <!-- Top Center Search Bar -->
     <div class="search-bar">
       <i class="fas fa-search" id="search-icon"></i>
       <input type="text" placeholder="Search" class="search-input">
     </div>
+    <!-- Top  Right Account Bar -->
     <div class="account-bar">
       <button type="button" class="help-button"><i class="far fa-question-circle"></i></button>
       <button type="button" class="notification-button"><i class="far fa-bell"></i></button>
       <button type="button" class="account-button"><i class="fas fa-user-circle"></i></button>
     </div>
+    <!-- Center Content Region -->
     <div class="content-region">
       <div>
         <h2 class="week-header-current">Week</h2>
         <h2 class="week-number-current">1</h2>
       </div>
       <div class="week-content-top">
+
+        <div class="left-week-subdivision"></div>
+        <div class="right-top-week-subdivision"></div>
+        <div class="right-middle-week-subdivision"></div>
+        <div class="right-bottom-week-subdivision"></div>
       </div>
       <div>
         <h2 class="week-header-other">Week</h2>
         <h2 class="week-number-other">2</h2>
       </div>
       <div class="week-content-middle">
+        <div class="left-week-subdivision"></div>
+        <div class="right-top-week-subdivision"></div>
+        <div class="right-middle-week-subdivision"></div>
+        <div class="right-bottom-week-subdivision"></div>
       </div>
       <div>
         <h2 class="week-header-other">Week</h2>
         <h2 class="week-number-other">3</h2>
       </div>
       <div class="week-content-bottom">
+        <div class="left-week-subdivision"></div>
+        <div class="right-top-week-subdivision"></div>
+        <div class="right-middle-week-subdivision"></div>
+        <div class="right-bottom-week-subdivision"></div>
       </div>
       <button type="button" class="content-button"><i class="fas fa-chevron-down"></i></button>
     </div>
+    <!-- Left Navigation Region -->
     <div class="left-nav"></div>
+    <!-- Right Navigation Region -->
     <div class="right-nav">
       <div class="calendar-region">
         <div class="month-selector">
@@ -127,7 +151,7 @@
 
   <!-- left-nav web component -->
   <script src="../components/left-nav-component.js" type="module"></script>
-
+  <script src="../components/create-task.js" type="module"></script>
 </body>
 
 </html>
