@@ -4,24 +4,55 @@ const eventTemplate = document.createElement('template');
 eventTemplate.innerHTML = `
     <style>
 
+        .event-grid {
+            display: grid;
+            grid-template-columns: 3fr 4fr;
+            grid-template-rows: auto;
+            margin: 5px;
+            width: 90%;
+        }
         .time {
-            border: 2px solid black;
-            float: left;
+            width: 100%;
+            height: 100%;
+            padding: 10px;
+            background-color: #43748A;
+            color: white;
+            display: table;
         }
-
-        .event {
-            border: 2px solid black;
-        }
-        .event-content{
+        .event-time {
+            line-height: 1;
+            font-family: "Roboto";
+            font-size: 14px;
             text-align: center;
+            vertical-align: middle;
+            display: table-cell;
         }
-    </style>
+        .event {
+            width: 100%;
+            height: 100%;
+            padding: 10px;
+            border: 2px solid #43748A;
+            display: table;
+        }
+        .event-content {
+            line-height: 1;
+            font-family: "Roboto";
+            font-size: 14px;
+            font-weight: 400;
+            text-align: center;
+            vertical-align: middle;
+            display: table-cell;
+        }
 
-    <div class="time">
-        <p class="event-time"></p>
-    </div>
-    <div class="event">
-        <p class="event-content"></p>
+    </style>
+    
+    <div class="event-grid">
+        <div class="time">
+            <p class="event-time"></p>
+        </div>
+        <div class="event">
+            <p class="event-content"></p>
+        </div>
     </div>
 `;
 // 'event-toggle' component
