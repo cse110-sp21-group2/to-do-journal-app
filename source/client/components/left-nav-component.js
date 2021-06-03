@@ -60,12 +60,12 @@ class LeftNav extends HTMLElement {
                 color: #162A47;
             }
 		    </style>
-        <img src="../../../admin/branding/logo500.png" alt="Two-Do logo" class="logo">
-        <h1 class="navigation-title">Index</h1>
-        <h2 class="index-link"><a href="" class="link-text">Daily</a></h2>
-        <h2 class="index-link"><a href="" class="link-text">Weekly</a></h2>
-        <h2 class="index-link"><a href="" class="link-text">Monthly</a></h2>
-        <h2 class="index-link"><a href="" class="link-text">Quarterly</a></h2>
+        <a href="./dashboard.html"><img src="../../../admin/branding/logo500.png" alt="Two-Do logo" class="logo" ></a>
+        <a href="./index.html"><h1 class="navigation-title">Index</h1></a>
+        <h2 class="index-link"><a href="./daily.html" class="link-text">Daily</a></h2>
+        <h2 class="index-link"><a href="./weekly.html" class="link-text">Weekly</a></h2>
+        <h2 class="index-link"><a href="./monthly.html" class="link-text">Monthly</a></h2>
+        <h2 class="index-link"><a href="./semester-quarter.html" class="link-text">Quarterly</a></h2>
         <br>
         <h1 class="navigation-title">Collections</h1>
         <h2 class="collections-link"><a href="" class="link-text">Grocery List</a></h2>
