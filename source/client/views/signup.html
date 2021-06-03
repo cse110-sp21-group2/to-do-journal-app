@@ -23,6 +23,7 @@
       href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
       rel="stylesheet"
     />
+    <style> @font-face { font-family: hello honey; src: url('hello_honey.otf'); } </style>
 
     <!-- Main CSS -->
     <link rel="stylesheet" href="../styles/signup.css" />
@@ -37,11 +38,18 @@
             src="https://i.ibb.co/mBnjFw3/laurel-wreath.png"
             alt=""
           />
+          <p class="welcome-back">Create an Account</p>
+                
         </div>
+        <!--Bookmark-->
+        <div class='bookmark'>
+          <div class="solid-bookmark-div"></div>
+          <div class="bookmark-cutout-div"></div>
+      </div>
         <div class="column registration-form">
           <form>
             <img
-              src="../../../admin/branding/logo256.png"
+              src="../assets/logo256.png"
               alt="Avatar"
               class="avatar"
             />
@@ -82,14 +90,13 @@
             <br />
             <br />
             <input class="submit-btn" type="submit" value="Sign Up" />
+            <div class="google">
+              <hr class="horizontal-rule" />
+              <div id="google-sign-in"></div>
+              <div class="sign-in-container">
+                <a class="sign-in" href="/signin">Already have an account?</a>
+              </div>
           </form>
-          <div class="google">
-            <hr class="horizontal-rule" />
-            <div id="google-sign-in"></div>
-            <div class="sign-in-container">
-              <a class="sign-in" href="/signin">Already have an account?</a>
-            </div>
-          </div>
           </div>
         </div>
       </div>
