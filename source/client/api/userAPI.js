@@ -40,8 +40,6 @@ userAPI.getUserByEmail = async (email) => {
  userAPI.updateUserInfo = async ({id, updatedUser}) => {
   const url = `/api/update-user-info/${id}`;
 
-  console.log(id + " from updateUserInfo");
-
   // Attempt to send update request to user
   const response = await fetch(url, {
     method: 'PUT',

@@ -60,7 +60,8 @@ export default class UserController {
       user.name = updatedUser.name;
       user.email = updatedUser.email;
       user.term = updatedUser.term;
-      user.styles = updatedUser.styles;
+      user.firstDayOfTheWeek = updatedUser.firstDayOfTheWeek;
+      user.theme = updatedUser.theme;
       user.language = updatedUser.language;
       // Save the new updated user
       await user.save();

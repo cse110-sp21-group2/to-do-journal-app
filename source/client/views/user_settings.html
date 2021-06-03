@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>User Settings</title>
+  <title class="notranslate">User Settings</title>
   <!-- import -->
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Unica+One&display=swap" rel="stylesheet">
@@ -176,6 +176,7 @@
             <!--Language category-->
             <div class="language">
               <h5 class="category">Language</h5>
+              <!--<div id="google_translate_element"></div>-->
               <!--TODO implement different languages translation-->
               <select id="lang">
                 <option value="english">English</option>
@@ -201,6 +202,16 @@
   <!-- Main Script -->
   <script src="../scripts/settings.js" type="module"></script>
   <script src="../components/left-nav-component.js" type="module"></script>
+
+  <!-- Google Translation API
+  <script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+    }
+  </script>
+
+  <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+  -->
 </body>
 
 </html>
