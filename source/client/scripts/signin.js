@@ -17,5 +17,12 @@ loginBtn.addEventListener('click', async (e) => {
     password,
   };
 
-  await auth.login(payload);
+  const { user = null, message = null } = await auth.login(payload);
+
+  if (user) {
+    window.location.href = '/';
+  } else {
+    // eslint-disable-next-line no-alert
+    alert(message);
+  }
 });
