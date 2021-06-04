@@ -25,13 +25,17 @@ authAPI.login = async ({ email, password }) => {
   });
 
   // Get parsed request status, and user data
-  const { success, data: user } = await _user.json();
+  const { success, data: user = null } = await _user.json();
+
+  // If it wasn't a successful login, i.e. email or password
+  if (!success || !user) {
+    return {
+      message: 'Incorrect password or email entered'
+    }
+  }
 
   const { _id: id } = user;
-  // If it wasn't a successful login, i.e. email or password
-  if (!success) {
-    // Do stuff here
-  }
+
 
   // Otherwise, we got user and want to get the journal in
   // relation to this user
@@ -72,12 +76,14 @@ authAPI.register = async ({ name, email, password }) => {
       'Content-type': 'application/json; charset=UTF-8',
     },
   });
-  const { success, data: user } = await newUser.json();
+  const { success, data: user = null} = await newUser.json();
 
   // If registration wasn't successful, i.e. user with
   // this given email already exists
-  if (!success) {
-    // Do something here
+  if (!success || !user) {
+    return {
+      message: 'User with this email already exists!'
+    }
   }
 
   // Otherwise get this new user's id to create their journal
@@ -135,13 +141,17 @@ authAPI.googleLogin = async ({ email, googleId }) => {
   });
 
   // Get parsed request status, and user data
-  const { success, data: user } = await _user.json();
+  const { success, data: user = null } = await _user.json();
+
+  // If it wasn't a successful login, i.e. email or password
+  if (!success || !user) {
+    return {
+      message: 'Failed to authenticate with given Google credentials'
+    }
+  }
 
   const { _id: id } = user;
-  // If it wasn't a successful login, i.e. email or password
-  if (!success) {
-    // Do stuff here
-  }
+
 
   // Otherwise, we got user and want to get the journal in
   // relation to this user
@@ -183,14 +193,14 @@ authAPI.googleRegister = async ({ name, email, googleId }) => {
     },
   });
 
-  const { success, data: user } = await newUser.json();
+  const { success, data: user = null } = await newUser.json();
 
-  console.log(user);
-  console.log(success);
   // If registration wasn't successful, i.e. user with
   // this given email already exists
-  if (!success) {
-    // Do something here
+  if (!success || !user) {
+    return {
+      message: 'Failed to register!'
+    }
   }
 
   // Otherwise get this new user's id to create their journal

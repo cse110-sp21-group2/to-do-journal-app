@@ -14,7 +14,14 @@ const auth = {};
  * @returns {Object} User and Journal.
  */
 auth.login = async (payload) => {
-  const { user, journal } = await authAPI.login(payload);
+  const { user = null, journal, message = null } = await authAPI.login(payload);
+
+  if (!user) {
+    // eslint-disable-next-line no-alert
+    return {
+      message
+    }
+  }
 
   const { _id, email, name, firstDayOfTheWeek, term, theme } = user;
 
@@ -49,7 +56,13 @@ auth.login = async (payload) => {
  * @returns {Object} New User and Journal.
  */
 auth.register = async (payload) => {
-  const { user, journal } = await authAPI.register(payload);
+  const { user = null, journal, message = null } = await authAPI.register(payload);
+
+  if (!user) {
+    return {
+      message
+    }
+  }
 
   const { _id, email, name, firstDayOfTheWeek, term, theme } = user;
 
@@ -84,7 +97,13 @@ auth.register = async (payload) => {
  * @returns {Object} User and Journal.
  */
 auth.googleLogin = async (payload) => {
-  const { user, journal } = await authAPI.googleLogin(payload);
+  const { user = null, journal } = await authAPI.googleLogin(payload);
+
+  if (!user) {
+    return {
+      message: 'Failed to authenticate with given Google credentials'
+    }
+  }
 
   const { _id, email, name, firstDayOfTheWeek, term, theme } = user;
 

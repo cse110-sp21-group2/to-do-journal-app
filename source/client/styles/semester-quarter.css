@@ -1,12 +1,12 @@
 /*shared  Elements*/
-* { 
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
 body {
-  background: url("https://i.ibb.co/sFtX9zy/bg.png"); 
+  background: url('https://i.ibb.co/sFtX9zy/bg.png');
 }
 
 .main {
@@ -32,7 +32,7 @@ body {
   grid-row: 1 / 2;
   justify-self: center;
   background-color: white;
-  
+
   display: flex;
   padding: 10px;
   margin: 10px;
@@ -41,13 +41,13 @@ body {
   border-radius: 200px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
-#search-icon{
+#search-icon {
   margin: 8px;
   font-size: 20px;
-  color:#0000006b
+  color: #0000006b;
 }
-.search-input{
-  border-style:none;
+.search-input {
+  border-style: none;
   width: 80%;
 }
 
@@ -60,7 +60,7 @@ body {
   width: 150px;
   width: 201px;
   height: 59px;
-  display:flex;
+  display: flex;
   justify-content: space-evenly;
   align-items: center;
   box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.25);
@@ -70,9 +70,9 @@ body {
   width: 30px;
   height: 30px;
   border-radius: 15px;
-  border:solid;
+  border: solid;
   background: white;
-  position:relative;
+  position: relative;
   top: 0px;
   left: 0px;
 }
@@ -85,6 +85,7 @@ body {
   border-radius: 40px;
   background-color: #ffffff00;
   border: none;
+  cursor: pointer;
 }
 
 .help-button i,
@@ -98,11 +99,11 @@ body {
 .content-region {
   grid-column: 2 / 4;
   grid-row: 2 / 3;
-  min-width:1050px;
+  min-width: 1050px;
   width: auto;
   margin: 1cm;
   padding: 30px 0px;
-  display:grid;
+  display: grid;
   grid-template-columns: 110px auto;
   grid-template-rows: 1fr 1fr 1fr 100px;
   row-gap: 2px;
@@ -111,16 +112,16 @@ body {
 .week-header-other,
 .week-header-current {
   font-family: Unica One;
-  font-style:normal;
-  font-weight:normal;
+  font-style: normal;
+  font-weight: normal;
   font-size: 40px;
   line-height: 47px;
   margin: auto;
-  color: #162A47;
+  color: #162a47;
 }
 
 .week-header-current {
-  color:#834900;
+  color: #834900;
 }
 
 .week-number-current,
@@ -129,11 +130,11 @@ body {
   width: 60px;
   height: 60px;
   text-align: center;
-  display:table-cell;
+  display: table-cell;
   vertical-align: middle;
   font-family: Unica One;
-  font-style:normal;
-  font-weight:normal;
+  font-style: normal;
+  font-weight: normal;
   font-size: 40px;
   line-height: 47px;
 }
@@ -158,7 +159,6 @@ body {
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
 }
-
 
 .left-week-subdivision {
   grid-column: 1;
@@ -192,25 +192,25 @@ body {
 /* Top Left Academic Period Header*/
 .academic-period {
   grid-column: 2 / 3;
-    grid-row: 1 / 2;
-    display: flex;
-    justify-content: left;
-    padding-left: 30px;
-    line-height: 75px;
-    align-items: center;
-    text-align: center;
-    letter-spacing: -0.02em;
-    color: #162a47;
-    text-shadow: 0px 4px 5px rgba(0, 0, 0, 0.25);
+  grid-row: 1 / 2;
+  display: flex;
+  justify-content: left;
+  padding-left: 30px;
+  line-height: 75px;
+  align-items: center;
+  text-align: center;
+  letter-spacing: -0.02em;
+  color: #162a47;
+  text-shadow: 0px 4px 5px rgba(0, 0, 0, 0.25);
 }
 
 .current-period {
-  text-decoration:underline;
+  text-decoration: underline;
   font-family: Tw Cen MT Condensed;
   font-style: normal;
   font-weight: normal;
   font-size: 60px;
-  color: #162A47;
+  color: #162a47;
 }
 
 .period-button {
@@ -220,19 +220,19 @@ body {
 }
 
 /*Bookmark*/
-.bookmark{
+.bookmark {
   margin: 10px;
   margin-top: -50px;
   margin: -50px 50px 0px 10px;
 }
-.solid-bookmark-div{
+.solid-bookmark-div {
   background-color: #00649c;
   width: 20px;
   height: 200px;
 }
-.bookmark-cutout-div{
-  background-color: #edf2fA;
-  width:20px;
+.bookmark-cutout-div {
+  background-color: #edf2fa;
+  width: 20px;
   height: 20px;
   position: relative;
   top: -5px;
@@ -240,7 +240,7 @@ body {
 }
 
 /*Left Navigation Area*/
-.left-nav{
+.left-nav {
   grid-column: 1 / 2;
   grid-row: 1 / 4;
   padding: 10px 10px;
@@ -260,17 +260,17 @@ body {
   border-top-left-radius: 20px;
   border-bottom-left-radius: 20px;
   margin-right: -20px;
-  display:grid;
+  display: grid;
   grid-template-columns: 200px;
   grid-template-rows: 200px 75px 65px 200px 65px 200px;
   justify-content: center;
   align-content: center;
   box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.25);
 }
-.calendar-region{
+.calendar-region {
   width: 200px;
-  height:200px;
-  display:grid;
+  height: 200px;
+  display: grid;
   grid-template-columns: auto;
   grid-template-rows: 30px auto;
 }
@@ -279,7 +279,7 @@ body {
   margin: 0px auto;
   background-color: #d5ab09;
   border-radius: 20px;
-  color:white;
+  color: white;
   width: 150px;
   display: flex;
   align-items: center;
@@ -289,8 +289,8 @@ body {
   color: white;
 }
 
-.month-days{
-  display:grid;
+.month-days {
+  display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
   margin: 10px;
@@ -306,22 +306,24 @@ body {
   width: 18px;
   height: 20px;
   text-align: center;
-  color:#162a47
+  color: #162a47;
 }
 
-.calendar-seperator{
+.calendar-seperator {
   border-style: solid;
   border-width: 3px;
   border-radius: 3px;
 }
 
-.tasks-header, .events-header{
+.tasks-header,
+.events-header {
   display: flex;
-  justify-content:left;
+  justify-content: left;
   align-items: baseline;
   flex-wrap: wrap;
 }
-.tasks-title, .events-title{
+.tasks-title,
+.events-title {
   font-family: Tw Cen MT Condensed;
   font-style: normal;
   font-weight: normal;
@@ -329,22 +331,24 @@ body {
   line-height: 37px;
 }
 
-.tasks-button, .events-button{
+.tasks-button,
+.events-button {
   background-color: white;
   width: 20px;
   height: 20px;
   border-radius: 20px;
   margin: 4px;
-  border:solid;
+  border: solid;
 }
-.tasks-content, .events-content{
+.tasks-content,
+.events-content {
   width: 200px;
-  height:200px;
+  height: 200px;
 }
-.upcoming-header{
+.upcoming-header {
   font-family: Unica One;
-  font-style:normal;
-  font-weight:normal;
+  font-style: normal;
+  font-weight: normal;
   font-size: 40px;
   line-height: 47px;
   text-align: center;
