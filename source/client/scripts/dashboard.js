@@ -27,7 +27,7 @@ import session from './session.js';
 
 if (!session.isUserLoggedIn()) {
   alert('You must be signed in to view your journal');
-  window.location.href = '/';
+  window.location.href = '/signin';
 }
 
 
