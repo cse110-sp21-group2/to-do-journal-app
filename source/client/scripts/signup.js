@@ -1,12 +1,17 @@
 /* eslint-disable import/extensions */
 /* eslint-disable no-console */
 import auth from './auth.js';
+import session from './session.js';
 
 const emailInput = document.getElementById('email');
 const passwordInput = document.getElementById('password');
 const nameInput = document.getElementById('name');
 
 const submitBtn = document.querySelector('.submit-btn');
+
+if (session.isUserLoggedIn()) {
+  window.location.href = '/';
+}
 
 submitBtn.addEventListener('click', async (e) => {
   // Prevent page refresh
