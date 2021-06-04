@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 /* eslint-disable no-console */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-undef */
@@ -23,6 +24,13 @@ import session from './session.js';
  *  X ITERATE through notes and grab 'content'
  *  X POST/DISPLAY note's content
  */
+
+if (!session.isUserLoggedIn()) {
+  alert('You must be signed in to view your journal');
+  window.location.href = '/signin';
+}
+
+
 
 // Today's date
 const today = new Date();
@@ -51,8 +59,8 @@ const entry = getEntry();
 
 // TEST getting journal entry from DB
 // const test_entry = await journalAPI.getJournalEntry({
-//   id: "60ac3af75cc18f1184f58b9e", 
-//   date: "2021-05-24T23:47:03.282+00:00", 
+//   id: "60ac3af75cc18f1184f58b9e",
+//   date: "2021-05-24T23:47:03.282+00:00",
 //   type: "Daily" });
 // const entry = test_entry.data;
 

@@ -3,10 +3,10 @@
 class LeftNav extends HTMLElement {
     constructor() {
       super();
-  
+
       // templated HTML content
       const template = document.createElement('template');
-  
+
       template.innerHTML = `
         <head>
             <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
@@ -18,7 +18,7 @@ class LeftNav extends HTMLElement {
                 display: table;
                 margin: 0 auto;
             }
-            
+
             .navigation-title {
                 /*block*/
                 background-color: #E2CB14;
@@ -32,13 +32,13 @@ class LeftNav extends HTMLElement {
                 font-size: 45px;
                 color:#162A47;
             }
-            
+
             .index-link, .collections-link{
                 padding: 10px;
                 margin: 10px -10px 10px -10px;
                 text-align: center;
             }
-            
+
             .collections-button{
                 width: 40px;
                 height: 40px;
@@ -48,7 +48,7 @@ class LeftNav extends HTMLElement {
                 display: table;
                 margin: 0 auto;
             }
-            
+
             .link-text{
                 text-decoration: none;
                 font-family: 'Roboto', Condensed;
@@ -60,12 +60,12 @@ class LeftNav extends HTMLElement {
                 color: #162A47;
             }
 		    </style>
-        <img src="../../../admin/branding/logo500.png" alt="Two-Do logo" class="logo">
-        <h1 class="navigation-title">Index</h1>
-        <h2 class="index-link"><a href="" class="link-text">Daily</a></h2>
-        <h2 class="index-link"><a href="" class="link-text">Weekly</a></h2>
-        <h2 class="index-link"><a href="" class="link-text">Monthly</a></h2>
-        <h2 class="index-link"><a href="" class="link-text">Quarterly</a></h2>
+        <a href="/"><img src="../assets/logo500.png" alt="Two-Do logo" class="logo" ></a>
+        <a href="/index"><h1 class="navigation-title">Index</h1></a>
+        <h2 class="index-link"><a href="/daily" class="link-text">Daily</a></h2>
+        <h2 class="index-link"><a href="/weekly" class="link-text">Weekly</a></h2>
+        <h2 class="index-link"><a href="/monthly" class="link-text">Monthly</a></h2>
+        <h2 class="index-link"><a href="/term" class="link-text">Quarterly</a></h2>
         <br>
         <h1 class="navigation-title">Collections</h1>
         <h2 class="collections-link"><a href="" class="link-text">Grocery List</a></h2>
@@ -75,15 +75,15 @@ class LeftNav extends HTMLElement {
         <h2 class="collections-link"><a href="" class="link-text">Reading Collection</a></h2>
         <button type="button" class="collections-button"><i class="fas fa-chevron-down"></i></button>
         `;
-    
+
       // create a shadow root for this web component
       this.attachShadow({ mode: 'open' })
-      // attach cloned content of template to shadow DOM 
+      // attach cloned content of template to shadow DOM
       this.shadowRoot.appendChild(template.content.cloneNode(true))
     }
-  
+
 }
-  
+
 // Define, instantiate, and add the component to its respective div to the calling document
 customElements.define('left-nav-component', LeftNav);
 const comp = document.createElement('left-nav-component');
