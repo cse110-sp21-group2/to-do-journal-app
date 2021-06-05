@@ -1,7 +1,7 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "description": "",
+  "description": "This is the repository for the Bullet Jouranl app created by Group 2. View our team page [here](./admin/team.md).",
   "main": "index.js",
   "type": "module",
   "scripts": {

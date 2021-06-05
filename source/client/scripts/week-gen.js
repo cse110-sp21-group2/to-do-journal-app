@@ -5,13 +5,13 @@ const numDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
 function createCalendar() {
   // Grab today's date
-  let today = new Date();
+  const today = new Date();
   // Grab today's year
-  let currYear = today.getFullYear();
+  const currYear = today.getFullYear();
   // Grab today's month
-  let currMonth = today.getMonth();
+  const currMonth = today.getMonth();
   // Get's the day of the week
-  var currDay = getActualDay(today);
+  const currDay = getActualDay(today);
 
   // Have to subtract the number of days from today's day
   let whereStart = new Date(currYear, currMonth, 1);
@@ -104,18 +104,6 @@ function createMonthCalendar() {
   return dates;
   }
 
-// Gets the date of week, accounting for JS shift
-function getActualDay(date) {
-  let day = date.getDay();
-  if(day == 6) {
-    day = 0;
-  }
-  else{
-    day = day + 1;
-  }
-  return day;
-  }
-
 function nextMonth() {
   let calcMonth;
   let currLabel = document.getElementById("current-month").innerHTML;
@@ -136,13 +124,12 @@ function nextMonth() {
     boop.push("");
   }
 
-  let numDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
   for(let i = 0; i < numDays[calcMonth]; i+=1) {
     boop.push(firstDay.getDate());
     firstDay.setDate(firstDay.getDate() + 1);
   }
 
-  for(let i = boop.length; i < 42; i++) {
+  for(let i = boop.length; i < 42; i+=1) {
     boop.push("");
   }
 
@@ -187,16 +174,16 @@ function nextMonth() {
       monthLabel[i].innerHTML = boop[i];
       monthLabel[i].style.backgroundColor = "#FFFFFF"
     }
-    document.getElementById("current-month").innerHTML = monthNames[nextMonth-1]; 
+    document.getElementById("current-month").innerHTML = `${monthNames[nextMonth-1]}`; 
 }
 
 // Grabs array of dates
 let addIn = createMonthCalendar();
 // Gets array of date elements 
-var monthLabel = document.getElementsByClassName("date-number");
+const monthLabel = document.getElementsByClassName("date-number");
 // Gets today's date
 var today = new Date();
-document.getElementById("current-month").innerHTML = monthNames[today.getMonth()];
+document.getElementById("current-month").innerHTML = `${monthNames[today.getMonth()]}`;
 // Populates date elements 
 for (let i = 0; i < addIn.length; i+=1) {
     monthLabel[i].innerHTML = addIn[i];

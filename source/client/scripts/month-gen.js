@@ -24,7 +24,7 @@
 
     // Populates dates
     for(let i = 0; i < numDays[currMonth]; i+=1) {
-      const toSave = firstDay.toString();
+      let toSave = firstDay.toString();
       dates.push(toSave);
       firstDay.setDate(firstDay.getDate() + 1);
      }
@@ -50,39 +50,39 @@
   */
 
   function nextMonth() {
-    let next_Month;
-    const currLabel = document.getElementById("month-label").innerHTML;
+    let nextMonth;
+    let currLabel = document.getElementById("month-label").innerHTML;
     for(let i = 0; i < monthNames.length; i+=1) {
       if (currLabel.includes(monthNames[i])) {
-        next_Month = i;
+        nextMonth = i;
       }
     }
-    const grabYear = currLabel.substring(currLabel.length-4, currLabel.length);
+    let grabYear = currLabel.substring(currLabel.length-4, currLabel.length);
 
     let assignMonth;
-    if((next_Month+1) > 11) {
+    if((nextMonth+1) > 11) {
       assignMonth = 0;
     }
     else {
-      assignMonth = parseInt(next_Month) + 1;
+      assignMonth = parseInt(nextMonth, 10) + 1;
     }
 
-    //const today = new Date();
+    //let today = new Date();
 
     let nextYear = grabYear;
-    if(assignMonth == 0) {
-      nextYear = parseInt(grabYear) + 1;
+    if(assignMonth === 0) {
+      nextYear = parseInt(grabYear, 10) + 1;
     }
     else {
       nextYear = grabYear;
     }
     
-    let firstDay = new Date(nextYear, assignMonth);
+    const firstDay = new Date(nextYear, assignMonth);
 
-    let numSpace = firstDay.getDay();
-    let boop = new Array();
+    const numSpace = firstDay.getDay();
+    const boop = [];
 
-    for (let i = 0; i < numSpace; i++) {
+    for (let i = 0; i < numSpace; i+=1) {
       boop.push("");
     }
 
@@ -104,38 +104,38 @@
   }
 
   function prevMonth() {
-    let nextMonth;
-    let currLabel = document.getElementById("month-label").innerHTML;
+    let prevMonth;
+    const currLabel = document.getElementById("month-label").innerHTML;
 
     for(let i = 0; i < monthNames.length; i+=1) {
       if (currLabel.includes(monthNames[i])) {
-        nextMonth = i;
+        prevMonth = i;
       }
     }
 
-    let grabYear = currLabel.substring(currLabel.length-4, currLabel.length);
+    const grabYear = currLabel.substring(currLabel.length-4, currLabel.length);
 
     let assignMonth;
-    if((nextMonth-1) < 0) {
+    if((prevMonth-1) < 0) {
       assignMonth = 11;
     }
     else {
-      assignMonth = nextMonth - 1;
+      assignMonth = prevMonth - 1;
     }
 
     //let today = new Date();
     
     let nextYear;
-    if(assignMonth == 11) {
+    if(assignMonth === 11) {
       nextYear = grabYear - 1;
     }
     else {
       nextYear = grabYear;
     }
   
-    let firstDay = new Date(nextYear, assignMonth);
-    let numSpace = firstDay.getDay();
-    let boop = new Array();
+    const firstDay = new Date(nextYear, assignMonth);
+    const numSpace = firstDay.getDay();
+    const boop = [];
 
     for (let i = 0; i < numSpace; i+=1) {
       boop.push("");
@@ -150,7 +150,7 @@
       boop.push("");
     }
 
-    for (let i = 0; i < boop.length; i++) {
+    for (let i = 0; i < boop.length; i+=1) {
       dayLabel[i].innerHTML = `<a href="daily.html"> ${boop[i]} </a>`;
       dayLabel[i].style.backgroundColor = "#FFFFFF"
     }
