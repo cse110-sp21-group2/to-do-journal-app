@@ -296,6 +296,45 @@ button.date {
   left: 43%;
 }
 
+button.date:hover {
+    background: rgba(238, 238, 238, 0.194);
+} 
+a {
+    text-decoration:none;
+ }
+
+ .page-heading {
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 300px;
+    margin-top: -20px;
+    margin: -20px 0px 0px;
+}
+
+.current-month {
+    text-decoration:underline;
+    font-family: Tw Cen MT Condensed;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 30px;
+    color: #162A47;
+}
+
+.button-circle {
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+    border: solid;
+    color: var(--mainColor);
+    border-color: var(--mainColor);
+    background: white;
+    position:relative;
+    top: 0px;
+    left: 0px;
+}
 /* button.date:hover {
     background: rgba(238, 238, 238, 0.194);
 } */
