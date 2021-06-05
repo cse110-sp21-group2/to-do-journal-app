@@ -24,7 +24,7 @@
 
     // Populates dates
     for(let i = 0; i < numDays[currMonth]; i+=1) {
-      let toSave = firstDay.toString();
+      const toSave = firstDay.toString();
       dates.push(toSave);
       firstDay.setDate(firstDay.getDate() + 1);
      }
@@ -50,24 +50,24 @@
   */
 
   function nextMonth() {
-    let nextMonth;
-    let currLabel = document.getElementById("month-label").innerHTML;
+    let next_Month;
+    const currLabel = document.getElementById("month-label").innerHTML;
     for(let i = 0; i < monthNames.length; i+=1) {
       if (currLabel.includes(monthNames[i])) {
-        nextMonth = i;
+        next_Month = i;
       }
     }
-    let grabYear = currLabel.substring(currLabel.length-4, currLabel.length);
+    const grabYear = currLabel.substring(currLabel.length-4, currLabel.length);
 
     let assignMonth;
-    if((nextMonth+1) > 11) {
+    if((next_Month+1) > 11) {
       assignMonth = 0;
     }
     else {
-      assignMonth = parseInt(nextMonth) + 1;
+      assignMonth = parseInt(next_Month) + 1;
     }
 
-    let today = new Date();
+    //const today = new Date();
 
     let nextYear = grabYear;
     if(assignMonth == 0) {
@@ -123,7 +123,7 @@
       assignMonth = nextMonth - 1;
     }
 
-    let today = new Date();
+    //let today = new Date();
     
     let nextYear;
     if(assignMonth == 11) {
