@@ -9,7 +9,13 @@ const journalAPI = {};
  */
 journalAPI.createJournal = async ({ id }) => {
   const url = `/api/create-journal/${id}`;
-  const response = await fetch(url).catch((err) => console.log(err));
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-type': 'application/json; charset=UTF-8',
+    },
+  }).catch((err) => console.log(err));
+  console.log(response);
   const result = response.json();
 
   return result;
