@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 /* eslint-disable import/extensions */
 import auth from "./auth.js";
 import session from "./session.js";
@@ -22,6 +23,12 @@ submitBtn.addEventListener('click', async (e) => {
   const { value: newPassword } = confirmPasswordInput;
 
   if (_newPassword === newPassword) {
-    await auth.resetPassword({ token, newPassword });
+    const { message, success } = await auth.resetPassword({ token, newPassword });
+
+    alert(message);
+
+    if (success) { window.location.href = '/' };
+  } else {
+    alert('Passwords don\'t match');
   }
 });

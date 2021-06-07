@@ -25,19 +25,18 @@ authAPI.login = async ({ email, password }) => {
   });
 
   // Get parsed request status, and user data
-  const { success, data: user = null } = await _user.json();
+  const { success, data: user = null, message = null } = await _user.json();
 
   // If it wasn't a successful login, i.e. email or password
-  if (!success || !user) {
+  if (!success) {
     return {
-      message: 'Incorrect password or email entered'
+      message
     }
   }
 
   const { _id: id } = user;
 
-
-  // Otherwise, we got user and want to get the journal in
+  // Otherwise, user login successful  and want to get the journal in
   // relation to this user
   url = `/api/journal/${id}`;
 
@@ -76,13 +75,13 @@ authAPI.register = async ({ name, email, password }) => {
       'Content-type': 'application/json; charset=UTF-8',
     },
   });
-  const { success, data: user = null} = await newUser.json();
+  const { success, data: user = null,  message = null } = await newUser.json();
 
   // If registration wasn't successful, i.e. user with
   // this given email already exists
-  if (!success || !user) {
+  if (!success) {
     return {
-      message: 'User with this email already exists!'
+      message
     }
   }
 
@@ -104,13 +103,8 @@ authAPI.register = async ({ name, email, password }) => {
 
   // Get parsed user journal
   const {
-    success: journalSuccess,
     data: journal,
   } = await newJournal.json();
-
-  if (!journalSuccess) {
-    // Do something here
-  }
 
   return {
     user,
@@ -141,12 +135,12 @@ authAPI.googleLogin = async ({ email, googleId }) => {
   });
 
   // Get parsed request status, and user data
-  const { success, data: user = null } = await _user.json();
+  const { success, data: user = null, message = null } = await _user.json();
 
   // If it wasn't a successful login, i.e. email or password
-  if (!success || !user) {
+  if (!success) {
     return {
-      message: 'Failed to authenticate with given Google credentials'
+      message,
     }
   }
 
@@ -193,13 +187,13 @@ authAPI.googleRegister = async ({ name, email, googleId }) => {
     },
   });
 
-  const { success, data: user = null } = await newUser.json();
+  const { success, data: user = null, message = null } = await newUser.json();
 
   // If registration wasn't successful, i.e. user with
   // this given email already exists
-  if (!success || !user) {
+  if (!success) {
     return {
-      message: 'Failed to register!'
+      message
     }
   }
 
@@ -243,7 +237,7 @@ authAPI.forgotPassword = async ({ email }) => {
   const url = '/auth/forgot-password';
 
   // Attempt to send reset link to user with given email
-  await fetch(url, {
+  const response = await fetch(url, {
     method: 'POST',
     body: JSON.stringify({
       email,
@@ -253,6 +247,10 @@ authAPI.forgotPassword = async ({ email }) => {
       'Content-type': 'application/json; charset=UTF-8',
     },
   });
+
+  const result = response.json();
+
+  return result;
 };
 
 /**
@@ -277,6 +275,7 @@ authAPI.resetPassword = async ({ token, newPassword }) => {
   });
 
   const result = response.json();
+
   return result;
 };
 
