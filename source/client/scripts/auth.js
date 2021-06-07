@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable import/extensions */
 /* eslint-disable no-console */
@@ -166,7 +167,9 @@ auth.googleRegister = async (payload) => {
  * @param {Object} payload - Email for this user.
  */
 auth.forgotPassword = async (payload) => {
-  await authAPI.forgotPassword(payload);
+  const { message } = await authAPI.forgotPassword(payload);
+
+  return message
 };
 
 /**
@@ -174,9 +177,9 @@ auth.forgotPassword = async (payload) => {
  * @param {Object} payload - JWT token and new password.
  */
 auth.resetPassword = async (payload) => {
-  const result = await authAPI.resetPassword(payload);
+  const { success , message } = await authAPI.resetPassword(payload);
 
-  return result;
+  return {success, message };
 };
 
 export default auth;

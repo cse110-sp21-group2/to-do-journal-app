@@ -35,12 +35,14 @@ export default class EmailService {
     } catch (error) {
       return {
         success: false,
-        error,
+        message: 'Failed to send message',
       };
     }
 
+    console.log('hi');
     return {
       success: true,
+      message: 'We\'ve emailed you a reset link'
     };
   }
 }
