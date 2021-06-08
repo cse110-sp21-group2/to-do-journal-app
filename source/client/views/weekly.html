@@ -21,160 +21,154 @@
       crossorigin="anonymous"
     />
     <link rel="stylesheet" href="../styles/weekly.css" />
-</head>
-<body>
-    <main class="main">
-      <!-- Left Navigation -->
-      <div class="left-nav"></div>
-      <div class="title">
-        <!--Bookmark-->
-        <div class="bookmark">
-          <div class="solid-bookmark-div"></div>
-          <div class="bookmark-cutout-div"></div>
-        </div>
-        <div class="page-heading">
-            <!-- Yesterday Button -->
-            <div class="back-button">
-                <button type="button" onclick= "prevWeek();" class="button-circle"><i class="fas fa-chevron-left"></i></button>
-            </div>
-
-            <h1 class="current-month" id="month-label">This week</h1>
-
-            <!-- Tomorrow Button -->
-            <div class="forward-button">
-                <button type="button" onclick = "nextWeek();" class="button-circle"><i class="fas fa-chevron-right"></i></button>
-            </div>
-
-        </div>
-        <button class="nav-btn">
-          <i class="arrow-left"></i>
-        </button>
-        <h1 class="title-text">May 2021</h1>
-        <button class="nav-btn">
-          <i class="arrow-right"></i>
-        </button>
+  </head>
+  <body class="main">
+    <div class="title">
+      <!--Bookmark-->
+      <div class="bookmark">
+        <div class="solid-bookmark-div"></div>
+        <div class="bookmark-cutout-div"></div>
       </div>
-
-      <div class="search-bar">
-        <i class="fas fa-search" id="search-icon"></i>
-        <input type="text" placeholder="Search" class="search-input" />
-      </div>
-      <div class="account-bar">
-        <button type="button" class="help-button">
-          <i class="far fa-question-circle"></i>
-        </button>
-        <button type="button" class="notification-button">
-          <i class="far fa-bell"></i>
-        </button>
-        <a href="/settings">
-          <button type="button" class="account-button">
-            <i class="fas fa-user-circle"></i>
+      <div class="page-heading">
+        <!-- Yesterday Button -->
+        <div class="back-button">
+          <button type="button" onclick="prevWeek();" class="button-circle">
+            <i class="fas fa-chevron-left"></i>
           </button>
-        </a>
-      </div>
+        </div>
 
-      <!-- Weekly Main content -->
-      <div class="weekly-view">
-        <div class="column-day">
-          <h3 class="day-title">MON</h3>
-          <button class="date">3</button>
-        </div>
-        <div class="column-day">
-          <h3 class="day-title">TUES</h3>
-          <button class="date">4</button>
-        </div>
-        <div class="column-day">
-          <h3 class="day-title">WED</h3>
-          <button class="date">5</button>
-        </div>
-        <div class="column-day">
-          <h3 class="day-title">THURS</h3>
-          <button class="date">6</button>
-        </div>
-        <div class="column-day">
-          <h3 class="day-title">FRI</h3>
-          <button class="date">7</button>
-        </div>
-        <div class="column-day">
-          <h3 class="day-title">SAT</h3>
-          <button class="date">8</button>
-        </div>
-        <div class="column-day">
-          <h3 class="day-title">SUN</h3>
-          <button class="date">9</button>
+        <h1 class="current-month" id="month-label">This week</h1>
+
+        <!-- Tomorrow Button -->
+        <div class="forward-button">
+          <button type="button" onclick="nextWeek();" class="button-circle">
+            <i class="fas fa-chevron-right"></i>
+          </button>
         </div>
       </div>
+    </div>
 
-        <!-- Left Navigation -->
-        <div class="left-nav"></div>
+    <div class="search-bar">
+      <i class="fas fa-search" id="search-icon"></i>
+      <input type="text" placeholder="Search" class="search-input" />
+    </div>
+    <div class="account-bar">
+      <button type="button" class="help-button">
+        <i class="far fa-question-circle"></i>
+      </button>
+      <button type="button" class="notification-button">
+        <i class="far fa-bell"></i>
+      </button>
+      <a href="/settings">
+        <button type="button" class="account-button">
+          <i class="fas fa-user-circle"></i>
+        </button>
+      </a>
+    </div>
 
-        <!-- Right Navigation -->
-        <div class="right-nav">
-            <div class="calendar-region">
-                <div class="month-selector">
-                    <button type="button" onclick = "prevMonth();"class=left-month-button><i class="fas fa-chevron-left"></i></button>
-                    <h3 class="current month" id="current-month">May</h3>
-                    <button type="button" onclick = "nextMonth();" class="right-month-button"><i class="fas fa-chevron-right"></i></button>
-                </div>
-                <div class="month-days">
-                    <div class="date-number">26</div>
-                    <div class="date-number">27</div>
-                    <div class="date-number">28</div>
-                    <div class="date-number">29</div>
-                    <div class="date-number">30</div>
-                    <div class="date-number">1</div>
-                    <div class="date-number">2</div>
-                    <div class="date-number">3</div>
-                    <div class="date-number">4</div>
-                    <div class="date-number">5</div>
-                    <div class="date-number">6</div>
-                    <div class="date-number">7</div>
-                    <div class="date-number">8</div>
-                    <div class="date-number">9</div>
-                    <div class="date-number">10</div>
-                    <div class="date-number">11</div>
-                    <div class="date-number">12</div>
-                    <div class="date-number">13</div>
-                    <div class="date-number">14</div>
-                    <div class="date-number">15</div>
-                    <div class="date-number">16</div>
-                    <div class="date-number">17</div>
-                    <div class="date-number">18</div>
-                    <div class="date-number">19</div>
-                    <div class="date-number">20</div>
-                    <div class="date-number">21</div>
-                    <div class="date-number">22</div>
-                    <div class="date-number">23</div>
-                    <div class="date-number">24</div>
-                    <div class="date-number">25</div>
-                    <div class="date-number">26</div>
-                    <div class="date-number">27</div>
-                    <div class="date-number">28</div>
-                    <div class="date-number">29</div>
-                    <div class="date-number">30</div>
-                    <div class="date-number">31</div>
-                    <div class="date-number">1</div>
-                    <div class="date-number">2</div>
-                    <div class="date-number">3</div>
-                    <div class="date-number">4</div>
-                    <div class="date-number">5</div>
-                    <div class="date-number">6</div>
-                </div>
-            </div>
-            <div>
-                <hr class="calendar-seperator">
-                <h2 class="goals-label">Goals</h2>
-            </div>
-            <div class="goals-container">
-                <div class="goals-element">Study for at least 2 hours</div>
-                <div class="goals-element">Maintain workout schedule</div>
-            </div>
+    <!-- Weekly Main content -->
+    <div class="weekly-view">
+      <div class="column-day">
+        <h3 class="day-title">MON</h3>
+        <button class="date">3</button>
+      </div>
+      <div class="column-day">
+        <h3 class="day-title">TUES</h3>
+        <button class="date">4</button>
+      </div>
+      <div class="column-day">
+        <h3 class="day-title">WED</h3>
+        <button class="date">5</button>
+      </div>
+      <div class="column-day">
+        <h3 class="day-title">THURS</h3>
+        <button class="date">6</button>
+      </div>
+      <div class="column-day">
+        <h3 class="day-title">FRI</h3>
+        <button class="date">7</button>
+      </div>
+      <div class="column-day">
+        <h3 class="day-title">SAT</h3>
+        <button class="date">8</button>
+      </div>
+      <div class="column-day">
+        <h3 class="day-title">SUN</h3>
+        <button class="date">9</button>
+      </div>
+    </div>
+
+    <!-- Right Navigation -->
+    <div class="right-nav">
+      <div class="calendar-region">
+        <div class="month-selector">
+          <button type="button" onclick="prevMonth();" class="left-month-button">
+            <i class="fas fa-chevron-left"></i>
+          </button>
+          <h3 class="current month" id="current-month">May</h3>
+          <button type="button" onclick="nextMonth();" class="right-month-button">
+            <i class="fas fa-chevron-right"></i>
+          </button>
         </div>
+        <div class="month-days">
+          <div class="date-number">26</div>
+          <div class="date-number">27</div>
+          <div class="date-number">28</div>
+          <div class="date-number">29</div>
+          <div class="date-number">30</div>
+          <div class="date-number">1</div>
+          <div class="date-number">2</div>
+          <div class="date-number">3</div>
+          <div class="date-number">4</div>
+          <div class="date-number">5</div>
+          <div class="date-number">6</div>
+          <div class="date-number">7</div>
+          <div class="date-number">8</div>
+          <div class="date-number">9</div>
+          <div class="date-number">10</div>
+          <div class="date-number">11</div>
+          <div class="date-number">12</div>
+          <div class="date-number">13</div>
+          <div class="date-number">14</div>
+          <div class="date-number">15</div>
+          <div class="date-number">16</div>
+          <div class="date-number">17</div>
+          <div class="date-number">18</div>
+          <div class="date-number">19</div>
+          <div class="date-number">20</div>
+          <div class="date-number">21</div>
+          <div class="date-number">22</div>
+          <div class="date-number">23</div>
+          <div class="date-number">24</div>
+          <div class="date-number">25</div>
+          <div class="date-number">26</div>
+          <div class="date-number">27</div>
+          <div class="date-number">28</div>
+          <div class="date-number">29</div>
+          <div class="date-number">30</div>
+          <div class="date-number">31</div>
+          <div class="date-number">1</div>
+          <div class="date-number">2</div>
+          <div class="date-number">3</div>
+          <div class="date-number">4</div>
+          <div class="date-number">5</div>
+          <div class="date-number">6</div>
+        </div>
+      </div>
+      <div>
+        <hr class="calendar-seperator" />
+        <h2 class="goals-label">Goals</h2>
+      </div>
+      <div class="goals-container">
+        <div class="goals-element">Study for at least 2 hours</div>
+        <div class="goals-element">Maintain workout schedule</div>
+      </div>
+    </div>
 
-        <!-- left-nav web component -->
-        <script src="../components/left-nav-component.js" type="module"></script>
-        <script type = "text/javascript" src="../scripts/week-gen.js"></script>
-
-    </main>
+    <!-- Left Navigation -->
+    <div class="left-nav"></div>
+    <!-- left-nav web component -->
+    <script src="../components/left-nav-component.js" type="module"></script>
+    <script type="text/javascript" src="../scripts/week-gen.js"></script>
   </body>
 </html>
