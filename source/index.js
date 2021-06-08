@@ -54,6 +54,11 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'source/client/views/dashboard.html'));
 });
 
+// Index
+app.get('/index', (req, res) => {
+  res.sendFile(path.join(__dirname, 'source/client/views/index.html'));
+});
+
 // Daily view
 app.get('/daily', (req, res) => {
   res.sendFile(path.join(__dirname, 'source/client/views/daily.html'));
@@ -72,11 +77,6 @@ app.get('/monthly', (req, res) => {
 // Semester / Quarter view
 app.get('/term', (req, res) => {
   res.sendFile(path.join(__dirname, 'source/client/views/semester-quarter.html'));
-});
-
-// Profile
-app.get('/profile', (req, res) => {
-  res.sendFile(path.join(__dirname, 'source/client/views/profile.html'));
 });
 
 // User settings
@@ -103,4 +103,5 @@ app.listen(port, () =>
   console.log(`Server running on port: http://localhost:${port}`)
 );
 
+// Export app to use for unit testing
 export default app;

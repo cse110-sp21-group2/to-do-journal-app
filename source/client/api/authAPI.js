@@ -25,15 +25,18 @@ authAPI.login = async ({ email, password }) => {
   });
 
   // Get parsed request status, and user data
-  const { success, data: user } = await _user.json();
+  const { success, data: user = null, message = null } = await _user.json();
 
-  const { _id: id } = user;
   // If it wasn't a successful login, i.e. email or password
   if (!success) {
-    // Do stuff here
+    return {
+      message
+    }
   }
 
-  // Otherwise, we got user and want to get the journal in
+  const { _id: id } = user;
+
+  // Otherwise, user login successful  and want to get the journal in
   // relation to this user
   url = `/api/journal/${id}`;
 
@@ -72,12 +75,14 @@ authAPI.register = async ({ name, email, password }) => {
       'Content-type': 'application/json; charset=UTF-8',
     },
   });
-  const { success, data: user } = await newUser.json();
+  const { success, data: user = null,  message = null } = await newUser.json();
 
   // If registration wasn't successful, i.e. user with
   // this given email already exists
   if (!success) {
-    // Do something here
+    return {
+      message
+    }
   }
 
   // Otherwise get this new user's id to create their journal
@@ -87,19 +92,19 @@ authAPI.register = async ({ name, email, password }) => {
   url = `/api/create-journal/${id}`;
 
   // Attempt to create and fetch new user journal
-  const newJournal = await fetch(url).catch((err) =>
+  const newJournal = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-type': 'application/json; charset=UTF-8',
+    }
+  }).catch((err) =>
     console.log(err)
   );
 
   // Get parsed user journal
   const {
-    success: journalSuccess,
     data: journal,
   } = await newJournal.json();
-
-  if (!journalSuccess) {
-    // Do something here
-  }
 
   return {
     user,
@@ -130,13 +135,17 @@ authAPI.googleLogin = async ({ email, googleId }) => {
   });
 
   // Get parsed request status, and user data
-  const { success, data: user } = await _user.json();
+  const { success, data: user = null, message = null } = await _user.json();
 
-  const { _id: id } = user;
   // If it wasn't a successful login, i.e. email or password
   if (!success) {
-    // Do stuff here
+    return {
+      message,
+    }
   }
+
+  const { _id: id } = user;
+
 
   // Otherwise, we got user and want to get the journal in
   // relation to this user
@@ -177,12 +186,15 @@ authAPI.googleRegister = async ({ name, email, googleId }) => {
       'Content-type': 'application/json; charset=UTF-8',
     },
   });
-  const { success, data: user } = await newUser.json();
+
+  const { success, data: user = null, message = null } = await newUser.json();
 
   // If registration wasn't successful, i.e. user with
   // this given email already exists
   if (!success) {
-    // Do something here
+    return {
+      message
+    }
   }
 
   // Otherwise get this new user's id to create their journal
@@ -192,7 +204,12 @@ authAPI.googleRegister = async ({ name, email, googleId }) => {
   url = `/api/create-journal/${id}`;
 
   // Attempt to create and fetch new user journal
-  const newJournal = await fetch(url).catch((err) =>
+  const newJournal = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-type': 'application/json; charset=UTF-8',
+    }
+  }).catch((err) =>
     console.log(err)
   );
 
@@ -220,7 +237,7 @@ authAPI.forgotPassword = async ({ email }) => {
   const url = '/auth/forgot-password';
 
   // Attempt to send reset link to user with given email
-  await fetch(url, {
+  const response = await fetch(url, {
     method: 'POST',
     body: JSON.stringify({
       email,
@@ -230,6 +247,10 @@ authAPI.forgotPassword = async ({ email }) => {
       'Content-type': 'application/json; charset=UTF-8',
     },
   });
+
+  const result = response.json();
+
+  return result;
 };
 
 /**
@@ -254,6 +275,7 @@ authAPI.resetPassword = async ({ token, newPassword }) => {
   });
 
   const result = response.json();
+
   return result;
 };
 

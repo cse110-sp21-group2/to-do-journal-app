@@ -1,7 +1,5 @@
-import Journal from '../models/Journal';
 import chai from 'chai';
 import chaiHttp from 'chai-http';
-import mongoose from 'mongoose';
 import server from '../index';
 
 chai.use(chaiHttp);
@@ -11,7 +9,7 @@ const should = chai.should();
 const DAY_MULTIPLIER = 86400000;
 
 // const id = mongoose.Types.ObjectId();
-const id = '60a43dfc8fd553c9a3b4e1b8';
+const id = '60b969131e33bf2f68299225';
 const _date = new Date();
 
 let url;
@@ -90,8 +88,8 @@ describe('Journal', () => {
           res.body.data.should.have.property('_id');
           res.body.data.should.have.property('dailyEntries');
           res.body.data.should.have.property('weeklyEntries');
-          res.body.data.should.have.property('quarterlyEntries');
-          res.body.data.should.have.property('semesterlyEntries');
+          res.body.data.should.have.property('monthlyEntries');
+          res.body.data.should.have.property('terms');
           res.body.data.should.have.property('collections');
 
           done();

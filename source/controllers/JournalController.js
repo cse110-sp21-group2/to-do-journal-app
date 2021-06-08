@@ -203,7 +203,7 @@ export default class JournalController {
    * @param {string} fromDate - Starting date for journal entries.
    * @param {string} toDate - End date for journal entries.
    * @param {string} type - Type of entries to filter.
-   * @returns {[Object]} All journal entries within this range (inclusive).
+   * @returns {Object} All journal entries within this range (inclusive).
    */
   async getJournalEntries({ params: { id, fromDate, toDate, type } }, res) {
     // Attempt to get this user journal

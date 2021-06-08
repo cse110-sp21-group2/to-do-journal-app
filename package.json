@@ -6,9 +6,9 @@
   "type": "module",
   "scripts": {
     "start": "nodemon --no-warnings --experimental-modules --es-module-specifier-resolution=node source/index.js",
-    "test": "mocha --recursive --no-warnings --experimental-modules --es-module-specifier-resolution=node ./source/test/* || true",
+    "test": "mocha --timeout 5000 --recursive --no-warnings --experimental-modules --es-module-specifier-resolution=node ./source/test/* || true",
     "lint": "./node_modules/.bin/eslint ./source",
-    "docs": "node_modules/.bin/jsdoc --configure .jsdoc.json --verbose"
+    "docs": "jsdoc -c ./jsdoc.config.json"
   },
   "author": "",
   "license": "ISC",
@@ -29,6 +29,7 @@
     "eslint": "^7.26.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.22.1",
+    "jsdoc": "^3.6.7",
     "minami": "^1.2.3",
     "mocha": "^8.4.0",
     "prettier": "2.2.1"

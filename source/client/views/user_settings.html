@@ -22,17 +22,124 @@
 <body>
   <main class="main">
     <div class="title">
-      <h1 class="title-text">User Settings</h1>
-    </div>
+        <!--Bookmark-->
+        <div class='bookmark'>
+          <div class="solid-bookmark-div"></div>
+          <div class="bookmark-cutout-div"></div>
+      </div>
 
+      <h1 class="title-text">User Settings</h1>
+
+    </div>
+    <!-- Top Center Search Bar -->
+    <div class="search-bar">
+      <i class="fas fa-search" id="search-icon"></i>
+      <input type="text" placeholder="Search" class="search-input">
+    </div>
+  <!-- Top Right Account Bar -->
     <div class="account-bar">
       <button type="button" class="help-button"><i class="far fa-question-circle"></i></button>
       <button type="button" class="notification-button"><i class="far fa-bell"></i></button>
       <button type="button" class="account-button"><i class="fas fa-user-circle"></i></button>
     </div>
 
-    <div class="left-nav"></div>
+    <div class="content-area">
+      <div class="profile">
+        <form action="" method="post">
+          
+          <div class="name">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" placeholder="John Doe" />
+          </div>
 
+
+          <div class="email">
+            <label for="email">Email</label>
+              <input type="text" id="email" name="email" placeholder="email123@placeholder.com" />
+            </div>
+
+          <br style="clear: both" />
+
+          <!-- start of preferneces -->
+          <div class="divider">
+            Preferences
+          </div>
+
+          <!--Academic Period category-->
+          <div class="academic-period">
+            <h5 class="category">Academic Period</h5>
+            <select id="period">
+              <option value="quarter">Quarter</option>
+              <option value="semester">Semester</option>
+            </select>
+          </div>
+
+          <!--Color Scheme category-->
+          <div class="appearance">
+            <h5 class="category">Appearance</h5>
+            <select id="color-scheme">
+              <option value="light">Light</option>
+              <option value="dark">Dark</option>
+              <option value="colorblind">Colorblind</option>
+            </select>
+          </div>
+
+
+          <br style="clear: both" />
+
+          <!--First Day of Week category-->
+          <div class="first-day">
+            <h5 class="category">First Day of the Week</h5>
+            <select id="day">
+              <option value="monday">Monday</option>
+              <option value="tuesday">Tuesday</option>
+              <option value="wednesday">Wednesday</option>
+              <option value="thursday">Thursday</option>
+              <option value="friday">Friday</option>
+              <option value="saturday">Saturday</option>
+              <option value="sunday">Sunday</option>
+            </select>
+          </div>
+
+          <!--Font and Colors category-->
+          <!--TODO Font API? Get Font lists?-->
+          <!--TODO Color API? Get Color Lists? Color circle/wheel-->
+          <div class="fonts-and-color">
+            <h5 class="category">Fonts & Color</h5>
+            <div class="manage">
+              <!--Should open "fonts_and_color.html" file-->
+              <a href="fonts_and_color.html"><button class="manage-btn">Manage <i
+                    class="fas fa-edit"></i></button></a>
+            </div>
+          </div>
+
+          <!--Language category-->
+          <div class="language">
+            <h5 class="category">Language</h5>
+            <!--<div id="google_translate_element"></div>-->
+            <!--TODO implement different languages translation-->
+            <select id="lang">
+              <option value="english">English</option>
+              <option value="spanish">Spanish</option>
+              <option value="chinese">Chinese</option>
+              <option value="vietnamese">Vietnamese</option>
+              <option value="korean">Korean</option>
+              <option value="tagalog">Togalog</option>
+            </select>
+          </div>
+
+          <br style="clear: both" />
+
+          <div class="save">
+            <input class="save-btn" type="button" value="Save Changes" />
+          </div>
+
+        </form>
+      </div>
+    </div>
+
+    <div class="left-nav"></div>
+    <!-- Right Navigation Section -->
     <div class="right-nav">
       <div class="calendar-region">
         <div class="month-selector">
@@ -87,114 +194,11 @@
       </div>
       <div>
         <hr class="calendar-seperator">
-        <h1 class="upcoming-header">Upcoming!</h1>
+        <h2 class="goals-label">Goals</h2>
       </div>
-      <div class="tasks-header">
-        <h2 class="tasks-title">Tasks</h2>
-        <button type="button" class="tasks-button"><i class="fas fa-chevron-right"></i></button>
-      </div>
-      <div class="tasks-content"></div>
-      <div class="events-header">
-        <h2 class="events-title">Events</h2>
-        <button type="button" class="events-button"><i class="fas fa-chevron-right"></i></button>
-      </div>
-      <div class="events-content"></div>
-    </div>
-
-    <div class="content-area">
-      <div class="profile">
-        <form action="" method="post">
-          
-            <div class="name">
-              <label for="name">Name</label>
-              <input type="text" id="name" name="name" placeholder="John Doe" />
-            </div>
-
-
-            <div class="email">
-              <label for="email">Email</label>
-              <input type="text" id="email" name="email" placeholder="email123@placeholder.com" />
-            </div>
-
-          <br style="clear: both" />
-
-          <!-- start of preferneces -->
-          <div class="divider">
-            Preferences
-          </div>
-
-
-            <!--Academic Period category-->
-            <div class="academic-period">
-              <h5 class="category">Academic Period</h5>
-              <select id="period">
-                <option value="quarter">Quarter</option>
-                <option value="semester">Semester</option>
-              </select>
-            </div>
-
-            <!--Color Scheme category-->
-            <div class="appearance">
-              <h5 class="category">Appearance</h5>
-              <select id="color-scheme">
-                <option value="light">Light</option>
-                <option value="dark">Dark</option>
-                <option value="colorblind">Colorblind</option>
-              </select>
-            </div>
-
-
-          <br style="clear: both" />
-
-            <!--First Day of Week category-->
-            <div class="first-day">
-              <h5 class="category">First Day of the Week</h5>
-              <select id="day">
-                <option value="monday">Monday</option>
-                <option value="tuesday">Tuesday</option>
-                <option value="wednesday">Wednesday</option>
-                <option value="thursday">Thursday</option>
-                <option value="friday">Friday</option>
-                <option value="saturday">Saturday</option>
-                <option value="sunday">Sunday</option>
-              </select>
-            </div>
-
-            <!--Font and Colors category-->
-            <!--TODO Font API? Get Font lists?-->
-            <!--TODO Color API? Get Color Lists? Color circle/wheel-->
-            <div class="fonts-and-color">
-              <h5 class="category">Fonts & Color</h5>
-              <div class="manage">
-                <!--Should open "fonts_and_color.html" file-->
-                <a href="fonts_and_color.html"><button class="manage-btn">Manage <i
-                      class="fas fa-edit"></i></button></a>
-              </div>
-            </div>
-
-
-            <!--Language category-->
-            <div class="language">
-              <h5 class="category">Language</h5>
-              <!--<div id="google_translate_element"></div>-->
-              <!--TODO implement different languages translation-->
-              <select id="lang">
-                <option value="english">English</option>
-                <option value="spanish">Spanish</option>
-                <option value="chinese">Chinese</option>
-                <option value="vietnamese">Vietnamese</option>
-                <option value="korean">Korean</option>
-                <option value="tagalog">Togalog</option>
-              </select>
-            </div>
-
-          <br style="clear: both" />
-
-          <div class="save">
-            <input class="save-btn" type="button" value="Save Changes" />
-          </div>
-
-        </form>
+      <div class="goals-container">
+        <div class="goals-element">Study for at least 2 hours</div>
+        <div class="goals-element">Maintain workout schedule</div>
       </div>
     </div>
   </main>
@@ -203,15 +207,5 @@
   <script src="../scripts/settings.js" type="module"></script>
   <script src="../components/left-nav-component.js" type="module"></script>
 
-  <!-- Google Translation API
-  <script type="text/javascript">
-    function googleTranslateElementInit() {
-      new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
-    }
-  </script>
-
-  <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-  -->
 </body>
-
 </html>

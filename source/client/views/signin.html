@@ -19,6 +19,12 @@
       href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
       rel="stylesheet"
     />
+    <style>
+      @font-face {
+        font-family: hello honey;
+        src: url('hello_honey.otf');
+      }
+    </style>
 
     <!-- Main CSS -->
     <link rel="stylesheet" href="../styles/signin.css" />
@@ -34,14 +40,16 @@
             src="https://i.ibb.co/mBnjFw3/laurel-wreath.png"
             alt=""
           />
+          <p class="welcome-back">Welcome Back</p>
+        </div>
+        <!--Bookmark-->
+        <div class="bookmark">
+          <div class="solid-bookmark-div"></div>
+          <div class="bookmark-cutout-div"></div>
         </div>
         <div class="column login-form">
           <form>
-            <img
-              src="../../../admin/branding/logo256.png"
-              alt="Avatar"
-              class="avatar"
-            />
+            <img src="../assets/logo256.png" alt="Avatar" class="avatar" />
             <br />
             <h1 class="header">Sign In</h1>
             <br />
@@ -79,16 +87,8 @@
       </div>
     </main>
     <!-- Scripts -->
-    <script
-      src="https://apis.google.com/js/platform.js?onload"
-      async
-      defer
-    ></script>
+    <script src="https://apis.google.com/js/platform.js?onload" async defer></script>
     <script src="../scripts/signin.js" type="module"></script>
-    <script src="../scripts/auth.js" type="module"></script>
-    <script
-      src="../scripts/googleAuth/googleAuthLogin.js"
-      type="module"
-    ></script>
+    <script src="../scripts/googleAuth/googleAuthLogin.js" type="module"></script>
   </body>
 </html>
