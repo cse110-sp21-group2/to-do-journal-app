@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>User Settings</title>
+  <title class="notranslate">User Settings</title>
   <!-- import -->
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Unica+One&display=swap" rel="stylesheet">
@@ -43,19 +43,18 @@
       <button type="button" class="account-button"><i class="fas fa-user-circle"></i></button>
     </div>
 
-  <!-- Main Content Container  -->
     <div class="content-area">
       <div class="profile">
         <form action="" method="post">
           
-            <div class="name">
-              <label for="name">Name</label>
-              <input type="text" id="name" name="name" placeholder="John Doe" />
-            </div>
+          <div class="name">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" placeholder="John Doe" />
+          </div>
 
 
-            <div class="email">
-              <label for="email">Email</label>
+          <div class="email">
+            <label for="email">Email</label>
               <input type="text" id="email" name="email" placeholder="email123@placeholder.com" />
             </div>
 
@@ -66,83 +65,73 @@
             Preferences
           </div>
 
+          <!--Academic Period category-->
+          <div class="academic-period">
+            <h5 class="category">Academic Period</h5>
+            <select id="period">
+              <option value="quarter">Quarter</option>
+              <option value="semester">Semester</option>
+            </select>
+          </div>
 
-            <!--Academic Period category-->
-            <div class="academic-period">
-              <h5 class="category">Academic Period</h5>
-              <select id="period">
-                <option value="quarter">Quarter</option>
-                <option value="semester">Semester</option>
-              </select>
-            </div>
-
-            <!--Color Scheme category-->
-            <div class="appearance">
-              <h5 class="category">Appearance</h5>
-              <select id="color-scheme">
-                <option value="light">Light</option>
-                <option value="dark">Dark</option>
-                <option value="colorblind">Colorblind</option>
-              </select>
-            </div>
+          <!--Color Scheme category-->
+          <div class="appearance">
+            <h5 class="category">Appearance</h5>
+            <select id="color-scheme">
+              <option value="light">Light</option>
+              <option value="dark">Dark</option>
+              <option value="colorblind">Colorblind</option>
+            </select>
+          </div>
 
 
           <br style="clear: both" />
 
-            <!--First Day of Week category-->
-            <div class="first-day">
-              <h5 class="category">First Day of the Week</h5>
-              <select id="day">
-                <option value="monday">Monday</option>
-                <option value="tuesday">Tuesday</option>
-                <option value="wednesday">Wednesday</option>
-                <option value="thursday">Thursday</option>
-                <option value="friday">Friday</option>
-                <option value="saturday">Saturday</option>
-                <option value="sunday">Sunday</option>
-              </select>
-            </div>
+          <!--First Day of Week category-->
+          <div class="first-day">
+            <h5 class="category">First Day of the Week</h5>
+            <select id="day">
+              <option value="monday">Monday</option>
+              <option value="tuesday">Tuesday</option>
+              <option value="wednesday">Wednesday</option>
+              <option value="thursday">Thursday</option>
+              <option value="friday">Friday</option>
+              <option value="saturday">Saturday</option>
+              <option value="sunday">Sunday</option>
+            </select>
+          </div>
 
-            <!--Font and Colors category-->
-            <!--TODO Font API? Get Font lists?-->
-            <!--TODO Color API? Get Color Lists? Color circle/wheel-->
-            <div class="fonts-and-color">
-              <h5 class="category">Fonts & Color</h5>
-              <div class="manage">
-                <!--Should open "fonts_and_color.html" file-->
-                <a href="fonts_and_color.html"><button class="manage-btn">Manage <i
-                      class="fas fa-edit"></i></button></a>
-              </div>
+          <!--Font and Colors category-->
+          <!--TODO Font API? Get Font lists?-->
+          <!--TODO Color API? Get Color Lists? Color circle/wheel-->
+          <div class="fonts-and-color">
+            <h5 class="category">Fonts & Color</h5>
+            <div class="manage">
+              <!--Should open "fonts_and_color.html" file-->
+              <a href="fonts_and_color.html"><button class="manage-btn">Manage <i
+                    class="fas fa-edit"></i></button></a>
             </div>
+          </div>
 
-
-            <!--Language category-->
-            <div class="language">
-              <h5 class="category">Language</h5>
-              <!--TODO implement different languages translation-->
-              <select id="lang">
-                <option value="english">English</option>
-                <option value="spanish">Spanish</option>
-                <option value="chinese">Chinese</option>
-                <option value="vietnamese">Vietnamese</option>
-                <option value="korean">Korean</option>
-                <option value="tagalog">Togalog</option>
-              </select>
-            </div>
-
-            <!-- Labels -->
-            <div class="labels">
-              <h5 class="category">Labels</h5>
-              <div class="manage">
-                <!--Should open "labels.html" file-->
-                <a href="labels.html"><button class="manage-btn">Labels <i class="fas fa-edit"></i></button></a>
-              </div>
-            </div>
+          <!--Language category-->
+          <div class="language">
+            <h5 class="category">Language</h5>
+            <!--<div id="google_translate_element"></div>-->
+            <!--TODO implement different languages translation-->
+            <select id="lang">
+              <option value="english">English</option>
+              <option value="spanish">Spanish</option>
+              <option value="chinese">Chinese</option>
+              <option value="vietnamese">Vietnamese</option>
+              <option value="korean">Korean</option>
+              <option value="tagalog">Togalog</option>
+            </select>
+          </div>
 
           <br style="clear: both" />
 
           <div class="save">
-            <input class="save-btn" type="submit" value="Save Changes" />
+            <input class="save-btn" type="button" value="Save Changes" />
           </div>
 
         </form>
@@ -152,71 +141,71 @@
     <div class="left-nav"></div>
     <!-- Right Navigation Section -->
     <div class="right-nav">
-        <div class="calendar-region">
-            <div class="month-selector">
-                <button type="button" class=left-month-button><i class="fas fa-chevron-left"></i></button>
-                <h3 class="current month">May</h3>
-                <button type="button" class="right-month-button"><i class="fas fa-chevron-right"></i></button>
-            </div>
-            <div class="month-days">
-                <div class="date-number">26</div>
-                <div class="date-number">27</div>
-                <div class="date-number">28</div>
-                <div class="date-number">29</div>
-                <div class="date-number">30</div>
-                <div class="date-number">1</div>
-                <div class="date-number">2</div>
-                <div class="date-number">3</div>
-                <div class="date-number">4</div>
-                <div class="date-number">5</div>
-                <div class="date-number">6</div>
-                <div class="date-number">7</div>
-                <div class="date-number">8</div>
-                <div class="date-number">9</div>
-                <div class="date-number">10</div>
-                <div class="date-number">11</div>
-                <div class="date-number">12</div>
-                <div class="date-number">13</div>
-                <div class="date-number">14</div>
-                <div class="date-number">15</div>
-                <div class="date-number">16</div>
-                <div class="date-number">17</div>
-                <div class="date-number">18</div>
-                <div class="date-number">19</div>
-                <div class="date-number">20</div>
-                <div class="date-number">21</div>
-                <div class="date-number">22</div>
-                <div class="date-number">23</div>
-                <div class="date-number">24</div>
-                <div class="date-number">25</div>
-                <div class="date-number">26</div>
-                <div class="date-number">27</div>
-                <div class="date-number">28</div>
-                <div class="date-number">29</div>
-                <div class="date-number">30</div>
-                <div class="date-number">31</div>
-                <div class="date-number">1</div>
-                <div class="date-number">2</div>
-                <div class="date-number">3</div>
-                <div class="date-number">4</div>
-                <div class="date-number">5</div>
-                <div class="date-number">6</div>
-            </div>
+      <div class="calendar-region">
+        <div class="month-selector">
+          <button type="button" class=left-month-button><i class="fas fa-chevron-left"></i></button>
+          <h3 class="current month">May</h3>
+          <button type="button" class="right-month-button"><i class="fas fa-chevron-right"></i></button>
         </div>
-        <div>
-            <hr class="calendar-seperator">
-            <h2 class="goals-label">Goals</h2>
+        <div class="month-days">
+          <div class="date-number">26</div>
+          <div class="date-number">27</div>
+          <div class="date-number">28</div>
+          <div class="date-number">29</div>
+          <div class="date-number">30</div>
+          <div class="date-number">1</div>
+          <div class="date-number">2</div>
+          <div class="date-number">3</div>
+          <div class="date-number">4</div>
+          <div class="date-number">5</div>
+          <div class="date-number">6</div>
+          <div class="date-number">7</div>
+          <div class="date-number">8</div>
+          <div class="date-number">9</div>
+          <div class="date-number">10</div>
+          <div class="date-number">11</div>
+          <div class="date-number">12</div>
+          <div class="date-number">13</div>
+          <div class="date-number">14</div>
+          <div class="date-number">15</div>
+          <div class="date-number">16</div>
+          <div class="date-number">17</div>
+          <div class="date-number">18</div>
+          <div class="date-number">19</div>
+          <div class="date-number">20</div>
+          <div class="date-number">21</div>
+          <div class="date-number">22</div>
+          <div class="date-number">23</div>
+          <div class="date-number">24</div>
+          <div class="date-number">25</div>
+          <div class="date-number">26</div>
+          <div class="date-number">27</div>
+          <div class="date-number">28</div>
+          <div class="date-number">29</div>
+          <div class="date-number">30</div>
+          <div class="date-number">31</div>
+          <div class="date-number">1</div>
+          <div class="date-number">2</div>
+          <div class="date-number">3</div>
+          <div class="date-number">4</div>
+          <div class="date-number">5</div>
+          <div class="date-number">6</div>
         </div>
-        <div class="goals-container">
-            <div class="goals-element">Study for at least 2 hours</div>
-            <div class="goals-element">Maintain workout schedule</div>
-        </div>
+      </div>
+      <div>
+        <hr class="calendar-seperator">
+        <h2 class="goals-label">Goals</h2>
+      </div>
+      <div class="goals-container">
+        <div class="goals-element">Study for at least 2 hours</div>
+        <div class="goals-element">Maintain workout schedule</div>
+      </div>
     </div>
   </main>
 
   <!-- Main Script -->
-  <!-- left-nav web component -->
+  <script src="../scripts/settings.js" type="module"></script>
   <script src="../components/left-nav-component.js" type="module"></script>
-</body>
 
+</body>
 </html>
