@@ -22,9 +22,9 @@ loginBtn.addEventListener('click', async (e) => {
     password,
   };
 
-  const { user = null, message = null } = await auth.login(payload);
+  const { success, message } = await auth.login(payload);
 
-  if (user) {
+  if (success) {
     window.location.href = '/';
   } else {
     // eslint-disable-next-line no-alert

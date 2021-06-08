@@ -16,5 +16,8 @@ submitBtn.addEventListener('click', async (e) => {
 
   const { value: email } = emailInput;
 
-  await auth.forgotPassword({ email });
+  const { message } = await auth.forgotPassword({ email });
+
+  // eslint-disable-next-line no-alert
+  alert(message);
 });

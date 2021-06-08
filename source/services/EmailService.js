@@ -18,8 +18,6 @@ export default class EmailService {
     this.transporter.verify((err) => {
       if (err) {
         console.log('Error setting up Email Service: ', err);
-      } else {
-        console.log('Email Service setup successful');
       }
     });
   }
@@ -35,12 +33,13 @@ export default class EmailService {
     } catch (error) {
       return {
         success: false,
-        error,
+        message: 'Failed to send message',
       };
     }
 
     return {
       success: true,
+      message: 'We\'ve emailed you a reset link'
     };
   }
 }

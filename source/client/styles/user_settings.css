@@ -42,8 +42,6 @@ body {
   color: #162A47;
 }
 
-
-
 /*Bookmark*/
 .bookmark{
   margin: 10px;
@@ -62,43 +60,6 @@ body {
   position: relative;
   top: -5px;
   transform: rotate(-45deg);
-}
-
-/*Left Navigation Area*/
-.left-nav{
-  grid-column: 1 / 2;
-  grid-row: 1 / 4;
-  padding: 10px 10px;
-  background-color: white;
-  margin: -20px 0px -20px -20px;
-  min-height: 1000px;
-  height: 100vh;
-  box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.25);
-}
-
-/*Top Center Search Bar*/
-.search-bar {
-  grid-column: 3 / 4;
-  grid-row: 1 / 2;
-  justify-self: center;
-  background-color: white;
-  
-  display: flex;
-  padding: 10px;
-  margin: 10px;
-  width: 480px;
-  height: 56px;
-  border-radius: 200px;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-}
-#search-icon{
-  margin: 8px;
-  font-size: 20px;
-  color:#0000006b
-}
-.search-input{
-  border-style:none;
-  width: 80%;
 }
 
 /*Top Right Account Bar*/
@@ -127,7 +88,6 @@ body {
   left: 0px;
 }
 
-
 .help-button,
 .notification-button,
 .account-button {
@@ -145,88 +105,17 @@ body {
   color: #263449;
 }
 
-/*Right Navigation Area*/
-.right-nav {
+/*Left Navigation Area*/
+.left-nav{
+  grid-column: 1 / 2;
+  grid-row: 1 / 4;
+  padding: 10px 10px;
   background-color: white;
-  height: 856px;
-  grid-column: -2 / -1;
-  grid-row: 2 / 3;
-  border-top-left-radius: 20px;
-  border-bottom-left-radius: 20px;
-  margin-right: -20px;
-  display:grid;
-  grid-template-columns: 200px;
-  grid-template-rows: 200px 75px 65px 200px 65px 200px;
-  justify-content: center;
-  align-content: center;
+  margin: -20px 0px -20px -20px;
+  min-height: 1000px;
+  height: 100vh;
   box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.25);
 }
-
-.calendar-region{
-  width: 200px;
-  height:200px;
-  display:grid;
-  grid-template-columns: auto;
-  grid-template-rows: 30px auto;
-}
-
-.month-selector {
-  margin: 0px auto;
-  background-color: #d5ab09;
-  border-radius: 20px;
-  color:white;
-  width: 150px;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-}
-
-.month-selector i {
-  color: white;
-}
-
-.month-days{
-  display:grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
-  margin: 10px;
-}
-
-.right-month-button,
-.left-month-button {
-  background-color: #ffffff00;
-  border: none;
-}
-
-.date-number {
-  font-family: Tw Cen MT;
-  width: 18px;
-  height: 20px;
-  text-align: center;
-  color:#162a47
-}
-
-.calendar-seperator{
-  border-style: solid;
-  border-width: 3px;
-  border-radius: 3px;
-}
-
-.goals-label{
-  font-family: Unica One;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 40px;
-  line-height: 47px;
-  display: flex;
-}
-
-.goals-element{
-  font-size: 20px;
-  line-height: 37px;
-  text-align: left;
-}
-
 
 /* Center Content Region */
 .content-area{
@@ -448,5 +337,101 @@ select{
   color: #834900;
 }
 
+/* Right Navigation Bar */
+.right-nav {
+  background-color: white;
+  height: 856px;
+  grid-column: -2 / -1;
+  grid-row: 2 / 3;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  margin-right: -20px;
+  display:grid;
+  grid-template-columns: 200px;
+  grid-template-rows: 200px 75px 65px 200px 65px 200px;
+  justify-content: center;
+  align-content: center;
+  box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.25);
+}
+.calendar-region{
+  width: 200px;
+  height:200px;
+  display:grid;
+  grid-template-columns: auto;
+  grid-template-rows: 30px auto;
+}
 
+.month-selector {
+  margin: 0px auto;
+  background-color: #d5ab09;
+  border-radius: 20px;
+  color:white;
+  width: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.month-selector i {
+  color: white;
+}
 
+.month-days{
+  display:grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+  margin: 10px;
+}
+.right-month-button,
+.left-month-button {
+  background-color: #ffffff00;
+  border: none;
+}
+
+.date-number {
+  font-family: Tw Cen MT;
+  width: 18px;
+  height: 20px;
+  text-align: center;
+  color:#162a47
+}
+
+.calendar-seperator{
+  border-style: solid;
+  border-width: 3px;
+  border-radius: 3px;
+}
+
+.tasks-header, .events-header{
+  display: flex;
+  justify-content:left;
+  align-items: baseline;
+  flex-wrap: wrap;
+}
+.tasks-title, .events-title{
+  font-family: Tw Cen MT Condensed;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 35px;
+  line-height: 37px;
+}
+
+.tasks-button, .events-button{
+  background-color: white;
+  width: 20px;
+  height: 20px;
+  border-radius: 20px;
+  margin: 4px;
+  border:solid;
+}
+.tasks-content, .events-content{
+  width: 200px;
+  height:200px;
+}
+.upcoming-header{
+  font-family: Unica One;
+  font-style:normal;
+  font-weight:normal;
+  font-size: 40px;
+  line-height: 47px;
+  text-align: center;
+}

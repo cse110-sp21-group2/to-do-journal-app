@@ -27,9 +27,9 @@ submitBtn.addEventListener('click', async (e) => {
     password,
   };
 
-  const { user = null, message = null } = await auth.register(payload);
+  const { success, message } = await auth.register(payload);
 
-  if (user) {
+  if (success) {
     window.location.href = '/';
   } else {
     // eslint-disable-next-line no-alert
