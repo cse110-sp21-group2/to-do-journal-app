@@ -1,5 +1,7 @@
 /* eslint-disable no-console */
 /* eslint-disable no-undef */
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable import/extensions */
 import userAPI from "../api/userAPI.js";
 import session from "./session.js";
 
@@ -14,16 +16,17 @@ const submitBtn = document.querySelector('.save-btn');
 
 // Current User
 const user = session.getUser();
+
 // Current user's id
 const id = user._id;
 
-//Initialize the input fields to display the current user's info
+// Initialize the input fields to display the current user's info
 nameInput.value = user.userName;
 emailInput.value = user.email;
-termInput = user.term;
+termInput.value = user.term;
 firstDayOfTheWeekInput.value = user.firstDayOfTheWeek;
-stylesInput = user.theme;
-languageInput = user.language;
+stylesInput.value = user.theme;
+languageInput.value = user.language;
 
 /**
  * Updates the settings of the user
