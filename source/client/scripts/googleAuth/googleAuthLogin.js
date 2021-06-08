@@ -10,7 +10,14 @@ const onSuccess = async (googleUser) => {
   const email = googleUser.getBasicProfile().getEmail();
   const googleId = googleUser.getBasicProfile().getId();
 
-  await auth.googleLogin({email, googleId});
+  const { success, message } = await auth.googleLogin({email, googleId});
+
+  if (success) {
+    window.location.href = '/';
+  } else {
+    // eslint-disable-next-line no-alert
+    alert(message);
+  }
 };
 
 // Failed google auth login

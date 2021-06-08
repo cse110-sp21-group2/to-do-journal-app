@@ -15,11 +15,12 @@ const auth = {};
  * @returns {Object} User and Journal.
  */
 auth.login = async (payload) => {
-  const { user = null, journal, message = null } = await authAPI.login(payload);
+  const { success, user, journal, message } = await authAPI.login(payload);
 
-  if (!user) {
+  if (!success) {
     // eslint-disable-next-line no-alert
     return {
+      success,
       message
     }
   }
@@ -42,10 +43,9 @@ auth.login = async (payload) => {
     session.setJournal(journal);
   }
 
-  // return newly registered user and journal
+  // return success
   return {
-    user,
-    journal,
+    success,
   };
 };
 
@@ -57,10 +57,11 @@ auth.login = async (payload) => {
  * @returns {Object} New User and Journal.
  */
 auth.register = async (payload) => {
-  const { user = null, journal, message = null } = await authAPI.register(payload);
+  const { success, user, journal, message } = await authAPI.register(payload);
 
-  if (!user) {
+  if (!success) {
     return {
+      success,
       message
     }
   }
@@ -85,8 +86,7 @@ auth.register = async (payload) => {
 
   // return newly registered user and journal
   return {
-    user,
-    journal,
+    success
   };
 };
 
@@ -98,11 +98,12 @@ auth.register = async (payload) => {
  * @returns {Object} User and Journal.
  */
 auth.googleLogin = async (payload) => {
-  const { user = null, journal } = await authAPI.googleLogin(payload);
+  const { success, message, user, journal } = await authAPI.googleLogin(payload);
 
-  if (!user) {
+  if (!success) {
     return {
-      message: 'Failed to authenticate with given Google credentials'
+      success,
+      message
     }
   }
 
@@ -126,6 +127,7 @@ auth.googleLogin = async (payload) => {
 
   // return newly registered user and journal
   return {
+    success,
     user,
     journal,
   };
@@ -137,7 +139,14 @@ auth.googleLogin = async (payload) => {
  * @returns {Object} New User and Journal.
  */
 auth.googleRegister = async (payload) => {
-  const { user, journal } = await authAPI.googleRegister(payload);
+  const { user, journal, success, message } = await authAPI.googleRegister(payload);
+
+  if (!success) {
+    return {
+      success,
+      message
+    }
+  }
 
   const { _id, email, name, firstDayOfTheWeek, term, theme } = user;
   const _user = {
@@ -148,6 +157,7 @@ auth.googleRegister = async (payload) => {
     term,
     theme,
   };
+
   if (_user && journal) {
     // Set session user
     session.setUser(_user);
@@ -157,8 +167,7 @@ auth.googleRegister = async (payload) => {
 
   // return newly registered user and journal
   return {
-    user,
-    journal,
+    success,
   };
 };
 
@@ -169,7 +178,7 @@ auth.googleRegister = async (payload) => {
 auth.forgotPassword = async (payload) => {
   const { message } = await authAPI.forgotPassword(payload);
 
-  return message
+  return { message }
 };
 
 /**
@@ -177,9 +186,14 @@ auth.forgotPassword = async (payload) => {
  * @param {Object} payload - JWT token and new password.
  */
 auth.resetPassword = async (payload) => {
-  const { success , message } = await authAPI.resetPassword(payload);
+  const { success , message, user } = await authAPI.resetPassword(payload);
 
-  return {success, message };
+  if (success) {
+    // Set session user
+    session.setUser(user);
+  }
+
+  return { success, message };
 };
 
 export default auth;
