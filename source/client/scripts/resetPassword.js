@@ -27,8 +27,8 @@ submitBtn.addEventListener('click', async (e) => {
 
     alert(message);
 
-    if (success) { window.location.href = '/' };
-  } else {
-    alert('Passwords don\'t match');
+    if (success) {
+      window.location.href = '/'
+    };
   }
 });

@@ -239,7 +239,6 @@ export default class AuthController {
     // Get success status for this send
     const { success, message } = await emailService.sendMessage(emailOptions);
 
-    console.log(success, message);
     // Return success status
     return res.status(200).json({ success, message });
   }
