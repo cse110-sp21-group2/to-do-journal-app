@@ -419,9 +419,10 @@ h5 {
 .category {
   text-align: left;
   color: grey;
-  margin-bottom: 10px;
-  
+  margin-bottom: 10px; 
 }
+
+
 
 select{
   float: left;
