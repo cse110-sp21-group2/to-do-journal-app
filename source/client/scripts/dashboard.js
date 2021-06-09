@@ -31,7 +31,6 @@ if (!session.isUserLoggedIn()) {
 }
 
 
-
 // Today's date
 const today = new Date();
 console.log(`Today's date: ${today}`);

@@ -129,7 +129,7 @@ class createTask extends HTMLElement{
      * Getter that gets the start Date: MM/DD/YYYY
      */
     get getStartDate(){
-        return this.shadowRoot.querySelector('input#task-name').value;
+        return this.shadowRoot.querySelector('input#start-date').value;
     }
 
     /**
