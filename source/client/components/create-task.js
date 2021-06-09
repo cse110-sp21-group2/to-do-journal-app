@@ -104,10 +104,10 @@ class createTask extends HTMLElement{
     }
     /**
      * TODO:
-     *      - SET task content property value
-     *      - SET note content property value
-     *      - SET Link property value
-     *      - SET time property value
+     *      - SET task content property value?
+     *      - SET note content property value?
+     *      - SET Link property value?
+     *      - SET time property value?
      *      
      *      - GET task content
      *      - GET note content
@@ -116,43 +116,44 @@ class createTask extends HTMLElement{
      *      
      */
 
-    // /**
-    //  * Getter that gets the name/content of task
-    //  */
-    // get getTaskContent(){
-    //     console.log(document.querySelector('input#task-name').value);
-    //     return document.querySelector('input#task-name').value;
-    // }
 
-    // /**
-    //  * Getter that gets the start Date: MM/DD/YYYY
-    //  */
-    // get getStartDate(){
-    //     console.log(document.querySelector('input#start-date').value);
-    //     return document.querySelector('input#task-name').value;
-    // }
+    /**
+     * Getter that gets the name/content of task
+     */
+    get getTaskContent(){
+        console.log(document.querySelector('input#task-name').value);
+        return document.querySelector('input#task-name').value;
+    }
 
-    // /**
-    //  * Getter that gets the link
-    //  */
-    // get getLink(){
-    //     console.log(document.querySelector('input#link').value);
-    //     return document.querySelector('input#link').value;
-    // }
+    /**
+     * Getter that gets the start Date: MM/DD/YYYY
+     */
+    get getStartDate(){
+        console.log(document.querySelector('input#start-date').value);
+        return document.querySelector('input#task-name').value;
+    }
+
+    /**
+     * Getter that gets the link
+     */
+    get getLink(){
+        console.log(document.querySelector('input#link').value);
+        return document.querySelector('input#link').value;
+    }
 
 
-    // /**
-    //  * Getter that gets the End Time 00:00 PM ? AM
-    //  */
-    // get getTime() {
-    //     console.log(document.querySelector('input#input-time').value);
-    //     return document.querySelector('input#input-time').value;
-    // }
+    /**
+     * Getter that gets the End Time 00:00 PM ? AM
+     */
+    get getTime() {
+        console.log(document.querySelector('input#input-time').value);
+        return document.querySelector('input#input-time').value;
+    }
     
 }
 
 
-
+// in order to display it for scripting convenience, but wants to act as pop up when click btn
 customElements.define('create-task', createTask);
 const someTask = document.createElement('create-task');
-document.querySelector('main.main').appendChild(someTask);
+document.querySelector('.main').appendChild(someTask);

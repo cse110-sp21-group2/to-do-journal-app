@@ -45,18 +45,17 @@ console.log(`Print current user's id: ${id}`);
 const getEntry = async () => {
   const payload = {
     id,
-    today,
+    date: today,
     type: "Daily",
   };
-  const  { data: entry }  = await journalAPI.getJournalEntry(payload);
+  const  { data: entry, success}  = await journalAPI.getJournalEntry(payload);
   // Output entry data
-  console.log("This is the entry: ", entry);
-
-  return entry;
+  if ( success ) {
+    return entry;
+  }
 };
 // GET entry promise
 const entry = getEntry();
-
 // TEST getting journal entry from DB
 // const test_entry = await journalAPI.getJournalEntry({
 //   id: "60ac3af75cc18f1184f58b9e",
@@ -65,6 +64,7 @@ const entry = getEntry();
 // const entry = test_entry.data;
 
 // GET each task from entry and DISPLAY it
+
 entry.then(res => res.tasks.forEach((task) => {
     const newTask = document.createElement('task-toggle');
     newTask.content = task;
