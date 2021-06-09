@@ -1,486 +1,341 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Daily</title>
-    <!-- import -->
-    <link rel="preconnect" href="https://fonts.gstatic.com" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Unica+One&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
-      integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
-      crossorigin="anonymous"
-    />
-    <!-- <link href="http://fonts.cdnfonts.com/css/tw-cen-mt-condensed" rel="stylesheet">     -->
 
-    <link rel="stylesheet" href="../styles/daily.css" />
-  </head>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Daily</title>
+  <!-- import -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Unica+One&display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+    integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous" />
+  <!-- <link href="http://fonts.cdnfonts.com/css/tw-cen-mt-condensed" rel="stylesheet">     -->
 
-  <body>
-    <main class="main">
-      <!-- bookmark here (click on to get back to current day) -->
+  <link rel="stylesheet" href="../styles/daily.css" />
+</head>
 
-      <!-- current date heading and yesterday/tomorrow buttons -->
-      <div class="page-heading">
-        <!--Bookmark-->
-        <div class="bookmark">
-          <div class="solid-bookmark-div"></div>
-          <div class="bookmark-cutout-div"></div>
-        </div>
-
-        <!-- Yesterday Button -->
-        <div class="back-button">
-          <button type="button" class="button-circle">
-            <i class="fas fa-chevron-left"></i>
-          </button>
-        </div>
-
-        <h1 class="daily-date">May 5, 2021</h1>
-
-        <!-- Tomorrow Button -->
-        <div class="forward-button">
-          <button type="button" class="button-circle">
-            <i class="fas fa-chevron-right"></i>
-          </button>
-        </div>
+<body>
+  <main class="main">
+    <!-- current date heading and yesterday/tomorrow buttons -->
+    <div class="page-heading">
+      <!--Bookmark-->
+      <div class="bookmark">
+        <div class="solid-bookmark-div"></div>
+        <div class="bookmark-cutout-div"></div>
       </div>
 
-      <!-- Search Bar -->
-      <div class="search-bar">
+      <!-- Yesterday Button -->
+      <div class="back-button">
+        <button type="button" class="button-circle">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+      </div>
+
+      <h1 class="daily-date">May 5, 2021</h1>
+
+      <!-- Tomorrow Button -->
+      <div class="forward-button">
+        <button type="button" class="button-circle">
+          <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Search Bar -->
+    <!-- <div class="search-bar">
         <i class="fas fa-search" id="search-icon"></i>
         <input type="text" placeholder="Search" class="search-input" />
-      </div>
+      </div> -->
 
-      <!-- help/notifications/account menu -->
-      <div class="account-bar">
-        <button type="button" class="help-button">
+    <!-- help/notifications/account menu -->
+    <div class="account-bar">
+      <!-- <button type="button" class="help-button">
           <i class="far fa-question-circle"></i>
         </button>
         <button type="button" class="notification-button">
           <i class="far fa-bell"></i>
+        </button> -->
+      <a href="/settings">
+        <button type="button" class="account-button">
+          <i class="fas fa-user-circle"></i>
         </button>
-        <a href="/settings">
-          <button type="button" class="account-button">
-            <i class="fas fa-user-circle"></i>
+      </a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="daily-grid">
+      <!-- Events -->
+      <div class="section-header" id="events-header">
+        <h1 class="heading" id="events-heading">Events</h1>
+        <!-- Add Event Button (submit) -->
+        <div class="add-button" id="add-event">
+          <button type="submit" value="Submit" class="button-circle" id="submitButton">
+            <i class="fas fa-plus"></i>
           </button>
-        </a>
+        </div>
       </div>
 
-      <!-- Main Content -->
-      <div class="daily-grid">
-        <!-- Events -->
-        <div class="section-header" id="events-header">
-          <h1 class="heading" id="events-heading">Events</h1>
-          <!-- Add Event Button (submit) -->
-          <div class="add-button" id="add-event">
-            <button type="submit" value="Submit" class="button-circle" id="submitButton">
-              <i class="fas fa-plus"></i>
-            </button>
-          </div>
-        </div>
-
-        <div id="events-container">
-          <div id="events-content">
-            <!-- Time Picker for Events -->
-            <div class="time-picker">
-              <div class="time-col">
-                <!-- <div class="header timezone">PDT</div> -->
-                <div class="timeGroup">
-                  <div class="timeSlot">8 AM</div>
-                  <div class="timeSlot"></div>
-                </div>
-                <div class="timeGroup">
-                  <div class="timeSlot">9 AM</div>
-                  <div class="timeSlot"></div>
-                </div>
-                <div class="timeGroup">
-                  <div class="timeSlot">10 AM</div>
-                  <div class="timeSlot"></div>
-                </div>
-                <div class="timeGroup">
-                  <div class="timeSlot">11 AM</div>
-                  <div class="timeSlot"></div>
-                </div>
-                <div class="timeGroup">
-                  <div class="timeSlot">12 PM</div>
-                  <div class="timeSlot"></div>
-                </div>
-                <div class="timeGroup">
-                  <div class="timeSlot">1 PM</div>
-                  <div class="timeSlot"></div>
-                </div>
-                <div class="timeGroup">
-                  <div class="timeSlot">2 PM</div>
-                  <div class="timeSlot"></div>
-                </div>
-                <div class="timeGroup">
-                  <div class="timeSlot">3 PM</div>
-                  <div class="timeSlot"></div>
-                </div>
-                <div class="timeGroup">
-                  <div class="timeSlot">4 PM</div>
-                  <div class="timeSlot"></div>
-                </div>
-                <div class="timeGroup">
-                  <div class="timeSlot">5 PM</div>
-                  <div class="timeSlot"></div>
-                </div>
-                <div class="timeGroup">
-                  <div class="timeSlot">6 PM</div>
-                  <div class="timeSlot"></div>
-                </div>
-                <div class="timeGroup">
-                  <div class="timeSlot">7 PM</div>
-                  <div class="timeSlot"></div>
-                </div>
-                <div class="timeGroup">
-                  <div class="timeSlot">8 PM</div>
-                  <div class="timeSlot"></div>
-                </div>
-                <div class="timeGroup">
-                  <div class="timeSlot">9 PM</div>
-                  <div class="timeSlot"></div>
-                </div>
-                <div class="timeGroup">
-                  <div class="timeSlot">10 PM</div>
-                  <div class="timeSlot"></div>
-                </div>
+      <div id="events-container">
+        <div id="events-content">
+          <!-- Time Picker for Events -->
+          <div class="time-picker">
+            <div class="time-col">
+              <!-- <div class="header timezone">PDT</div> -->
+              <div class="timeGroup">
+                <div class="timeSlot">8 AM</div>
+                <div class="timeSlot"></div>
               </div>
+              <div class="timeGroup">
+                <div class="timeSlot">9 AM</div>
+                <div class="timeSlot"></div>
+              </div>
+              <div class="timeGroup">
+                <div class="timeSlot">10 AM</div>
+                <div class="timeSlot"></div>
+              </div>
+              <div class="timeGroup">
+                <div class="timeSlot">11 AM</div>
+                <div class="timeSlot"></div>
+              </div>
+              <div class="timeGroup">
+                <div class="timeSlot">12 PM</div>
+                <div class="timeSlot"></div>
+              </div>
+              <div class="timeGroup">
+                <div class="timeSlot">1 PM</div>
+                <div class="timeSlot"></div>
+              </div>
+              <div class="timeGroup">
+                <div class="timeSlot">2 PM</div>
+                <div class="timeSlot"></div>
+              </div>
+              <div class="timeGroup">
+                <div class="timeSlot">3 PM</div>
+                <div class="timeSlot"></div>
+              </div>
+              <div class="timeGroup">
+                <div class="timeSlot">4 PM</div>
+                <div class="timeSlot"></div>
+              </div>
+              <div class="timeGroup">
+                <div class="timeSlot">5 PM</div>
+                <div class="timeSlot"></div>
+              </div>
+              <div class="timeGroup">
+                <div class="timeSlot">6 PM</div>
+                <div class="timeSlot"></div>
+              </div>
+              <div class="timeGroup">
+                <div class="timeSlot">7 PM</div>
+                <div class="timeSlot"></div>
+              </div>
+              <div class="timeGroup">
+                <div class="timeSlot">8 PM</div>
+                <div class="timeSlot"></div>
+              </div>
+              <div class="timeGroup">
+                <div class="timeSlot">9 PM</div>
+                <div class="timeSlot"></div>
+              </div>
+              <div class="timeGroup">
+                <div class="timeSlot">10 PM</div>
+                <div class="timeSlot"></div>
+              </div>
+            </div>
 
-              <div class="ac-grid">
-                <div class="col"></div>
-                <div class="slots slots-edit">
-                  <div class="slotGroup">
-                    <div
-                      id="slot-0"
-                      class="slot"
-                      style="background-color: transparent"
-                    ></div>
-                    <div
-                      id="slot-1"
-                      class="slot"
-                      style="background-color: transparent"
-                    ></div>
-                  </div>
-                  <div class="slotGroup">
-                    <div
-                      id="slot-2"
-                      class="slot"
-                      style="background-color: transparent"
-                    ></div>
-                    <div
-                      id="slot-3"
-                      class="slot"
-                      style="background-color: transparent"
-                    ></div>
-                  </div>
-                  <div class="slotGroup">
-                    <div
-                      id="slot-4"
-                      class="slot"
-                      style="background-color: transparent"
-                    ></div>
-                    <div
-                      id="slot-5"
-                      class="slot"
-                      style="background-color: transparent"
-                    ></div>
-                  </div>
-                  <div class="slotGroup">
-                    <div
-                      id="slot-6"
-                      class="slot"
-                      style="background-color: transparent"
-                    ></div>
-                    <div
-                      id="slot-7"
-                      class="slot"
-                      style="background-color: transparent"
-                    ></div>
-                  </div>
-                  <div class="slotGroup">
-                    <div
-                      id="slot-8"
-                      class="slot"
-                      style="background-color: transparent"
-                    ></div>
-                    <div
-                      id="slot-9"
-                      class="slot"
-                      style="background-color: transparent"
-                    ></div>
-                  </div>
-                  <div class="slotGroup">
-                    <div
-                      id="slot-10"
-                      class="slot"
-                      style="background-color: transparent"
-                    ></div>
-                    <div
-                      id="slot-11"
-                      class="slot"
-                      style="background-color: transparent"
-                    ></div>
-                  </div>
-                  <div class="slotGroup">
-                    <div
-                      id="slot-12"
-                      class="slot"
-                      style="background-color: transparent"
-                    ></div>
-                    <div
-                      id="slot-13"
-                      class="slot"
-                      style="background-color: transparent"
-                    ></div>
-                  </div>
-                  <div class="slotGroup">
-                    <div
-                      id="slot-14"
-                      class="slot"
-                      style="background-color: transparent"
-                    ></div>
-                    <div
-                      id="slot-15"
-                      class="slot"
-                      style="background-color: transparent"
-                    ></div>
-                  </div>
-                  <div class="slotGroup">
-                    <div
-                      id="slot-16"
-                      class="slot"
-                      style="background-color: transparent"
-                    ></div>
-                    <div
-                      id="slot-17"
-                      class="slot"
-                      style="background-color: transparent"
-                    ></div>
-                  </div>
-                  <div class="slotGroup">
-                    <div
-                      id="slot-18"
-                      class="slot"
-                      style="background-color: transparent"
-                    ></div>
-                    <div
-                      id="slot-19"
-                      class="slot"
-                      style="background-color: transparent"
-                    ></div>
-                  </div>
-                  <div class="slotGroup">
-                    <div
-                      id="slot-20"
-                      class="slot"
-                      style="background-color: transparent"
-                    ></div>
-                    <div
-                      id="slot-21"
-                      class="slot"
-                      style="background-color: transparent"
-                    ></div>
-                  </div>
-                  <div class="slotGroup">
-                    <div
-                      id="slot-22"
-                      class="slot"
-                      style="background-color: transparent"
-                    ></div>
-                    <div
-                      id="slot-23"
-                      class="slot"
-                      style="background-color: transparent"
-                    ></div>
-                  </div>
-                  <div class="slotGroup">
-                    <div
-                      id="slot-24"
-                      class="slot"
-                      style="background-color: transparent"
-                    ></div>
-                    <div
-                      id="slot-25"
-                      class="slot"
-                      style="background-color: transparent"
-                    ></div>
-                  </div>
-                  <div class="slotGroup">
-                    <div
-                      id="slot-26"
-                      class="slot"
-                      style="background-color: transparent"
-                    ></div>
-                    <div
-                      id="slot-27"
-                      class="slot"
-                      style="background-color: transparent"
-                    ></div>
-                  </div>
-                  <div class="slotGroup">
-                    <div
-                      id="slot-28"
-                      class="slot"
-                      style="background-color: transparent"
-                    ></div>
-                    <div
-                      id="slot-29"
-                      class="slot"
-                      style="background-color: transparent"
-                    ></div>
-                  </div>
+            <div class="ac-grid">
+              <div class="col"></div>
+              <div class="slots slots-edit">
+                <div class="slotGroup">
+                  <div id="slot-0" class="slot" style="background-color: transparent"></div>
+                  <div id="slot-1" class="slot" style="background-color: transparent"></div>
+                </div>
+                <div class="slotGroup">
+                  <div id="slot-2" class="slot" style="background-color: transparent"></div>
+                  <div id="slot-3" class="slot" style="background-color: transparent"></div>
+                </div>
+                <div class="slotGroup">
+                  <div id="slot-4" class="slot" style="background-color: transparent"></div>
+                  <div id="slot-5" class="slot" style="background-color: transparent"></div>
+                </div>
+                <div class="slotGroup">
+                  <div id="slot-6" class="slot" style="background-color: transparent"></div>
+                  <div id="slot-7" class="slot" style="background-color: transparent"></div>
+                </div>
+                <div class="slotGroup">
+                  <div id="slot-8" class="slot" style="background-color: transparent"></div>
+                  <div id="slot-9" class="slot" style="background-color: transparent"></div>
+                </div>
+                <div class="slotGroup">
+                  <div id="slot-10" class="slot" style="background-color: transparent"></div>
+                  <div id="slot-11" class="slot" style="background-color: transparent"></div>
+                </div>
+                <div class="slotGroup">
+                  <div id="slot-12" class="slot" style="background-color: transparent"></div>
+                  <div id="slot-13" class="slot" style="background-color: transparent"></div>
+                </div>
+                <div class="slotGroup">
+                  <div id="slot-14" class="slot" style="background-color: transparent"></div>
+                  <div id="slot-15" class="slot" style="background-color: transparent"></div>
+                </div>
+                <div class="slotGroup">
+                  <div id="slot-16" class="slot" style="background-color: transparent"></div>
+                  <div id="slot-17" class="slot" style="background-color: transparent"></div>
+                </div>
+                <div class="slotGroup">
+                  <div id="slot-18" class="slot" style="background-color: transparent"></div>
+                  <div id="slot-19" class="slot" style="background-color: transparent"></div>
+                </div>
+                <div class="slotGroup">
+                  <div id="slot-20" class="slot" style="background-color: transparent"></div>
+                  <div id="slot-21" class="slot" style="background-color: transparent"></div>
+                </div>
+                <div class="slotGroup">
+                  <div id="slot-22" class="slot" style="background-color: transparent"></div>
+                  <div id="slot-23" class="slot" style="background-color: transparent"></div>
+                </div>
+                <div class="slotGroup">
+                  <div id="slot-24" class="slot" style="background-color: transparent"></div>
+                  <div id="slot-25" class="slot" style="background-color: transparent"></div>
+                </div>
+                <div class="slotGroup">
+                  <div id="slot-26" class="slot" style="background-color: transparent"></div>
+                  <div id="slot-27" class="slot" style="background-color: transparent"></div>
+                </div>
+                <div class="slotGroup">
+                  <div id="slot-28" class="slot" style="background-color: transparent"></div>
+                  <div id="slot-29" class="slot" style="background-color: transparent"></div>
                 </div>
               </div>
             </div>
           </div>
         </div>
+      </div>
 
-        <!-- Notes -->
-        <div class="section-header" id="notes-header">
-          <h1 class="heading" id="notes-heading">Notes</h1>
-
-          <!-- stickers/photos/audio/video/link menu -->
-          <div id="add-media-container">
-            <!-- add stickers/emoji button -->
-            <div class="add-media-button" id="sticker-button">
-              <button type="button" class="button-circle">
-                <i class="far fa-grin"></i>
-              </button>
-            </div>
-
-            <!-- add photo button -->
-            <div class="add-media-button" id="photo-button">
-              <button type="button" class="button-circle">
-                <i class="fas fa-images"></i>
-              </button>
-            </div>
-
-            <!-- add audio button -->
-            <div class="add-media-button" id="audio-button">
-              <button type="button" class="button-circle">
-                <i class="fas fa-microphone"></i>
-              </button>
-            </div>
-
-            <!-- add video button -->
-            <div class="add-media-button" id="video-button">
-              <button type="button" class="button-circle">
-                <i class="fas fa-play"></i>
-              </button>
-            </div>
-
-            <!-- add link button -->
-            <div class="add-media-button" id="link-button">
-              <button type="button" class="button-circle">
-                <i class="fas fa-link"></i>
-              </button>
-            </div>
-          </div>
-        </div>
-        <div id="notes-container">
-          <div id="notes-content">
-            <textarea id="notes" rows="41" cols="80"></textarea>
-          </div>
-        </div>
-
-        <!-- Tasks -->
-        <div class="section-header" id="tasks-header">
-          <h1 class="heading" id="tasks-heading">Tasks</h1>
-          <!-- Add Task Button -->
-          <div class="add-button" id="add-task">
-            <button type="button" class="button-circle">
-              <i class="fas fa-plus"></i>
-            </button>
-          </div>
-        </div>
-        <div id="tasks-container">
-          <div id="tasks-content"></div>
+      <!-- Notes -->
+      <div class="section-header" id="notes-header">
+        <h1 class="heading" id="notes-heading">Notes</h1>
+      </div>
+      <div id="notes-container">
+        <div id="notes-content">
+          <textarea id="notes" rows="41" cols="80"></textarea>
         </div>
       </div>
 
-      <!-- Left Navigation -->
-      <div class="left-nav"></div>
-
-      <!-- Right Navigation -->
-      <div class="right-nav">
-        <div class="calendar-region">
-          <div class="month-selector">
-            <button type="button" class="left-month-button">
-              <i class="fas fa-chevron-left"></i>
-            </button>
-            <h3 class="current month">May</h3>
-            <button type="button" class="right-month-button">
-              <i class="fas fa-chevron-right"></i>
-            </button>
-          </div>
-          <div class="month-days">
-            <div class="date-number">26</div>
-            <div class="date-number">27</div>
-            <div class="date-number">28</div>
-            <div class="date-number">29</div>
-            <div class="date-number">30</div>
-            <div class="date-number">1</div>
-            <div class="date-number">2</div>
-            <div class="date-number">3</div>
-            <div class="date-number">4</div>
-            <div class="date-number">5</div>
-            <div class="date-number">6</div>
-            <div class="date-number">7</div>
-            <div class="date-number">8</div>
-            <div class="date-number">9</div>
-            <div class="date-number">10</div>
-            <div class="date-number">11</div>
-            <div class="date-number">12</div>
-            <div class="date-number">13</div>
-            <div class="date-number">14</div>
-            <div class="date-number">15</div>
-            <div class="date-number">16</div>
-            <div class="date-number">17</div>
-            <div class="date-number">18</div>
-            <div class="date-number">19</div>
-            <div class="date-number">20</div>
-            <div class="date-number">21</div>
-            <div class="date-number">22</div>
-            <div class="date-number">23</div>
-            <div class="date-number">24</div>
-            <div class="date-number">25</div>
-            <div class="date-number">26</div>
-            <div class="date-number">27</div>
-            <div class="date-number">28</div>
-            <div class="date-number">29</div>
-            <div class="date-number">30</div>
-            <div class="date-number">31</div>
-            <div class="date-number">1</div>
-            <div class="date-number">2</div>
-            <div class="date-number">3</div>
-            <div class="date-number">4</div>
-            <div class="date-number">5</div>
-            <div class="date-number">6</div>
-          </div>
-        </div>
-        <div>
-          <hr class="calendar-seperator" />
-          <h2 class="goals-label">Goals</h2>
-        </div>
-        <div class="goals-container">
-          <div class="goals-element">Study for at least 2 hours</div>
-          <div class="goals-element">Maintain workout schedule</div>
+      <!-- Tasks -->
+      <div class="section-header" id="tasks-header">
+        <h1 class="heading" id="tasks-heading">Tasks</h1>
+        <!-- Add Task Button -->
+        <div class="add-button" id="add-task">
+          <button type="button" class="button-circle">
+            <i class="fas fa-plus"></i>
+          </button>
         </div>
       </div>
-    </main>
+      <div id="tasks-container">
+        <div id="tasks-content"></div>
+      </div>
+    </div>
 
-    <!-- left-nav web component -->
-    <script src="../components/left-nav-component.js" type="module"></script>
-  </body>
+    <!-- Overlays -->
+    <div class="overlay">
+      <!-- Add Task Menu -->
+      <div id="task-overlay">
+
+        <input type="text">
+        
+      </div>
+      <!-- Add Event Menu -->
+      <div id="event-overlay">
+  
+      </div>
+    </div>
+
+    <!-- Left Navigation -->
+    <div class="left-nav"></div>
+
+    <!-- Right Navigation -->
+    <div class="right-nav">
+      <div class="calendar-region">
+        <div class="month-selector">
+          <button type="button" class="left-month-button">
+            <i class="fas fa-chevron-left"></i>
+          </button>
+          <h3 class="current month">May</h3>
+          <button type="button" class="right-month-button">
+            <i class="fas fa-chevron-right"></i>
+          </button>
+        </div>
+        <div class="month-days">
+          <div class="date-number">26</div>
+          <div class="date-number">27</div>
+          <div class="date-number">28</div>
+          <div class="date-number">29</div>
+          <div class="date-number">30</div>
+          <div class="date-number">1</div>
+          <div class="date-number">2</div>
+          <div class="date-number">3</div>
+          <div class="date-number">4</div>
+          <div class="date-number">5</div>
+          <div class="date-number">6</div>
+          <div class="date-number">7</div>
+          <div class="date-number">8</div>
+          <div class="date-number">9</div>
+          <div class="date-number">10</div>
+          <div class="date-number">11</div>
+          <div class="date-number">12</div>
+          <div class="date-number">13</div>
+          <div class="date-number">14</div>
+          <div class="date-number">15</div>
+          <div class="date-number">16</div>
+          <div class="date-number">17</div>
+          <div class="date-number">18</div>
+          <div class="date-number">19</div>
+          <div class="date-number">20</div>
+          <div class="date-number">21</div>
+          <div class="date-number">22</div>
+          <div class="date-number">23</div>
+          <div class="date-number">24</div>
+          <div class="date-number">25</div>
+          <div class="date-number">26</div>
+          <div class="date-number">27</div>
+          <div class="date-number">28</div>
+          <div class="date-number">29</div>
+          <div class="date-number">30</div>
+          <div class="date-number">31</div>
+          <div class="date-number">1</div>
+          <div class="date-number">2</div>
+          <div class="date-number">3</div>
+          <div class="date-number">4</div>
+          <div class="date-number">5</div>
+          <div class="date-number">6</div>
+        </div>
+      </div>
+      <div>
+        <hr class="calendar-seperator" />
+        <h2 class="goals-label">Goals</h2>
+      </div>
+      <div class="goals-container">
+        <div class="goals-element">Study for at least 2 hours</div>
+        <div class="goals-element">Maintain workout schedule</div>
+      </div>
+    </div>
+    
+  </main>
+
+  <!-- Main Script -->
+  <!-- <script src="../scripts/daily.js" type="module"></script> -->
+  <script src="../components/task.js"></script>
+  <script src="../components/event.js"></script>
+  <script src="../components/note.js"></script>
+
+  <!-- left-nav web component -->
+  <script src="../components/left-nav-component.js" type="module"></script>
+</body>
+
 </html>

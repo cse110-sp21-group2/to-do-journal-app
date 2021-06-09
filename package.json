@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "start": "nodemon --no-warnings --experimental-modules --es-module-specifier-resolution=node source/index.js",
-    "test": "mocha --recursive --no-warnings --experimental-modules --es-module-specifier-resolution=node ./source/test/* || true",
+    "test": "mocha --timeout 5000 --recursive --no-warnings --experimental-modules --es-module-specifier-resolution=node ./source/test/* || true",
     "lint": "./node_modules/.bin/eslint ./source",
     "docs": "jsdoc -c ./jsdoc.config.json"
   },
@@ -24,12 +24,14 @@
     "nodemon": "^2.0.7"
   },
   "devDependencies": {
+    "@babel/core": "^7.14.3",
+    "@babel/preset-env": "^7.14.4",
+    "babel-jest": "^27.0.2",
     "chai": "^4.3.4",
-    "chai-http": "^4.3.0",
-    "eslint": "^7.26.0",
+    "eslint": "^7.2.0",
+    "eslint-config-airbnb": "^18.2.1",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.22.1",
-    "jsdoc": "^3.6.7",
     "minami": "^1.2.3",
     "mocha": "^8.4.0",
     "prettier": "2.2.1"

@@ -89,14 +89,13 @@ export default class AuthController {
       return res.status(400).json({
         success: false,
         error,
-        message: 'Failed to sign up user',
+        message: 'Failed to hash password',
       });
     }
 
     // Return new user
-    return res.status(200).json({
+    return res.status(201).json({
       success: true,
-      message: 'User successfully signed up',
       data: newUser,
     });
   }
@@ -131,7 +130,7 @@ export default class AuthController {
     } else {
       return res.status(400).json({
         success: false,
-        message: "Google Id's do not match",
+        message: "Failed to authenticate Google account",
       });
     }
   }
@@ -177,14 +176,13 @@ export default class AuthController {
       return res.status(400).json({
         success: false,
         error,
-        message: 'Failed to sign up user',
+        message: 'Failed to sign up.',
       });
     }
 
     // Return new user
     return res.status(200).json({
       success: true,
-      message: 'User successfully signed up',
       data: newUser,
     });
   }
@@ -208,7 +206,7 @@ export default class AuthController {
     if (!user) {
       return res.status(404).json({
         success: false,
-        error: 'User with this email does not exist.',
+        message: 'Account with this email does not exist.',
       });
     }
 
@@ -239,10 +237,10 @@ export default class AuthController {
     const emailService = new EmailService();
 
     // Get success status for this send
-    const { success } = await emailService.sendMessage(emailOptions);
+    const { success, message } = await emailService.sendMessage(emailOptions);
 
     // Return success status
-    return success;
+    return res.status(200).json({ success, message });
   }
 
   /**
@@ -256,7 +254,7 @@ export default class AuthController {
     if (!token) {
       return res
         .status(401)
-        .json({ success: false, error: 'Authentication error' });
+        .json({ success: false, message: 'Authentication error' });
     }
 
     // Verify this token
@@ -279,14 +277,14 @@ export default class AuthController {
       return res.status(400).json({
         success: false,
         error,
-        message: 'Error while trying to reset password',
+        message: 'Failed to reset password. Please try again',
       });
     }
 
     // Return user
     return res.status(200).json({
       success: true,
-      message: 'Password successfully changed',
+      message: 'Password has been changed.',
       data: user,
     });
   }

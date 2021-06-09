@@ -18,4 +18,9 @@ router.get('/user-by-email/:email', (req, res) => {
   userController.getUserByEmail(req, res);
 });
 
+// Route for updating user info and settings
+router.put('/update-user-info/:id', (req, res) => {
+  userController.updateUserInfo(req, res);
+});
+
 export default router;
