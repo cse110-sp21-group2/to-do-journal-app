@@ -10,6 +10,7 @@ Location: Zoom
 
 ## Artifacts
 ![Zoom Meeting Screenshot](../lib/zoom-meeting.png)
+![Retrium Screenshot](../lib/retro1.png)
 
 
 ## Attendance
