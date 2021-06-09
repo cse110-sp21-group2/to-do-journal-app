@@ -38,7 +38,12 @@ if(user.term === ""){
 
 // SET end Date for end of quarter
 let endDate = new Date();
-endDate.setDate(endDate.getDate() + 77);
+if ( termType === "Quarter"){
+  endDate.setDate(endDate.getDate() + 77);
+  // Else we're in a semester
+} else {
+  endDate.setDate(endDate.getDate() + 112);
+}
 // console.log(`Quarter ends on this day: ${endDate}`);
 
 // GET journal of user
@@ -53,13 +58,35 @@ const getJournal = async () => {
 } 
 
 // GET entry promise and set it to JSON
-const getTerm = async () => {
-  const payload = {
+const getTerm = async (someDate) => {
+  const payload1 = {
     id,
-    date: today
+    date: someDate
   };
-  const { data: term, success } = await journalAPI.getJournalTerm(payload);
+  const { data: term, success } = await journalAPI.getJournalTerm(payload1);
   if(success){
+    return term;
+    // Else create a term 
+  } else {
+    let someEndDate = someDate;
+    if ( termType === "Quarter") {
+      someEndDate.setDate(someEndDate.getDate() + 77);
+    } else {
+      someEndDate.setDate(someEndDate.getDate() + 112);
+    }
+    const payload2 = {
+      id,
+      type: termType,
+      startDate: someDate,
+      endDate: someEndDate
+    }
+    journalAPI.addJournalTerm(payload2);
+
+    const payload3 = {
+      id,
+      date: someDate
+    }
+    const { data: term } = await journalAPI.getJournalTerm(payload3);
     return term;
   }
 };
@@ -79,24 +106,12 @@ journal.then(response => {
     journalAPI.addJournalTerm(payload);
   }
 })
-// Check if term exists for date, create term if it doesn't exist
-getTerm().then(response => {
-  if(response === undefined){
-    const payload = {
-      id,
-      type: termType,
-      startDate: today,
-      endDate: endDate
-    };
-
-    journalAPI.addJournalTerm(payload);
-  }
-})
 
 // GET term object
-const term = getTerm();
+const term = getTerm(today);
 // GET term ID
-let tId = await term.then(response => {return response._id})
+let tId = await term.then(response =>  {return response._id});
+console.log(tId);
 term.then(response => console.log(`This is the term: `, response));
 
 const someTask = document.createElement('create-task');
@@ -106,16 +121,29 @@ const someTask = document.createElement('create-task');
 function createTask() {
   document.querySelector('.main').appendChild(someTask);
 }
+
+let currWeek = 11 - ((Math.abs(endDate - today)) / (1000 * 3600 * 24)) / 7;
+
+// GET week number based on the button we click
+let weekNum = 0;
+function setWeekNum(){
+  weekNum = Number(this.getAttribute("name"));
+  console.log("weekNum=", weekNum);
+}
 // GET week number
-let weekNum = 11-((Math.abs(endDate - today))/(1000 * 3600 * 24))/7;
 
 // SET click function for add-task button
 const addTaskBtns = document.querySelectorAll("#add-task");
+let counter =0;
 addTaskBtns.forEach((btn) => {
   btn.addEventListener("click", createTask)
+  btn.setAttribute("name", counter);
+  btn.addEventListener("click", setWeekNum);
+  counter++;
 });
+
 /**
- * This should grab the inputs and send it to MongoDB
+ * Grab the inputs and send it to MongoDB
  */
 function submitTask() {
   const payload = {
@@ -128,6 +156,75 @@ function submitTask() {
 
   journalAPI.addTermTask(payload);
 }
+// GET submit button and save value to mongoDB
 const saveTask = someTask.submitBtn;
 saveTask.addEventListener("click", submitTask)
 
+// GET tasks and notes for specific week and display it
+function displayItems(specificTerm) {
+  let weekCount = 0;
+  specificTerm.then(res => res.weeks.forEach((week) => {
+    week.tasks.forEach((task) => {
+      const newTask = document.createElement('task-toggle');
+      newTask.content = task;
+      const taskDate = new Date(task.dueDate);
+      newTask.date = taskDate;
+      document.querySelector(`#task-container-${weekCount}`).appendChild(newTask);
+    })
+    week.notes.forEach((note) => {
+      const newNote = document.createElement('note-toggle');
+      newNote.content = note;
+      document.querySelector(`#task-container-${weekCount}`);
+    })
+    weekCount++;
+  }
+  ));
+}
+// DISPLAY when page first loads
+displayItems(term);
+
+function removeAllTasksAndNotes(parent) {
+  parent.innerHTML = '';
+}
+
+/**
+ * Creates new term, display it
+ * Forward arrow function
+ * 
+ * NOT DONE
+ */
+function nextTerm(){
+  const currentPeriodTitle = document.querySelector(".currentPeriod");
+  const notesContain = document.querySelectorAll(".notes-container");
+  const tasksContain = document.querySelectorAll(".task-container");
+  tasksContain.forEach((taskContainer) => {
+    removeAllTasksAndNotes(taskContainer);
+  })
+  notesContain.forEach((noteContainer) =>{
+    removeAllTasksAndNotes(noteContainer);
+  })
+  // SET new term and display 
+  let newTermStartDate = new Date();
+  let newTermEndDate = newTermStartDate;
+  newTermStartDate = journal.then(response => { return new Date(response.terms[response.terms.length-1].endDate)});
+  newTermEndDate = newTermStartDate.then(response =>{return response});
+  if (termType === "Quarter") {
+    newTermEndDate.setDate(newTermEndDate.getDate() + 77);
+  } else {
+    newTermEndDate.setDate(newTermEndDate.getDate() + 112);
+  }
+  // const moreTerm = getTerm(newTermStartDate);
+  // displayItems(moreTerm);
+}
+const forwardBtn = document.querySelector(".forward-button");
+forwardBtn.addEventListener("click", nextTerm);
+
+
+/**
+ * TODO:
+ * - Arrows switching to different quarters/semester
+ * - Down arrow see other weeks
+ * - Fix CSS for display notes and tasks
+ * - Fix create-task pop up interface
+ * - Week logic (when clicking button, write to correct week in mongo)
+ */
