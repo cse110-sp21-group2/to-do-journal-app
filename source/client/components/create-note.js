@@ -1,11 +1,11 @@
-class createTask extends HTMLElement {
+class createNote extends HTMLElement {
     constructor() {
         super();
 
         // templated HTML content
-        const createTaskTemplate = document.createElement('template');
+        const createNoteTemplate = document.createElement('template');
 
-        createTaskTemplate.innerHTML = `
+        createNoteTemplate.innerHTML = `
             <style>
                 form {
                     display: grid;
@@ -20,19 +20,11 @@ class createTask extends HTMLElement {
                     box-shadow: 0px 5px 20px 5px rgba(0, 0, 0, 0.25);
                     border-radius: 15px;
                 }
-                .task-name-field {
+                .note-content-field {
                     font-family: Roboto Condensed;
                     font-style: normal;
                     font-weight: normal;
                     font-size: 36px;
-                    color: rgba(22, 42, 71, 0.75);
-                }
-                .start-date-field,
-                end-time-field,
-                link-field {
-                    font-family: Roboto Condensed;
-                    font-style: normal;
-                    font-weight: normal;
                     color: rgba(22, 42, 71, 0.75);
                 }
                 .cancel-button {
@@ -62,24 +54,12 @@ class createTask extends HTMLElement {
                     cursor: pointer;
                 }        
             </style>
-        <form action="create-task">
-            <h2 class="create-task-title"> Create a Task</h2>
-            <div class="task-name-field">
-                <label for="task-name"></label>
-                <input type="text" id="task-name" name="task-name" placeholder="Task Name">
+        <form action="create-note">
+            <h2 class="create-note-title"> Add a Note</h2>
+            <div class="note-content-field">
+                <label for="note-content"></label>
+                <input type="text" id="note-content" name="note-content">
             </div>
-                <div class="start-date-field">
-                    <label for="start-date">Start Date</label>
-                    <input id="start-date" type="date" name="start-date">
-                </div>
-                <div class="end-date-field">
-                    <label for="end-date">End date</label>
-                    <input id="end-date" type="date" name="end-date"></input>
-                </div>
-                <div class="link-field">
-                    <label for="link"></label>
-                    <input type="url" id="link" name="link" placeholder="Link">
-                </div>
                 <div class="buttons">
                     <input type="submit" name="cancel" value="Cancel" class="cancel-button">
                     <input type="submit" name="save" value="Save" class="save-button">
@@ -90,36 +70,15 @@ class createTask extends HTMLElement {
         // create a shadow root for this web component
         this.attachShadow({ mode: 'open' })
         // attach cloned content of template to shadow DOM
-        this.shadowRoot.appendChild(createTaskTemplate.content.cloneNode(true))
+        this.shadowRoot.appendChild(createNoteTemplate.content.cloneNode(true))
 
     }
 
     /**
- * Getter that gets the name/content of task
- */
-    get getTaskContent() {
-        return this.shadowRoot.querySelector('input#task-name').value;
-    }
-
-    /**
-     * Getter that gets the start Date: MM/DD/YYYY
+     * Getter that gets the content of a note
      */
-    get getStartDate(){
-        return this.shadowRoot.querySelector('input#start-date').value;
-    }
-
-    /**
-     * Getter that gets the link
-     */
-    get getLink() {
-        return this.shadowRoot.querySelector('input#link').value;
-    }
-
-    /**
-     * Getter that gets the End Time 00:00 PM ? AM
-     */
-    get getEndDate() {
-        return this.shadowRoot.querySelector('input#end-date').value;
+    get getNoteContent() {
+        return this.shadowRoot.querySelector('input#note-content').value;
     }
 
     /**
@@ -131,4 +90,4 @@ class createTask extends HTMLElement {
 }
 
 // Define, instantiate, and add the component to its respective div to the calling document
-customElements.define('create-task', createTask);
+customElements.define('create-note', createNote);

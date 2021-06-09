@@ -31,16 +31,16 @@
 
       <!-- Yesterday Button -->
       <div class="back-button">
-        <button type="button" class="button-circle">
+        <button id="yes-btn" type="button" class="button-circle">
           <i class="fas fa-chevron-left"></i>
         </button>
       </div>
 
-      <h1 class="daily-date">May 5, 2021</h1>
+      <h1 class="daily-date" id ="daily-date">Date</h1>
 
       <!-- Tomorrow Button -->
       <div class="forward-button">
-        <button type="button" class="button-circle">
+        <button id="tmr-btn" type="button" class="button-circle">
           <i class="fas fa-chevron-right"></i>
         </button>
       </div>
@@ -72,9 +72,9 @@
       <!-- Events -->
       <div class="section-header" id="events-header">
         <h1 class="heading" id="events-heading">Events</h1>
-        <!-- Add Event Button (submit) -->
+        <!-- Add Event Button -->
         <div class="add-button" id="add-event">
-          <button type="submit" value="Submit" class="button-circle" id="submitButton">
+          <button type="button" class="button-circle">
             <i class="fas fa-plus"></i>
           </button>
         </div>
@@ -88,63 +88,63 @@
               <!-- <div class="header timezone">PDT</div> -->
               <div class="timeGroup">
                 <div class="timeSlot">8 AM</div>
-                <div class="timeSlot"></div>
+                <div class="timeSlot8am"></div>
               </div>
               <div class="timeGroup">
                 <div class="timeSlot">9 AM</div>
-                <div class="timeSlot"></div>
+                <div class="timeSlot9am"></div>
               </div>
               <div class="timeGroup">
                 <div class="timeSlot">10 AM</div>
-                <div class="timeSlot"></div>
+                <div class="timeSlot10am"></div>
               </div>
               <div class="timeGroup">
                 <div class="timeSlot">11 AM</div>
-                <div class="timeSlot"></div>
+                <div class="timeSlot11am"></div>
               </div>
               <div class="timeGroup">
                 <div class="timeSlot">12 PM</div>
-                <div class="timeSlot"></div>
+                <div class="timeSlot12pm"></div>
               </div>
               <div class="timeGroup">
                 <div class="timeSlot">1 PM</div>
-                <div class="timeSlot"></div>
+                <div class="timeSlot1pm"></div>
               </div>
               <div class="timeGroup">
                 <div class="timeSlot">2 PM</div>
-                <div class="timeSlot"></div>
+                <div class="timeSlot2pm"></div>
               </div>
               <div class="timeGroup">
                 <div class="timeSlot">3 PM</div>
-                <div class="timeSlot"></div>
+                <div class="timeSlot3pm"></div>
               </div>
               <div class="timeGroup">
                 <div class="timeSlot">4 PM</div>
-                <div class="timeSlot"></div>
+                <div class="timeSlot4pm"></div>
               </div>
               <div class="timeGroup">
                 <div class="timeSlot">5 PM</div>
-                <div class="timeSlot"></div>
+                <div class="timeSlot5pm"></div>
               </div>
               <div class="timeGroup">
                 <div class="timeSlot">6 PM</div>
-                <div class="timeSlot"></div>
+                <div class="timeSlot6pm"></div>
               </div>
               <div class="timeGroup">
                 <div class="timeSlot">7 PM</div>
-                <div class="timeSlot"></div>
+                <div class="timeSlot7pm"></div>
               </div>
               <div class="timeGroup">
                 <div class="timeSlot">8 PM</div>
-                <div class="timeSlot"></div>
+                <div class="timeSlot8pm"></div>
               </div>
               <div class="timeGroup">
                 <div class="timeSlot">9 PM</div>
-                <div class="timeSlot"></div>
+                <div class="timeSlot9pm"></div>
               </div>
               <div class="timeGroup">
                 <div class="timeSlot">10 PM</div>
-                <div class="timeSlot"></div>
+                <div class="timeSlot10pm"></div>
               </div>
             </div>
 
@@ -220,6 +220,12 @@
       <!-- Notes -->
       <div class="section-header" id="notes-header">
         <h1 class="heading" id="notes-heading">Notes</h1>
+        <!-- Add Note Button -->
+        <div class="add-button" id="add-note">
+          <button type="button" class="button-circle">
+            <i class="fas fa-plus"></i>
+          </button>
+        </div>
       </div>
       <div id="notes-container">
         <div id="notes-content">
@@ -244,15 +250,23 @@
 
     <!-- Overlays -->
     <div class="overlay">
+
       <!-- Add Task Menu -->
       <div id="task-overlay">
-
-        <input type="text">
-        
+          <!-- ADD TASK COMPONENT -->
+          <div class="create-task"></div>
       </div>
+
+      <!-- Add Note Menu -->
+      <div id="note-overlay">
+            <!-- ADD NOTE COMPONENT -->
+            <div class="create-note"></div>
+      </div>
+
       <!-- Add Event Menu -->
       <div id="event-overlay">
-  
+            <!-- ADD EVENT COMPONENT -->
+            <div class="create-event"></div>
       </div>
     </div>
 
@@ -334,6 +348,8 @@
   <script src="../components/event.js"></script>
   <script src="../components/note.js"></script>
   <script src="../components/left-nav-component.js" type="module"></script>
+  <script src="../components/create-note.js" type="module"></script>
+  <script src="../components/create-event.js" type="module"></script>
   <script src="../components/create-task.js" type="module"></script>
   <script src="../scripts/daily.js" type="module"></script>
 

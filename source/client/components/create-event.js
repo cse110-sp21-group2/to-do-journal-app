@@ -1,11 +1,11 @@
-class createTask extends HTMLElement {
+class createEvent extends HTMLElement {
     constructor() {
         super();
 
         // templated HTML content
-        const createTaskTemplate = document.createElement('template');
+        const createEventTemplate = document.createElement('template');
 
-        createTaskTemplate.innerHTML = `
+        createEventTemplate.innerHTML = `
             <style>
                 form {
                     display: grid;
@@ -20,7 +20,7 @@ class createTask extends HTMLElement {
                     box-shadow: 0px 5px 20px 5px rgba(0, 0, 0, 0.25);
                     border-radius: 15px;
                 }
-                .task-name-field {
+                .event-name-field {
                     font-family: Roboto Condensed;
                     font-style: normal;
                     font-weight: normal;
@@ -62,19 +62,19 @@ class createTask extends HTMLElement {
                     cursor: pointer;
                 }        
             </style>
-        <form action="create-task">
-            <h2 class="create-task-title"> Create a Task</h2>
-            <div class="task-name-field">
-                <label for="task-name"></label>
-                <input type="text" id="task-name" name="task-name" placeholder="Task Name">
+        <form action="create-event">
+            <h2 class="create-event-title"> Create an Event</h2>
+            <div class="event-name-field">
+                <label for="event-name"></label>
+                <input type="text" id="event-name" name="event-name" placeholder="Event Name">
             </div>
-                <div class="start-date-field">
-                    <label for="start-date">Start Date</label>
-                    <input id="start-date" type="date" name="start-date">
+                <div class="start-time-field">
+                    <label for="start-time">Start Time</label>
+                    <input id="start-time" type="time" name="start-time">
                 </div>
-                <div class="end-date-field">
-                    <label for="end-date">End date</label>
-                    <input id="end-date" type="date" name="end-date"></input>
+                <div class="end-time-field">
+                    <label for="end-time">End Time</label>
+                    <input id="end-time" type="time" name="end-time"></input>
                 </div>
                 <div class="link-field">
                     <label for="link"></label>
@@ -90,22 +90,22 @@ class createTask extends HTMLElement {
         // create a shadow root for this web component
         this.attachShadow({ mode: 'open' })
         // attach cloned content of template to shadow DOM
-        this.shadowRoot.appendChild(createTaskTemplate.content.cloneNode(true))
+        this.shadowRoot.appendChild(createEventTemplate.content.cloneNode(true))
 
     }
 
     /**
- * Getter that gets the name/content of task
+ * Getter that gets the name/content of event
  */
-    get getTaskContent() {
-        return this.shadowRoot.querySelector('input#task-name').value;
+    get getEventContent() {
+        return this.shadowRoot.querySelector('input#event-name').value;
     }
 
     /**
-     * Getter that gets the start Date: MM/DD/YYYY
+     * Getter that gets the start time: 00:00 PM ? AM
      */
-    get getStartDate(){
-        return this.shadowRoot.querySelector('input#start-date').value;
+    get getStartTime(){
+        return this.shadowRoot.querySelector('input#start-time').value;
     }
 
     /**
@@ -118,8 +118,8 @@ class createTask extends HTMLElement {
     /**
      * Getter that gets the End Time 00:00 PM ? AM
      */
-    get getEndDate() {
-        return this.shadowRoot.querySelector('input#end-date').value;
+    get getEndTime() {
+        return this.shadowRoot.querySelector('input#end-time').value;
     }
 
     /**
@@ -131,4 +131,4 @@ class createTask extends HTMLElement {
 }
 
 // Define, instantiate, and add the component to its respective div to the calling document
-customElements.define('create-task', createTask);
+customElements.define('create-event', createEvent);
