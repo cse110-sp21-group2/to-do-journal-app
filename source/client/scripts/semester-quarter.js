@@ -12,7 +12,7 @@ import journalAPI from '../api/journalAPI.js';
  */
 
 const addTask = document.getElementById('add-task');
-const taskSubmit = document.getElementsByClassName('menu-submit')[0];
+// const taskSubmit = document.getElementsByClassName('menu-submit')[0];
 const taskOverlay = document.getElementById('task-overlay');
 
 // if (!session.isUserLoggedIn()) {
@@ -38,14 +38,9 @@ addTask.addEventListener('click', (event) => {
 });
 
 // ON CLICK of task submit button - close menu
-taskSubmit.addEventListener('click', (event) => {
-    closeOverlay();
-});
-if (!session.isUserLoggedIn()) {
-  // eslint-disable-next-line no-alert
-  alert('You must sign in to view your journal');
-  window.location.href = '/signin';
-}
+// taskSubmit.addEventListener('click', (event) => {
+//     closeOverlay();
+// });
 
 // Today's date
 const today = new Date();

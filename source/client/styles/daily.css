@@ -432,8 +432,13 @@ button {
   cursor: pointer;
 }
 
+#task-overlay {
+  visibility: hidden;
+  z-index: 100;
+  opacity: 100;
+}
+
 /* overlays */
-#task-overlay,
 #event-overlay {
   position: absolute;
   top: 50%;
