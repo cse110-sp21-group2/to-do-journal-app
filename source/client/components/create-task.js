@@ -5,7 +5,7 @@ class createTask extends HTMLElement {
 
         // templated HTML content
         const createTaskTemplate = document.createElement('template');
-        
+
         createTaskTemplate.innerHTML = `
             <style>
                 form {
@@ -74,9 +74,9 @@ class createTask extends HTMLElement {
                     <input type="text" id="task-name" name="task-name" placeholder="Task Name">
                 </div>
 
-                <div class="start-date-field">
-                    <label for="start-date">Start Date</label>
-                    <input id="start-date" type="date" name="start-date">
+                <div class="end-date-field">
+                    <label for="end-date">End Date</label>
+                    <input id="end-date" type="date" name="end-date">
                 </div>
 
                 <div class="end-time-field">
@@ -96,68 +96,56 @@ class createTask extends HTMLElement {
             </form> 
         `;
 
-      // create a shadow root for this web component
-      this.attachShadow({ mode: 'open' })
-      // attach cloned content of template to shadow DOM
-      this.shadowRoot.appendChild(createTaskTemplate.content.cloneNode(true))   
-      
-    /**
-     * TODO:
-     *      - SET task content property value
-     *      - SET note content property value
-     *      - SET Link property value
-     *      - SET time property value
-     *      
-     *      - GET task content
-     *      - GET note content
-     *      - GET Link
-     *      - GET time
-     *      
-     */
-
-    // /**
-    //  * Getter that gets the name/content of task
-    //  */
-    // get getTaskContent(){
-    //     console.log(document.querySelector('input#task-name').value);
-    //     return document.querySelector('input#task-name').value;
-    // }
-
-    // /**
-    //  * Getter that gets the start Date: MM/DD/YYYY
-    //  */
-    // get getStartDate(){
-    //     console.log(document.querySelector('input#start-date').value);
-    //     return document.querySelector('input#task-name').value;
-    // }
-
-    // /**
-    //  * Getter that gets the link
-    //  */
-    // get getLink(){
-    //     console.log(document.querySelector('input#link').value);
-    //     return document.querySelector('input#link').value;
-    // }
+        // create a shadow root for this web component
+        this.attachShadow({ mode: 'open' })
+        // attach cloned content of template to shadow DOM
+        this.shadowRoot.appendChild(createTaskTemplate.content.cloneNode(true));
 
 
-    // /**
-    //  * Getter that gets the End Time 00:00 PM ? AM
-    //  */
-    // get getTime() {
-    //     console.log(document.querySelector('input#input-time').value);
-    //     return document.querySelector('input#input-time').value;
-    // }
-      
+        /**
+         * Getter that gets the name/content of task
+         */
+        get getTaskContent(){
+            return this.shadowRoot.querySelector('input#task-name').value;
+        }
+
+        /**
+         * Getter that gets the start Date: MM/DD/YYYY
+         */
+        get getStartDate(){
+            return this.shadowRoot.querySelector('input#task-name').value;
+        }
+
+        /**
+         * Getter that gets the link
+         */
+        get getLink(){
+            return this.shadowRoot.querySelector('input#link').value;
+        }
+
+        /**
+         * Getter that gets the End Time 00:00 PM ? AM
+         */
+        get getEndDate() {
+            return this.shadowRoot.querySelector('input#end-date').value;
+        }
+
+        /**
+         * Returns the submit button 
+         */
+        get submitBtn() {
+            return this.shadowRoot.querySelector("input.save-button");
+        }
 
     }
-}
 
-// Define, instantiate, and add the component to its respective div to the calling document
-customElements.define('add-task-component', createTask);
-const comp = document.createElement('add-task-component');
-document.querySelector('.overlay').appendChild(comp);
+    // Define, instantiate, and add the component to its respective div to the calling document
+    customElements.define('create-task', createTask);
+    const comp = document.createElement('create-task');
+    document.querySelector('.overlay').appendChild(comp);
 
-
-// customElements.define('create-task', createTask);
-// const someTask = document.createElement('create-task');
-// document.querySelector('main.main').appendChild(someTask);
+    // customElements.define('create-task', createTask);
+    // const someTask = document.createElement('create-task');
+    // document.querySelector('main.main').appendChild(someTask);
+    // in order to display it for scripting convenience, but wants to act as pop up when click btn
+    // customElements.define('create-task', createTask);
