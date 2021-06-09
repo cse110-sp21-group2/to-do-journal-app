@@ -102,9 +102,6 @@ term.then(response => console.log(`This is the term: `, response));
 const someTask = document.createElement('create-task');
 /**
  * Make create-task interface pop-up when button is clicked
- * 
- * @params 
- * @return 
  */
 function createTask() {
   document.querySelector('.main').appendChild(someTask);
@@ -119,9 +116,6 @@ addTaskBtns.forEach((btn) => {
 });
 /**
  * This should grab the inputs and send it to MongoDB
- * 
- * @params
- * @return
  */
 function submitTask() {
   const payload = {
@@ -132,10 +126,6 @@ function submitTask() {
     weekNumber: weekNum
   }
 
-  console.log("content: ", payload.content);
-  console.log("dueDate: ", payload.dueDate);
-  console.log("Term ID: ", payload.termId);
-  console.log("Week Number: ", payload.weekNumber);
   journalAPI.addTermTask(payload);
 }
 const saveTask = someTask.submitBtn;

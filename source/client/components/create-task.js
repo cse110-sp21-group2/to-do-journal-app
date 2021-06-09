@@ -122,7 +122,6 @@ class createTask extends HTMLElement{
      * Getter that gets the name/content of task
      */
     get getTaskContent(){
-        console.log(this.shadowRoot.querySelector('input#task-name').value);
         return this.shadowRoot.querySelector('input#task-name').value;
     }
 
@@ -130,7 +129,6 @@ class createTask extends HTMLElement{
      * Getter that gets the start Date: MM/DD/YYYY
      */
     get getStartDate(){
-        console.log(this.shadowRoot.querySelector('input#start-date').value);
         return this.shadowRoot.querySelector('input#task-name').value;
     }
 
@@ -138,7 +136,6 @@ class createTask extends HTMLElement{
      * Getter that gets the link
      */
     get getLink(){
-        console.log(this.shadowRoot.querySelector('input#link').value);
         return this.shadowRoot.querySelector('input#link').value;
     }
 
@@ -147,7 +144,6 @@ class createTask extends HTMLElement{
      * Getter that gets the End Time 00:00 PM ? AM
      */
     get getEndDate() {
-        console.log(this.shadowRoot.querySelector('input#end-date').value);
         return this.shadowRoot.querySelector('input#end-date').value;
     }
     /**
