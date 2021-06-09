@@ -62,7 +62,7 @@ createTaskTemplate.innerHTML =`
             cursor: pointer;
           }        
     </style>
-    <form action="/action_page.php" class="create-task">
+    <form class="create-task">
         <h2 class="create-task-title"> Create a Tasks </h2>
         <div class="task-name-field">
             <label for="task-name"></label>
@@ -74,9 +74,9 @@ createTaskTemplate.innerHTML =`
             <input id="start-date" type="date" name="start-date">
         </div>
 
-        <div class="end-time-field">
-            <label for="end-time">End Time</label>
-            <input id="end-time" type="time" name="end-time"></input>
+        <div class="end-date-field">
+            <label for="end-date">End Date</label>
+            <input id="end-date" type="date" name="end-date"></input>
         </div>
 
         <div class="link-field">
@@ -92,7 +92,7 @@ createTaskTemplate.innerHTML =`
             <input type="submit" name="cancel" value="Cancel" class="cancel-button">
             <input type="submit" name="save" value="Save" class="save-button">
         </div>
-    </form> 
+    </form>
 `
 // Component for Creating a Task
 class createTask extends HTMLElement{
@@ -101,13 +101,14 @@ class createTask extends HTMLElement{
 
         this.attachShadow({ mode: 'open' });
         this.shadowRoot.appendChild(createTaskTemplate.content.cloneNode(true));
+        
     }
     /**
      * TODO:
-     *      - SET task content property value
-     *      - SET note content property value
-     *      - SET Link property value
-     *      - SET time property value
+     *      - SET task content property value?
+     *      - SET note content property value?
+     *      - SET Link property value?
+     *      - SET time property value?
      *      
      *      - GET task content
      *      - GET note content
@@ -116,43 +117,43 @@ class createTask extends HTMLElement{
      *      
      */
 
-    // /**
-    //  * Getter that gets the name/content of task
-    //  */
-    // get getTaskContent(){
-    //     console.log(document.querySelector('input#task-name').value);
-    //     return document.querySelector('input#task-name').value;
-    // }
 
-    // /**
-    //  * Getter that gets the start Date: MM/DD/YYYY
-    //  */
-    // get getStartDate(){
-    //     console.log(document.querySelector('input#start-date').value);
-    //     return document.querySelector('input#task-name').value;
-    // }
+    /**
+     * Getter that gets the name/content of task
+     */
+    get getTaskContent(){
+        return this.shadowRoot.querySelector('input#task-name').value;
+    }
 
-    // /**
-    //  * Getter that gets the link
-    //  */
-    // get getLink(){
-    //     console.log(document.querySelector('input#link').value);
-    //     return document.querySelector('input#link').value;
-    // }
+    /**
+     * Getter that gets the start Date: MM/DD/YYYY
+     */
+    get getStartDate(){
+        return this.shadowRoot.querySelector('input#task-name').value;
+    }
 
+    /**
+     * Getter that gets the link
+     */
+    get getLink(){
+        return this.shadowRoot.querySelector('input#link').value;
+    }
 
-    // /**
-    //  * Getter that gets the End Time 00:00 PM ? AM
-    //  */
-    // get getTime() {
-    //     console.log(document.querySelector('input#input-time').value);
-    //     return document.querySelector('input#input-time').value;
-    // }
+    /**
+     * Getter that gets the End Time 00:00 PM ? AM
+     */
+    get getEndDate() {
+        return this.shadowRoot.querySelector('input#end-date').value;
+    }
+    
+    /**
+     * Returns the submit button 
+     */
+    get submitBtn() {
+        return this.shadowRoot.querySelector("input.save-button");
+    }
     
 }
 
-
-
+// in order to display it for scripting convenience, but wants to act as pop up when click btn
 customElements.define('create-task', createTask);
-const someTask = document.createElement('create-task');
-document.querySelector('main.main').appendChild(someTask);
