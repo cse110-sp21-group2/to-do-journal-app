@@ -139,13 +139,13 @@ class createTask extends HTMLElement{
         return this.shadowRoot.querySelector('input#link').value;
     }
 
-
     /**
      * Getter that gets the End Time 00:00 PM ? AM
      */
     get getEndDate() {
         return this.shadowRoot.querySelector('input#end-date').value;
     }
+    
     /**
      * Returns the submit button 
      */
