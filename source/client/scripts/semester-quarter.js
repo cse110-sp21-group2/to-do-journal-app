@@ -19,7 +19,7 @@ if (!session.isUserLoggedIn()) {
 
 // Today's date
 const today = new Date();
-console.log(`Today's date: ${today}`);
+// console.log(`Today's date: ${today}`);
 
 // Current User
 const user = session.getUser();
@@ -27,19 +27,19 @@ const user = session.getUser();
 // const id = user._id;
 // TEST USER ID
 const id = "60bebc3da19d7bd0468fed9d";
-console.log(`Print current user's id: ${id}`);
+// console.log(`Print current user's id: ${id}`);
 
 // Return "Quarter" or "Semester" DEFAULT: "Quarter"
 let termType = user.term;
 if(user.term === ""){
   termType= "Quarter";
 }
-console.log(`Print term type: ${termType}`);
+// console.log(`Print term type: ${termType}`);
 
 // SET end Date for end of quarter
 let endDate = new Date();
-endDate.setDate(endDate.getDate() + 70);
-console.log(`Quarter ends on this day: ${endDate}`);
+endDate.setDate(endDate.getDate() + 77);
+// console.log(`Quarter ends on this day: ${endDate}`);
 
 // GET journal of user
 const getJournal = async () => {
@@ -95,5 +95,49 @@ getTerm().then(response => {
 
 // GET term object
 const term = getTerm();
+// GET term ID
+let tId = await term.then(response => {return response._id})
 term.then(response => console.log(`This is the term: `, response));
+
+const someTask = document.createElement('create-task');
+/**
+ * Make create-task interface pop-up when button is clicked
+ * 
+ * @params 
+ * @return 
+ */
+function createTask() {
+  document.querySelector('.main').appendChild(someTask);
+}
+// GET week number
+let weekNum = 11-((Math.abs(endDate - today))/(1000 * 3600 * 24))/7;
+
+// SET click function for add-task button
+const addTaskBtns = document.querySelectorAll("#add-task");
+addTaskBtns.forEach((btn) => {
+  btn.addEventListener("click", createTask)
+});
+/**
+ * This should grab the inputs and send it to MongoDB
+ * 
+ * @params
+ * @return
+ */
+function submitTask() {
+  const payload = {
+    id,
+    content: someTask.getTaskContent,
+    dueDate: new Date(someTask.getEndDate),
+    termId: tId,
+    weekNumber: weekNum
+  }
+
+  console.log("content: ", payload.content);
+  console.log("dueDate: ", payload.dueDate);
+  console.log("Term ID: ", payload.termId);
+  console.log("Week Number: ", payload.weekNumber);
+  journalAPI.addTermTask(payload);
+}
+const saveTask = someTask.submitBtn;
+saveTask.addEventListener("click", submitTask)
 
