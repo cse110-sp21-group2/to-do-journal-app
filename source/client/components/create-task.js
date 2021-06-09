@@ -84,10 +84,6 @@ createTaskTemplate.innerHTML =`
             <input type="url" id="link" name="link" placeholder="Link">
         </div>
 
-        <div class="label-container">
-            placeholder
-        </div>
-
         <div class="buttons">
             <input type="submit" name="cancel" value="Cancel" class="cancel-button">
             <input type="submit" name="save" value="Save" class="save-button">
