@@ -279,3 +279,43 @@ body {
   top: -5px;
   transform: rotate(-45deg);
 }
+
+
+/* Routing */
+a {
+    text-decoration:none;
+ }
+
+ .date-number:hover {
+    background: rgba(238, 238, 238, 0.194);
+}
+
+.button-circle:hover {
+    background: rgba(238, 238, 238, 0.194);
+}
+
+/* Labels */
+.color-key {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-column-gap: 25px;
+    padding: 80px 25px 25px 25px;
+
+}
+
+.orange {
+    border: 1px solid rgba(0, 0, 0, 0.8);
+    background-color: #FDC775;
+}
+.blue {
+    border: 1px solid rgba(0, 0, 0, 0.8);
+    background-color: #FF4B4B;
+}
+.red {
+    border: 1px solid rgba(0, 0, 0, 0.8);
+    background-color: #5B71EA;
+}
+.green {
+    border: 1px solid rgba(0, 0, 0, 0.8);
+    background-color: #B8FF97;
+}
