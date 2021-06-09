@@ -130,7 +130,6 @@ function setWeekNum(){
   weekNum = Number(this.getAttribute("name"));
   console.log("weekNum=", weekNum);
 }
-// GET week number
 
 // SET click function for add-task button
 const addTaskBtns = document.querySelectorAll("#add-task");
