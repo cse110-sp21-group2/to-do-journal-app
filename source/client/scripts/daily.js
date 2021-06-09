@@ -106,7 +106,8 @@ function submitTask() {
     type: 'Daily'
   };
 
-  journalAPI.addEntryTask(payload);
+  const { success } = await journalAPI.addEntryTask(payload);
+  console.log(success);
 }
 
 // GET submit button and save value to mongoDB
