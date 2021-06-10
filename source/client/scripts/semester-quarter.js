@@ -105,8 +105,7 @@ const getTerm = async (someDate) => {
     }
     const { data: newTerm } = await journalAPI.getJournalTerm(payload3);
     return newTerm;
-
-};
+}};
 
 // GET journal promise
 const journal = getJournal();
@@ -184,7 +183,6 @@ function setWeekNum(){
   weekNum = Number(this.getAttribute("name"));
   console.log("weekNum=", weekNum);
 }
-// GET week number
 
 // SET click function for add-task button
 const addTaskBtns = document.querySelectorAll("#add-task");
