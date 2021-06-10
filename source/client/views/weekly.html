@@ -32,7 +32,7 @@
       <div class="page-heading">
         <!-- Yesterday Button -->
         <div class="back-button">
-          <button type="button" onclick="prevWeek();" class="button-circle">
+          <button id="bk-button" onclick="prevWeek();" class="button-circle">
             <i class="fas fa-chevron-left"></i>
           </button>
         </div>
@@ -41,20 +41,20 @@
 
         <!-- Tomorrow Button -->
         <div class="forward-button">
-          <button type="button" onclick="nextWeek();" class="button-circle">
+          <button id="fwd-btn" type="button" onclick="nextWeek();" class="button-circle">
             <i class="fas fa-chevron-right"></i>
           </button>
         </div>
       </div>
     </div>
 
-<!--     <div class="search-bar">
+    <!--     <div class="search-bar">
       <i class="fas fa-search" id="search-icon"></i>
       <input type="text" placeholder="Search" class="search-input" />
     </div> -->
-    
+
     <div class="account-bar">
-<!--       <button type="button" class="help-button">
+      <!--       <button type="button" class="help-button">
         <i class="far fa-question-circle"></i>
       </button>
       <button type="button" class="notification-button">
@@ -69,33 +69,47 @@
 
     <!-- Weekly Main content -->
     <div class="weekly-view">
-      <div class="column-day">
-        <h3 class="day-title">MON</h3>
-        <button class="date">3</button>
-      </div>
-      <div class="column-day">
-        <h3 class="day-title">TUES</h3>
-        <button class="date">4</button>
-      </div>
-      <div class="column-day">
-        <h3 class="day-title">WED</h3>
-        <button class="date">5</button>
-      </div>
-      <div class="column-day">
-        <h3 class="day-title">THURS</h3>
-        <button class="date">6</button>
-      </div>
-      <div class="column-day">
-        <h3 class="day-title">FRI</h3>
-        <button class="date">7</button>
-      </div>
-      <div class="column-day">
-        <h3 class="day-title">SAT</h3>
-        <button class="date">8</button>
-      </div>
-      <div class="column-day">
+      <div class="column-day" id="sunday">
         <h3 class="day-title">SUN</h3>
+        <button class="date">3</button>
+        <div class="column-content">
+        </div>
+      </div>
+      <div class="column-day" id="monday">
+        <h3 class="day-title">MON</h3>
+        <button class="date">4</button>
+        <div class="column-content">
+        </div>
+      </div>
+      <div class="column-day" id="tuesday">
+        <h3 class="day-title">TUE</h3>
+        <button class="date">5</button>
+        <div class="column-content">
+        </div>
+      </div>
+      <div class="column-day" id="wednesday">
+        <h3 class="day-title">WED</h3>
+        <button class="date">6</button>
+        <div class="column-content">
+        </div>
+      </div>
+      <div class="column-day" id="thursday">
+        <h3 class="day-title">THU</h3>
+        <button class="date">7</button>
+        <div class="column-content">
+        </div>
+      </div>
+      <div class="column-day" id="friday">
+        <h3 class="day-title">FRI</h3>
+        <button class="date">8</button>
+        <div class="column-content">
+        </div>
+      </div>
+      <div class="column-day" id="saturday">
+        <h3 class="day-title">SAT</h3>
         <button class="date">9</button>
+        <div class="column-content">
+        </div>
       </div>
     </div>
 
@@ -171,5 +185,9 @@
     <!-- left-nav web component -->
     <script src="../components/left-nav-component.js" type="module"></script>
     <script type="text/javascript" src="../scripts/week-gen.js"></script>
+    <script src="../components/task.js"></script>
+    <script src="../components/event.js"></script>
+    <script src="../components/note.js"></script>
+    <script src="../scripts/weekly.js" type="module"></script>
   </body>
 </html>

@@ -147,6 +147,7 @@ body {
   padding: 10px;
   display: grid;
   grid-template-columns: auto auto;
+  max-height: 250px;
 }
 
 .week-content-top {
@@ -162,17 +163,35 @@ body {
 .notes-container {
   grid-column: 1;
   display: flex;
+  flex-direction: column;
   border-right: solid #162A47 1px;
   margin: 15px;
+  height: 100%;
+  overflow: auto;
 }
 
 .task-container {
   grid-column: 2;
   display: flex;
   margin: 15px;
+  flex-direction: column;
+  height: 100%;
+  overflow: auto;
 }
 
 .button-circle {
+  width: 30px;
+  height: 30px;
+  border-radius: 15px;
+  color: var(--mainColor);
+  border-color: var(--mainColor);
+  background: white;
+  position: relative;
+  top: 0px;
+  left: 0px;
+}
+
+.add-button {
   grid-column: 2;
   grid-row: 2;
   justify-self: end;
@@ -362,4 +381,43 @@ body {
   font-size: 40px;
   line-height: 47px;
   text-align: center;
+}
+
+/* overlays */
+#task-overlay,
+#note-overlay {
+  visibility: hidden;
+  z-index: 100;
+  opacity: 100;
+}
+
+
+#task-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  visibility: hidden;
+  z-index: 100;
+  text-align: center;
+  border-radius: 10px;
+  font-size: 20px;
+  height: 700px;
+  width: 500px;
+  opacity: 100;
+}
+
+#note-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  visibility: hidden;
+  z-index: 100;
+  text-align: center;
+  border-radius: 10px;
+  font-size: 20px;
+  height: 700px;
+  width: 500px;
+  opacity: 100;
 }

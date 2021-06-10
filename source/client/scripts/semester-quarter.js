@@ -1,21 +1,37 @@
+/* eslint-disable import/extensions */
+/* eslint-disable no-param-reassign */
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-console */
+/* eslint-disable no-underscore-dangle */
 import session from './session.js';
 import journalAPI from '../api/journalAPI.js';
 
-/**
- * TODO:
- *      - Know when it's quarterly or semesterly(User Setting)
- *      - GET journal
- *      - GET entries (semester or quqarter)
- *      - Go through each entry to see if there exist an entry for current date
- *          - Make new entry otherwise based on date
- *      - In that entry, create new task
- */
+const addTask = document.getElementById('add-task');
+const addNote = document.getElementById('add-note');
+const taskOverlay = document.getElementById('task-overlay');
+const noteOverlay = document.getElementById('note-overlay');
 
 if (!session.isUserLoggedIn()) {
   // eslint-disable-next-line no-alert
   alert('You must sign in to view your journal');
   window.location.href = '/signin';
 }
+
+// open either the add task or add note overlay
+function openOverlay(menu) {
+  console.log(menu.style.visibility);
+  menu.style.visibility = "visible";
+}
+
+// ON CLICK of add task button - open the add task menu
+addTask.addEventListener('click', (event) => {
+  openOverlay(taskOverlay);
+});
+
+// ON CLICK of add note button - open the add note menu
+addNote.addEventListener('click', (event) => {
+openOverlay(noteOverlay);
+});
 
 // Today's date
 const today = new Date();
@@ -24,9 +40,9 @@ const today = new Date();
 // Current User
 const user = session.getUser();
 // Current user's id
-// const id = user._id;
+const id = user._id;
 // TEST USER ID
-const id = "60bebc3da19d7bd0468fed9d";
+// const id = "60bebc3da19d7bd0468fed9d";
 // console.log(`Print current user's id: ${id}`);
 
 // Return "Quarter" or "Semester" DEFAULT: "Quarter"
@@ -37,7 +53,7 @@ if(user.term === ""){
 // console.log(`Print term type: ${termType}`);
 
 // SET end Date for end of quarter
-let endDate = new Date();
+const endDate = new Date();
 if ( termType === "Quarter"){
   endDate.setDate(endDate.getDate() + 77);
   // Else we're in a semester
@@ -55,7 +71,7 @@ const getJournal = async () => {
   const { data: journal } = await journalAPI.getJournal(payload);
 
   return journal;
-} 
+}
 
 // GET entry promise and set it to JSON
 const getTerm = async (someDate) => {
@@ -69,6 +85,7 @@ const getTerm = async (someDate) => {
     // Else create a term 
   } else {
     let someEndDate = someDate;
+    // UPDATE new date
     if ( termType === "Quarter") {
       someEndDate.setDate(someEndDate.getDate() + 77);
     } else {
@@ -86,9 +103,9 @@ const getTerm = async (someDate) => {
       id,
       date: someDate
     }
-    const { data: term } = await journalAPI.getJournalTerm(payload3);
-    return term;
-  }
+    const { data: newTerm } = await journalAPI.getJournalTerm(payload3);
+    return newTerm;
+
 };
 
 // GET journal promise
@@ -101,7 +118,7 @@ journal.then(response => {
       id,
       type: termType,
       startDate: today,
-      endDate: endDate
+      endDate
     }
     journalAPI.addJournalTerm(payload);
   }
@@ -110,17 +127,54 @@ journal.then(response => {
 // GET term object
 const term = getTerm(today);
 // GET term ID
-let tId = await term.then(response =>  {return response._id});
+let tId;
+
+(async () => {
+  tId = await term.then(response => response._id);
+})();
+
 console.log(tId);
 term.then(response => console.log(`This is the term: `, response));
 
+const someNote = document.createElement('create-note');
 const someTask = document.createElement('create-task');
 /**
  * Make create-task interface pop-up when button is clicked
  */
 function createTask() {
-  document.querySelector('.main').appendChild(someTask);
+  document.querySelector('#task-overlay').appendChild(someTask);
 }
+
+/**
+ * Make create-note interface pop-up when button is clicked
+ */
+function createNote() {
+  document.querySelector('#note-overlay').appendChild(someNote);
+}
+
+
+const addNoteBtns = document.querySelectorAll("#add-note");
+let noteCounter=0;
+addNoteBtns.forEach((btn) => {
+  btn.addEventListener("click", createNote);
+  btn.setAttribute("name", noteCounter);
+  btn.addEventListener("click", setWeekNum);
+  noteCounter++;
+})
+
+function submitNote(){
+  const payload = {
+    id,
+    content: someNote.getNoteContent,
+    termId: tId,
+    weekNumber: weekNum
+  }
+
+  journalAPI.addTermNote(payload);
+}
+
+const saveNote = someNote.submitBtn;
+saveNote.addEventListener("click", submitNote);
 
 let currWeek = 11 - ((Math.abs(endDate - today)) / (1000 * 3600 * 24)) / 7;
 
@@ -138,8 +192,9 @@ addTaskBtns.forEach((btn) => {
   btn.addEventListener("click", createTask)
   btn.setAttribute("name", counter);
   btn.addEventListener("click", setWeekNum);
-  counter++;
+  counter+=1;
 });
+
 
 /**
  * Grab the inputs and send it to MongoDB
@@ -160,63 +215,66 @@ const saveTask = someTask.submitBtn;
 saveTask.addEventListener("click", submitTask)
 
 // GET tasks and notes for specific week and display it
-function displayItems(specificTerm) {
-  let weekCount = 0;
-  specificTerm.then(res => res.weeks.forEach((week) => {
-    week.tasks.forEach((task) => {
-      const newTask = document.createElement('task-toggle');
-      newTask.content = task;
-      const taskDate = new Date(task.dueDate);
-      newTask.date = taskDate;
-      document.querySelector(`#task-container-${weekCount}`).appendChild(newTask);
-    })
-    week.notes.forEach((note) => {
-      const newNote = document.createElement('note-toggle');
-      newNote.content = note;
-      document.querySelector(`#task-container-${weekCount}`);
-    })
-    weekCount++;
-  }
-  ));
-}
-// DISPLAY when page first loads
-displayItems(term);
 
-function removeAllTasksAndNotes(parent) {
-  parent.innerHTML = '';
+let weekCount = 0;
+term.then(res => res.weeks.forEach((week) => {
+  week.tasks.forEach((task) => {
+    const newTask = document.createElement('task-toggle');
+    newTask.content = task;
+    const taskDate = new Date(task.dueDate);
+    newTask.date = taskDate;
+    document.querySelector(`#task-container-${weekCount}`).appendChild(newTask);
+  })
+  week.notes.forEach((note) => {
+    const newNote = document.createElement('note-toggle');
+    newNote.content = note;
+    document.querySelector(`#note-container-${weekCount}`).appendChild(newNote);
+  })
+  weekCount++;
 }
+));
+// DISPLAY when page first loads
+// displayItems(term);
+
+
+
+// function removeAllTasksAndNotes(parent) {
+//   parent.innerHTML = '';
+// }
 
 /**
  * Creates new term, display it
  * Forward arrow function
- * 
+ *
  * NOT DONE
  */
-function nextTerm(){
-  const currentPeriodTitle = document.querySelector(".currentPeriod");
-  const notesContain = document.querySelectorAll(".notes-container");
-  const tasksContain = document.querySelectorAll(".task-container");
-  tasksContain.forEach((taskContainer) => {
-    removeAllTasksAndNotes(taskContainer);
-  })
-  notesContain.forEach((noteContainer) =>{
-    removeAllTasksAndNotes(noteContainer);
-  })
-  // SET new term and display 
-  let newTermStartDate = new Date();
-  let newTermEndDate = newTermStartDate;
-  newTermStartDate = journal.then(response => { return new Date(response.terms[response.terms.length-1].endDate)});
-  newTermEndDate = newTermStartDate.then(response =>{return response});
-  if (termType === "Quarter") {
-    newTermEndDate.setDate(newTermEndDate.getDate() + 77);
-  } else {
-    newTermEndDate.setDate(newTermEndDate.getDate() + 112);
-  }
-  // const moreTerm = getTerm(newTermStartDate);
-  // displayItems(moreTerm);
-}
-const forwardBtn = document.querySelector(".forward-button");
-forwardBtn.addEventListener("click", nextTerm);
+
+// function nextTerm(){
+//   const currentPeriodTitle = document.querySelector(".currentPeriod");
+//   const notesContain = document.querySelectorAll(".notes-container");
+//   const tasksContain = document.querySelectorAll(".task-container");
+//   tasksContain.forEach((taskContainer) => {
+//     removeAllTasksAndNotes(taskContainer);
+//   })
+//   notesContain.forEach((noteContainer) =>{
+//     removeAllTasksAndNotes(noteContainer);
+//   })
+//   // SET new term and display 
+//   let newTermStartDate = new Date();
+//   let newTermEndDate = newTermStartDate;
+//   newTermStartDate = journal.then(response => { return new Date(response.terms[response.terms.length-1].endDate)});
+//   newTermEndDate = newTermStartDate.then(response =>{return response});
+//   if (termType === "Quarter") {
+//     newTermEndDate.setDate(newTermEndDate.getDate() + 77);
+//   } else {
+//     newTermEndDate.setDate(newTermEndDate.getDate() + 112);
+//   }
+//   // const moreTerm = getTerm(newTermStartDate);
+//   // displayItems(moreTerm);
+// }
+// const forwardBtn = document.querySelector(".forward-button");
+// forwardBtn.addEventListener("click", nextTerm);
+
 
 
 /**

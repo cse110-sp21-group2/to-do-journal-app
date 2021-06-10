@@ -6,7 +6,7 @@ eventTemplate.innerHTML = `
 
         .event-grid {
             display: grid;
-            grid-template-columns: 3fr 4fr;
+            grid-template-columns: 2fr 3fr 1fr;
             grid-template-rows: auto;
             margin: 5px;
             width: 90%;
@@ -43,6 +43,9 @@ eventTemplate.innerHTML = `
             display: table-cell;
             padding: 10px;
         }
+        .delete-button {
+            opacity:0.5;
+        }
 
     </style>
     
@@ -52,6 +55,9 @@ eventTemplate.innerHTML = `
         </div>
         <div class="event">
             <p class="event-content"></p>
+        </div>
+        <div class="button">
+            <button class="delete-button" type="button">X</button>
         </div>
     </div>
 `;

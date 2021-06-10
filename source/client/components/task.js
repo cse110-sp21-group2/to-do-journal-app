@@ -63,18 +63,18 @@ taskTemplate.innerHTML = `
         
 
     </style>
-    <div class="task-grid">
-        <div class="task-icon">
-            <div class="inner-icon">
+        <div class="task-grid">
+            <div class="task-icon">
+                <div class="inner-icon">
+                </div>
+            </div>
+            <div class="task">
+                <p class="task-content"></p>
+            </div>
+            <div class="date">
+                <p class="curr-date"></p>
             </div>
         </div>
-        <div class="task">
-            <p class="task-content"></p>
-        </div>
-        <div class="date">
-            <p class="curr-date"></p>
-        </div>
-    </div>
 `;
 
 // 'task-toggle' component
@@ -104,12 +104,9 @@ class Task extends HTMLElement {
      * @params date - date object in task object
      */
     set date(date){
-        const hour = date.getHours()%12;
-        const ampm = hour >= 12 ? 'PM' : 'AM';
-        const minute = date.getMinutes();
-        const month = date.getMonth();
-        const day = date.getDate();
-        this.shadowRoot.querySelector('p.curr-date').innerHTML = `by ${month}/${day}, ${hour}:${minute}${ampm}`;
+        const month = date.getMonth()+1;
+        const day = date.getDate()+1;
+        this.shadowRoot.querySelector('p.curr-date').innerHTML = `by ${month}/${day}`;
     }
 }
 

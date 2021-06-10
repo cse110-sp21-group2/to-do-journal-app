@@ -35,6 +35,7 @@
         </button>
       </div>
     </div>
+
     <!-- Top Center Search Bar -->
     <!-- <div class="search-bar">
         <i class="fas fa-search" id="search-icon"></i>
@@ -56,18 +57,19 @@
     </div>
     <!-- Center Content Region -->
     <div class="content-region">
-      <div>
+      <div class="top-of-the-world">
         <h2 class="week-header-current">Week</h2>
         <h2 class="week-number-current">1</h2>
       </div>
       <div class="week-content-top">
         <div id="note-container-0" class="notes-container">
-          <p>PLACEHOLDER FOR NOTES</p>
+          <button type="button" class="add-button" id="add-note">
+            <i class="fas fa-plus"></i>
+          </button>
         </div>
         <div id="task-container-0" class="task-container">
-          <p>PLACEHOLDER FOR TASKS</p>
         </div>
-        <button type="button" id="add-task" class="button-circle">
+        <button type="button" class="add-button" id="add-task">
           <i class="fas fa-plus"></i>
         </button>
       </div>
@@ -77,12 +79,13 @@
       </div>
       <div class="week-content-middle">
         <div id="note-container-1" class="notes-container">
-          <p>PLACEHOLDER FOR NOTES</p>
+          <button type="button" class="add-button" id="add-note">
+            <i class="fas fa-plus"></i>
+          </button>
         </div>
         <div id="task-container-1" class="task-container">
-          <p>PLACEHOLDER FOR TASKS</p>
         </div>
-        <button type="button" id="add-task" class="button-circle">
+        <button type="button" class="add-button" id="add-task">
           <i class="fas fa-plus"></i>
         </button>
       </div>
@@ -92,12 +95,13 @@
       </div>
       <div class="week-content-bottom">
         <div id="note-container-2" class="notes-container">
-          <p>PLACEHOLDER FOR NOTES</p>
+          <button type="button" class="add-button" id="add-note">
+            <i class="fas fa-plus"></i>
+          </button>
         </div>
         <div id="task-container-2" class="task-container">
-          <p>PLACEHOLDER FOR TASKS</p>
         </div>
-        <button type="button" id="add-task" class="button-circle">
+        <button type="button" class="add-button" id="add-task">
           <i class="fas fa-plus"></i>
         </button>
       </div>
@@ -105,6 +109,7 @@
         <i class="fas fa-chevron-down"></i>
       </button>
     </div>
+
     <!-- Left Navigation Region -->
     <div class="left-nav"></div>
     <!-- Right Navigation Region -->
@@ -183,13 +188,35 @@
       </div>
       <div class="events-content"></div>
     </div>
+
+    <!-- Overlays -->
+    <div class="overlay">
+
+      <!-- Add Note Menu -->
+      <div id="note-overlay">
+        <!-- ADD NOTE COMPONENT -->
+        <div class="create-note"></div>
+      </div>
+
+      <!-- Add Task Menu -->
+      <div id="task-overlay">
+        <!-- ADD TASK COMPONENT -->
+        <div class="create-task"></div>
+      </div>
+
+    </div>
+
   </main>
 
-  <!-- left-nav web component -->
+  <!-- SCRIPTS / COMPONENTS -->
+  <script src="../components/task.js"></script>
+  <script src="../components/event.js"></script>
+  <script src="../components/note.js"></script>
   <script src="../components/left-nav-component.js" type="module"></script>
+  <script src="../components/create-note.js" type="module"></script>
   <script src="../components/create-task.js" type="module"></script>
   <script src="../scripts/semester-quarter.js" type="module"></script>
-  <script src="../components/task.js" type="module"></script>
+
 </body>
 
 </html>

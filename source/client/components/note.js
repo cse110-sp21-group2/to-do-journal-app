@@ -21,9 +21,12 @@ noteTemplate.innerHTML = `
         }
         .note-content {
             display: table-cell;
+            white-space: pre-line;
             text-align: left;
             vertical-align: middle;
-            font-family: "Roboto";
+            font-family: Roboto Condensed;
+            font-style: normal;
+            font-weight: normal;
             font-size: 18px;
             line-height: 1;
         }
