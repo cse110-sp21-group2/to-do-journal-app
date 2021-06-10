@@ -50,7 +50,7 @@ class LeftNav extends HTMLElement {
                 background-color: white;
                 border: solid;
                 display: table;
-                margin: 0 auto;
+                margin: 15px auto;
             }
 
             .link-text{

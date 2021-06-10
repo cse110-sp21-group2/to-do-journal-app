@@ -179,7 +179,7 @@ modalTemplate.innerHTML = `
         </div>
         <br style="clear: both" />
         <div class="save">
-          <input class="save-btn" type="button" value="Save Changes" />
+          <input class="save-btn" type="button" value="Save" />
         </div>
       </form>
       <button title="Close" class="close-modal">
