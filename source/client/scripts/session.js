@@ -28,6 +28,15 @@ session.isUserLoggedIn = () => {
 };
 
 /**
+ * Logs out the user for this session
+ */
+session.logout = () => {
+  localStorage.removeItem('sessionUser');
+  localStorage.removeItem('userJournal');
+  window.location.href = '/signin';
+}
+
+/**
  * Sets the journal for this session
  */
 session.setJournal = (journal) => {

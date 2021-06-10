@@ -13,6 +13,7 @@ const firstDayOfTheWeekInput = document.getElementById('day');
 const stylesInput = document.getElementById('color-scheme');
 const languageInput = document.getElementById('lang');
 const submitBtn = document.querySelector('.save-btn');
+const logoutBtn = document.querySelector('.logout-btn');
 
 // Current User
 const user = session.getUser();
@@ -49,3 +50,7 @@ submitBtn.addEventListener('click', async () => {
   // Update the user info locally
   session.setUser(updatedResult.data);
 });
+
+logoutBtn.addEventListener('click', () => {
+  session.logout();
+})
