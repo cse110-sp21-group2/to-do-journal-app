@@ -37,6 +37,8 @@ console.log(`Today's date: ${today}`);
 const user = session.getUser();
 // Current user's id
 const id = user._id;
+// TEST user
+// const id = "60bebc3da19d7bd0468fed9d";
 console.log(`Print current user's id: ${id}`);
 
 // GET entry promise and set it to JSON
@@ -44,7 +46,7 @@ const getEntry = async () => {
   const payload = {
     id,
     date: today,
-    type: "Daily",
+    type: "Daily"
   };
   const  { data: entry, success}  = await journalAPI.getJournalEntry(payload);
   // Output entry data
@@ -86,11 +88,10 @@ const entry = getEntry();
       document.querySelector('.event-container').appendChild(newEvent);
     }))
 
-    // GET each note from entry and DISPLAY it
-    entry.then(res => res.notes.forEach((note) => {
-      const newNote = document.createElement('note-toggle');
-      newNote.content = note;
-      document.querySelector('.today-container').appendChild(newNote);
-    }))
-  }
-})();
+  // GET each note from entry and DISPLAY it
+  entry.then(res => res.notes.forEach((note) => {
+    const newNote = document.createElement('note-toggle');
+    newNote.content = note;
+    document.querySelector('.today-container').appendChild(newNote);
+  }))
+}
