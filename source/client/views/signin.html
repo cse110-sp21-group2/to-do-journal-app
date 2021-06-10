@@ -1,75 +1,93 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="google-signin-client_id"
+      content="110656900996-fi7ahcr6josugvshub5bh4mm0lbl9m69.apps.googleusercontent.com"
+    />
+    <title>Sign In</title>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="google-signin-client_id"
-    content="110656900996-fi7ahcr6josugvshub5bh4mm0lbl9m69.apps.googleusercontent.com" />
-  <title>Sign In</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Unica+One&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      @font-face {
+        font-family: hello honey;
+        src: url('hello_honey.otf');
+      }
+    </style>
 
-  <link rel="preconnect" href="https://fonts.gstatic.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Unica+One&display=swap" rel="stylesheet" />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
-    rel="stylesheet" />
-  <style>
-    @font-face {
-      font-family: hello honey;
-      src: url('hello_honey.otf');
-    }
-  </style>
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="../styles/signin.css" />
+  </head>
 
-  <!-- Main CSS -->
-  <link rel="stylesheet" href="../styles/signin.css" />
-</head>
-
-<body>
-  <div id="fb-root"></div>
-  <main>
-    <div class="row">
-      <div class="column hero-banner">
-        <img class="column hero-banner-image" src="https://i.ibb.co/CwSbqYB/Welcome-Back.png" alt="" />
-        <p class="welcome-back">Welcome Back</p>
+  <body>
+    <div id="fb-root"></div>
+    <main>
+      <div class="row">
+        <div class="column hero-banner">
+          <img
+            class="column hero-banner-image"
+            src="https://i.ibb.co/CwSbqYB/Welcome-Back.png"
+            alt=""
+          />
+          <p class="welcome-back">Welcome Back</p>
+        </div>
+        <!--Bookmark-->
+        <div class="bookmark">
+          <img src="https://i.ibb.co/LtnwkkD/Sign-In-Bookmark.png" alt="" />
+        </div>
+        <div class="column login-form">
+          <form>
+            <img src="../assets/logo256.png" alt="Avatar" class="avatar" />
+            <br />
+            <h1 class="header">Sign In</h1>
+            <br />
+            <label for="email">Email</label>
+            <input
+              type="text"
+              id="email"
+              name="email"
+              placeholder="Type your email here..."
+            />
+            <br />
+            <br />
+            <label for="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Type your password here..."
+            />
+            <br />
+            <br />
+            <a href="/forgot-password">Forgot password?</a>
+            <div class="login-btn-container">
+              <input class="login-btn" type="submit" value="Login" />
+            </div>
+            <p class="or">OR</p>
+            <div className="google">
+              <div id="google-sign-in"></div>
+            </div>
+            <a class="sign-up" href="/signup">
+              Don't have an account? Create an account today!
+            </a>
+          </form>
+        </div>
       </div>
-      <!--Bookmark-->
-      <div class="bookmark">
-        <img src="https://i.ibb.co/LtnwkkD/Sign-In-Bookmark.png" alt="">
-      </div>
-      <div class="column login-form">
-        <form>
-          <img src="../assets/logo256.png" alt="Avatar" class="avatar" />
-          <br />
-          <h1 class="header">Sign In</h1>
-          <br />
-          <label for="email">Email</label>
-          <input type="text" id="email" name="email" placeholder="Type your email here..." />
-          <br />
-          <br />
-          <label for="password">Password</label>
-          <input type="text" id="password" name="password" placeholder="Type your password here..." />
-          <br />
-          <br />
-          <a href="/forgot-password">Forgot password?</a>
-          <div class="login-btn-container">
-            <input class="login-btn" type="submit" value="Login" />
-          </div>
-          <p class="or">OR</p>
-          <div className="google">
-            <div id="google-sign-in"></div>
-          </div>
-          <a class="sign-up" href="/signup">
-            Don't have an account? Create an account today!
-          </a>
-        </form>
-      </div>
-    </div>
-  </main>
-  <!-- Scripts -->
-  <script src="https://apis.google.com/js/platform.js?onload" async defer></script>
-  <script src="../scripts/signin.js" type="module"></script>
-  <script src="../scripts/googleAuth/googleAuthLogin.js" type="module"></script>
-</body>
-
+    </main>
+    <!-- Scripts -->
+    <script src="https://apis.google.com/js/platform.js?onload" async defer></script>
+    <script src="../scripts/signin.js" type="module"></script>
+    <script src="../scripts/googleAuth/googleAuthLogin.js" type="module"></script>
+  </body>
 </html>
