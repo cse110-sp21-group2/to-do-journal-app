@@ -42,7 +42,7 @@ submitBtn.addEventListener('click', async () => {
     theme: stylesInput.value,
     language: languageInput.value
   }
-  
+
   // Update the user info in the database
   const updatedResult = await userAPI.updateUserInfo({id, updatedUser});
 

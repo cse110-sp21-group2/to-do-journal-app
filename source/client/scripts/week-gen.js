@@ -40,6 +40,7 @@ function createCalendar() {
 return dates;
 }
 
+
 let magic = createCalendar();
 let firstLabel = new Date(magic[0]);
 var dayLabel = document.getElementsByClassName("date");
@@ -48,6 +49,7 @@ for (let i = 0; i < magic.length; i+=1) {
   let thatDay = new Date(magic[i]);
   dayLabel[i].innerHTML = '<a href="daily.html">' + thatDay.getDate()+ "</a>";
   columnLabel[i].setAttribute('date-object', new Date(thatDay.getFullYear(),thatDay.getMonth(),thatDay.getDate()));
+
 }
 
 function nextWeek() {

@@ -237,7 +237,7 @@ export default class JournalController {
    * @param {string} collectionId - Collection Id.
    * @returns {Object} Journal Collection.
    */
-  async getJournalCollection({ params: { id, collectionId } }, res) {
+  async getJournalCollection({ params: { id, collectionName } }, res) {
     // Attempt to get journal for this user
     let journal;
     try {
@@ -247,9 +247,7 @@ export default class JournalController {
     }
 
     // Get the collection
-    const collection = journal.collections.find((c) =>
-      JournalController.isItem({ item: c, id: collectionId })
-    );
+    const collection = journal.collections.find((c) => c.name === collectionName);
 
     // If no entry exists for this given date, return success false
     if (!collection) {

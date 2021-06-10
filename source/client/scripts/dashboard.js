@@ -52,9 +52,9 @@ const getEntry = async () => {
   // Output entry data
   if ( success ) {
     return entry;
-  } else {
-    return null;
   }
+    return null;
+
 };
 // GET entry promise
 const entry = getEntry();
@@ -66,26 +66,27 @@ const entry = getEntry();
 // const entry = test_entry.data;
 
 
-if ( await entry.then(response => {return response}) != null ) {
-  // GET each task from entry and DISPLAY it
-  entry.then(res => res.tasks.forEach((task) => {
-    const newTask = document.createElement('task-toggle');
-    newTask.content = task;
-    const taskDate = new Date(task.dueDate);
-    newTask.date = taskDate;
-    document.querySelector('.task-container').appendChild(newTask);
-  }));
+(async () => {
+  if ( await entry.then(response => response) != null ) {
+    // GET each task from entry and DISPLAY it
+    entry.then(res => res.tasks.forEach((task) => {
+      const newTask = document.createElement('task-toggle');
+      newTask.content = task;
+      const taskDate = new Date(task.dueDate);
+      newTask.date = taskDate;
+      document.querySelector('.task-container').appendChild(newTask);
+    }));
 
-  // GET each event from entry and DISPLAY it
-  entry.then(res => res.events.forEach((event) => {
-    const newEvent = document.createElement('event-toggle');
-    const startTime = new Date(event.startTime);
-    const endTime = new Date(event.endTime);
-    newEvent.content = event;
-    newEvent.startTime = startTime;
-    newEvent.endTime = endTime;
-    document.querySelector('.event-container').appendChild(newEvent);
-  }))
+    // GET each event from entry and DISPLAY it
+    entry.then(res => res.events.forEach((event) => {
+      const newEvent = document.createElement('event-toggle');
+      const startTime = new Date(event.startTime);
+      const endTime = new Date(event.endTime);
+      newEvent.content = event;
+      newEvent.startTime = startTime;
+      newEvent.endTime = endTime;
+      document.querySelector('.event-container').appendChild(newEvent);
+    }))
 
   // GET each note from entry and DISPLAY it
   entry.then(res => res.notes.forEach((note) => {

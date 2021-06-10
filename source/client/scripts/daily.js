@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-param-reassign */
 /* eslint-disable no-alert */
 /* eslint-disable no-console */
 /* eslint-disable no-underscore-dangle */
@@ -277,6 +279,7 @@ function submitNote() {
 
   console.log(journalAPI.addEntryNote(payload));
 }
+
 
 const saveNote = newNote.submitBtn;
 saveNote.addEventListener("click", submitNote)

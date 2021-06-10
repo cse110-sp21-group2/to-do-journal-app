@@ -1,3 +1,8 @@
+/* eslint-disable import/extensions */
+/* eslint-disable no-param-reassign */
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-console */
+/* eslint-disable no-underscore-dangle */
 import session from './session.js';
 import journalAPI from '../api/journalAPI.js';
 
@@ -48,7 +53,7 @@ if(user.term === ""){
 // console.log(`Print term type: ${termType}`);
 
 // SET end Date for end of quarter
-let endDate = new Date();
+const endDate = new Date();
 if ( termType === "Quarter"){
   endDate.setDate(endDate.getDate() + 77);
   // Else we're in a semester
@@ -66,7 +71,7 @@ const getJournal = async () => {
   const { data: journal } = await journalAPI.getJournal(payload);
 
   return journal;
-} 
+}
 
 // GET entry promise and set it to JSON
 const getTerm = async (someDate) => {
@@ -98,9 +103,9 @@ const getTerm = async (someDate) => {
       id,
       date: someDate
     }
-    const { data: term } = await journalAPI.getJournalTerm(payload3);
-    return term;
-  }
+    const { data: newTerm } = await journalAPI.getJournalTerm(payload3);
+    return newTerm;
+
 };
 
 // GET journal promise
@@ -113,7 +118,7 @@ journal.then(response => {
       id,
       type: termType,
       startDate: today,
-      endDate: endDate
+      endDate
     }
     journalAPI.addJournalTerm(payload);
   }
@@ -122,7 +127,12 @@ journal.then(response => {
 // GET term object
 const term = getTerm(today);
 // GET term ID
-let tId = await term.then(response =>  {return response._id});
+let tId;
+
+(async () => {
+  tId = await term.then(response => response._id);
+})();
+
 console.log(tId);
 term.then(response => console.log(`This is the term: `, response));
 
@@ -141,6 +151,7 @@ function createTask() {
 function createNote() {
   document.querySelector('#note-overlay').appendChild(someNote);
 }
+
 
 const addNoteBtns = document.querySelectorAll("#add-note");
 let noteCounter=0;
@@ -182,7 +193,7 @@ addTaskBtns.forEach((btn) => {
   btn.addEventListener("click", createTask)
   btn.setAttribute("name", counter);
   btn.addEventListener("click", setWeekNum);
-  counter++;
+  counter+=1;
 });
 
 
@@ -205,6 +216,7 @@ const saveTask = someTask.submitBtn;
 saveTask.addEventListener("click", submitTask)
 
 // GET tasks and notes for specific week and display it
+
 let weekCount = 0;
 term.then(res => res.weeks.forEach((week) => {
   week.tasks.forEach((task) => {
@@ -234,9 +246,10 @@ term.then(res => res.weeks.forEach((week) => {
 /**
  * Creates new term, display it
  * Forward arrow function
- * 
+ *
  * NOT DONE
  */
+
 // function nextTerm(){
 //   const currentPeriodTitle = document.querySelector(".currentPeriod");
 //   const notesContain = document.querySelectorAll(".notes-container");
@@ -262,6 +275,7 @@ term.then(res => res.weeks.forEach((week) => {
 // }
 // const forwardBtn = document.querySelector(".forward-button");
 // forwardBtn.addEventListener("click", nextTerm);
+
 
 
 /**
