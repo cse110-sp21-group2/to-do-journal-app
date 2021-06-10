@@ -153,7 +153,7 @@ const newTask = document.createElement('create-task');
  * Make create-task interface pop-up when button is clicked
  */
 function createTask() {
-  document.querySelector('.main').appendChild(newTask);
+  document.querySelector('.create-task').appendChild(newTask);
 }
 // SET click function for add-task button
 const addTaskBtn = document.querySelector("#add-task");
@@ -194,8 +194,7 @@ const newEvent = document.createElement('create-event');
  * Create event interface pop-up
  */
 function createEvent() {
-  document.querySelector("#events-content").appendChild(newEvent);
-
+  document.querySelector(".create-event").appendChild(newEvent);
 }
 // CLICK button to make popup
 const addEventBtn= document.querySelector("#add-event");
@@ -207,9 +206,9 @@ addEventBtn.addEventListener("click", createEvent);
  function submitEvent() {
   const payload = {
     id,
-    content: newEvent.getEventContent(),
-    startTime: newEvent.getStartTime(),
-    endTime: newEvent.getEndTime(),
+    content: newEvent.getEventContent,
+    startTime: newEvent.getStartTime,
+    endTime: newEvent.getEndTime,
     entryDate: today,
     URL: null,
     type: 'Daily'
