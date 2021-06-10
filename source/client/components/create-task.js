@@ -7,6 +7,11 @@ class createTask extends HTMLElement {
 
         createTaskTemplate.innerHTML = `
             <style>
+                h1 {
+                    font-family: Unica One;
+                    font-style: normal;
+                    font-weight: normal;
+                }
                 form {
                     display: grid;
                     width: 500px;
@@ -20,6 +25,14 @@ class createTask extends HTMLElement {
                     box-shadow: 0px 5px 20px 5px rgba(0, 0, 0, 0.25);
                     border-radius: 15px;
                 }
+                input {
+                    font-family: Roboto Condensed;
+                    font-style: normal;
+                    font-weight: normal;
+                    width: 200px;
+                    height: 40px;
+                    border-radius: 10px;
+                }
                 .task-name-field {
                     font-family: Roboto Condensed;
                     font-style: normal;
@@ -27,8 +40,7 @@ class createTask extends HTMLElement {
                     font-size: 36px;
                     color: rgba(22, 42, 71, 0.75);
                 }
-                .start-date-field,
-                end-time-field,
+                .end-date-field
                 link-field {
                     font-family: Roboto Condensed;
                     font-style: normal;
@@ -62,30 +74,31 @@ class createTask extends HTMLElement {
                     cursor: pointer;
                 }        
             </style>
-        <form class="create-task">
-            <h2 class="create-task-title"> Create a Task</h2>
-            <div class="task-name-field">
-                <label for="task-name"></label>
-                <input type="text" id="task-name" name="task-name" placeholder="Task Name">
-            </div>
-                <div class="start-date-field">
-                    <label for="start-date">Start Date</label>
-                    <input id="start-date" type="date" name="start-date">
+            <form class="create-task">
+                <h1 class="create-task-title"> Create a Task</h1>
+                <div class="task-name-field">
+                    <label for="task-name"></label>
+                    <input type="text" id="task-name" name="task-name" placeholder="Task Name">
                 </div>
-                <div class="end-date-field">
-                    <label for="end-date">End date</label>
-                    <input id="end-date" type="date" name="end-date"></input>
-                </div>
-                <div class="link-field">
-                    <label for="link"></label>
-                    <input type="url" id="link" name="link" placeholder="Link">
-                </div>
-                <div class="buttons">
-                    <input type="submit" name="cancel" value="Cancel" class="cancel-button">
-                    <input type="submit" name="save" value="Save" class="save-button">
-                </div>
-            </form>
+                    <div class="end-date-field">
+                        <label for="end-date">End date</label>
+                        <br>
+                        <input id="end-date" type="date" name="end-date"></input>
+                    </div>
+                    <div class="link-field">
+                        <label for="link"></label>
+                        <input type="url" id="link" name="link" placeholder="Link">
+                    </div>
+                    <div class="buttons">
+                        <input type="submit" name="cancel" value="Cancel" class="cancel-button">
+                        <input type="submit" name="save" value="Save" class="save-button">
+                    </div>
+                </form>
         `;
+
+        // $(".cancel-button").submit(function(e) {
+        //     e.preventDefault();
+        // });
 
         // create a shadow root for this web component
         this.attachShadow({ mode: 'open' })
@@ -95,8 +108,8 @@ class createTask extends HTMLElement {
     }
 
     /**
- * Getter that gets the name/content of task
- */
+     * Getter that gets the name/content of task
+     */
     get getTaskContent() {
         return this.shadowRoot.querySelector('input#task-name').value;
     }

@@ -7,19 +7,32 @@ class createEvent extends HTMLElement {
 
         createEventTemplate.innerHTML = `
             <style>
-                form {
-                    display: grid;
-                    width: 500px;
-                    height: 700px;
-                    font-family: Roboto Condensed;
-                    font-style: normal;
-                    font-weight: normal;
-                    color: rgba(22, 42, 71, 0.75);
-                    padding: 30px;
-                    background-color: white;
-                    box-shadow: 0px 5px 20px 5px rgba(0, 0, 0, 0.25);
-                    border-radius: 15px;
-                }
+            h1 {
+                font-family: Unica One;
+                font-style: normal;
+                font-weight: normal;
+            }
+            form {
+                display: grid;
+                width: 500px;
+                height: 700px;
+                font-family: Roboto Condensed;
+                font-style: normal;
+                font-weight: normal;
+                color: rgba(22, 42, 71, 0.75);
+                padding: 30px;
+                background-color: white;
+                box-shadow: 0px 5px 20px 5px rgba(0, 0, 0, 0.25);
+                border-radius: 15px;
+            }
+            input {
+                font-family: Roboto Condensed;
+                font-style: normal;
+                font-weight: normal;
+                width: 200px;
+                height: 40px;
+                border-radius: 10px;
+            }
                 .event-name-field {
                     font-family: Roboto Condensed;
                     font-style: normal;
@@ -63,17 +76,19 @@ class createEvent extends HTMLElement {
                 }        
             </style>
         <form class="create-event">
-            <h2 class="create-event-title"> Create an Event</h2>
+            <h1 class="create-event-title"> Create an Event</h1>
             <div class="event-name-field">
                 <label for="event-name"></label>
                 <input type="text" id="event-name" name="event-name" placeholder="Event Name">
             </div>
                 <div class="start-time-field">
                     <label for="start-time">Start Time</label>
+                    <br>
                     <input id="start-time" type="time" name="start-time">
                 </div>
                 <div class="end-time-field">
                     <label for="end-time">End Time</label>
+                    <br>
                     <input id="end-time" type="time" name="end-time"></input>
                 </div>
                 <div class="link-field">

@@ -30,7 +30,6 @@ if (!session.isUserLoggedIn()) {
   window.location.href = '/signin';
 }
 
-
 // Today's date
 const today = new Date();
 console.log(`Today's date: ${today}`);
@@ -38,6 +37,8 @@ console.log(`Today's date: ${today}`);
 const user = session.getUser();
 // Current user's id
 const id = user._id;
+// TEST user
+// const id = "60bebc3da19d7bd0468fed9d";
 console.log(`Print current user's id: ${id}`);
 
 // GET entry promise and set it to JSON
@@ -45,7 +46,7 @@ const getEntry = async () => {
   const payload = {
     id,
     date: today,
-    type: "Daily",
+    type: "Daily"
   };
   const  { data: entry, success}  = await journalAPI.getJournalEntry(payload);
   // Output entry data

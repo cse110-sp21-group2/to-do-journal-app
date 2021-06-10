@@ -21,7 +21,7 @@ const user = session.getUser();
 const id = user._id;
 
 // Initialize the input fields to display the current user's info
-nameInput.value = user.userName;
+nameInput.value = user.name;
 emailInput.value = user.email;
 termInput.value = user.term;
 firstDayOfTheWeekInput.value = user.firstDayOfTheWeek;

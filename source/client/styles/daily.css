@@ -263,7 +263,7 @@ body {
   min-width: 1050px;
   width: auto;
   display: grid;
-  grid-template-columns: 2fr 10fr 5fr;
+  grid-template-columns: 6fr 6fr 6fr;
   grid-template-rows: 60px auto;
   justify-items: start;
   align-items: start;
@@ -291,6 +291,15 @@ body {
   grid-row: 2;
   width: 100%;
   background-color: white;
+  overflow: auto;
+  border: 1px var(--mainColor) solid;
+}
+
+#events-content,#tasks-content,#notes-content {
+  height: 40em;
+  width: 20rem;
+  width: 100%;
+  padding: 10px;
 }
 
 #notes-header {
@@ -302,22 +311,23 @@ body {
   grid-column: 2;
   grid-row: 2;
   width: 100%;
+  overflow: auto;
+  background: white;
+  border: 1px var(--mainColor) solid;
 }
 
 #tasks-header {
   width: 150px;
 }
+
 #tasks-container {
   grid-column: 3;
   grid-row: 2;
   width: 100%;
-}
-#tasks-content {
-  height: 40rem;
-  width: 20rem;
+  overflow: auto;
+  height: auto;
   background: white;
   border: 1px var(--mainColor) solid;
-  width: 100%;
 }
 
 #add-media-container {
@@ -455,7 +465,23 @@ button {
   visibility: hidden;
   z-index: 100;
   text-align: center;
-  background-color: rgb(147, 181, 253);
+  /* background-color: rgb(147, 181, 253); */
+  border-radius: 10px;
+  font-size: 20px;
+  height: 700px;
+  width: 500px;
+  opacity: 100;
+}
+
+#note-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  visibility: hidden;
+  z-index: 100;
+  text-align: center;
+  /* background-color: rgb(147, 181, 253); */
   border-radius: 10px;
   font-size: 20px;
   height: 700px;
@@ -471,7 +497,7 @@ button {
   visibility: hidden;
   z-index: 100;
   text-align: center;
-  background-color: rgb(147, 181, 253);
+  /* background-color: rgb(147, 181, 253); */
   border-radius: 10px;
   font-size: 20px;
   height: 700px;
