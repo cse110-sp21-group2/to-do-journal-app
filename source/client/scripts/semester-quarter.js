@@ -105,8 +105,7 @@ const getTerm = async (someDate) => {
     }
     const { data: newTerm } = await journalAPI.getJournalTerm(payload3);
     return newTerm;
-
-};
+}};
 
 // GET journal promise
 const journal = getJournal();

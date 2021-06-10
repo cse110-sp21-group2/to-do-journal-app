@@ -58,13 +58,6 @@ const getEntry = async () => {
 };
 // GET entry promise
 const entry = getEntry();
-// TEST getting journal entry from DB
-// const test_entry = await journalAPI.getJournalEntry({
-//   id: "60ac3af75cc18f1184f58b9e",
-//   date: "2021-05-24T23:47:03.282+00:00",
-//   type: "Daily" });
-// const entry = test_entry.data;
-
 
 (async () => {
   if ( await entry.then(response => response) != null ) {
@@ -94,4 +87,4 @@ const entry = getEntry();
     newNote.content = note;
     document.querySelector('.today-container').appendChild(newNote);
   }))
-}
+}})()

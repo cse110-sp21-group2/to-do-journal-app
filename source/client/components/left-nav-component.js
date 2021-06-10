@@ -8,7 +8,6 @@ class LeftNav extends HTMLElement {
       super();
 
       const journal = session.getJournal();
-
       // templated HTML content
       const template = document.createElement('template');
 
