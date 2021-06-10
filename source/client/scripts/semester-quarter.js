@@ -1,3 +1,8 @@
+/* eslint-disable import/extensions */
+/* eslint-disable no-param-reassign */
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-console */
+/* eslint-disable no-underscore-dangle */
 import session from './session.js';
 import journalAPI from '../api/journalAPI.js';
 
@@ -62,7 +67,7 @@ if(user.term === ""){
 // console.log(`Print term type: ${termType}`);
 
 // SET end Date for end of quarter
-let endDate = new Date();
+const endDate = new Date();
 if ( termType === "Quarter"){
   endDate.setDate(endDate.getDate() + 77);
   // Else we're in a semester
@@ -80,7 +85,7 @@ const getJournal = async () => {
   const { data: journal } = await journalAPI.getJournal(payload);
 
   return journal;
-} 
+}
 
 // GET entry promise and set it to JSON
 const getTerm = async (someDate) => {
@@ -91,9 +96,9 @@ const getTerm = async (someDate) => {
   const { data: term, success } = await journalAPI.getJournalTerm(payload1);
   if(success){
     return term;
-    // Else create a term 
-  } else {
-    let someEndDate = someDate;
+    // Else create a term
+  }
+    const someEndDate = someDate;
     if ( termType === "Quarter") {
       someEndDate.setDate(someEndDate.getDate() + 77);
     } else {
@@ -111,9 +116,9 @@ const getTerm = async (someDate) => {
       id,
       date: someDate
     }
-    const { data: term } = await journalAPI.getJournalTerm(payload3);
-    return term;
-  }
+    const { data: newTerm } = await journalAPI.getJournalTerm(payload3);
+    return newTerm;
+
 };
 
 // GET journal promise
@@ -126,7 +131,7 @@ journal.then(response => {
       id,
       type: termType,
       startDate: today,
-      endDate: endDate
+      endDate
     }
     journalAPI.addJournalTerm(payload);
   }
@@ -135,7 +140,12 @@ journal.then(response => {
 // GET term object
 const term = getTerm(today);
 // GET term ID
-let tId = await term.then(response =>  {return response._id});
+let tId;
+
+(async () => {
+  tId = await term.then(response => response._id);
+})();
+
 console.log(tId);
 term.then(response => console.log(`This is the term: `, response));
 
@@ -147,7 +157,7 @@ function createTask() {
   document.querySelector('.main').appendChild(someTask);
 }
 
-let currWeek = 11 - ((Math.abs(endDate - today)) / (1000 * 3600 * 24)) / 7;
+const currWeek = 11 - ((Math.abs(endDate - today)) / (1000 * 3600 * 24)) / 7;
 
 // GET week number based on the button we click
 let weekNum = 0;
@@ -164,7 +174,7 @@ addTaskBtns.forEach((btn) => {
   btn.addEventListener("click", createTask)
   btn.setAttribute("name", counter);
   btn.addEventListener("click", setWeekNum);
-  counter++;
+  counter+=1;
 });
 
 /**
@@ -201,7 +211,7 @@ function displayItems(specificTerm) {
       newNote.content = note;
       document.querySelector(`#task-container-${weekCount}`);
     })
-    weekCount++;
+    weekCount+=1;
   }
   ));
 }
@@ -215,7 +225,7 @@ function removeAllTasksAndNotes(parent) {
 /**
  * Creates new term, display it
  * Forward arrow function
- * 
+ *
  * NOT DONE
  */
 function nextTerm(){
@@ -228,11 +238,11 @@ function nextTerm(){
   notesContain.forEach((noteContainer) =>{
     removeAllTasksAndNotes(noteContainer);
   })
-  // SET new term and display 
+  // SET new term and display
   let newTermStartDate = new Date();
   let newTermEndDate = newTermStartDate;
-  newTermStartDate = journal.then(response => { return new Date(response.terms[response.terms.length-1].endDate)});
-  newTermEndDate = newTermStartDate.then(response =>{return response});
+  newTermStartDate = journal.then(response => new Date(response.terms[response.terms.length-1].endDate));
+  newTermEndDate = newTermStartDate.then(response =>response);
   if (termType === "Quarter") {
     newTermEndDate.setDate(newTermEndDate.getDate() + 77);
   } else {

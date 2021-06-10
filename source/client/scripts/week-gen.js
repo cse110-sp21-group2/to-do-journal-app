@@ -64,7 +64,7 @@ const firstLabel = new Date(magic[0]);
 const dayLabel = document.getElementsByClassName('date');
 for (let i = 0; i < magic.length; i += 1) {
   const thatDay = new Date(magic[i]);
-  dayLabel[i].innerHTML = `<a href="daily.html">${thatDay.getDate()}</a>`;
+  dayLabel[i].innerHTML = `<a href="/daily">${thatDay.getDate()}</a>`;
 }
 
 function nextWeek() {
@@ -74,7 +74,7 @@ function nextWeek() {
     toSub.getMonth() + 1
   }/${toSub.getDate()}`;
   for (let i = 0; i < 7; i += 1) {
-    dayLabel[i].innerHTML = `<a href="daily.html">${toSub.getDate()}</a>`;
+    dayLabel[i].innerHTML = `<a href="/daily">${toSub.getDate()}</a>`;
     const saved = toSub.toString();
     magic[i] = saved;
     toSub.setDate(toSub.getDate() + 1);
@@ -88,7 +88,7 @@ function prevWeek() {
     toSub.getMonth() + 1
   }/${toSub.getDate()}`;
   for (let i = 0; i < 7; i += 1) {
-    dayLabel[i].innerHTML = `<a href="daily.html">${toSub.getDate()}</a>`;
+    dayLabel[i].innerHTML = `<a href="/daily">${toSub.getDate()}</a>`;
     const saved = toSub.toString();
     magic[i] = saved;
     toSub.setDate(toSub.getDate() + 1);

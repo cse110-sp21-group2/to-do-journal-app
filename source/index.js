@@ -79,6 +79,12 @@ app.get('/term', (req, res) => {
   res.sendFile(path.join(__dirname, 'source/client/views/semester-quarter.html'));
 });
 
+// Collections view
+app.get('/collections/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'source/client/views/collection.html'))
+});
+
+
 // User settings
 app.get('/settings', (req, res) => {
   res.sendFile(path.join(__dirname, 'source/client/views/user_settings.html'));

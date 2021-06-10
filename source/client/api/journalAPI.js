@@ -40,8 +40,8 @@ journalAPI.getJournal = async ({ id }) => {
  * @param {string} collectionId - Collection Id.
  * @returns {object} collection.
  */
-journalAPI.getJournalCollection = async ({ id, collectionId }) => {
-  const url = `/api/journal-collection/${id}&${collectionId}`;
+journalAPI.getJournalCollection = async ({ id, collectionName }) => {
+  const url = `/api/journal-collection/${id}&${collectionName}`;
   const response = await fetch(url).catch((err) => console.log(err));
   const result = response.json();
 
