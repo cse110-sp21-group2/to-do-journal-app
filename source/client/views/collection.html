@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dashboard</title>
+    <title>Collections</title>
     <link rel="preconnect" href="https://fonts.gstatic.com" />
     <link
       href="https://fonts.googleapis.com/css2?family=Unica+One&display=swap"
@@ -20,7 +20,7 @@
       integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="../styles/dashboard.css" />
+    <link rel="stylesheet" href="../styles/collection.css" />
   </head>
   <body>
     <main class="main">
@@ -31,7 +31,7 @@
           <div class="solid-bookmark-div"></div>
           <div class="bookmark-cutout-div"></div>
         </div>
-        <h1 class="title-text">Today</h1>
+        <h1 id="collection-name" class="title-text"></h1>
       </div>
       <!-- Top Center Search Bar -->
       <!-- <div class="search-bar">
@@ -53,23 +53,15 @@
         </a>
       </div>
       <!-- Center Content Area -->
-      <div class="dashboard-view">
-        <div class="today-view">
-          <h2 class="dashboard-title">Todays Notes</h2>
-          <div class="today-container">
-            <p>Place Holder for journal entry object</p>
-          </div>
-        </div>
-        <div class="task-view">
-          <h2 class="dashboard-title">Tasks</h2>
-          <div class="task-container">
-            <p>Place Holder for journal entry object</p>
-          </div>
+      <div class="collection-view">
+        <div class="note-view">
+          <h2 class="collection-title">Notes</h2>
+          <textarea id="notes" rows="41" cols="72"></textarea>
         </div>
         <div class="event-view">
-          <h2 class="dashboard-title">Events</h2>
+          <h2 class="collection-title">Events</h2>
           <div class="event-container">
-            <p>Place Holder for journal entry object</p>
+            <p>Place Holder for events</p>
           </div>
         </div>
       </div>
@@ -141,13 +133,9 @@
           <div class="goals-element">Maintain workout schedule</div>
         </div>
       </div>
-      <!-- Main Script -->
-      <script src="../scripts/dashboard.js" type="module"></script>
-      <script src="../components/task.js"></script>
-      <script src="../components/event.js"></script>
-      <script src="../components/note.js"></script>
     </main>
-
+    <!-- Main Script -->
+    <script src="../scripts/collection.js" type="module"></script>
     <!-- left-nav web component -->
     <script src="../components/left-nav-component.js" type="module"></script>
     <script src="../components/create-collection-modal.js" type="module"></script>
