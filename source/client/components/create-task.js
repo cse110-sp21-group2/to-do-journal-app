@@ -62,7 +62,7 @@ class createTask extends HTMLElement {
                     cursor: pointer;
                 }        
             </style>
-        <form action="create-task">
+        <form class="create-task">
             <h2 class="create-task-title"> Create a Task</h2>
             <div class="task-name-field">
                 <label for="task-name"></label>

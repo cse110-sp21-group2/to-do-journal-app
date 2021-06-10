@@ -54,7 +54,7 @@ class createNote extends HTMLElement {
                     cursor: pointer;
                 }        
             </style>
-        <form action="create-note">
+        <form class="create-note">
             <h2 class="create-note-title"> Add a Note</h2>
             <div class="note-content-field">
                 <label for="note-content"></label>

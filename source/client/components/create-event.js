@@ -62,7 +62,7 @@ class createEvent extends HTMLElement {
                     cursor: pointer;
                 }        
             </style>
-        <form action="create-event">
+        <form class="create-event">
             <h2 class="create-event-title"> Create an Event</h2>
             <div class="event-name-field">
                 <label for="event-name"></label>
