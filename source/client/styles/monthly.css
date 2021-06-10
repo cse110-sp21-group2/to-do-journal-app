@@ -1,3 +1,9 @@
+@font-face {
+  font-family: 'Tw Cen MT Std Medium Cond';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Tw Cen MT Std Medium Cond'), url('../assets/TwCenMTStdMediumCond.woff') format('woff');
+}
 /*shared  Elements*/
 * {
   margin: 0;
@@ -147,7 +153,7 @@ body {
 }
 .tasks-title,
 .events-title {
-  font-family: Tw Cen MT Condensed;
+  font-family: 'Tw Cen MT Std Medium Cond';
   font-style: normal;
   font-weight: normal;
   font-size: 35px;
@@ -211,7 +217,7 @@ body {
   height: 25px;
   width: 25px;
   color: #834900;
-  font-family: Tw Cen MT;
+  font-family: 'Tw Cen MT Std Medium Cond';
   font-style: normal;
   font-weight: normal;
   font-size: 12px;
@@ -254,7 +260,7 @@ body {
 
 .current-month {
   text-decoration: underline;
-  font-family: Tw Cen MT Condensed;
+  font-family: 'Tw Cen MT Std Medium Cond';
   font-style: normal;
   font-weight: normal;
   font-size: 60px;

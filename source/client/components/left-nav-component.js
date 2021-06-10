@@ -13,6 +13,12 @@ class LeftNav extends HTMLElement {
             integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
         </head>
 		    <style>
+            @font-face {
+                font-family: 'Tw Cen MT Std Medium Cond';
+                font-style: normal;
+                font-weight: normal;
+                src: local('Tw Cen MT Std Medium Cond'), url('../assets/TwCenMTStdMediumCond.woff') format('woff');
+            }
             .logo {
                 width: 180px;
                 display: table;
@@ -26,7 +32,7 @@ class LeftNav extends HTMLElement {
                 padding: 10px;
                 text-align: center;
                 /*text*/
-                font-family: Tw Cen MT Condensed;
+                font-family: 'Tw Cen MT Std Medium Cond';
                 font-style: normal;
                 font-weight: normal;
                 font-size: 45px;

@@ -9,6 +9,12 @@ class RightGoalNav extends HTMLElement {
   
       template.innerHTML = `
 		    <style>
+                @font-face {
+                    font-family: 'Tw Cen MT Std Medium Cond';
+                    font-style: normal;
+                    font-weight: normal;
+                    src: local('Tw Cen MT Std Medium Cond'), url('../assets/TwCenMTStdMediumCond.woff') format('woff');
+                }
                 .calendar-region{
                     width: 200px;
                     height:200px;
@@ -46,7 +52,7 @@ class RightGoalNav extends HTMLElement {
                 }
                 
                 .date-number {
-                    font-family: Tw Cen MT;
+                    font-family: 'Tw Cen MT Std Medium Cond';
                     width: 18px;
                     height: 20px;
                     text-align: center;
