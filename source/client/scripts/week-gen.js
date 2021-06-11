@@ -1,3 +1,5 @@
+/* eslint-disable no-array-constructor */
+/* eslint-disable no-unused-vars */
 // Array of months
 const monthNames =  ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 // Arrays of days in corresponding month
@@ -41,13 +43,13 @@ return dates;
 }
 
 
-let magic = createCalendar();
-let firstLabel = new Date(magic[0]);
-var dayLabel = document.getElementsByClassName("date");
-var columnLabel = document.getElementsByClassName("column-content");
+const magic = createCalendar();
+const firstLabel = new Date(magic[0]);
+const dayLabel = document.getElementsByClassName("date");
+const columnLabel = document.getElementsByClassName("column-content");
 for (let i = 0; i < magic.length; i+=1) {
-  let thatDay = new Date(magic[i]);
-  dayLabel[i].innerHTML = '<a href="daily.html">' + thatDay.getDate()+ "</a>";
+  const thatDay = new Date(magic[i]);
+  dayLabel[i].innerHTML = `<a href="daily.html">${  thatDay.getDate() }</a>`;
   columnLabel[i].setAttribute('date-object', new Date(thatDay.getFullYear(),thatDay.getMonth(),thatDay.getDate()));
 
 }
@@ -62,7 +64,7 @@ function nextWeek() {
     const saved = toSub.toString();
     magic[i] = saved;
     toSub.setDate(toSub.getDate()+ 1);
-    
+
   }
 }
 
@@ -70,10 +72,10 @@ function prevWeek() {
   const toSub = new Date(magic[0]);
   toSub.setDate(toSub.getDate() - 7);
   document.getElementById("month-label").innerHTML = `Week of ${(toSub.getMonth()+1)}/${toSub.getDate()}`;
-  for(let i = 0; i < 7; i++) {
+  for(let i = 0; i < 7; i+=1) {
     dayLabel[i].innerHTML = `<a href="daily.html"> ${toSub.getDate()} </a>`;
     columnLabel[i].setAttribute('date-object', new Date(toSub.getFullYear(),toSub.getMonth(),toSub.getDate()));
-    let saved = toSub.toString();
+    const saved = toSub.toString();
     magic[i] = saved;
     toSub.setDate(toSub.getDate()+ 1);
   }
@@ -84,23 +86,23 @@ function prevWeek() {
 // Initial calendar creation
 function createMonthCalendar() {
   // Grabs today's date
-  let today = new Date();
+  const today = new Date();
   // Grabs today's year
-  let currYear = today.getFullYear();
+  const currYear = today.getFullYear();
   // Grabs today's month
-  let currMonth = today.getMonth();
+  const currMonth = today.getMonth();
   // First day worked on
-  let firstDay = new Date(currYear, currMonth, 1);
+  const firstDay = new Date(currYear, currMonth, 1);
   // What day is first day
-  let numSpace = firstDay.getDay();
+  const numSpace = firstDay.getDay();
   // Array for dates
-  let dates = new Array();
+  const dates = new Array();
   // Empty spaces for days of previous month
-  for (let i = 0; i < numSpace; i++) {
+  for (let i = 0; i < numSpace; i+=1) {
     dates.push("");
   }
   // Populates dates
-  for(let i = 0; i < numDays[currMonth]; i++) {
+  for(let i = 0; i < numDays[currMonth]; i+=1) {
     dates.push(firstDay.getDate());
     firstDay.setDate(firstDay.getDate() + 1);
   }
@@ -113,12 +115,12 @@ function createMonthCalendar() {
 
 // Grabs array of dates
 const addIn = createMonthCalendar();
-// Gets array of date elements 
+// Gets array of date elements
 const monthLabel = document.getElementsByClassName("date-number");
 // Gets today's date
 const today = new Date();
 document.getElementById("current-month").innerHTML = `${monthNames[today.getMonth()]} ${today.getFullYear()}`;
-// Populates date elements 
+// Populates date elements
 for (let i = 0; i < addIn.length; i+=1) {
     monthLabel[i].innerHTML = addIn[i];
     if(addIn[i] === today.getDate()) {
@@ -129,7 +131,7 @@ for (let i = 0; i < addIn.length; i+=1) {
 function nextMonth() {
   let calcMonth;
   // Grabs the string with the month and date
-  let currLabel = document.getElementById("current-month").innerHTML;
+  const currLabel = document.getElementById("current-month").innerHTML;
   // Grabs the months
   for(let i = 0; i < monthNames.length; i+=1) {
     if (currLabel.includes(monthNames[i])) {
@@ -138,12 +140,12 @@ function nextMonth() {
   }
   // Grabs the year
   const currYear = currLabel.substring(currLabel.length - 4, currLabel.length);
-  
+
   if(calcMonth + 1 > 11) {
     calcMonth = 0;
   }
   else {
-    calcMonth = calcMonth + 1;
+    calcMonth += 1;
   }
 
   let nextYear = currYear;
@@ -153,11 +155,11 @@ function nextMonth() {
     nextYear = currYear;
   }
 
-  let firstDay = new Date(nextYear, calcMonth);
-  let numSpace = firstDay.getDay();
-  let boop = new Array();
+  const firstDay = new Date(nextYear, calcMonth);
+  const numSpace = firstDay.getDay();
+  const boop = new Array();
 
-  for (let i = 0; i < numSpace; i++) {
+  for (let i = 0; i < numSpace; i+=1) {
     boop.push("");
   }
 
@@ -175,13 +177,13 @@ function nextMonth() {
     monthLabel[i].style.backgroundColor = "#FFFFFF"
   }
 
-  document.getElementById("current-month").innerHTML = `${monthNames[calcMonth]} ${nextYear}`; 
+  document.getElementById("current-month").innerHTML = `${monthNames[calcMonth]} ${nextYear}`;
   }
 
   function prevMonth() {
     let calcMonth;
     // Checks for the current month
-    let currLabel = document.getElementById("current-month").innerHTML;
+    const currLabel = document.getElementById("current-month").innerHTML;
 
     for(let i = 0; i < monthNames.length; i+=1) {
       if (currLabel.includes(monthNames[i])) {
@@ -195,7 +197,7 @@ function nextMonth() {
       calcMonth = 11;
     }
     else {
-      calcMonth = calcMonth - 1;
+      calcMonth -= 1;
     }
 
     let nextYear;
@@ -204,10 +206,10 @@ function nextMonth() {
     } else {
       nextYear = currYear;
     }
-  
-    let firstDay = new Date(nextYear, calcMonth);
-    let numSpace = firstDay.getDay();
-    let boop = [];
+
+    const firstDay = new Date(nextYear, calcMonth);
+    const numSpace = firstDay.getDay();
+    const boop = [];
 
     for (let i = 0; i < numSpace; i+=1) {
       boop.push("");
@@ -226,5 +228,5 @@ function nextMonth() {
       monthLabel[i].innerHTML = boop[i];
       monthLabel[i].style.backgroundColor = "#FFFFFF"
     }
-    document.getElementById("current-month").innerHTML = `${monthNames[calcMonth]} ${nextYear}`; 
+    document.getElementById("current-month").innerHTML = `${monthNames[calcMonth]} ${nextYear}`;
 }

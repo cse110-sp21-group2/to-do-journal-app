@@ -1351,7 +1351,6 @@ export default class JournalController {
       return res.status(400).json({ success: false, error });
     }
 
-    console.log(newEvent);
     // Return new note
     return res.status(201).json({
       success: true,

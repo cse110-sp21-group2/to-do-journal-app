@@ -1,3 +1,7 @@
+/* eslint-disable no-shadow */
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable no-unused-vars */
+/* eslint-disable import/extensions */
 import session from './session.js';
 import journalAPI from '../api/journalAPI.js';
 
@@ -18,13 +22,14 @@ const monthNames = [
   const numDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
   if (!session.isUserLoggedIn()) {
+    // eslint-disable-next-line no-alert
     alert('You must be signed in to view your journal');
     window.location.href = '/signin';
   }
 
-// GET user 
+// GET user
 const user = session.getUser();
-// GET user ID 
+// GET user ID
 const id = user._id;
 // Test User ID
 // const id = "60bebc3da19d7bd0468fed9d";
@@ -32,7 +37,7 @@ const id = user._id;
 
 
 /**
- * get journal . 
+ * get journal .
  * get journal entries: get the start date and end date for that specific week -> call journalAPI.getJournalEntries
  * for each daily entry -> run entry.then for each to display only the events in the correct div container
 or each event t */
@@ -49,12 +54,12 @@ or each event t */
     };
     const { data: journal } = await journalAPI.getJournal(payload);
     return journal;
-  } 
+  }
 
 // GET journal promise
 const journal = getJournal();
 
-let allDays = document.querySelectorAll('.column-content'); 
+const allDays = document.querySelectorAll('.column-content');
 
 /**
  * Getting journal entry for one day
@@ -64,20 +69,20 @@ let allDays = document.querySelectorAll('.column-content');
   const payload = {
     id,
     date: oneDay.getAttribute('date-object'),
-    type:'Daily' 
+    type:'Daily'
   };
   const { data: entry, success } = await journalAPI.getJournalEntry(payload);
   if ( success ) {
     return entry;
-  } else {
-    return null;
   }
-} 
+    return null;
+
+}
 
 // Go through each day in the week to find if it has dailyentries
 for(let i = 0; i < allDays.length; i+=1) {
   const entry = getEntry(allDays[i]);
-  
+
   if ( entry != null ) {
     // GET each event from entry and DISPLAY it
     entry.then(res => res.events.forEach((event) => {
@@ -89,14 +94,14 @@ for(let i = 0; i < allDays.length; i+=1) {
         newEvent.endTime = endTime;
 
         allDays[i].appendChild(newEvent);
-    })) 
+    }))
   }
 }
 
 
 // FORWARD function
 function changeWeek() {
-  let allDays = document.querySelectorAll('.column-content'); 
+  const allDays = document.querySelectorAll('.column-content');
   // Go through each day in the week to find if it has dailyentries
   for(let i = 0; i < allDays.length; i+=1) {
     const entry = getEntry(allDays[i]);
@@ -113,7 +118,7 @@ function changeWeek() {
           newEvent.endTime = endTime;
 
           allDays[i].appendChild(newEvent);
-      })) 
+      }))
     }
   }
 }
