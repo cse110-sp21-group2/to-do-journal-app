@@ -170,6 +170,7 @@ function submitNote(){
   }
 
   journalAPI.addTermNote(payload);
+  window.location.reload();
 }
 
 const saveNote = someNote.submitBtn;
@@ -208,6 +209,7 @@ function submitTask() {
   }
 
   journalAPI.addTermTask(payload);
+  window.location.reload();
 }
 // GET submit button and save value to mongoDB
 const saveTask = someTask.submitBtn;

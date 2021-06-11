@@ -16,6 +16,11 @@ body {
   background: url('https://i.ibb.co/sFtX9zy/bg.png');
 }
 
+p {
+  font-family: "Roboto";
+  font-size: 18px;
+}
+
 .main {
   display: grid;
   grid-template-columns: 205px 555px auto 205px;

@@ -51,11 +51,11 @@ const eventOverlay = document.getElementById('event-overlay');
 /**
  * If user is not logged in -> redirect to signin page
  */
-//  if (!session.isUserLoggedIn()) {
-//     // eslint-disable-next-line no-alert
-//     alert('You must sign in to view your journal');
-//     window.location.href = '/signin';
-//   }
+ if (!session.isUserLoggedIn()) {
+    // eslint-disable-next-line no-alert
+    alert('You must sign in to view your journal');
+    window.location.href = '/signin';
+  }
 
 // GET user 
 const user = session.getUser();

@@ -28,7 +28,6 @@ class createNote extends HTMLElement {
                 textarea {
                     border: 1px solid #162a47;
                     border-radius: 5px;
-                    margin: 5px;
                     white-space: pre-wrap;
                 }
                 .note-content-field {
@@ -69,7 +68,7 @@ class createNote extends HTMLElement {
             <form class="create-note">
                 <h1 class="create-note-title"> Add a Note</h1>
                 <div class="note-content-field">
-                    <textarea id="note-content" name="note-content" rows="30" cols="50"></textarea>
+                    <textarea id="note-content" name="note-content" rows="25" cols="50"></textarea>
                 </div>
                 <div class="buttons">
                     <input type="submit" name="cancel" value="Cancel" class="cancel-button">
