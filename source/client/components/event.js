@@ -90,7 +90,7 @@ class Events extends HTMLElement{
     set startTime(date) {
         const hour = date.getHours() % 12;
         const minute = date.getMinutes();
-        const ampm = hour >= 12 ? 'PM' : 'AM';
+        const ampm = date.getHours() >= 12 ? 'PM' : 'AM';
         this.shadowRoot.querySelector("p.event-time").innerHTML = `${hour}:${minute}${ampm} - `;
     }
 
@@ -103,7 +103,7 @@ class Events extends HTMLElement{
     set endTime(date) {
         const hour = date.getHours() % 12;
         const minute = date.getMinutes();
-        const ampm = hour >= 12 ? 'PM' : 'AM';
+        const ampm = date.getHours() >= 12 ? 'PM' : 'AM';
         const startHTML = this.shadowRoot.querySelector('p.event-time').innerHTML;
         this.shadowRoot.querySelector('p.event-time').innerHTML =  `${startHTML}${hour}:${minute}${ampm}`
     }
