@@ -42,5 +42,5 @@ We experimented with the idea of creating a workflow to automatically generate d
 
 #### Video Demo
 
-Click [here](https://youtu.be/M3SwNhlou6Q) to view a video demo of the pipeline
+Click [here](./admin/cipipeline/phase1.mp4) to view a video demo of the pipeline
 

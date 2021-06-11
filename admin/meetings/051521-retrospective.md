@@ -1,7 +1,7 @@
 # Meeting Minutes
 Team: Group 2\
 Type: Retrospective Meeting\
-Date: 06/01/2021\
+Date: 05/15/2021\
 Time: 12:00 - 1:00pm\
 Location: Zoom
 
@@ -10,6 +10,7 @@ Location: Zoom
 
 ## Artifacts
 ![Zoom Meeting Screenshot](../lib/zoom-meeting.png)
+![Retrium Screenshot](../lib/retro1.png)
 
 
 ## Attendance
@@ -32,7 +33,6 @@ Location: Zoom
 - Most Common "Glad":
   - friendly teammates and no conflicts so far
   - initial design looks very clean for the wireframes
-  - 
 
 ## Action Items
 - need to write up next round of tasks for Sprint 2
