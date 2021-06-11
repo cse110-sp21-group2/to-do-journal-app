@@ -73,23 +73,22 @@ function createCalendar() {
 function nextMonth() {
   let _nextMonth;
   const currLabel = document.getElementById('month-label').innerHTML;
+
   for (let i = 0; i < monthNames.length; i += 1) {
     if (currLabel.includes(monthNames[i])) {
       _nextMonth = i;
     }
   }
   const grabYear = currLabel.substring(currLabel.length - 4, currLabel.length);
-
   let assignMonth;
   if (_nextMonth + 1 > 11) {
     assignMonth = 0;
   } else {
-    assignMonth = parseInt(nextMonth, 10) + 1;
+    assignMonth = parseInt(_nextMonth, 10) + 1;
   }
-
   // let today = new Date();
 
-  let nextYear = grabYear;
+  let nextYear;
   if (assignMonth === 0) {
     nextYear = parseInt(grabYear, 10) + 1;
   } else {

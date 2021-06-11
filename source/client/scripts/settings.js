@@ -13,6 +13,7 @@ const firstDayOfTheWeekInput = document.getElementById('day');
 const stylesInput = document.getElementById('color-scheme');
 const languageInput = document.getElementById('lang');
 const submitBtn = document.querySelector('.save-btn');
+const logoutBtn = document.querySelector('.logout-btn');
 
 // Current User
 const user = session.getUser();
@@ -21,7 +22,7 @@ const user = session.getUser();
 const id = user._id;
 
 // Initialize the input fields to display the current user's info
-nameInput.value = user.userName;
+nameInput.value = user.name;
 emailInput.value = user.email;
 termInput.value = user.term;
 firstDayOfTheWeekInput.value = user.firstDayOfTheWeek;
@@ -42,10 +43,14 @@ submitBtn.addEventListener('click', async () => {
     theme: stylesInput.value,
     language: languageInput.value
   }
-  
+
   // Update the user info in the database
   const updatedResult = await userAPI.updateUserInfo({id, updatedUser});
 
   // Update the user info locally
   session.setUser(updatedResult.data);
 });
+
+logoutBtn.addEventListener('click', () => {
+  session.logout();
+})

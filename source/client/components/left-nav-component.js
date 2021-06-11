@@ -1,9 +1,13 @@
+/* eslint-disable import/extensions */
 /* eslint-disable no-undef */
+
+import session from "../scripts/session.js";
 
 class LeftNav extends HTMLElement {
     constructor() {
       super();
 
+      const journal = session.getJournal();
       // templated HTML content
       const template = document.createElement('template');
 
@@ -52,7 +56,7 @@ class LeftNav extends HTMLElement {
                 background-color: white;
                 border: solid;
                 display: table;
-                margin: 0 auto;
+                margin: 15px auto;
             }
 
             .link-text{
@@ -74,11 +78,14 @@ class LeftNav extends HTMLElement {
         <h2 class="index-link"><a href="/term" class="link-text">Quarterly</a></h2>
         <br>
         <h1 class="navigation-title">Collections</h1>
-        <h2 class="collections-link"><a href="" class="link-text">Grocery List</a></h2>
-        <h2 class="collections-link"><a href="" class="link-text">Bucket List</a></h2>
-        <h2 class="collections-link"><a href="" class="link-text">Finance Planner</a></h2>
-        <h2 class="collections-link"><a href="" class="link-text">Fitness Planner</a></h2>
-        <h2 class="collections-link"><a href="" class="link-text">Reading Collection</a></h2>
+        ${journal.collections.map((collection) =>
+          `<h2 class="collections-link">
+            <a href="/collections/?name=${collection.name}" class="link-text">
+              ${collection.name}
+            </a>
+          </h2>`
+          ).join('')}
+        <create-collection-modal id="create-collection-component"></create-collection-modal>
         <button type="button" class="collections-button"><i class="fas fa-chevron-down"></i></button>
         `;
 
@@ -87,7 +94,6 @@ class LeftNav extends HTMLElement {
       // attach cloned content of template to shadow DOM
       this.shadowRoot.appendChild(template.content.cloneNode(true))
     }
-
 }
 
 // Define, instantiate, and add the component to its respective div to the calling document

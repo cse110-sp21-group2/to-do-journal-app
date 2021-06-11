@@ -35,7 +35,7 @@ router.get('/journal-term/:id&:date', (req, res) => {
 });
 
 // Route for getting journal collection
-router.get('/journal-collection/:id&:collectionId', (req, res) => {
+router.get('/journal-collection/:id&:collectionName', (req, res) => {
   journalController.getJournalCollection(req, res);
 });
 
