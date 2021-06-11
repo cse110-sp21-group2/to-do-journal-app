@@ -1,3 +1,8 @@
+/* eslint-disable consistent-return */
+/* eslint-disable no-array-constructor */
+/* eslint-disable no-else-return */
+/* eslint-disable no-shadow */
+/* eslint-disable no-use-before-define */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-alert */
@@ -41,7 +46,7 @@ const eventOverlay = document.getElementById('event-overlay');
  * TODO:
  *      - Check that user is logged in
  *      - GET journal
- *      - GET entries 
+ *      - GET entries
  *      - Go through each entry to see if there exist an entry for current date
  *          - Make new entry otherwise based on date
  *      - In that entry, create new task
@@ -57,9 +62,9 @@ const eventOverlay = document.getElementById('event-overlay');
 //     window.location.href = '/signin';
 //   }
 
-// GET user 
+// GET user
 const user = session.getUser();
-// GET user ID 
+// GET user ID
 const id = user._id;
 // Test User ID
 // const id = "60bebc3da19d7bd0468fed9d";
@@ -115,7 +120,7 @@ addEvent.addEventListener('click', (event) => {
     };
     const { data: journal } = await journalAPI.getJournal(payload);
     return journal;
-  } 
+  }
 
 // GET journal promise
 const journal = getJournal();
@@ -124,9 +129,9 @@ let today = new Date();
 
 // SPECIFIC Date
 let currDate = today.getDate();
-let currMonth = today.getMonth();
-let monthName = monthNames[currMonth];
-let currYear = today.getFullYear();
+const currMonth = today.getMonth();
+const monthName = monthNames[currMonth];
+const currYear = today.getFullYear();
 
 document.getElementById("daily-date").innerHTML = `${monthName} ${currDate}, ${currYear}`;
 
@@ -137,13 +142,13 @@ function nextDay() {
   const tomorrow = new Date(currYear, currMonth, currDate);
   const tDate = tomorrow.getDate();
   const tMonth = tomorrow.getMonth();
-  const tMonthName = monthNames[tMonth];               
+  const tMonthName = monthNames[tMonth];
   const tYear = tomorrow.getFullYear();
   document.getElementById("daily-date").innerHTML = `${tMonthName} ${tDate}, ${tYear}`;
   document.getElementById("events-content").innerHTML= "";
   document.getElementById("notes-content").innerHTML= "";
   document.getElementById("tasks-content").innerHTML= "";
-  
+
   const dateNext = new Date(tYear, tMonth, tDate);
   today = dateNext;
   // GET entry promise
@@ -188,7 +193,7 @@ backBtn.addEventListener("click", prevDay);
 /**
  * GET entry and CREATE entry if entry not found
  * @param {Date} todayDate some date that we're trying to get entry from
- * @returns 
+ * @returns {object} entry
  */
 const getEntry = async (todayDate) => {
   const payload = {
@@ -223,7 +228,7 @@ function createTask(createTaskComp) {
 }
 // SET click function for add-task button
 const addTaskBtn = document.querySelector("#add-task");
-addTaskBtn.addEventListener('click', function() { createTask(newTask); } );
+addTaskBtn.addEventListener('click', () => { createTask(newTask); } );
 
 /**
  * Grab the inputs and send it to MongoDB
@@ -243,7 +248,7 @@ function submitTask(todayDate) {
 
 // GET submit button and save value to mongoDB
 const saveTask = newTask.submitBtn;
-saveTask.addEventListener("click", function() { submitTask(today); } );
+saveTask.addEventListener("click", () => { submitTask(today); } );
 
 // DISPLAY tasks
 function displayEntry(entry){
@@ -255,7 +260,7 @@ function displayEntry(entry){
     newTask.date = taskDate;
     document.querySelector('#tasks-content').appendChild(newTask);
     const removeTaskBox = newTask.shadowRoot.querySelector('.task-icon');
-    removeTaskBox.addEventListener('click', function () { deleteTask(newTask, task); });
+    removeTaskBox.addEventListener('click', () => { deleteTask(newTask, task); });
   }));
 }
 displayEntry(entry);
@@ -266,7 +271,7 @@ displayEntry(entry);
 function deleteTask(task, taskContent) {
   console.log('delete this task:');
   console.log(taskContent);
-  
+
   const payload = {
     id,
     taskId: taskContent._id,
@@ -292,7 +297,7 @@ const addNoteBtn= document.querySelector("#add-note");
 addNoteBtn.addEventListener("click", createNote);
 
 /**
- * Submit notes to 
+ * Submit notes to
  */
 function submitNote() {
   const payload = {
@@ -317,7 +322,7 @@ function displayEntryNote(entry){
     displayNote.content = note;
     document.querySelector('#notes-content').appendChild(displayNote);
     const removeNote = displayNote.shadowRoot.querySelector('.bullet');
-    removeNote.addEventListener('click', function () { deleteNote(displayNote, note); });
+    removeNote.addEventListener('click', () => { deleteNote(displayNote, note); });
   }))
 }
 displayEntryNote(entry);
@@ -327,7 +332,7 @@ displayEntryNote(entry);
 function deleteNote(note, noteContent) {
   console.log('delete this note:');
   console.log(noteContent);
-  
+
   const payload = {
     id,
     noteId: noteContent._id,
@@ -356,14 +361,14 @@ addEventBtn.addEventListener("click", createEvent);
  * Grab the inputs and send it to MongoDB
  */
  function submitEvent() {
-   let startDate = new Date();
-   let endDate = new Date();
+   const startDate = new Date();
+   const endDate = new Date();
 
   const payload = {
     id,
     content: newEvent.getEventContent,
-    startTime: new Date(startDate.toDateString() + ' ' + newEvent.getStartTime),
-    endTime: new Date(endDate.toDateString() + ' ' + newEvent.getEndTime),
+    startTime: new Date(`${startDate.toDateString()  } ${  newEvent.getStartTime}`),
+    endTime: new Date(`${endDate.toDateString()  } ${  newEvent.getEndTime}`),
     entryDate: today,
     URL: newEvent.getLink,
     type: 'Daily'
@@ -389,7 +394,7 @@ function displayEntryEvent(entry) {
     displayEvent.endTime = endTime;
     document.querySelector('#events-content').appendChild(displayEvent);
     const removeEventBox = displayEvent.shadowRoot.querySelector('.delete-button');
-    removeEventBox.addEventListener('click', function () { deleteEvent(displayEvent, event); });
+    removeEventBox.addEventListener('click', () => { deleteEvent(displayEvent, event); });
   }))
 }
 displayEntryEvent(entry);
@@ -401,7 +406,7 @@ displayEntryEvent(entry);
 function deleteEvent(event, eventContent) {
   console.log('delete this event:');
   console.log(eventContent);
-  
+
   const payload = {
     id,
     eventId: eventContent._id,
@@ -418,23 +423,23 @@ function deleteEvent(event, eventContent) {
 // Initial calendar creation
 function createMonthCalendar() {
   // Grabs today's date
-  let today = new Date();
+  const today = new Date();
   // Grabs today's year
-  let currYear = today.getFullYear();
+  const currYear = today.getFullYear();
   // Grabs today's month
-  let currMonth = today.getMonth();
+  const currMonth = today.getMonth();
   // First day worked on
-  let firstDay = new Date(currYear, currMonth, 1);
+  const firstDay = new Date(currYear, currMonth, 1);
   // What day is first day
-  let numSpace = firstDay.getDay();
+  const numSpace = firstDay.getDay();
   // Array for dates
-  let dates = new Array();
+  const dates = new Array();
   // Empty spaces for days of previous month
-  for (let i = 0; i < numSpace; i++) {
+  for (let i = 0; i < numSpace; i+=1) {
     dates.push("");
   }
   // Populates dates
-  for(let i = 0; i < numDays[currMonth]; i++) {
+  for(let i = 0; i < numDays[currMonth]; i+=1) {
     dates.push(firstDay.getDate());
     firstDay.setDate(firstDay.getDate() + 1);
   }
@@ -447,12 +452,12 @@ function createMonthCalendar() {
 
 // Grabs array of dates
 const addIn = createMonthCalendar();
-// Gets array of date elements 
+// Gets array of date elements
 const monthLabel = document.getElementsByClassName("date-number");
 // Gets today's date
-//const today = new Date();
+// const today = new Date();
 document.getElementById("current-month").innerHTML = `${monthNames[today.getMonth()]} ${today.getFullYear()}`;
-// Populates date elements 
+// Populates date elements
 for (let i = 0; i < addIn.length; i+=1) {
     monthLabel[i].innerHTML = addIn[i];
     if(addIn[i] === today.getDate()) {
@@ -463,7 +468,7 @@ for (let i = 0; i < addIn.length; i+=1) {
 function nextMonth() {
   let calcMonth;
   // Grabs the string with the month and date
-  let currLabel = document.getElementById("current-month").innerHTML;
+  const currLabel = document.getElementById("current-month").innerHTML;
   // Grabs the months
   for(let i = 0; i < monthNames.length; i+=1) {
     if (currLabel.includes(monthNames[i])) {
@@ -472,12 +477,12 @@ function nextMonth() {
   }
   // Grabs the year
   const currYear = currLabel.substring(currLabel.length - 4, currLabel.length);
-  
+
   if(calcMonth + 1 > 11) {
     calcMonth = 0;
   }
   else {
-    calcMonth = calcMonth + 1;
+    calcMonth += 1;
   }
 
   let nextYear = currYear;
@@ -487,11 +492,11 @@ function nextMonth() {
     nextYear = currYear;
   }
 
-  let firstDay = new Date(nextYear, calcMonth);
-  let numSpace = firstDay.getDay();
-  let boop = new Array();
+  const firstDay = new Date(nextYear, calcMonth);
+  const numSpace = firstDay.getDay();
+  const boop = new Array();
 
-  for (let i = 0; i < numSpace; i++) {
+  for (let i = 0; i < numSpace; i+=1) {
     boop.push("");
   }
 
@@ -509,14 +514,14 @@ function nextMonth() {
     monthLabel[i].style.backgroundColor = "#FFFFFF"
   }
 
-  document.getElementById("current-month").innerHTML = `${monthNames[calcMonth]} ${nextYear}`; 
+  document.getElementById("current-month").innerHTML = `${monthNames[calcMonth]} ${nextYear}`;
   }
 
 
 function prevMonth() {
     let calcMonth;
     // Checks for the current month
-    let currLabel = document.getElementById("current-month").innerHTML;
+    const currLabel = document.getElementById("current-month").innerHTML;
 
     for(let i = 0; i < monthNames.length; i+=1) {
       if (currLabel.includes(monthNames[i])) {
@@ -530,7 +535,7 @@ function prevMonth() {
       calcMonth = 11;
     }
     else {
-      calcMonth = calcMonth - 1;
+      calcMonth -= 1;
     }
 
     let nextYear;
@@ -539,10 +544,10 @@ function prevMonth() {
     } else {
       nextYear = currYear;
     }
-  
-    let firstDay = new Date(nextYear, calcMonth);
-    let numSpace = firstDay.getDay();
-    let boop = [];
+
+    const firstDay = new Date(nextYear, calcMonth);
+    const numSpace = firstDay.getDay();
+    const boop = [];
 
     for (let i = 0; i < numSpace; i+=1) {
       boop.push("");
@@ -561,5 +566,5 @@ function prevMonth() {
       monthLabel[i].innerHTML = boop[i];
       monthLabel[i].style.backgroundColor = "#FFFFFF"
     }
-    document.getElementById("current-month").innerHTML = `${monthNames[calcMonth]} ${nextYear}`; 
+    document.getElementById("current-month").innerHTML = `${monthNames[calcMonth]} ${nextYear}`;
 }

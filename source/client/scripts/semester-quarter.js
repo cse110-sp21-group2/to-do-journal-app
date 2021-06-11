@@ -1,3 +1,4 @@
+/* eslint-disable no-use-before-define */
 /* eslint-disable import/extensions */
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-unused-vars */
@@ -82,9 +83,9 @@ const getTerm = async (someDate) => {
   const { data: term, success } = await journalAPI.getJournalTerm(payload1);
   if(success){
     return term;
-    // Else create a term 
-  } else {
-    let someEndDate = someDate;
+    // Else create a term
+  }
+    const someEndDate = someDate;
     // UPDATE new date
     if ( termType === "Quarter") {
       someEndDate.setDate(someEndDate.getDate() + 77);
@@ -105,7 +106,7 @@ const getTerm = async (someDate) => {
     }
     const { data: newTerm } = await journalAPI.getJournalTerm(payload3);
     return newTerm;
-}};
+};
 
 // GET journal promise
 const journal = getJournal();
@@ -158,7 +159,7 @@ addNoteBtns.forEach((btn) => {
   btn.addEventListener("click", createNote);
   btn.setAttribute("name", noteCounter);
   btn.addEventListener("click", setWeekNum);
-  noteCounter++;
+  noteCounter+=1;
 })
 
 function submitNote(){
@@ -175,7 +176,7 @@ function submitNote(){
 const saveNote = someNote.submitBtn;
 saveNote.addEventListener("click", submitNote);
 
-let currWeek = 11 - ((Math.abs(endDate - today)) / (1000 * 3600 * 24)) / 7;
+const currWeek = 11 - ((Math.abs(endDate - today)) / (1000 * 3600 * 24)) / 7;
 
 // GET week number based on the button we click
 let weekNum = 0;
@@ -229,7 +230,7 @@ term.then(res => res.weeks.forEach((week) => {
     newNote.content = note;
     document.querySelector(`#note-container-${weekCount}`).appendChild(newNote);
   })
-  weekCount++;
+  weekCount+=1;
 }
 ));
 // DISPLAY when page first loads
@@ -258,7 +259,7 @@ term.then(res => res.weeks.forEach((week) => {
 //   notesContain.forEach((noteContainer) =>{
 //     removeAllTasksAndNotes(noteContainer);
 //   })
-//   // SET new term and display 
+//   // SET new term and display
 //   let newTermStartDate = new Date();
 //   let newTermEndDate = newTermStartDate;
 //   newTermStartDate = journal.then(response => { return new Date(response.terms[response.terms.length-1].endDate)});

@@ -1,3 +1,5 @@
+/* eslint-disable no-shadow */
+/* eslint-disable no-param-reassign */
 /* eslint-disable no-unused-vars */
 /* eslint-disable consistent-return */
 /* eslint-disable no-console */
@@ -89,7 +91,7 @@ const getCollection = async () => {
   addNoteBtn.addEventListener("click", createNote);
 
   /**
- * Submit notes to 
+ * Submit notes to
  */
   function submitNote() {
     const payload = {
@@ -131,14 +133,14 @@ const getCollection = async () => {
    * Grab the inputs and send it to MongoDB
    */
   function submitEvent() {
-    let startDate = new Date();
-    let endDate = new Date();
+    const startDate = new Date();
+    const endDate = new Date();
 
     const payload = {
       id,
       content: newEvent.getEventContent,
-      startTime: new Date(startDate.toDateString() + ' ' + newEvent.getStartTime),
-      endTime: new Date(endDate.toDateString() + ' ' + newEvent.getEndTime),
+      startTime: new Date(`${startDate.toDateString()  } ${  newEvent.getStartTime}`),
+      endTime: new Date(`${endDate.toDateString()  } ${  newEvent.getEndTime}`),
       URL: newEvent.getLink,
       collectionId: collection._id,
     };
