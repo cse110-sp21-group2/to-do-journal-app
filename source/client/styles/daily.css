@@ -123,13 +123,55 @@ body {
   width: 80%;
 }
 
+.tutorial-overlay {
+  display: flex;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  visibility: hidden;
+  z-index: 100;
+}
+
+#tutorial {
+  position: absolute;
+  /* object-fit: fill; */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  visibility: hidden;
+  z-index: 100;
+  border: 10px solid #162a47;
+}
+
+#close-tutorial {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  visibility: hidden;
+  z-index: 10111;
+  font-family: Roboto Condensed;
+  font-style: normal;
+  font-weight: normal;
+  border: none;
+  background: #C69000;
+  filter: drop-shadow(0px 5px 10px rgba(217, 173, 16, 0.4));
+  color: white;
+  width: 182.39px;
+  height: 53.9px;
+  border-radius: 10px;
+
+}
+
 /*Top Right Account Bar*/
 .account-bar {
   grid-column: -2 / -1;
   grid-row: 1 / 2;
   background-color: white;
   border-radius: 200px;
-  width: 59px;
+  width: 150px;
+  /* width: 59px; */
   height: 59px;
   display: flex;
   justify-content: space-evenly;

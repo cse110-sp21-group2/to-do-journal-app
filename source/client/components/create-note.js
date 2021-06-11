@@ -64,7 +64,7 @@ class createNote extends HTMLElement {
                 .save-button:hover {
                     background-color: #DCBB0E;
                     cursor: pointer;
-                }        
+                }
             </style>
             <form class="create-note">
                 <h1 class="create-note-title"> Add a Note</h1>
@@ -73,7 +73,7 @@ class createNote extends HTMLElement {
                 </div>
                 <div class="buttons">
                     <input type="submit" name="cancel" value="Cancel" class="cancel-button">
-                    <input type="submit" name="save" value="Save" class="save-button">
+                    <input type="button" name="save" value="Save" class="save-button">
                 </div>
             </form>
         `;

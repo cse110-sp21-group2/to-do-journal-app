@@ -72,7 +72,7 @@ class createTask extends HTMLElement {
                 .save-button:hover {
                     background-color: #DCBB0E;
                     cursor: pointer;
-                }        
+                }
             </style>
             <form class="create-task">
                 <h1 class="create-task-title"> Create a Task</h1>
@@ -93,7 +93,7 @@ class createTask extends HTMLElement {
                         <input type="submit" name="cancel" value="Cancel" class="cancel-button">
                         <input type="submit" name="save" value="Save" class="save-button">
                     </div>
-                </form>
+            </form>
         `;
 
         // $(".cancel-button").submit(function(e) {

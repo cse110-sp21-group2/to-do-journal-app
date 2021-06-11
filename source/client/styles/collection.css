@@ -307,3 +307,60 @@ body {
 
   color: #000000;
 }
+
+/* overlays */
+#task-overlay,
+#note-overlay,
+#event-overlay {
+  visibility: hidden;
+  z-index: 100;
+  opacity: 100;
+}
+
+#task-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  visibility: hidden;
+  z-index: 100;
+  text-align: center;
+  /* background-color: rgb(147, 181, 253); */
+  border-radius: 10px;
+  font-size: 20px;
+  height: 700px;
+  width: 500px;
+  opacity: 100;
+}
+
+#note-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  visibility: hidden;
+  z-index: 100;
+  text-align: center;
+  /* background-color: rgb(147, 181, 253); */
+  border-radius: 10px;
+  font-size: 20px;
+  height: 700px;
+  width: 500px;
+  opacity: 100;
+}
+
+#event-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  visibility: hidden;
+  z-index: 100;
+  text-align: center;
+  /* background-color: rgb(147, 181, 253); */
+  border-radius: 10px;
+  font-size: 20px;
+  height: 700px;
+  width: 500px;
+  opacity: 100;
+}

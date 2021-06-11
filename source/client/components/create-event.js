@@ -97,7 +97,7 @@ class createEvent extends HTMLElement {
                 </div>
                 <div class="buttons">
                     <input type="submit" name="cancel" value="Cancel" class="cancel-button">
-                    <input type="submit" name="save" value="Save" class="save-button">
+                    <input type="button" name="save" value="Save" class="save-button">
                 </div>
             </form>
         `;
@@ -143,6 +143,7 @@ class createEvent extends HTMLElement {
     get submitBtn() {
         return this.shadowRoot.querySelector("input.save-button");
     }
+
 }
 
 // Define, instantiate, and add the component to its respective div to the calling document
