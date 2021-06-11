@@ -26,8 +26,6 @@ There are a set of rules to keep in mind:
 
 - Before merging a Pull Request, make sure your feature branch builds successfully and passes all linting and code style checks.
 
- 
-- You will need to ask someone from the team for the `.env` file. 
 
 ### 1.2 Git workflow
 
@@ -59,6 +57,8 @@ There are a set of rules to keep in mind:
   npm install
   ```
 - This will download all the necessary node modules for starting the application
+
+- You will need to ask someone from the team for the `.env` file in order to successfully run the app. 
 
 - After the packages are finished installing, Within the main directory run:
   ```sh
