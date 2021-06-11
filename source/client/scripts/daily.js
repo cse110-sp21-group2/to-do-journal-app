@@ -26,6 +26,10 @@ const monthNames = [
 ];
 const numDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
+const helpButton = document.getElementById('help');
+const tutorial = document.getElementById('tutorial-overlay');
+const tutorialImg = document.getElementById('tutorial');
+const closeTutorial = document.getElementById('close-tutorial');
 const addTask = document.getElementById('add-task');
 const addNote = document.getElementById('add-note');
 const addEvent = document.getElementById('add-event');
@@ -47,11 +51,11 @@ const eventOverlay = document.getElementById('event-overlay');
 /**
  * If user is not logged in -> redirect to signin page
  */
- if (!session.isUserLoggedIn()) {
-    // eslint-disable-next-line no-alert
-    alert('You must sign in to view your journal');
-    window.location.href = '/signin';
-  }
+//  if (!session.isUserLoggedIn()) {
+//     // eslint-disable-next-line no-alert
+//     alert('You must sign in to view your journal');
+//     window.location.href = '/signin';
+//   }
 
 // GET user 
 const user = session.getUser();
@@ -65,6 +69,26 @@ function openOverlay(menu) {
     console.log(menu.style.visibility);
     menu.style.visibility = "visible";
 }
+
+// close menu overlay
+function closeOverlay() {
+  tutorial.style.visibility = "hidden";
+  tutorialImg.style.visibility = "hidden";
+  closeTutorial.style.visibility = "hidden";
+}
+
+// ON CLICK of help button - open the tutorial
+helpButton.addEventListener('click', (event) => {
+  // openOverlay(tutorial);
+  tutorial.style.visibility = "visible";
+  tutorialImg.style.visibility = "visible";
+  closeTutorial.style.visibility = "visible";
+});
+
+// ON CLICK of close button - close the tutorial
+closeTutorial.addEventListener('click', (event) => {
+  closeOverlay();
+});
 
 // ON CLICK of add task button - open the add task menu
 addTask.addEventListener('click', (event) => {
@@ -214,6 +238,7 @@ function submitTask(todayDate) {
   };
 
   console.log("This is the added task:", journalAPI.addEntryTask(payload));
+  window.location.reload();
 }
 
 // GET submit button and save value to mongoDB
@@ -278,6 +303,7 @@ function submitNote() {
   }
 
   console.log(journalAPI.addEntryNote(payload));
+  window.location.reload();
 }
 
 
@@ -346,6 +372,7 @@ addEventBtn.addEventListener("click", createEvent);
   console.log(payload.endTime);
   console.log(payload.startTime);
   journalAPI.addEntryEvent(payload);
+  window.location.reload();
 }
 
 // GET submit button and save value to mongoDB

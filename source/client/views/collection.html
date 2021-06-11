@@ -55,16 +55,47 @@
       <!-- Center Content Area -->
       <div class="collection-view">
         <div class="note-view">
+          <div class="add-button" id="add-note">
+            <button type="button" class="button-circle">
+              <i class="fas fa-plus"></i>
+            </button>
+          </div>
           <h2 class="collection-title">Notes</h2>
-          <textarea id="notes" rows="41" cols="72"></textarea>
+          <div id="notes-container"></div>
         </div>
         <div class="event-view">
+          <div class="add-button">
+            <button id="add-event" type="button" class="button-circle">
+              <i class="fas fa-plus"></i>
+            </button>
+          </div>
           <h2 class="collection-title">Events</h2>
           <div class="event-container">
             <p>Place Holder for events</p>
           </div>
         </div>
       </div>
+      
+          <!-- Overlays -->
+          <div class="overlay">
+            <!-- Add Task Menu -->
+            <div id="task-overlay">
+              <!-- ADD TASK COMPONENT -->
+              <div class="create-task"></div>
+            </div>
+          
+            <!-- Add Note Menu -->
+            <div id="note-overlay">
+              <!-- ADD NOTE COMPONENT -->
+              <div class="create-note"></div>
+            </div>
+          
+            <!-- Add Event Menu -->
+            <div id="event-overlay">
+              <!-- ADD EVENT COMPONENT -->
+              <div class="create-event"></div>
+            </div>
+          </div>
 
       <div class="left-nav"></div>
       <!-- Right Navigation Section -->
@@ -136,6 +167,10 @@
     </main>
     <!-- Main Script -->
     <script src="../scripts/collection.js" type="module"></script>
+    <script src="../components/event.js"></script>
+    <script src="../components/note.js"></script>
+    <script src="../components/create-note.js" type="module"></script>
+    <script src="../components/create-event.js" type="module"></script>
     <!-- left-nav web component -->
     <script src="../components/left-nav-component.js" type="module"></script>
     <script src="../components/create-collection-modal.js" type="module"></script>
