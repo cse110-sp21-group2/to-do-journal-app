@@ -33,7 +33,6 @@ Location: Zoom
 - Most Common "Glad":
   - friendly teammates and no conflicts so far
   - initial design looks very clean for the wireframes
-  - 
 
 ## Action Items
 - need to write up next round of tasks for Sprint 2

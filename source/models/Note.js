@@ -3,11 +3,14 @@ import mongoose from 'mongoose';
 const { Schema: _Schema } = mongoose;
 
 const NoteSchema = new _Schema({
-  content: String,
-  date: {
-    type: Date,
+  _id: {
+    type: _Schema.Types.ObjectId,
+    required: true,
   },
-  dueDate: Date,
-}, { timestamps: true });
+  content: {
+    type: String,
+    required: true,
+  },
+});
 
 export default NoteSchema;

@@ -1,228 +1,230 @@
 /* eslint-disable */
 import jwt from 'jsonwebtoken';
-import mailgun from 'mailgun-js';
-import { compare, hash as _hash } from 'bcrypt';
-
-import _ from 'lodash';
-
-// For creating and verifying tokens for user authentication / creation
-const { sign, verify } = jwt;
+import bcrypt from 'bcrypt';
+import EmailService from '../services/EmailService';
 
 // Increases cost factor to calculate a Bcrypt password hash
 const saltRounds = 10;
 
-// Domain to be used for sending out emails from
-const DOMAIN = 'www.something.com';
-
-// Service for handling our emails
-const mg = mailgun({ apiKey: process.env.MAILGUN_API_KEY, domain: DOMAIN });
-
 export default class AuthController {
   // Set our passed in User model
   constructor(UserModel) {
-    this.User = UserModel
+    this.User = UserModel;
   }
 
-  async login(req, res) {
-    const { email, password } = req.body;
-
-    let user;
-
+  /**
+   * User login.
+   * @param {string} email - User email
+   * @param {string} password - User password
+   * @returns {object} User
+   */
+  async login({ body: { email, password } }, res) {
     // Attempt to find this user
+    let user;
     try {
       user = await this.User.findOne({ email });
+      // Failed to find user
     } catch (error) {
-      res.status(400).json({ success: false, error });
+      return res.status(400).json({ success: false, error });
     }
 
     // Compare the password entered by taking its hash and comparing
-    // to password from db
-    try {
-      compare(password, user.password, (result) => {
-        // If comparison isn't equal, password is wrong
-        if (!result) {
-          return res.status(400).json({
-            success: false,
-            message: 'Password entered is incorrect.',
-          });
-        }
-
-        // Else successful and we create an authentication token
-        const token = sign({ _id: user.id }, process.env.JWT_LOGIN_KEY, {
-          expiresIn: '7d',
-        });
-
-        // Assign token to user
-        user.accessToken = token;
-        // Return user object
-        res.json({
-          data: user,
-        });
-      });
-    } catch (error) {
-      res.status(400).json({ success: false, error });
-    }
-  }
-
-  // Handles logout
-  async logout(req, res) {
-    // Get user email
-    const { email } = req.body;
-
-    try {
-      // Attempt to find user
-      const user = await this.User.findOne({ email });
-
-      // Found user, so we remove their access token previously set
-      user.accessToken = '';
-
-      // Update the database
-      await user.save();
-    } catch (error) {
-      res.status(400).json({ success: false, error });
-    }
-  }
-
-  // Handles new users wanting to register
-  async userSignup(req, res) {
-    // Initial information required is their email and password
-    // which they want to use
-    const {
-      email,
+    // to hashed password from db
+    const isValidPassword = await bcrypt.compare(
       password,
-    } = req.body;
+      user.password
+    );
+
+    // If it was the correct password, return user
+    if (isValidPassword) {
+      return res.json({
+        success: true,
+        data: user,
+      });
+      // Else this was the incorrect password entered
+    } else {
+      return res.status(400).json({
+        success: false,
+        message: 'Password entered is incorrect.',
+      });
+    }
+  }
+
+  /**
+   * User signup.
+   * @param {string} name - User name
+   * @param {string} email - User email
+   * @param {string} password - User password
+   * @returns {object} User
+   */
+  async userSignup({ body: { name, email, password } }, res) {
+    // Get User model
+    const { User } = this;
 
     // Attempt to find user with this email
     const user = await this.User.findOne({ email });
 
     // If user exists already, then this email is taken
     if (user) {
-      res.status(400).json({ success: false, error: 'Email already taken.' });
+      return res
+        .status(400)
+        .json({ success: false, error: 'Email already taken.' });
     }
 
-    // Else, the email is good and we create a token for registration
-    // Sign token using email and password, and assign an activation token
-    const token = sign(
-      {
-        email,
-        password,
-      },
-      process.env.JWT_ACC_ACTIVATE,
-      { expiresIn: '1d' },
-    );
+    // Create new user obj
+    const newUser = new User({
+      name,
+      email,
+      password: '',
+    });
 
-    // Link to verify account email
-    const VERIFICATION_LINK = `${process.env.CLIENT_URL}/register-user/${token}`;
-
-    // Build email
-    const data = {
-      from: 'noreply@two-do-bujo.com',
-      to: email,
-      subject: 'Account Registration Link',
-      html: `
-          <a href=${VERIFICATION_LINK}>Click this link to register</a>
-      `,
-    };
-
-    // Attempt to send email through Mailgun service
     try {
-      mg.messages().send(data);
+      // Set user password to hash of password entered
+      newUser.password = await bcrypt.hash(password, saltRounds);
+      // Save new user
+      await newUser.save();
 
-      res.status(200).json({ success: true });
+      // Error while trying to hash password
     } catch (error) {
-      res.status(400).json({ success: false, error });
+      return res.status(400).json({
+        success: false,
+        error,
+        message: 'Failed to hash password',
+      });
     }
+
+    // Return new user
+    return res.status(201).json({
+      success: true,
+      data: newUser,
+    });
   }
 
-  // Handles activation of user accounts
-  // Called after user clicks registration link from email
-  // and is finished setting some of their personal information
-  async activateUserAccount(req, res) {
-    // Get token and user information
-    const {
-      params: {
-        token,
-      },
-      body: {
-        firstName,
-        lastName,
-        term,
-      },
-    } = req;
+  /**
+   * User login through Google OAuth.
+   * @param {string} email - User email
+   * @param {string} googleId - User Google Id
+   * @returns {object} User
+   */
+  async googleLogin({ body: { email, googleId } }, res) {
+    // Attempt to find this user
+    let user;
+    try {
+      user = await this.User.findOne({ email });
+      // Failed to find user
+    } catch (error) {
+      return res.status(400).json({ success: false, error });
+    }
 
-    const { User } = this;
+    // Compare the password entered by taking its hash and comparing
+    // to hashed password from db
+    const isValidGoogleId = user.google.id === googleId;
 
-    // If the token exists
-    if (token) {
-      // Attempt to verify user token
-      verify(token, process.env.JWT_ACC_ACTIVATE, (err, decodedToken) => {
-        // The token has expired
-        if (err) {
-          return res.status(400).json({ error: 'Incorrect or expired link' });
-        }
-
-        // Get user email and password from this decoded token
-        const { email, password } = decodedToken;
-
-        // Perform a hash for the new user's password
-        _hash(password, saltRounds, (err, hash) => {
-
-          // Create new user
-          const newUser = new User({
-            firstName,
-            lastName,
-            term,
-            email,
-            password: hash,
-          });
-          // Update database with new user
-          newUser
-            .save()
-            .then(() => res.status(200).json({
-              success: true,
-              id: newUser.id,
-              data: newUser,
-            }))
-            .catch((error) => res.status(400).json({
-              error,
-              message: 'Error while trying to register account',
-            }));
-        });
+    // If it was the correct google Id, return user
+    if (isValidGoogleId) {
+      return res.json({
+        success: true,
+        data: user,
+      });
+      // Else this was the incorrect google Id given
+    } else {
+      return res.status(400).json({
+        success: false,
+        message: "Failed to authenticate Google account",
       });
     }
   }
 
-  // eslint-disable-next-line consistent-return
-  async forgotPassword(req, res) {
-    const { email } = req.body;
+  /**
+   * User signup through Google OAuth.
+   * @param {string} name - User name
+   * @param {string} email - User email
+   * @param {string} googleId - User password
+   * @returns {object} User
+   */
+  async googleUserSignup({ body: { name, email, googleId } }, res) {
+    // Get User model
+    const { User } = this;
 
-    // Attempt to find user existing with given email
+    // Attempt to find user with this email
+    const user = await this.User.findOne({ email });
+
+    // If user exists already, then this email is taken
+    if (user) {
+      return res
+        .status(400)
+        .json({ success: false, error: 'Email already taken.' });
+    }
+
+    // Create new user obj
+    const newUser = new User({
+      name,
+      email,
+      google: {
+        id: googleId,
+        email,
+        name,
+      },
+    });
+
+    try {
+      // Save new user
+      await newUser.save();
+
+      // Error while trying to register new user through Google OAuth
+    } catch (error) {
+      return res.status(400).json({
+        success: false,
+        error,
+        message: 'Failed to sign up.',
+      });
+    }
+
+    // Return new user
+    return res.status(200).json({
+      success: true,
+      data: newUser,
+    });
+  }
+
+  /**
+   * User forgot password.
+   * @param {email} email - User email
+   * @returns {boolean} Success status
+   */
+  async forgotPassword({ body: { email } }, res) {
+    // Attempt to find user with given email
     let user;
     try {
-      user = await this.User.findOne(email);
+      user = await this.User.findOne({ email });
     } catch (error) {
-      res.status(400).json({ success: false, error });
+      return res.status(400).json({ success: false, error });
     }
 
     // If user wasn't found, account registered with this email
     // doesn't exist
     if (!user) {
-      return res
-        .status(404)
-        .json({ error: 'User with this email does not exist.' });
+      return res.status(404).json({
+        success: false,
+        message: 'Account with this email does not exist.',
+      });
     }
 
     // Else sign a token for resetting user password
-    const token = sign({ _id: user.id }, process.env.RESET_PASSWORD_KEY, {
-      expiresIn: '20m',
-    });
+    const token = jwt.sign(
+      { _id: user._id },
+      process.env.RESET_PASSWORD_KEY,
+      {
+        expiresIn: '20m',
+      }
+    );
 
     // Link for email
-    const RESET_LINK = `${process.env.CLIENT_URL}/reset-password/${token}`;
+    const RESET_LINK = `${process.env.CLIENT_URL}/reset-password/?resetToken=${token}`;
 
     // Build email
-    const data = {
-      from: 'noreply@logic-workspace.com',
+    const emailOptions = {
+      from: process.env.SMTP_FROM_EMAIL,
       to: email,
       subject: 'Password Reset Link',
       html: `
@@ -231,85 +233,59 @@ export default class AuthController {
       `,
     };
 
-    // Update user with new reset link token
-    try {
-      await user.updateOne({ resetLink: token });
-    } catch (error) {
-      return res.status(400).json({ error: 'Reset password link error' });
-    }
+    // Initialize service for sending emails
+    const emailService = new EmailService();
 
-    // Use Mailgun service to send email
-    mg.messages().send(data, (error) => {
-      if (error) {
-        return res.json({
-          error: error.message,
-        });
-      }
-      return res.json({
-        message:
-        'An email has been sent, please follow the instructions to reset your password.',
-      });
-    });
+    // Get success status for this send
+    const { success, message } = await emailService.sendMessage(emailOptions);
+
+    // Return success status
+    return res.status(200).json({ success, message });
   }
 
-  // Handles resetting user password after user has clicked
-  // reset link and has finished entering new password
-  async resetPassword(req, res) {
-    // Get reset link and new password
-    const { resetLink, newPassword } = req.body;
-
-    // If reset link exists, this is correct email
-    if (resetLink) {
-      // Verify accurate reset link
-      verify(resetLink, process.env.RESET_PASSWORD_KEY,
-        async (error, decodedData) => {
-          if (error) {
-            return res.status(401).json({ error: 'Incorrect token or expired.' });
-          }
-
-          // Attempt to find user
-          let user;
-          try {
-						 user = await this.User.findOne({ resetLink });
-          } catch (err) {
-            res.status(400).json({ success: false, err });
-          }
-
-          // User with this email found is not correct one
-          if (!user) {
-            res.status(400).json({
-              success: false,
-              error: 'User with this token does not exist',
-            });
-          }
-
-          // Hash new password
-          _hash(newPassword, saltRounds, async (err, hash) => {
-            const obj = {
-              password: hash,
-              resetLink: '',
-            };
-
-            try {
-              user = _.extend(user, obj);
-
-              await user.save();
-
-              res.status(201).json({
-                success: true,
-                message: 'Password successfully changed',
-              });
-            } catch (e) {
-              res.status(400).json({
-                success: false,
-                e,
-                message: 'Error while trying to reset password',
-              });
-            }
-				  });
-	      });
-    } else {
-      res.status(401).json({ error: 'Authentication error' });
+  /**
+   * Handles user password reset.
+   * @param {string} email - User email
+   * @param {string} password - User password
+   * @returns {object} Updated User
+   */
+  async resetPassword({ body: { token, newPassword } }, res) {
+    // If reset token doesn't exist, authentication error
+    if (!token) {
+      return res
+        .status(401)
+        .json({ success: false, message: 'Authentication error' });
     }
+
+    // Verify this token
+    const decodedToken = jwt.verify(
+      token,
+      process.env.RESET_PASSWORD_KEY
+    );
+
+    let user;
+    try {
+      // Find user using verified token _id
+      user = await this.User.findOne({ _id: decodedToken._id });
+      // Set user password to hash of new password entered
+      user.password = await bcrypt.hash(newPassword, saltRounds);
+      // Save new password
+      await user.save();
+
+      // Error while trying to hash new password
+    } catch (error) {
+      return res.status(400).json({
+        success: false,
+        error,
+        message: 'Failed to reset password. Please try again',
+      });
+    }
+
+    // Return user
+    return res.status(200).json({
+      success: true,
+      message: 'Password has been changed.',
+      data: user,
+    });
   }
 }

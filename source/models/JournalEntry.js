@@ -9,19 +9,26 @@ const { Schema: _Schema } = mongoose;
 
 // Schema
 const JournalEntrySchema = new _Schema({
+  _id: {
+    type: _Schema.Types.ObjectId,
+    required: true,
+  },
   tasks: {
     type: [TaskSchema],
+    required: true,
   },
   notes: {
     type: [NoteSchema],
+    required: true,
   },
   events: {
     type: [EventSchema],
+    required: true,
   },
   date: {
     type: Date,
-    default: Date.now, // Journal entry for new day
+    required: true,
   },
-}, { timestamps: true });
+});
 
 export default JournalEntrySchema;
