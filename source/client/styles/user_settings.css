@@ -1,3 +1,9 @@
+@font-face {
+  font-family: 'Tw Cen MT Std Medium Cond';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Tw Cen MT Std Medium Cond'), url('../assets/TwCenMTStdMediumCond.woff') format('woff');
+}
 /*shared  Elements*/
 * {
   margin: 0;
@@ -33,9 +39,10 @@ body {
   color: #162a47;
   text-shadow: 0px 4px 5px rgba(0, 0, 0, 0.25);
 }
-.title-text {
-  text-decoration: underline;
-  font-family: Tw Cen MT Condensed;
+
+.title-text{
+  text-decoration:underline;
+  font-family: 'Tw Cen MT Std Medium Cond';
   font-style: normal;
   font-weight: normal;
   font-size: 60px;
@@ -396,7 +403,7 @@ select {
 }
 
 .date-number {
-  font-family: Tw Cen MT;
+  font-family: 'Tw Cen MT Std Medium Cond';
   width: 18px;
   height: 20px;
   text-align: center;
@@ -416,9 +423,8 @@ select {
   align-items: baseline;
   flex-wrap: wrap;
 }
-.tasks-title,
-.events-title {
-  font-family: Tw Cen MT Condensed;
+.tasks-title, .events-title{
+  font-family: 'Tw Cen MT Std Medium Cond';
   font-style: normal;
   font-weight: normal;
   font-size: 35px;
