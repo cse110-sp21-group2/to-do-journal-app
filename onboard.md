@@ -73,5 +73,4 @@ There are a set of rules to keep in mind:
 
     
 ## 3. Reusable Components
-* Every folder will have an ```index.js``` with imports and exports.
 * Components folder: ```./client/components ```.
