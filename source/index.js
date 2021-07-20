@@ -101,6 +101,7 @@ app.use('/api', UserRouter);
 app.use('/api', JournalRouter);
 /*  */
 
+// Testing new commit
 // Listening for any connection errors with database
 db.on('err', console.error.bind(console, 'MongoDB connection error:'));
 
