@@ -95,7 +95,7 @@ class createNote extends HTMLElement {
      * Returns the submit button 
      */
     get submitBtn() {
-        return this.shadowRoot.querySelector("input.save-button");
+        return this.shadowRoot.querySelector(".save-button");
     }
 }
 
