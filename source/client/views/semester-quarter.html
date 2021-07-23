@@ -24,15 +24,15 @@
         <div class="bookmark-cutout-div"></div>
       </div>
       <div class="back-button">
-        <button type="button" class="button-circle">
+        <!-- <button type="button" class="button-circle">
           <i class="fas fa-chevron-left"></i>
-        </button>
+        </button> -->
       </div>
       <h1 class="current-period">Spring '21</h1>
       <div class="forward-button">
-        <button type="button" class="button-circle">
+        <!-- <button type="button" class="button-circle">
           <i class="fas fa-chevron-right"></i>
-        </button>
+        </button> -->
       </div>
     </div>
 
@@ -59,7 +59,7 @@
     <div class="content-region">
       <div class="top-of-the-world">
         <h2 class="week-header-current">Week</h2>
-        <h2 class="week-number-current">1</h2>
+        <h2 id="first-header" class="week-number-current">1</h2>
       </div>
       <div class="week-content-top">
         <div id="note-container-0" class="notes-container">
@@ -77,7 +77,7 @@
       </div>
       <div>
         <h2 class="week-header-other">Week</h2>
-        <h2 class="week-number-other">2</h2>
+        <h2 id="second-header" class="week-number-other">2</h2>
       </div>
       <div class="week-content-middle">
         <div id="note-container-1" class="notes-container">
@@ -95,7 +95,7 @@
       </div>
       <div>
         <h2 class="week-header-other">Week</h2>
-        <h2 class="week-number-other">3</h2>
+        <h2 id="third-header" class="week-number-other">3</h2>
       </div>
       <div class="week-content-bottom">
         <div id="note-container-2" class="notes-container">
@@ -215,6 +215,7 @@
   </main>
 
   <!-- SCRIPTS / COMPONENTS -->
+  <script src="../components/term-week.js"></script>
   <script src="../components/task.js"></script>
   <script src="../components/event.js"></script>
   <script src="../components/note.js"></script>
