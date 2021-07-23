@@ -88,6 +88,15 @@ class Task extends HTMLElement {
     }
 
     /**
+     * Get task content
+     * 
+     * @return task content
+     */
+    get getContent(){
+        return this.shadowRoot.querySelector('p.task-content').innerHTML;
+    }
+
+    /**
      * SET task property of 'event-toggle' element/object
      * and put it in HTML
      *

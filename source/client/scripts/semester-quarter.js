@@ -227,70 +227,155 @@ saveTask.addEventListener("click", submitTask)
 // GET tasks and notes for specific week and DISPLAY it
 let weekCount = 0;
 term.then(res => res.weeks.forEach((week) => {
-  week.tasks.forEach((task) => {
-    const newTask = document.createElement('task-toggle');
-    newTask.content = task;
-    const taskDate = new Date(task.dueDate);
-    newTask.date = taskDate;
-    document.querySelector(`#task-container-${weekCount}`).appendChild(newTask);
-  })
-  week.notes.forEach((note) => {
-    const newNote = document.createElement('note-toggle');
-    newNote.content = note;
-    document.querySelector(`#note-container-${weekCount}`).appendChild(newNote);
-  })
-  weekCount+=1;
+  if(weekCount < 3){
+    week.tasks.forEach((task) => {
+      const newTask = document.createElement('task-toggle');
+      newTask.content = task;
+      const taskDate = new Date(task.dueDate);
+      newTask.date = taskDate;
+      document.querySelector(`#task-container-${weekCount}`).appendChild(newTask);
+    })
+    week.notes.forEach((note) => {
+      const newNote = document.createElement('note-toggle');
+      newNote.content = note;
+      document.querySelector(`#note-container-${weekCount}`).appendChild(newNote);
+    })
+    weekCount+=1;
+  }
 }
 ));
-// DISPLAY when page first loads
-// displayItems(term);
+// DOWN ARROW FUNCTIONALITY
+let downCount = 0;
+const downArrow = document.querySelector('.content-button');
 
+function goToNextWeek(){
+  term.then(res => {
+    if(downCount < 8){
+      const nextWeek = res.weeks[addNote[addNote.length - 1].getAttribute('name')];
 
+      const topSection = document.querySelector('.week-content-top');
+      const middleSection = document.querySelector('.week-content-middle');
+      const midWeekNum = document.getElementById('second-header').innerHTML;
+      const bottomSection = document.querySelector('.week-content-bottom');
+      const bottomWeekNum = document.getElementById('third-header').innerHTML;
 
-// function removeAllTasksAndNotes(parent) {
-//   parent.innerHTML = '';
-// }
+      // Replaced top with mid
+      const cloneMid = middleSection.cloneNode(true);
+      topSection.replaceWith(cloneMid);
+      // Replaced mid with bottom
+      const cloneBottom = bottomSection.cloneNode(true);
+      middleSection.replaceWith(cloneBottom)
+      // Change any necessary attributes in new top
+      const newTopSection = document.querySelector('.week-content-middle');
+      newTopSection.setAttribute('class', 'week-content-top');
+      // Change any necessary attributes in new mid
+      const newMidSection = document.querySelector('.week-content-bottom');
+      newMidSection.setAttribute('class', 'week-content-middle')
+      // Change id of the containers
+      document.getElementById('note-container-1').setAttribute('id', 'note-container-0');
+      document.getElementById('task-container-1').setAttribute('id', 'task-container-0');
+      document.getElementById('note-container-2').setAttribute('id', 'note-container-1');
+      document.getElementById('task-container-2').setAttribute('id', 'task-container-1');
+      document.getElementById('first-header').innerHTML = midWeekNum;
+      document.getElementById('second-header').innerHTML = bottomWeekNum;
+      let newBottomNum = 0;
+      if (parseInt(bottomWeekNum) + 1 < 12) {
+        newBottomNum = Number(bottomWeekNum) + 1;
+        if(newBottomNum == 11){
+          document.getElementById('third-header').innerHTML = 'FINAL';
+        } else {
+          document.getElementById('third-header').innerHTML = newBottomNum;
+        }
+      }
+      
+      // Replace bottom with next week
+      const oldBottomNoteContainer = document.getElementById('note-container-2');
+      const oldBottomNotes = oldBottomNoteContainer.querySelectorAll('note-toggle');
+      oldBottomNotes.forEach((note) => {
+        note.remove();
+      })
+      const oldBottomTasks = document.getElementById('task-container-2').querySelectorAll('task-toggle');
+      oldBottomTasks.forEach((task) => {
+        task.remove();
+      })
+      // get tasks and notes toggle from top and mid
+      const tasksNewTopSection = document.getElementById('task-container-0').querySelectorAll('task-toggle');
+      const notesNewTopSection = document.getElementById('note-container-0').querySelectorAll('note-toggle');
+      const tasksNewMidSection = document.getElementById('task-container-1').querySelectorAll('task-toggle');
+      const notesNewMidSection = document.getElementById('note-container-1').querySelectorAll('note-toggle');
 
-/**
- * Creates new term, display it
- * Forward arrow function
- *
- * NOT DONE
- */
+      const newAddTask = document.querySelectorAll('#add-task');
+      const newAddNote = document.querySelectorAll('#add-note');
+      // Make overlay visisble
+      newAddNote.forEach(button => button.addEventListener('click', (event) => {
+        openOverlay(noteOverlay);
+      }))
+      newAddTask.forEach(button => button.addEventListener('click', (event) => {
+        openOverlay(taskOverlay);
+      }))
+      // Add functionality to button override
+      noteCounter -= 2;
+      newAddNote.forEach((btn) => {
+        btn.addEventListener("click", createNote);
+        btn.setAttribute("name", noteCounter);
+        btn.addEventListener("click", setWeekNum);
+        noteCounter++;
+      })
+      counter -= 2;
+      newAddTask.forEach((btn) => {
+        btn.addEventListener("click", createTask)
+        btn.setAttribute("name", counter);
+        btn.addEventListener("click", setWeekNum);
+        counter++;
+      })
+      // Submit button functionality
+      const newSaveNote = someNote.submitBtn;
+      newSaveNote.addEventListener('click', submitNote);
+      const newSaveTask = someTask.submitBtn;
+      newSaveTask.addEventListener('click', submitTask);
 
-// function nextTerm(){
-//   const currentPeriodTitle = document.querySelector(".currentPeriod");
-//   const notesContain = document.querySelectorAll(".notes-container");
-//   const tasksContain = document.querySelectorAll(".task-container");
-//   tasksContain.forEach((taskContainer) => {
-//     removeAllTasksAndNotes(taskContainer);
-//   })
-//   notesContain.forEach((noteContainer) =>{
-//     removeAllTasksAndNotes(noteContainer);
-//   })
-//   // SET new term and display
-//   let newTermStartDate = new Date();
-//   let newTermEndDate = newTermStartDate;
-//   newTermStartDate = journal.then(response => { return new Date(response.terms[response.terms.length-1].endDate)});
-//   newTermEndDate = newTermStartDate.then(response =>{return response});
-//   if (termType === "Quarter") {
-//     newTermEndDate.setDate(newTermEndDate.getDate() + 77);
-//   } else {
-//     newTermEndDate.setDate(newTermEndDate.getDate() + 112);
-//   }
-//   // const moreTerm = getTerm(newTermStartDate);
-//   // displayItems(moreTerm);
-// }
-// const forwardBtn = document.querySelector(".forward-button");
-// forwardBtn.addEventListener("click", nextTerm);
+      // Display tasks and notes for week section that we've moved up
+      let countTop = 0;
+      res.weeks[midWeekNum - 1].tasks.forEach((task) => {
+        tasksNewTopSection[countTop].content = task;
+        const taskDate = new Date(task.dueDate);
+        tasksNewTopSection[countTop].date = taskDate;
+        countTop++;
+      })
+      countTop = 0;
+      res.weeks[midWeekNum - 1].notes.forEach((note) => {
+        notesNewTopSection[countTop].content = note;
+        countTop++;
+      })
+      let countMid = 0;
+      res.weeks[bottomWeekNum - 1].tasks.forEach((task) => {
+        tasksNewMidSection[countMid].content = task;
+        const taskDate = new Date(task.dueDate);
+        tasksNewMidSection[countMid].date = taskDate;
+        countMid;
+      })
+      countMid = 0;
+      res.weeks[bottomWeekNum - 1].notes.forEach((note) => {
+        notesNewMidSection[countMid].content = note;
+        countMid++;
+      })
+      res.weeks[newBottomNum - 1].tasks.forEach((task) => {
+        const nextWeekTask = document.createElement('task-toggle');
+        nextWeekTask.content = task;
+        const taskDate = new Date(task.dueDate);
+        nextWeekTask.date = taskDate;
+        document.querySelector(`#task-container-2`).appendChild(nextWeekTask);
+      })
+      res.weeks[newBottomNum - 1].notes.forEach((note) => {
+        const nextWeekNote = document.createElement('note-toggle');
+        nextWeekNote.content = note;
+        document.querySelector(`#note-container-2`).appendChild(nextWeekNote);
+      })
+      downCount++;
+    } else {
+      alert("You've reached the end of the Quarter!");
+    }
+  })
+}
+downArrow.addEventListener('click', goToNextWeek);
 
-
-
-/**
- * TODO:
- * - Arrows switching to different quarters/semester
- * - Down arrow see other weeks
- * - Fix CSS for display notes and tasks
- * - Fix create-task pop up interface
- * - Week logic (when clicking button, write to correct week in mongo)
- */
