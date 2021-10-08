@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "start": "nodemon --no-warnings --experimental-modules --es-module-specifier-resolution=node source/index.js",
+    "heroku-postbuild": "npm install --prefix client && npm run build --prefix client",
     "test": "mocha --timeout 5000 --recursive --no-warnings --experimental-modules --es-module-specifier-resolution=node ./source/test/* || true",
     "lint": "./node_modules/.bin/eslint ./source",
     "docs": "jsdoc -c ./jsdoc.config.json"
