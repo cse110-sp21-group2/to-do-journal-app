@@ -101,6 +101,13 @@ app.use('/api', UserRouter);
 app.use('/api', JournalRouter);
 /*  */
 
+if (process.env.NODE_ENV === "production"){
+  app.use(express.static("build"));
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "build", "index.html"));
+  });
+}
+
 // Testing new commit
 // Listening for any connection errors with database
 db.on('err', console.error.bind(console, 'MongoDB connection error:'));
