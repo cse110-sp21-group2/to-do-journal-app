@@ -266,7 +266,7 @@ export default class JournalController {
   /**
    * Get a journal term.
    * @param {string} id - User Id.
-   * @param {string} termId - Term Id.
+   * @param {Date} date 
    * @returns {Object} Journal Term.
    */
   async getJournalTerm({ params: { id, date } }, res) {
