@@ -6,7 +6,11 @@
 import auth from '../auth.js';
 
 // Successful google auth login
-const onSuccess = async (googleUser) => {
+export function doSomething() {
+  console.log("HELLO WORLD!")
+}
+
+export const onSuccess = async (googleUser) => {
   const email = googleUser.getBasicProfile().getEmail();
   const googleId = googleUser.getBasicProfile().getId();
 
@@ -27,15 +31,16 @@ const onFailure = (error) => {
 
 // Called when signin page is navigated to to render
 // our google login button
-window.onload = () => {
-  // Render google auth button using div id
-  gapi.signin2.render('google-sign-in', {
-    scope: 'profile email',
-    width: 240,
-    height: 50,
-    longtitle: true,
-    theme: 'dark',
-    onsuccess: onSuccess,
-    onfailure: onFailure,
-  });
-};
+// window.onload = () => {
+//   // Render google auth button using div id
+//   gapi.signin2.render('g_id_signin', {
+//     scope: 'profile email',
+//     width: 240,
+//     height: 50,
+//     longtitle: true,
+//     theme: 'dark',
+//     onsuccess: onSuccess,
+//     onfailure: onFailure,
+//   });
+// };
+

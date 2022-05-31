@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="google-signin-client_id"
-      content="110656900996-fi7ahcr6josugvshub5bh4mm0lbl9m69.apps.googleusercontent.com"
+      content="260314868235-vopeoa0j7cu1hmqt6oja4bnnod50em3h.apps.googleusercontent.com"
     />
     <title>Sign In</title>
 
@@ -75,9 +75,14 @@
               <input class="login-btn" type="submit" value="Login" />
             </div>
             <p class="or">OR</p>
-            <div className="google">
+            <!-- <div className="google">
               <div id="google-sign-in"></div>
+            </div> -->
+            <div id="g_id_onload" 
+                data-client_id="260314868235-vopeoa0j7cu1hmqt6oja4bnnod50em3h.apps.googleusercontent.com" 
+                >
             </div>
+            <div class="g_id_signin" data-type="standard"></div>
             <a class="sign-up" href="/signup">
               Don't have an account? Create an account today!
             </a>
@@ -86,7 +91,13 @@
       </div>
     </main>
     <!-- Scripts -->
-    <script src="https://apis.google.com/js/platform.js?onload" async defer></script>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script>
+      // function test(userGoogle){
+      //   const responsePayload = 
+      //   console.log(responsePayload)
+      // }
+    </script>
     <script src="../scripts/signin.js" type="module"></script>
     <script src="../scripts/googleAuth/googleAuthLogin.js" type="module"></script>
   </body>

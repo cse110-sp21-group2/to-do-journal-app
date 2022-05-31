@@ -15,6 +15,7 @@ import db from './server';
 import AuthRouter from './routers/AuthRouter';
 import UserRouter from './routers/UserRouter';
 import JournalRouter from './routers/JournalRouter';
+import mongoose from 'mongoose';
 
 // Allows use of .env variables
 dotenv.config();
@@ -110,12 +111,30 @@ if (process.env.NODE_ENV === "production"){
 
 // Testing new commit
 // Listening for any connection errors with database
-db.on('err', console.error.bind(console, 'MongoDB connection error:'));
+// db.on('err', console.error.bind(console, 'MongoDB connection error:'));
 
-// Listening to which port the server is currently running on
-app.listen(port, () =>
-  console.log(`Server running on port: http://localhost:${port}`)
-);
+// // Listening to which port the server is currently running on
+// app.listen(port, () =>
+//   console.log(`Server running on port: http://localhost:${port}`)
+// );
+
+const uri = process.env.MONGODB_URI;
+
+// URI is where database is stored, the properties set in the 2nd argument is to make it easier to access MongoDB
+mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true });
+
+
+// Mongo Connection
+const connection = mongoose.connection;
+connection.once('open', () => {
+
+  console.log("MongoDB database connection established successfully!");
+})
+
+// This is how we start a server with a port
+app.listen(port, () => {
+  console.log(`Server is running on port: ${port}`);
+})
 
 // Export app to use for unit testing
 export default app;
