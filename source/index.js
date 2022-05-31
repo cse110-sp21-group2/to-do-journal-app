@@ -118,7 +118,7 @@ if (process.env.NODE_ENV === "production"){
 //   console.log(`Server running on port: http://localhost:${port}`)
 // );
 
-const uri = process.env.MONGODB_URI;
+const uri = process.env.DATABASE_URI;
 
 // URI is where database is stored, the properties set in the 2nd argument is to make it easier to access MongoDB
 mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true });

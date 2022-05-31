@@ -23,17 +23,26 @@ export default class AuthController {
     let user;
     try {
       user = await this.User.findOne({ email });
+      if(user == null){
+        throw "User can not be found!"
+      }
       // Failed to find user
     } catch (error) {
+      console.log(error);
       return res.status(400).json({ success: false, error });
     }
 
     // Compare the password entered by taking its hash and comparing
     // to hashed password from db
-    const isValidPassword = await bcrypt.compare(
-      password,
-      user.password
-    );
+    let isValidPassword = false;
+    if(user.password != null){
+      isValidPassword = await bcrypt.compare(
+        password,
+        user.password
+      );
+    } else {
+      window.alert("Password can not be empty!");
+    }
 
     // If it was the correct password, return user
     if (isValidPassword) {

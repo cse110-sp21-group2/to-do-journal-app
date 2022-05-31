@@ -11,6 +11,9 @@
     "lint": "./node_modules/.bin/eslint ./source",
     "docs": "jsdoc -c ./jsdoc.config.json"
   },
+  "engines": {
+    "node": "16.x"
+  },
   "author": "",
   "license": "ISC",
   "dependencies": {
