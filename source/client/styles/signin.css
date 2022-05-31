@@ -1,0 +1,169 @@
+/*shared  Elements*/
+* { 
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  min-width: 100vw;
+  font-family: 'Roboto', Condensed; 
+}
+
+/*shared  Elements End*/
+
+.row {
+  display: flex;
+  height: 100vh;
+}
+
+.column {
+  display: flex;
+  display: 50vw;
+}
+
+.column.hero-banner {
+  background: #162a47;
+  position: relative;
+}
+
+
+img.hero-banner-image {
+  max-width: 90%;
+  height: auto;
+  margin: auto;
+  margin-top: 80px;
+  align-items: center;
+  justify-content: center;
+}
+
+/*Bookmark*/
+.bookmark{
+  margin-top: -50px;
+}
+
+
+
+.header {
+  font-family: Unica One;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 70px;
+  line-height: 118px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  letter-spacing: -0.02em;
+
+  margin-left: 50px;
+
+  color: #000000;
+
+  text-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+.avatar {
+  border-radius: 50%;
+  height: 75px;
+  margin-left: 95px;
+  vertical-align: middle;
+  width: 75px;
+}
+
+.column.login-form {
+  margin-left: 150px;
+  margin-top: 75px;
+}
+
+label {
+  font-family: 'Roboto', Condensed;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 24px;
+  line-height: 36px;
+  display: flex;
+  align-items: center;
+  letter-spacing: -0.02em;
+  display: block;
+  margin-bottom: 10px;
+}
+
+a {
+  font-family: 'Roboto', Condensed;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 24px;
+  display: flex;
+  letter-spacing: -0.02em;
+  display: block;
+  margin-bottom: 20px;
+}
+
+#name,
+#email,
+#password {
+  font-family: 'Roboto', Condensed;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  border-width: 0 0 2px;
+  border-color: black;
+  outline: 0;
+  width: 300px;
+  margin-bottom: 15px;
+}
+
+.login-btn-container {
+  text-align: center;
+}
+
+.login-btn {
+  background-color: #00649c;
+  border: none;
+  color: #fff;
+  font-family: 'Roboto', Condensed;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  cursor: pointer;
+  margin-bottom: 25px;
+  height: 45px;
+  width: 150px;
+}
+
+.or {
+  text-align: center;
+  font-family: Roboto Condensed;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 20px;
+  line-height: 20px;
+  margin: -5px 0 20px;
+  align-items: center;
+  text-align: center;
+  letter-spacing: -0.02em;
+}
+
+.third-party-sign-in {
+  height: 50px;
+  width: 400px;
+}
+
+.google {
+  display: flex;
+  width: 370px;
+}
+
+#google-sign-in {
+  margin: 0 auto;
+  width: 250px;
+}
+
+a.sign-up {
+  text-align: center;
+  text-decoration: underline;
+  color: #000;
+  margin-top: 20px;
+}

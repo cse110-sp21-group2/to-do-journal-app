@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Two-Do</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Unica+One&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+      integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="../styles/monthly.css" />
+  </head>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Unica+One&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+        integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link rel="stylesheet" href="../styles/monthly.css" />
+</head>
+
+<body class="main">
+    <!-- current date heading and yesterday/tomorrow buttons -->
+    <div class="page-heading">
+      <!--Bookmark-->
+      <div class='bookmark'>
+        <div class="solid-bookmark-div"></div>
+        <div class="bookmark-cutout-div"></div>
+      </div>
+      <!-- Yesterday Button -->
+      <div class="back-button">
+          <button type="button" onclick= "prevMonth();" class="button-circle"><i class="fas fa-chevron-left"></i></button>
+      </div>
+      <h1 class="current-month" id="month-label"></h1>
+      <!-- Tomorrow Button -->
+      <div class="forward-button">
+          <button type="button" onclick = "nextMonth();" class="button-circle"><i class="fas fa-chevron-right"></i></button>
+      </div>
+    </div>
+
+    <!-- Search Bar -->
+    <!-- <div class="search-bar">
+      <i class="fas fa-search" id="search-icon"></i>
+      <input type="text" placeholder="Search" class="search-input" />
+    </div> -->
+
+    <!-- help/notifications/account menu -->
+    <div class="account-bar">
+      <!-- <button type="button" class="help-button">
+        <i class="far fa-question-circle"></i>
+      </button>
+      <button type="button" class="notification-button">
+        <i class="far fa-bell"></i>
+      </button> -->
+      <a href="/settings">
+        <button type="button" class="account-button">
+          <i class="fas fa-user-circle"></i>
+        </button>
+      </a>
+    </div>
+
+    <!-- Content Region -->
+    <div class="content-region">
+      <div class="day">SUN</div>
+      <div class="day">MON</div>
+      <div class="day">TUE</div>
+      <div class="day">WED</div>
+      <div class="day">THU</div>
+      <div class="day">FRI</div>
+      <div class="day">SAT</div>
+      <div class="date" id="top-left-corner">
+        <div class="date-number">26</div>
+      </div>
+      <div class="date">
+        <div class="date-number">27</div>
+      </div>
+      <div class="date">
+        <div class="date-number">28</div>
+      </div>
+      <div class="date">
+        <div class="date-number">29</div>
+      </div>
+      <div class="date">
+        <div class="date-number">30</div>
+      </div>
+      <div class="date">
+          <div class="date-number">1</div>
+      </div>
+      <div class="date" id="top-right-corner">
+          <div class="date-number">2</div>
+      </div>
+      <div class="date">
+          <div class="date-number">3</div>
+      </div>
+      <div class="date">
+          <div class="date-number">4</div>
+      </div>
+      <div class="date">
+          <div class="date-number">5</div>
+      </div>
+      <div class="date">
+          <div class="date-number">6</div>
+      </div>
+      <div class="date">
+          <div class="date-number">7</div>
+      </div>
+      <div class="date">
+          <div class="date-number">8</div>
+      </div>
+      <div class="date">
+        <div class="date-number">9</div>
+      </div>
+      <div class="date">
+        <div class="date-number">10</div>
+      </div>
+      <div class="date">
+        <div class="date-number">11</div>
+      </div>
+      <div class="date">
+        <div class="date-number">12</div>
+      </div>
+      <div class="date">
+        <div class="date-number">13</div>
+      </div>
+      <div class="date">
+        <div class="date-number">14</div>
+      </div>
+      <div class="date">
+        <div class="date-number">15</div>
+      </div>
+      <div class="date">
+        <div class="date-number">16</div>
+      </div>
+      <div class="date">
+        <div class="date-number">17</div>
+      </div>
+      <div class="date">
+        <div class="date-number">18</div>
+      </div>
+      <div class="date">
+        <div class="date-number">19</div>
+      </div>
+      <div class="date">
+        <div class="date-number">20</div>
+      </div>
+      <div class="date">
+        <div class="date-number">21</div>
+      </div>
+      <div class="date">
+        <div class="date-number">22</div>
+      </div>
+      <div class="date">
+        <div class="date-number">23</div>
+      </div>
+      <div class="date">
+        <div class="date-number">24</div>
+      </div>
+      <div class="date">
+        <div class="date-number">25</div>
+      </div>
+      <div class="date">
+        <div class="date-number">26</div>
+      </div>
+      <div class="date">
+        <div class="date-number">27</div>
+      </div>
+      <div class="date">
+        <div class="date-number">28</div>
+      </div>
+      <div class="date">
+        <div class="date-number">29</div>
+      </div>
+      <div class="date">
+        <div class="date-number">30</div>
+      </div>
+      <div class="date" id="bottom-left-corner">
+        <div class="date-number">31</div>
+      </div>
+      <div class="date">
+        <div class="date-number">1</div>
+      </div>
+      <div class="date">
+        <div class="date-number">2</div>
+      </div>
+      <div class="date">
+        <div class="date-number">3</div>
+      </div>
+      <div class="date">
+        <div class="date-number">4</div>
+      </div>
+      <div class="date">
+        <div class="date-number">5</div>
+      </div>
+      <div class="date" id="bottom-right-corner">
+        <div class="date-number">6</div>
+      </div>
+    </div>
+    </div>
+
+    <!-- Left navigation region-->
+    <div class="left-nav"></div>
+
+    <!-- Right navigation region-->
+    <div class="right-nav">
+      <div class="goals-container">
+        <h2 class="goals-label">Goals</h2>
+        <div class="goals-element">Study for at least 2 hours</div>
+        <div class="goals-element">Maintain workout schedule</div>
+      </div>
+      <div>
+        <hr class="goals-seperator" />
+        <h1 class="upcoming-header">Upcoming!</h1>
+      </div>
+      <div class="tasks-header">
+        <h2 class="tasks-title">Tasks</h2>
+        <button type="button" class="tasks-button">
+          <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
+      <div class="tasks-content"></div>
+      <div class="events-header">
+        <h2 class="events-title">Events</h2>
+        <button type="button" class="events-button">
+          <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
+      <div class="events-content"></div>
+    </div>
+
+    <!-- left-nav web component -->
+    <script src="../components/left-nav-component.js" type="module"></script>
+    <script type = "text/javascript" src="../scripts/month-gen.js"></script>
+    <script src="../components/create-collection-modal.js" type="module"></script>
+    <script src="../scripts/createCollectionModal.js" type="module"></script>
+  </body>
+</html>
