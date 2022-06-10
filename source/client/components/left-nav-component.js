@@ -69,8 +69,29 @@ class LeftNav extends HTMLElement {
                 letter-spacing: -0.02em;
                 color: #162A47;
             }
+            @keyframes logo_animate {
+              from {transform: scale(1);}
+              to {transform: scale(0.8);}
+            }
+
+            #logo{
+              transform: scale(1);
+              animation-name: logo_animate;
+              animation-duration: 2s;
+              animation-iteration-count: infinite;
+              animation-direction: alternate;
+              animation-timing-function: ease-in-out
+            }
+            .link-text:hover {
+              opacity: 0.8;
+              box-shadow: 0 3px 10px #E2CB14
+            }
+            #to-do-logo:hover {
+              opacity: 0.8;
+              box-shadow: 0 3px 10px #E2CB14
+            }
 		    </style>
-        <a href="/"><img src="../assets/logo500.png" alt="Two-Do logo" class="logo" ></a>
+        <a id="to-do-logo" href="/"><img id="logo" src="../assets/logo500.png" alt="Two-Do logo" class="logo" ></a>
         <a href="/index"><h1 class="navigation-title">Index</h1></a>
         <h2 class="index-link"><a href="/daily" class="link-text">Daily</a></h2>
         <h2 class="index-link"><a href="/weekly" class="link-text">Weekly</a></h2>
