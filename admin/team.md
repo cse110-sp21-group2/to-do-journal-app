@@ -12,7 +12,7 @@ We believe that trust and communication are one of the most important values to 
 
 **Name:** Armin Suraj
 
-**Major/Year:** Computer Science / 2^nd^ Year
+**Major/Year:** Computer Science / 2<sup>nd</sup> Year
 
 **Hobbies:** Video Games, Procrastinating, Art
 
@@ -20,15 +20,11 @@ We believe that trust and communication are one of the most important values to 
 
 **Profile:** [arm-out.github.io](https://github.com/arm-out/arm-out.github.io)
 
-
-
-
-
-
+<br/><br/><br/><br/><br/><br/>
 
 <img src="./lib/eric.png" alt="eric" style="zoom:13%" align="left"/>**Name:** Eric Cisneros
 
-**Major/Year:** Computer Engineering / 3^rd^ Year
+**Major/Year:** Computer Engineering / 3<sup>rd</sup> Year
 
 **Hobbies:** Art, Video games, Anime
 
@@ -36,13 +32,13 @@ We believe that trust and communication are one of the most important values to 
 
 **Profile:** https://ecisnero.github.io/
 
-
+<br/><br/>
 
 <img src="./lib/hyo.jpg" alt="hyo" style="zoom:18%" align="left"/> 
 
 **Name:** Hyo Kim
 
-**Major/Year:** Bioengineering / 4^th^ Year
+**Major/Year:** Bioengineering / 4<sup>th</sup> Year
 
 **Hobbies:** Baking, Learning guitar 
 
@@ -50,13 +46,11 @@ We believe that trust and communication are one of the most important values to 
 
 **Profile:** https://hik010.github.io
 
-
-
-
+<br/><br/><br/><br/>
 
 <img src="./lib/jerry.jpg" alt="jerry" style="zoom:13%" align="left"/>**Name:** Jerry Liang
 
-**Major/Year:** Computer Engineering / 3^rd^ Year
+**Major/Year:** Computer Engineering / 3<sup>rd</sup> Year
 
 **Hobbies:** Being sad, video games, rock climbing, driving
 
@@ -65,14 +59,14 @@ We believe that trust and communication are one of the most important values to 
 **Profile:** https://jevanliang.github.io/CSE110/ 
 
 
-
+<br/><br/>
 
 
 <img src="./lib/mark.png" alt="mark" style="zoom:22%" align="left"/> 
 
 **Name:** Mark Bussard
 
-**Major/Year:** Computer Science / 3^rd^ Year
+**Major/Year:** Computer Science / 3<sup>rd</sup> Year
 
 **Hobbies:** Running, Working out, Video Games, Cooking
 
@@ -80,15 +74,12 @@ We believe that trust and communication are one of the most important values to 
 
 **Profile:** https://www.markbussard.com/
 
-
-
-
-
+<br/><br/><br/><br/><br/>
 
 
 <img src="./lib/oscar.jpg" alt="oscar" style="zoom:24.5%" align="left"/>**Name:** Oscar Acevedo
 
-**Major/Year:** Computer Science / 2^nd^ Year
+**Major/Year:** Computer Science / 2<sup>nd</sup> Year
 
 **Hobbies:**  Boxing, Cooking, Anime
 
@@ -96,13 +87,13 @@ We believe that trust and communication are one of the most important values to 
 
 **Profile:** https://origamimm.github.io/PagesProject/
 
-
+<br/><br/>
 
 <img src="./lib/salwan.jpg" alt="salwan" style="zoom:63%" align="left"/> 
 
 **Name:** Salwan Shathar
 
-**Major/Year:** Computer Engineering / 2^nd^ Year
+**Major/Year:** Computer Engineering / 2<sup>nd</sup> Year
 
 **Hobbies:**  Tennis, Music, Anime
 
@@ -110,17 +101,14 @@ We believe that trust and communication are one of the most important values to 
 
 **Profile:** https://sal-iraqi.github.io/GitHub-Pages/
 
-
-
-
-
+<br/><br/><br/><br/><br/>
 
 
 <img src="./lib/susanna.png" alt="susanna" style="zoom:87%" align="left"/> 
 
 **Name:** Susanna He
 
-**Major/Year:** Computer Science / 2^nd^ Year
+**Major/Year:** Computer Science / 2<sup>nd</sup> Year
 
 **Hobbies:**  Drawing, Video Games, Anime
 
@@ -129,12 +117,12 @@ We believe that trust and communication are one of the most important values to 
 **Profile:** https://susannahe91.github.io/Lab1-GitHub-Pages/
 
 
-
+<br/><br/><br/><br/>
 
 
 <img src="./lib/trai.jpg" alt="trai" style="zoom:58%" align="left"/>**Name:** Trai Pham
 
-**Major/Year:** Computer Science / 2^nd^ Year
+**Major/Year:** Computer Science / 2<sup>nd</sup> Year
 
 **Hobbies:**  Football, Working out, Video Games, Anime, Hiking
 
