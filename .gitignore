@@ -1,7 +1,7 @@
 # Unnecessary files
 videos/
 specs/
-admin/
+# admin/
 onboard.md
 
 # Logs
