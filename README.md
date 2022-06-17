@@ -4,6 +4,8 @@ This is the repository for the Bullet Jouranl app created by Group 2. Meet the t
 
 ## About
 
+Head to our Web App: [To Do Journaling Web App](https://to-do-journaling.herokuapp.com/)
+
 Two-Do is a digital bullet journal system focused on delivering students with the best organisational tool to keep track of their day to day student life.
 
 ## CI/CD
